@@ -89,17 +89,21 @@ CREATE TABLE parent_notification (
   INSERT INTO parent
   (lastname, firstname, birthdate, mail_address, password, address, postcode, city, phone_number, notification_status) 
   VALUES
-  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false);
+  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false),
+  ('Dupond', 'Michel', '19800320', 'michel.dupond@example.fr', 'testmdp', '52 boulevard des embruns', 99999, 'Ville Fictive', 0600000003, false);
 
   INSERT INTO pro
   (name, mail_address, password, address, postcode, city, phone_number, description, type, notification_status)
   VALUES
-  ('Picoti Picota', 'picotita@example.fr', 'testmdp', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false);
+  ('Picoti Picota', 'picotita@example.fr', 'testmdp', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
+  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
 
   INSERT INTO child
   (lastname, firstname, birthdate, walking, doctor, parent_id)
   VALUES
-  ('Dupont', 'Marcel', '20221224', false, 'Docteur Qui', 1);
+  ('Dupont', 'Marcel', '20221224', false, 'Docteur Qui', 1),
+  ('Dupond', 'Noe', '20191103', false, 'Docteur Folamour', 2),
+  ('Dupond', 'Jade', '20191103', false, 'Docteur Folamour', 2);
 
   INSERT INTO disponibility
   (day)
@@ -109,15 +113,19 @@ CREATE TABLE parent_notification (
   INSERT into pro_disponibility
   (disponibility_id, pro_id)
   VALUES
-  (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
+  (1, 1), (2, 1), (3, 1), (4, 1), (5, 1),
+  (1, 2), (2, 2), (4, 2), (5, 2);
 
   INSERT into place
   (pro_id)
   VALUES
-  (1), (1), (1), (1), (1);
+  (1), (1), (1), (1), (1), (2), (2), (2);
 
--- Requête pour consulter les jours de disponibilité d'une crèche
+-- Requête pour consulter les jours de disponibilité d'une crèche.
 SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
 
--- Requête pour connaître le nombre de disponibilités d'une crèche
+-- Requête pour connaître le nombre de places d'une crèche.
 SELECT count(pl.id) AS places_for_pro from place AS pl LEFT JOIN pro AS pr ON pr.id = pl.pro_id;
+
+-- Requête pour lister les enfants d'un parent.
+SELECT c.lastname AS nom_enfant, c.firstname AS prenom_enfant, p.lastname AS nom_parent, p.firstname AS prenom_parent FROM child AS c LEFT JOIN parent AS p ON c.parent_id = p.id WHERE p.id = 2;
