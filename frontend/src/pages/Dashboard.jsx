@@ -1,5 +1,6 @@
 import React from "react";
+import Login from "../components/Login";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return <Login />;
 }
