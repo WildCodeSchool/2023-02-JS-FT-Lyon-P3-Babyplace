@@ -13,11 +13,12 @@
 .design h1, .design h2 {
   margin-top: 2vh;
   padding-inline: 2vw;
+  text-align: center;
 }
 
 .design img {
   margin: 10%;
-  margin-top: 30%;
+  margin-top: 20%;
   width: 80%;
   border-radius: 25px;
 }
@@ -39,4 +40,30 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+@media screen and (max-width: 850px) {
+  .home {
+    flex-direction: column;
+  }
+
+  .design {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    align-items: center;
+  }
+  .redirectWindow {
+    width: 100%;
+    height: 50%;
+    flex-direction: column;
+  }
+  .design img {
+    margin: auto;
+    width: auto;
+    height : 50%;
+    border-radius: 25px;
+  }
 }
