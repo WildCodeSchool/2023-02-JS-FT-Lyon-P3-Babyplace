@@ -1,5 +1,10 @@
-#root {
+body {
   width: 100vw;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
   --main-color: rgb(86,100,210);
   --second-color: rgb(116,120,141);
   --dark-color: rgb(52,58,64);
