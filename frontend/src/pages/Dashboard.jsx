@@ -2,5 +2,5 @@ import React from "react";
 import Login from "../components/Login";
 
 export default function Dashboard() {
-  return <Login />;
+  return <Login userType="pro" />;
 }
