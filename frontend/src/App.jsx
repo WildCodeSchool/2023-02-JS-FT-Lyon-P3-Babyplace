@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Particulier from "./pages/Particulier";
+import ProRegister from "./pages/ProRegister";
+import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import "./App.css";
 
