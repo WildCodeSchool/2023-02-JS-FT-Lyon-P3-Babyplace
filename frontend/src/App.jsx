@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
+import Particulier from "./pages/Particulier";
+import ProRegister from "./pages/ProRegister";
+import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
-import Particuliers from "./pages/Particuliers";
-import Pro from "./pages/Pro";
+
 import "./App.css";
 
 function App() {
@@ -9,8 +11,9 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/pro" element={<Pro />} />
-        <Route path="/particuliers" element={<Particuliers />} />
+        <Route path="/particulier" element={<Particulier />} />
+        <Route path="/pro-register" element={<ProRegister />} />
+        <Route path="/pro-dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

@@ -15,13 +15,13 @@ export default function Home() {
       <div className={styles.redirectWindow}>
         <div className={styles.pro}>
           <p>Je suis un professionnel : </p>
-          <Link to="/pro">
+          <Link to="/pro-dashboard">
             <Button variant="contained">Accéder au site pro</Button>
           </Link>
         </div>
         <div className={styles.particuliers}>
           <p>Je suis un particulier : </p>
-          <Link to="/particuliers">
+          <Link to="/particulier">
             <Button variant="contained">Accéder au site particuliers</Button>
           </Link>
         </div>
