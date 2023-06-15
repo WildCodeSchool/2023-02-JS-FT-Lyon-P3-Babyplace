@@ -53,8 +53,8 @@ const hashPassword = (req, res, next) => {
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
       req.body.hashedPassword = hashedPassword;
-      // we delete the password so only the hashedPassword remains
-      delete req.body.password;
+      // TODO delete the password so only the hashedPassword remains
+      // delete req.body.password;
       next();
     })
     .catch((err) => {
@@ -67,7 +67,7 @@ const verifyPassword = (req, res, next) => {
   // check if the req.user.hashedPassword from previous is the same as the password given through the login
   // if so => we delete the hashedPassword from the req.user and give a token
   argon2
-    .verify(req.user.hashedPassword, req.body.password, hashingOptions)
+    .verify(req.user.hashed_password, req.body.password, hashingOptions)
     .then((isPasswordOk) => {
       if (isPasswordOk) {
         // create token encoded with secret password in .env

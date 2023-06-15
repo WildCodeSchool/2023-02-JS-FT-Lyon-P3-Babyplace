@@ -30,7 +30,7 @@ function Login({ userType }) {
     event.preventDefault();
     if (validateLogin) {
       axios
-        .post(`${BACKEND_URL}/${userType}/login`)
+        .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
         .then((response) => {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           setUser(response.data.user);
@@ -47,12 +47,14 @@ function Login({ userType }) {
     }
   };
 
+  // console.log(user)
+
   return (
     <div className={styles.login}>
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          <p>{user && token ? user.firstname : null}</p>
+          <p>{user && token ? user.name : null}</p>
           <p className={styles.infoMessage}>{infoMessage || null}</p>
         </div>
         <Box

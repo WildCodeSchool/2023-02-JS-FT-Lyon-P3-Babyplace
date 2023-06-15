@@ -22,10 +22,12 @@ router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post("/parent/register", hashPassword);
+router.post("/parent", hashPassword, parentControllers.add);
 
 router.get("/pro", proControllers.browse);
 router.get("/pro/:id", proControllers.read);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post("/pro/register", hashPassword);
+router.post("/pro", hashPassword, proControllers.add);
 
 module.exports = router;

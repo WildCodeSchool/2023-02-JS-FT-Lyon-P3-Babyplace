@@ -1,3 +1,20 @@
+ALTER TABLE child
+DROP CONSTRAINT child_parent;
+ALTER TABLE place
+DROP CONSTRAINT place_pro;
+ALTER TABLE reservation
+DROP CONSTRAINT reservation_child;
+ALTER TABLE reservation
+DROP CONSTRAINT reservation_place;
+ALTER TABLE pro_disponibility
+DROP CONSTRAINT disponibility_pro;
+ALTER TABLE pro_disponibility
+DROP CONSTRAINT pro_disponibility;
+ALTER TABLE pro_notification
+DROP CONSTRAINT notification_pro;
+ALTER TABLE parent_notification
+DROP CONSTRAINT notification_parent;
+
 DROP TABLE IF EXISTS parent;
 CREATE TABLE parent (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -6,6 +23,7 @@ CREATE TABLE parent (
   birthdate DATE NOT NULL,
   mail_address VARCHAR(80) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
+  hashed_password VARCHAR(100) NOT NULL,
   address VARCHAR(80) NOT NULL,
   postcode INT(5) NOT NULL,
   city VARCHAR(45) NOT NULL,
@@ -31,6 +49,7 @@ CREATE TABLE pro (
   name VARCHAR(80),
   mail_address VARCHAR(80) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
+  hashed_password VARCHAR(100) NOT NULL,
   address VARCHAR(80),
   postcode INT(5),
   city VARCHAR(45),
@@ -96,16 +115,16 @@ CREATE TABLE parent_notification (
 );
 
   INSERT INTO parent
-  (lastname, firstname, birthdate, mail_address, password, address, postcode, city, phone_number, notification_status) 
+  (lastname, firstname, birthdate, mail_address, password, hashed_password, address, postcode, city, phone_number, notification_status) 
   VALUES
-  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false),
-  ('Dupond', 'Michel', '19800320', 'michel.dupond@example.fr', 'testmdp', '52 boulevard des embruns', 99999, 'Ville Fictive', 0600000003, false);
+  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', 'hashed password', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false),
+  ('Dupond', 'Michel', '19800320', 'michel.dupond@example.fr', 'testmdp', 'hashed password', '52 boulevard des embruns', 99999, 'Ville Fictive', 0600000003, false);
 
   INSERT INTO pro
-  (name, mail_address, password, address, postcode, city, phone_number, description, type, notification_status)
+  (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status)
   VALUES
-  ('Picoti Picota', 'picotita@example.fr', 'testmdp', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
-  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
+  ('Picoti Picota', 'picotita@example.fr', 'testmdp', 'hashed password', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
+  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', 'hashed password', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
 
   INSERT INTO child
   (lastname, firstname, birthdate, walking, doctor, parent_id)
