@@ -9,6 +9,9 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
+  const [infoMessage, setInfoMessage] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   const validateLogin = () => {
     return true;
@@ -26,15 +29,32 @@ function Login({ userType }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateLogin) {
-      axios.post(`${BACKEND_URL}/${userType}/login`);
+      axios
+        .post(`${BACKEND_URL}/${userType}/login`)
+        .then((response) => {
+          axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          setUser(response.data.user);
+          setToken(response.data.token);
+          // TODO effectuer le changement de page ici
+        })
+        .catch((error) => {
+          if (error.response?.status === 401)
+            setInfoMessage("Les informations renseignées sont incorrectes.");
+          else setInfoMessage("Merci d'essayer plus tard.");
+        });
+    } else {
+      setInfoMessage("Merci de compléter tous les champs.");
     }
-    // console.log(loginInfo);
   };
 
   return (
     <div className={styles.login}>
       <DesignWelcome />
       <div className={styles.loginForm}>
+        <div>
+          <p>{user && token ? user.firstname : null}</p>
+          <p className={styles.infoMessage}>{infoMessage || null}</p>
+        </div>
         <Box
           component="form"
           sx={{

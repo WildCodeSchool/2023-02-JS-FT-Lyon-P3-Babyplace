@@ -31,6 +31,11 @@
   width: 35ch;
 }
 
+.infoMessage {
+  color: var(--danger-color);
+  margin-bottom: 1em;
+}
+
 @media screen and (max-width: 850px) {
   .login {
     flex-direction: column;

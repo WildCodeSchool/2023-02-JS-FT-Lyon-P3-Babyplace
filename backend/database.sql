@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS parent;
 CREATE TABLE parent (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   lastname VARCHAR(80) NOT NULL,
@@ -12,6 +13,7 @@ CREATE TABLE parent (
   notification_status BOOLEAN NOT NULL
 );
 
+DROP TABLE IF EXISTS child;
 CREATE TABLE child (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   lastname VARCHAR(80),
@@ -23,6 +25,7 @@ CREATE TABLE child (
   CONSTRAINT child_parent FOREIGN KEY (parent_id) REFERENCES parent(id)
 );
 
+DROP TABLE IF EXISTS pro;
 CREATE TABLE pro (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name VARCHAR(80),
@@ -37,12 +40,14 @@ CREATE TABLE pro (
   notification_status BOOLEAN NOT NULL
 );
 
+DROP TABLE IF EXISTS place;
 CREATE TABLE place (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   pro_id INT NOT NULL,
   CONSTRAINT place_pro FOREIGN KEY (pro_id) REFERENCES pro(id)
 );
 
+DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   date_time_reservation DATETIME NOT NULL,
@@ -54,11 +59,13 @@ CREATE TABLE reservation (
   CONSTRAINT reservation_place FOREIGN KEY (place_id) REFERENCES place(id)
 );
 
+DROP TABLE IF EXISTS disponibility;
 CREATE TABLE disponibility (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   day VARCHAR(10)
 );
 
+DROP TABLE IF EXISTS pro_disponibility;
 CREATE TABLE pro_disponibility (
   disponibility_id INT NOT NULL,
   pro_id INT NOT NULL,
@@ -66,6 +73,7 @@ CREATE TABLE pro_disponibility (
   CONSTRAINT pro_disponibility FOREIGN KEY (disponibility_id) REFERENCES disponibility(id)
 );
 
+DROP TABLE IF EXISTS pro_notification;
 CREATE TABLE pro_notification (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type VARCHAR(80) NOT NULL,
@@ -76,6 +84,7 @@ CREATE TABLE pro_notification (
   CONSTRAINT notification_pro FOREIGN KEY (pro_id) REFERENCES pro(id)
 );
 
+DROP TABLE IF EXISTS parent_notification;
 CREATE TABLE parent_notification (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type VARCHAR(80) NOT NULL,
