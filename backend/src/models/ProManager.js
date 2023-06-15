@@ -1,8 +1,8 @@
 const AbstractManager = require("./AbstractManager");
 
-class ParentManager extends AbstractManager {
+class ProManager extends AbstractManager {
   constructor() {
-    super({ table: "parent" });
+    super({ table: "pro" });
   }
 
   findByEmailWithPassword(email) {
@@ -13,4 +13,4 @@ class ParentManager extends AbstractManager {
   }
 }
 
-module.exports = ParentManager;
+module.exports = ProManager;

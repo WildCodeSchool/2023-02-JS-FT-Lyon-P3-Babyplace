@@ -21,6 +21,8 @@ function Login({ userType }) {
     });
   };
 
+  // le userType change en fonction de la page depuis laquelle est appelé le composant Login ("pro" depuis l'espace pro, "parent" depuis l'espace particulier)
+  // la route utilisée change donc selon le profil de l'utilisateur
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateLogin) {
