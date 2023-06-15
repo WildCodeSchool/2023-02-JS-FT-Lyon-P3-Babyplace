@@ -53,7 +53,7 @@ const hashPassword = (req, res, next) => {
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
       req.body.hashedPassword = hashedPassword;
-      // on supprime le mot de passe en clair pour ne laisser que le mot de passe hashé.
+      // we delete the password so only the hashedPassword remains
       delete req.body.password;
       next();
     })
@@ -70,10 +70,10 @@ const verifyPassword = (req, res, next) => {
     .verify(req.user.hashedPassword, req.body.password, hashingOptions)
     .then((isPasswordOk) => {
       if (isPasswordOk) {
-        // on créé un token, encodé avec le mot de passe contenu dans le fichier d'environnement
+        // create token encoded with secret password in .env
         const token = jwt.sign({ sub: req.user.id }, JWT_SECRET, {
           algorithm: "HS512",
-          expiresIn: JWT_TIMING, // le token expirera après la durée défini dans le .env
+          expiresIn: JWT_TIMING, // token expires after delay defined in .env
         });
         delete req.user.hashedPassword;
         res.send({ token, user: req.user });
@@ -81,7 +81,6 @@ const verifyPassword = (req, res, next) => {
       } else res.sendStatus(401);
     })
     .catch((err) => {
-      // do something with err
       console.error(err);
       res.sendStatus(400);
     });
