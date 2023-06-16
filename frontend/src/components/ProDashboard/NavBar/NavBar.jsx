@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
@@ -40,89 +41,99 @@ export default function NavBar() {
       </div>
       <div className={openMenu ? `${styles.all_nav_elements}` : ""}>
         <div className={styles.nav_menu_first}>
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardOutlinedIcon
-                variant="outlined"
-                sx={{ color: "white" }}
-              />
-            </ListItemIcon>
-            <h4
-              className={
-                openMenu
-                  ? `${styles.menu_title_element}`
-                  : `${styles.diplay_none_class}`
-              }
-            >
-              Tableau de bord
-            </h4>
-          </ListItemButton>
+          <NavLink className={styles.menu_link_style} to="">
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardOutlinedIcon
+                  variant="outlined"
+                  sx={{ color: "white" }}
+                />
+              </ListItemIcon>
+              <h4
+                className={
+                  openMenu
+                    ? `${styles.menu_title_element}`
+                    : `${styles.diplay_none_class}`
+                }
+              >
+                Tableau de bord
+              </h4>
+            </ListItemButton>
+          </NavLink>
         </div>
         <div className={styles.nav_menu_second}>
           <h2 className={openMenu ? "" : `${styles.diplay_none_class}`}>
             Réservation
           </h2>
-          <ListItemButton>
-            <ListItemIcon>
-              <ListAltOutlinedIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <h4
-              className={
-                openMenu
-                  ? `${styles.menu_title_element}`
-                  : `${styles.diplay_none_class}`
-              }
-            >
-              Liste des commandes
-            </h4>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <CalendarMonthOutlinedIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <h4
-              className={
-                openMenu
-                  ? `${styles.menu_title_element}`
-                  : `${styles.diplay_none_class}`
-              }
-            >
-              Agenda
-            </h4>
-          </ListItemButton>
+          <NavLink className={styles.menu_link_style} to="orders">
+            <ListItemButton>
+              <ListItemIcon>
+                <ListAltOutlinedIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <h4
+                className={
+                  openMenu
+                    ? `${styles.menu_title_element}`
+                    : `${styles.diplay_none_class}`
+                }
+              >
+                Liste des commandes
+              </h4>
+            </ListItemButton>
+          </NavLink>
+          <NavLink className={styles.menu_link_style} to="calendar">
+            <ListItemButton>
+              <ListItemIcon>
+                <CalendarMonthOutlinedIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <h4
+                className={
+                  openMenu
+                    ? `${styles.menu_title_element}`
+                    : `${styles.diplay_none_class}`
+                }
+              >
+                Agenda
+              </h4>
+            </ListItemButton>
+          </NavLink>
         </div>
         <div className={styles.nav_menu_third}>
           <h2 className={openMenu ? "" : `${styles.diplay_none_class}`}>
             Administration
           </h2>
-          <ListItemButton>
-            <ListItemIcon>
-              <AccountCircleOutlinedIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <h4
-              className={
-                openMenu
-                  ? `${styles.menu_title_element}`
-                  : `${styles.diplay_none_class}`
-              }
-            >
-              Authentification
-            </h4>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <CreateOutlinedIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <h4
-              className={
-                openMenu
-                  ? `${styles.menu_title_element}`
-                  : `${styles.diplay_none_class}`
-              }
-            >
-              Modifier mes infos
-            </h4>
-          </ListItemButton>
+          <NavLink className={styles.menu_link_style} to="authentification">
+            <ListItemButton>
+              <ListItemIcon>
+                <AccountCircleOutlinedIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <h4
+                className={
+                  openMenu
+                    ? `${styles.menu_title_element}`
+                    : `${styles.diplay_none_class}`
+                }
+              >
+                Authentification
+              </h4>
+            </ListItemButton>
+          </NavLink>
+          <NavLink className={styles.menu_link_style} to="modify">
+            <ListItemButton>
+              <ListItemIcon>
+                <CreateOutlinedIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <h4
+                className={
+                  openMenu
+                    ? `${styles.menu_title_element}`
+                    : `${styles.diplay_none_class}`
+                }
+              >
+                Modifier mes infos
+              </h4>
+            </ListItemButton>
+          </NavLink>
         </div>
       </div>
     </div>

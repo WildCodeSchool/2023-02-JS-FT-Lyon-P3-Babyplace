@@ -1,3 +1,7 @@
+.menu_link_style {
+    text-decoration: none;
+    color: rgb(233, 233, 233);
+}
 
 .nav_container {
     height: 100vh;
