@@ -33,17 +33,36 @@ export default function SearchList() {
       <div className={style.card_media}>
         {pros.map((pro) => (
           <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={pro1test}
-                alt="profil_picture"
-              />
+            <CardActionArea sx={{ padding: "10px" }}>
+              <div className="style.image">
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={pro1test}
+                  alt="profil_picture"
+                  sx={{
+                    position: "relative",
+                    zIndex: 10,
+                    background: "linear-gradient(to bottom, red, orange)",
+                  }}
+                />
+              </div>
+
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="h1"
+                sx={{
+                  position: "absolute",
+                  top: "100px",
+                  left: "20px",
+                  color: "white",
+                  zIndex: 12,
+                }}
+              >
+                {pro.name}
+              </Typography>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {pro.name}
-                </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <DispoPros id={pro.id} />
                 </Typography>

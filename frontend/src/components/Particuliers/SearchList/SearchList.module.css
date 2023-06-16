@@ -1,7 +1,6 @@
 .search_list_page {
   /*   height: 100vh;
  */
-  margin: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,6 +9,9 @@
 }
 .search_list_page h2 {
   margin-top: 4rem;
+}
+.image img {
+  background-image: linear-gradient(to bottom, red, orange);
 }
 .logo_log_in {
   position: absolute;
@@ -21,9 +23,17 @@
 .logo_log_in img {
   margin-right: 5px;
 }
+.card {
+  padding: 20px;
+}
 .dispos_pro {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+.dispos_pro li {
+  padding: 1px;
+  display: flex;
+  justify-content: center;
 }
 @media screen and (min-width: 1024px) {
   .card_media {
