@@ -55,7 +55,11 @@ function Login({ userType }) {
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          <p>{user && token ? user.mail_address : null}</p>
+          <p>
+            {user && token
+              ? `Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`
+              : null}
+          </p>
           <p className={styles.infoMessage}>{infoMessage || null}</p>
         </div>
         <Box

@@ -28,7 +28,8 @@ CREATE TABLE parent (
   postcode INT(5) NOT NULL,
   city VARCHAR(45) NOT NULL,
   phone_number INT(10) NOT NULL,
-  notification_status BOOLEAN NOT NULL
+  notification_status BOOLEAN NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'parent'
 );
 
 DROP TABLE IF EXISTS child;
@@ -56,7 +57,8 @@ CREATE TABLE pro (
   phone_number INT(10) NOT NULL,
   description VARCHAR(255),
   type VARCHAR(45),
-  notification_status BOOLEAN NOT NULL
+  notification_status BOOLEAN NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'pro'
 );
 
 DROP TABLE IF EXISTS place;

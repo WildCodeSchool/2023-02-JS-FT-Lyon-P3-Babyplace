@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { user } = useUserContext();
   return (
     <div>
-      {user ? (
+      {user?.role === "pro" ? (
         <div className="dashboard_bg_color">
           <NavBar />
           <Header />
