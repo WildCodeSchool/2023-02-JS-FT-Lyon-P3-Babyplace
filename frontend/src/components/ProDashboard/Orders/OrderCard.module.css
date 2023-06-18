@@ -1,0 +1,16 @@
+.ordercard_box {
+    width: 90%;
+    height: 150px;
+    min-height: 150px;
+    box-shadow: 0px 0px 10px 0px rgba(76, 76, 76, 0.499);
+
+    margin: 10px 0;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ordercard_box * {
+    margin: 0 20px;
+}
