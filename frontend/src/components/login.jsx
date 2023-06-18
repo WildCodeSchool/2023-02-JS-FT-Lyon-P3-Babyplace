@@ -15,7 +15,6 @@ function Login({ userType }) {
   const [token, setToken] = useState(null);
 
   const validateLogin = () => {
-    // TODO ajouter içi les validateurs de login
     return true;
   };
 
@@ -32,7 +31,7 @@ function Login({ userType }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateLogin) {
-      // TODO gérer l'authentification de manière plus approfondie lorsuq'on aura eu tous les cours sur le sujet
+      // TODO gérer l'authentification de manière plus approfondie lorsqu'on aura eu tous les cours sur le sujet
       axios
         .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
         .then((response) => {
