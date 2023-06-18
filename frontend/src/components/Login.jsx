@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Box, TextField, Button, InputLabel } from "@mui/material";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../contexts/UserContext";
 import styles from "./Login.module.css";
@@ -99,6 +100,17 @@ function Login({ userType }) {
           >
             Je me connecte
           </Button>
+          {userType === "pro" ? (
+            <div className={styles.switch}>
+              <p>Pas encore inscrit ?</p>
+              <Link to="/pro-register"> Cliquez ici</Link>
+            </div>
+          ) : (
+            <div className={styles.switch}>
+              <p>Pas encore inscrit ?</p>
+              <Link to="/"> Cliquez ici</Link>
+            </div>
+          )}
         </Box>
       </div>
     </div>
