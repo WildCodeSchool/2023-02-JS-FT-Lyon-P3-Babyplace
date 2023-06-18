@@ -1,6 +1,6 @@
 import React from "react";
-import Login from "../components/Login";
 import { useUserContext } from "../contexts/UserContext";
+import Login from "../components/Login";
 
 export default function Particulier() {
   const { user } = useUserContext();
