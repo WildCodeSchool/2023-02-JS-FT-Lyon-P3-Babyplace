@@ -1,5 +1,13 @@
 import React from "react";
+import { useUserContext } from "../contexts/UserContext";
+import Login from "../components/Login";
 
 export default function Particulier() {
-  return <div>Particulier</div>;
+  const { user } = useUserContext();
+
+  return (
+    <div>
+      {user?.role === "parent" ? <p>Bienvenue</p> : <Login userType="parent" />}
+    </div>
+  );
 }

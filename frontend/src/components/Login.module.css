@@ -1,0 +1,52 @@
+.login {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.loginForm {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm button {
+  width: 35ch;
+}
+
+.infoMessage {
+  color: var(--danger-color);
+  margin-bottom: 1em;
+}
+
+@media screen and (max-width: 950px) {
+  .login {
+    flex-direction: column;
+  }
+
+  .loginForm {
+    height: 50%;
+    width: 100%
+  }
+
+  .loginForm form {
+    height: 100%;
+  }
+}
