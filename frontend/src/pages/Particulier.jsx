@@ -1,10 +1,13 @@
 import React from "react";
-import SearchList from "../components/Particuliers/SearchList/SearchList";
+import { useUserContext } from "../contexts/UserContext";
+import Login from "../components/Login";
 
 export default function Particulier() {
+  const { user } = useUserContext();
+
   return (
     <div>
-      <SearchList />
+      {user?.role === "parent" ? <p>Bienvenue</p> : <Login userType="parent" />}
     </div>
   );
 }

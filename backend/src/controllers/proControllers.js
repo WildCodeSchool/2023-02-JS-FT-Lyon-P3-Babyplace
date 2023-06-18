@@ -24,6 +24,7 @@ const browseProAndDispo = (req, res) => {
       res.sendStatus(500);
     });
 };
+
 const read = (req, res) => {
   models.pro
     .find(req.params.id)

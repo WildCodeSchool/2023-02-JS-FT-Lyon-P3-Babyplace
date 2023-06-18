@@ -1,3 +1,21 @@
+ALTER TABLE child
+DROP CONSTRAINT child_parent;
+ALTER TABLE place
+DROP CONSTRAINT place_pro;
+ALTER TABLE reservation
+DROP CONSTRAINT reservation_child;
+ALTER TABLE reservation
+DROP CONSTRAINT reservation_place;
+ALTER TABLE pro_disponibility
+DROP CONSTRAINT disponibility_pro;
+ALTER TABLE pro_disponibility
+DROP CONSTRAINT pro_disponibility;
+ALTER TABLE pro_notification
+DROP CONSTRAINT notification_pro;
+ALTER TABLE parent_notification
+DROP CONSTRAINT notification_parent;
+
+DROP TABLE IF EXISTS parent;
 CREATE TABLE parent (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   lastname VARCHAR(80) NOT NULL,
@@ -5,13 +23,16 @@ CREATE TABLE parent (
   birthdate DATE NOT NULL,
   mail_address VARCHAR(80) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
+  hashed_password VARCHAR(100) NOT NULL,
   address VARCHAR(80) NOT NULL,
   postcode INT(5) NOT NULL,
   city VARCHAR(45) NOT NULL,
   phone_number INT(10) NOT NULL,
-  notification_status BOOLEAN NOT NULL
+  notification_status BOOLEAN NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'parent'
 );
 
+DROP TABLE IF EXISTS child;
 CREATE TABLE child (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   lastname VARCHAR(80),
@@ -23,26 +44,31 @@ CREATE TABLE child (
   CONSTRAINT child_parent FOREIGN KEY (parent_id) REFERENCES parent(id)
 );
 
+DROP TABLE IF EXISTS pro;
 CREATE TABLE pro (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name VARCHAR(80),
   mail_address VARCHAR(80) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
+  hashed_password VARCHAR(100) NOT NULL,
   address VARCHAR(80),
   postcode INT(5),
   city VARCHAR(45),
   phone_number INT(10) NOT NULL,
   description VARCHAR(255),
   type VARCHAR(45),
-  notification_status BOOLEAN NOT NULL
+  notification_status BOOLEAN NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'pro'
 );
 
+DROP TABLE IF EXISTS place;
 CREATE TABLE place (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   pro_id INT NOT NULL,
   CONSTRAINT place_pro FOREIGN KEY (pro_id) REFERENCES pro(id)
 );
 
+DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   date_time_reservation DATETIME NOT NULL,
@@ -54,11 +80,13 @@ CREATE TABLE reservation (
   CONSTRAINT reservation_place FOREIGN KEY (place_id) REFERENCES place(id)
 );
 
+DROP TABLE IF EXISTS disponibility;
 CREATE TABLE disponibility (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   day VARCHAR(10)
 );
 
+DROP TABLE IF EXISTS pro_disponibility;
 CREATE TABLE pro_disponibility (
   disponibility_id INT NOT NULL,
   pro_id INT NOT NULL,
@@ -66,6 +94,7 @@ CREATE TABLE pro_disponibility (
   CONSTRAINT pro_disponibility FOREIGN KEY (disponibility_id) REFERENCES disponibility(id)
 );
 
+DROP TABLE IF EXISTS pro_notification;
 CREATE TABLE pro_notification (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type VARCHAR(80) NOT NULL,
@@ -76,6 +105,7 @@ CREATE TABLE pro_notification (
   CONSTRAINT notification_pro FOREIGN KEY (pro_id) REFERENCES pro(id)
 );
 
+DROP TABLE IF EXISTS parent_notification;
 CREATE TABLE parent_notification (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type VARCHAR(80) NOT NULL,
@@ -87,16 +117,16 @@ CREATE TABLE parent_notification (
 );
 
   INSERT INTO parent
-  (lastname, firstname, birthdate, mail_address, password, address, postcode, city, phone_number, notification_status) 
+  (lastname, firstname, birthdate, mail_address, password, hashed_password, address, postcode, city, phone_number, notification_status) 
   VALUES
-  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false),
-  ('Dupond', 'Michel', '19800320', 'michel.dupond@example.fr', 'testmdp', '52 boulevard des embruns', 99999, 'Ville Fictive', 0600000003, false);
+  ('Dupont', 'Jean-Luc', '19751008', 'jeanluc.dupont@example.fr', 'testmdp', 'hashed password', '18 rue des mouettes', 99999, 'Ville Fictive', 0600000000, false),
+  ('Dupond', 'Michel', '19800320', 'michel.dupond@example.fr', 'testmdp', 'hashed password', '52 boulevard des embruns', 99999, 'Ville Fictive', 0600000003, false);
 
   INSERT INTO pro
-  (name, mail_address, password, address, postcode, city, phone_number, description, type, notification_status)
+  (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status)
   VALUES
-  ('Picoti Picota', 'picotita@example.fr', 'testmdp', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
-  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
+  ('Picoti Picota', 'picotita@example.fr', 'testmdp', 'hashed password', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
+  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', 'hashed password', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
 
   INSERT INTO child
   (lastname, firstname, birthdate, walking, doctor, parent_id)
