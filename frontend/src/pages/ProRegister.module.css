@@ -1,0 +1,31 @@
+.registerPage {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  height: 10%;
+  background: linear-gradient(148.74deg, rgba(71, 79, 255, 0.9) 2.49%, rgba(89, 84, 249, 0.911237) 13.34%, #E37ACC 99.05%);
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stepper{
+  width : 100%;
+}
+.stepper span {
+  width : 100%;
+  background-color: var(--main-color);
+}
+
+.formDisplay {
+  height: 90%;
+  display: flex;
+  justify-content: space-between;
+}

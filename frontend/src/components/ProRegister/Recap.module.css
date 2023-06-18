@@ -1,0 +1,33 @@
+.recapPage {
+  padding: 1em;
+  width: 50%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.recapPage p {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.recapBlock {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  gap: 1em;
+}
+
+.recapFooter {
+  height: 10%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+}
