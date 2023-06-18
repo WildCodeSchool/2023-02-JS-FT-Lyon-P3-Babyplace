@@ -1,0 +1,157 @@
+.menu_link_style {
+    text-decoration: none;
+    color: rgb(233, 233, 233);
+}
+
+.nav_container {
+    height: 100vh;
+    width: 260px;
+    background: linear-gradient(130deg, rgba(92,70,237,1) 0%, rgba(247,131,255,1) 100%);
+    position: relative;
+    animation: opening-menu 1s ease;
+    z-index: 10;
+}
+
+.closed_menu {
+    position: relative;
+    height: 100vh;
+    width: 70px;
+    background: linear-gradient(130deg, rgba(92,70,237,1) 0%, rgba(247,131,255,1) 100%);
+    animation: closing-menu 0.5s ease;
+    z-index: 10;
+}
+
+.diplay_none_class {
+    animation: hiding-elements 1s ease;
+    display: none;
+}
+
+.btn_menu {
+height: 40px;
+width: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+right: -20px;
+top: 90px;
+border-radius: 50%;
+border: solid 2px rgb(255, 255, 255);
+background-color: rgb(177, 112, 237);
+transition: all 0.2s ease;
+cursor: pointer;
+}
+
+.logoandname {
+height: 100px;
+margin-bottom: 2rem;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+overflow: hidden;
+}
+
+.logoandname h1 {
+    font-size: 1.5rem;
+    color: white;
+    animation: showing-babyplace 1s ease;
+}
+.logoandname span {
+    font-size: 1rem;
+    color: rgb(223, 223, 223);
+    margin-left: 10px;
+    font-weight: 300;
+    border: solid 1px rgb(222, 222, 222);
+    border-radius: 20px;
+    padding: 1px 8px;
+    animation: showing-elements 1s ease;
+}
+.logoandname img {
+    height: 40px;
+    width: 45px;
+    animation: showing-elements 1s ease;
+}
+
+.all_nav_elements {
+    height: fit-content;
+    color: rgb(223, 222, 222);
+}
+.all_nav_elements h2 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin-left: 8px;
+    margin-bottom: 16px;
+    animation: showing-elements 1s ease;
+}
+.menu_title_element {
+    animation: showing-elements 1s ease;
+    font-size: 1rem;
+}
+
+.nav_menu_first {
+height: fit-content;
+margin-bottom: 50px;
+
+}
+
+.nav_menu_second {
+    height: fit-content;
+    margin-bottom: 50px;
+}
+
+.nav_menu_third {
+    height: fit-content;
+}
+
+
+@keyframes opening-menu {
+    from {
+       width: 70px;
+    }
+    to {
+        width: 260px;
+    }
+}
+@keyframes closing-menu {
+    from {
+        width: 260px;
+    }
+    to {
+        width: 70px;
+    }
+}
+@keyframes showing-elements {
+    0% {
+        opacity: 1;
+       font-size: 0;
+    }
+    100% {
+        opacity: 1;
+        font-size: 1rem;
+    } 
+}
+@keyframes showing-babyplace {
+    0% {
+        opacity: 1;
+       font-size: 0;
+    }
+    100% {
+        opacity: 1;
+        font-size: 1.5rem;
+    } 
+}
+@keyframes hiding-elements {
+    0% {
+        opacity: 1;
+        display: block;
+    }
+    50% {
+        opacity: 0;
+        display: none;
+    }
+    100% {
+        opacity: 0;
+    } 
+}

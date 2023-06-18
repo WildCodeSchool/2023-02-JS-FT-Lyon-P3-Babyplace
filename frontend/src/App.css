@@ -24,3 +24,19 @@ body {
   padding: 0px;
   font-family: var(--main-font-family);
 }
+
+.dashboard_bg_color {
+  background-color: rgb(230, 242, 243);
+  position: relative;
+  
+}
+
+.dashboard_box {
+ position: absolute;
+ width: 100vw;
+ height: 100vh;
+ top: 0px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}

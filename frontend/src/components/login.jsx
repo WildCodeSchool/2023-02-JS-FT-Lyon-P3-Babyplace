@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Box, TextField, Button, InputLabel } from "@mui/material";
 import axios from "axios";
+import { useUserContext } from "../contexts/UserContext";
 import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
 
@@ -11,8 +12,7 @@ function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const { user, setUser, token, setToken } = useUserContext();
 
   const validateLogin = () => {
     return true;
