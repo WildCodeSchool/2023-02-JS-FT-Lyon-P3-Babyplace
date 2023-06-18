@@ -15,9 +15,11 @@ function Login({ userType }) {
   const [token, setToken] = useState(null);
 
   const validateLogin = () => {
+    // TODO ajouter içi les validateurs de login
     return true;
   };
 
+  // Met à jour le state loginInfo à chaque fois qu'un des champs du formulaire est changé.
   const handleChange = (e) => {
     setLoginInfo({
       ...loginInfo,
@@ -49,14 +51,12 @@ function Login({ userType }) {
     }
   };
 
-  // console.log(user);
-
   return (
     <div className={styles.login}>
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          <p>{user && token ? user.name : null}</p>
+          <p>{user && token ? user.mail_address : null}</p>
           <p className={styles.infoMessage}>{infoMessage || null}</p>
         </div>
         <Box

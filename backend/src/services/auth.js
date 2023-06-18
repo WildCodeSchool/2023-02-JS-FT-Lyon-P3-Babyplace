@@ -63,7 +63,7 @@ const hashPassword = (req, res, next) => {
     });
 };
 
-const verifyPassword = (req, res, next) => {
+const verifyPassword = (req, res) => {
   // check if the req.user.hashedPassword from previous is the same as the password given through the login
   // if so => we delete the hashedPassword from the req.user and give a token
   argon2
@@ -77,7 +77,6 @@ const verifyPassword = (req, res, next) => {
         });
         delete req.user.hashedPassword;
         res.send({ token, user: req.user });
-        next();
       } else res.sendStatus(401);
     })
     .catch((err) => {
