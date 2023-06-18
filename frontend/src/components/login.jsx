@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, InputLabel } from "@mui/material";
 import axios from "axios";
 import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
@@ -10,6 +10,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
+  // TODO Faire context pour utilisateur et token
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
@@ -29,6 +30,7 @@ function Login({ userType }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateLogin) {
+      // TODO gérer l'authentification de manière plus approfondie lorsuq'on aura eu tous les cours sur le sujet
       axios
         .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
         .then((response) => {
@@ -47,7 +49,7 @@ function Login({ userType }) {
     }
   };
 
-  // console.log(user)
+  // console.log(user);
 
   return (
     <div className={styles.login}>
@@ -67,22 +69,22 @@ function Login({ userType }) {
           autoComplete="off"
         >
           <div className={styles.field}>
-            <p>Email :</p>
+            <InputLabel htmlFor="email">Email</InputLabel>
             <TextField
               required
               name="email"
-              id="outlined-required"
-              label="Enter your email address"
+              id="email"
+              label="Entrez votre adresse mail"
               onChange={handleChange}
             />
           </div>
           <div className={styles.field}>
-            <p>Password :</p>
+            <InputLabel htmlFor="password">Password</InputLabel>
             <TextField
               required
               name="password"
-              id="outlined-required"
-              label="Enter your password"
+              id="password"
+              label="Entrez votre mot de passe"
               onChange={handleChange}
             />
           </div>

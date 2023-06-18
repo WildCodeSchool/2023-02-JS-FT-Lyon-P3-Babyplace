@@ -25,6 +25,7 @@ class ProManager extends AbstractManager {
   }
 
   findByEmailWithPassword(email) {
+    // TODO changer la méthode pour ne sélectionner que les infos importantes
     return this.database.query(
       `SELECT * FROM ${this.table} WHERE mail_address = ?`,
       [email]
