@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Particulier from "./pages/Particulier";
+import SearchList from "./components/Particuliers/SearchList/SearchList";
 import ProRegister from "./pages/ProRegister";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -18,7 +18,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/particulier" element={<Particulier />} />
+          <Route path="/particulier" element={<SearchList />} />
           <Route path="/pro-register" element={<ProRegister />} />
           <Route path="/pro" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />

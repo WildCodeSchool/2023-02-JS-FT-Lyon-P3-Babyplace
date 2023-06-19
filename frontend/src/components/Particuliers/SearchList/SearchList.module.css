@@ -10,9 +10,7 @@
 .search_list_page h2 {
   margin-top: 4rem;
 }
-.image img {
-  background-image: linear-gradient(to bottom, red, orange);
-}
+
 .logo_log_in {
   position: absolute;
   right: 0;
