@@ -3,6 +3,7 @@
   justify-content: space-between;
   flex-direction: column;
   height: 100vh;
+  overflow:auto;
 }
 
 .header {
@@ -28,4 +29,21 @@
   height: 90%;
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 950px) {
+  .registerPage {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .formDisplay {
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 90%;
+  }
+  
 }

@@ -2,13 +2,11 @@
   padding: 1em;
   width: 50%;
   height: 100%;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  font-size: calc(2vh + 1vw);
 }
 
-.recapPage p {
-  height: 20%;
+.text {
+  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,12 +20,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: space-between;
-  gap: 1em;
+  gap: 5%;
 }
 
 .recapFooter {
   height: 10%;
   display: flex;
   justify-content: flex-end;
-  padding: 1em;
+  padding: 5%;
+}
+
+@media screen and (max-width: 950px) {
+  .recapPage{
+    width: 100%;
+    height: 50%;
+  }
 }
