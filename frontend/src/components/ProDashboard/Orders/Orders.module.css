@@ -1,14 +1,13 @@
 .orders_box {
-    
     width: 80vw;
     height: 85vh;
-   
 }
 
 .orders_header {
     height: 8%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
     margin-bottom: 10px;
 }
 
@@ -17,7 +16,7 @@
     flex-wrap: wrap;
     justify-content: center;
     width: fit-content;
-}
+   }
 
 .orders_container {
     width: 100%;
@@ -27,13 +26,21 @@
     align-items: center;
     overflow: scroll;
     overflow-x: hidden;
+    padding-bottom: 50px;
 }
 
+@media screen and (max-width: 1040px) {
+    .orders_header {
+        height: 15%;
+        flex-direction: column;
+    }
+  }
 
 
 @media screen and (max-width: 500px) {
     .orders_box {
         width: 70vw;
+        
     }
     .orders_header {
         flex-direction: column;
@@ -41,5 +48,8 @@
     }
     .filter_btn_box {
         flex-direction: column;
+    }
+    .orders_container {
+        padding-bottom: 200px;
     }
   }

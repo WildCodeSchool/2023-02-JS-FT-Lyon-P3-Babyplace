@@ -123,7 +123,7 @@ export default function Orders() {
             id="4"
             variant="contained"
             onClick={handleSelect}
-            sx={{ marginRight: 5, marginLeft: 5 }}
+            sx={{ marginRight: 1, marginLeft: 1 }}
           >
             Toutes
           </Button>
