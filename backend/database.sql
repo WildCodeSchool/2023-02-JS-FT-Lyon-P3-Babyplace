@@ -1,19 +1,4 @@
-ALTER TABLE child
-DROP CONSTRAINT child_parent;
-ALTER TABLE place
-DROP CONSTRAINT place_pro;
-ALTER TABLE reservation
-DROP CONSTRAINT reservation_child;
-ALTER TABLE reservation
-DROP CONSTRAINT reservation_place;
-ALTER TABLE pro_disponibility
-DROP CONSTRAINT disponibility_pro;
-ALTER TABLE pro_disponibility
-DROP CONSTRAINT pro_disponibility;
-ALTER TABLE pro_notification
-DROP CONSTRAINT notification_pro;
-ALTER TABLE parent_notification
-DROP CONSTRAINT notification_parent;
+SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS parent;
 CREATE TABLE parent (
@@ -125,7 +110,7 @@ CREATE TABLE parent_notification (
   INSERT INTO pro
   (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status)
   VALUES
-  ('Picoti Picota', 'picotita@example.fr', 'testmdp', 'hashed password', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'Nous sommes une crèche qui prend soin de vos enfants.', 'Micro-crèche', false),
+  ('Picoti Picota', 'picotita@example.fr', 'testmdp', 'hashed password', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'La crèche « Picoti Picota » n’est pas qu’un lieu de garde c’est surtout un lieu d’échange et d’accueil  des enfants et des familles dans une confiance réciproque où le respect, l’autonomie et la sécurité sont des références privilégiées dans notre projet. ', 'Micro-crèche', false),
   ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', 'hashed password', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
 
   INSERT INTO child
@@ -159,3 +144,5 @@ SELECT count(pl.id) AS places_for_pro from place AS pl LEFT JOIN pro AS pr ON pr
 
 -- Requête pour lister les enfants d'un parent.
 SELECT c.lastname AS nom_enfant, c.firstname AS prenom_enfant, p.lastname AS nom_parent, p.firstname AS prenom_parent FROM child AS c LEFT JOIN parent AS p ON c.parent_id = p.id WHERE p.id = 2;
+
+SET FOREIGN_KEY_CHECKS = 0;
