@@ -1,22 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField, Switch, FormControlLabel } from "@mui/material";
 
-function FormPart({ data }) {
-  // if (data.length === 1) {
-  //   return <TextField label={data.fieldname} />;
-  // }
-  return data.map((row) => {
-    if (typeof row === "string") {
+function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
+  const [state, setState] = useState({});
+
+  const handleSwitch = (event) => {
+    if (data[0].multiple) {
+      setState({ ...state, [event.target.name]: event.target.checked });
+      if (event.target.checked) {
+        setFormBlockInfo({
+          ...formBlockInfo,
+          empty: false,
+          [data[0].field]: [...event.target.name],
+        });
+      } else if ([data[0].field] === []) {
+        // TODO Voir avec Pierre pourquoi [vite] warning: Comparison using the "===" operator here is always false
+        setFormBlockInfo({
+          ...formBlockInfo,
+          empty: true,
+        });
+      } else {
+        setFormBlockInfo({
+          ...formBlockInfo,
+          empty: false,
+          // TODO Voir avec Pierre pour cette condition
+          // [data[0].field]: data[0].data.filter(data => )
+        });
+      }
+    } else {
+      setState({ ...state, [event.target.name]: event.target.checked });
+      if (event.target.checked) {
+        setFormBlockInfo({
+          ...formBlockInfo,
+          empty: false,
+          [data[0].field]: event.target.name,
+        });
+      } else {
+        setFormBlockInfo({ empty: true });
+      }
+    }
+  };
+
+  useEffect(() => {
+    // console.log(formBlockInfo);
+    // console.log(Object.keys(formBlockInfo));
+    // console.log(Object.entries(formBlockInfo));
+  }, [formBlockInfo]);
+
+  useEffect(() => {
+    return setFormBlockInfo({ empty: true });
+  }, []);
+
+  if (data[0].data && typeof data[0].data[0] === "string") {
+    return data[0].data.map((dataRow) => {
       return (
         <FormControlLabel
           value="top"
-          control={<Switch color="primary" />}
-          label={row}
+          control={
+            <Switch name={dataRow} onChange={handleSwitch} color="primary" />
+          }
+          label={dataRow}
           labelPlacement="top"
         />
       );
-    }
+    });
+  }
+  return data.map((row) => {
     return <TextField label={row.fieldname} />;
   });
 }

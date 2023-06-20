@@ -4,7 +4,14 @@ import { Button } from "@mui/material";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
 
-function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
+function FormBlock({
+  activeField,
+  setActiveField,
+  fieldsToComplete,
+  registerInfo,
+  setRegisterInfo,
+}) {
+  const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   useEffect(() => {
     if (activeField === "Informations de connexion") {
@@ -15,6 +22,8 @@ function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
       setFormMessage(
         "Veuillez indiquer le numéro de téléphone de votre structure :"
       );
+    } else if (activeField === "Type de structure") {
+      setFormMessage("Veuillez indiquer le type de votre structure :");
     } else if (activeField === "Description") {
       setFormMessage(
         "Veuillez renseigner une brève description de votre structure :"
@@ -27,10 +36,37 @@ function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
       );
     } else if (activeField === "Nombre de places") {
       setFormMessage(
-        "Veuillez préiciser le nombre de places disponibles dans votre structure :"
+        "Veuillez préciser le nombre de places disponibles dans votre structure :"
       );
     }
   }, [activeField]);
+
+  const handleConfirm = () => {
+    const displayedFields = [];
+    for (const fieldBlock of fieldsToComplete) {
+      if (fieldBlock.field === activeField) {
+        for (const field of fieldBlock.data) {
+          displayedFields.push(field.field);
+        }
+      }
+    }
+    console.warn(displayedFields);
+
+    if (
+      displayedFields.some(
+        (field) =>
+          Object.keys(formBlockInfo).includes(field) === false ||
+          Object.values(formBlockInfo).includes("")
+      )
+    ) {
+      console.warn("pas complet !");
+    } else {
+      console.warn("complet");
+      setRegisterInfo({ ...registerInfo, ...formBlockInfo });
+    }
+    setFormBlockInfo({});
+  };
+
   return (
     <div className={styles.formBlockPage}>
       {activeField ? (
@@ -44,7 +80,14 @@ function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
       {activeField
         ? fieldsToComplete.map((field) => {
             if (field.field === activeField) {
-              return <FormPart data={field.data} activeField={activeField} />;
+              return (
+                <FormPart
+                  data={field.data}
+                  activeField={activeField}
+                  formBlockInfo={formBlockInfo}
+                  setFormBlockInfo={setFormBlockInfo}
+                />
+              );
             }
             return null;
           })
@@ -52,10 +95,20 @@ function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
 
       {activeField ? (
         <div className={styles.formFooter}>
-          <Button variant="contained" onClick={() => setActiveField(null)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setFormBlockInfo({ empty: true });
+              setActiveField(null);
+            }}
+          >
             Retour
           </Button>
-          <Button variant="contained" disabled>
+          <Button
+            variant="contained"
+            onClick={handleConfirm}
+            disabled={Object.entries(formBlockInfo)[0]?.includes(true)}
+          >
             OK
           </Button>
         </div>
@@ -69,5 +122,7 @@ export default FormBlock;
 FormBlock.propTypes = {
   activeField: PropTypes.string.isRequired,
   setActiveField: PropTypes.func.isRequired,
+  registerInfo: PropTypes.string.isRequired,
+  setRegisterInfo: PropTypes.func.isRequired,
   fieldsToComplete: PropTypes.arrayOf.isRequired,
 };
