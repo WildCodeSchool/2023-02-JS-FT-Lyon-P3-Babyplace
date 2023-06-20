@@ -3,7 +3,7 @@
     height: 150px;
     min-height: 150px;
     box-shadow: 0px 0px 10px 0px rgba(76, 76, 76, 0.499);
-    margin: 10px 0;
+    margin: 15px 0;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -14,28 +14,28 @@
 
 .order_container {
     display: flex;
-   
     width: 100%;
     height: 100%;
 }
 
+.order_cancelled {
+    opacity: 0.5;
+}
+
 
 .status_bar {
-background-color: orange;
+
 height: 100%;
 width: 30px;
 border-radius: 10px;
 }
 .child_data {
-border: solid rgb(255, 153, 0) 1px;
-background-color: rgb(255, 207, 117);
 display: flex;
 flex-direction: column;
 height: 100%;
 width: 15%;
 }
 .child_name_box {
-border: solid rgb(255, 247, 0) 1px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -43,54 +43,60 @@ align-items: center;
 height: 50%;
 }
 .child_more_info {
-border: solid rgb(64, 255, 0) 1px;
 height: 50%;
 display: flex;
 justify-content: center;
 align-items: center;
 }
 .reservation {
-border: solid rgb(0, 242, 255) 1px;
-background-color: rgb(140, 255, 247);
 display: flex;
 flex-direction: column;
 height: 100%;
 width: 60%;
 }
 .reservation_data {
-    border: solid rgb(0, 255, 21) 1px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 50%;
+border-bottom: solid rgb(0, 0, 0) 1px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+height: 50%;
 }
 .parent_name {
-border: solid rgb(0, 81, 255) 1px;
 display: flex;
 flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
 }
 .parent_type {
-border: solid rgb(166, 0, 255) 1px;
 display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.status_detail_box {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
 }
 .status_detail {
-border: solid rgb(234, 0, 255) 1px;
 display: flex;
 border-radius: 10px;
-background-color: orange;
+
 width: 150px;
 height: 30px;
 justify-content: center;
 align-items: center;
 }
 .reservation_info {
-border: solid rgb(255, 0, 0) 1px;
 display: flex;
 justify-content: space-around;
 height: 50%;
 }
 .comming_div {
-border: solid rgb(255, 136, 0) 1px;
 display: flex;
 flex-direction: column;
 width: 33%;
@@ -98,7 +104,6 @@ justify-content: center;
 align-items: center;
 }
 .finish_div {
-border: solid rgb(255, 255, 0) 1px;
 display: flex;
 flex-direction: column;
 width: 33%;
@@ -106,7 +111,6 @@ justify-content: center;
 align-items: center;
 }
 .total_time_div {
-border: solid rgb(26, 255, 0) 1px;
 display: flex;
 flex-direction: column;
 width: 33%;
@@ -114,19 +118,15 @@ justify-content: center;
 align-items: center;
 }
 .action_box {
-border: solid rgb(0, 255, 200) 1px;
-background-color: rgb(251, 135, 135);
 height: 100%;
 width: 25%;
 }
 .about_child {
-border: solid rgb(0, 38, 255) 1px;
 display: flex;
 justify-content: space-around;
 height: 20%;
 }
 .btn_box {
-border: solid rgb(204, 0, 255) 1px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -135,6 +135,23 @@ align-items: center;
 height: 80%;
 }
 
+.bold_text {
+    font-weight: bold;
+}
+
+
+.success_color {
+    background-color: rgb(100, 176, 100);
+}
+.error_color {
+    background-color: rgb(241, 87, 87);
+}
+.warning_color {
+    background-color: rgb(113, 113, 113);
+}
+.waiting_color {
+    background-color: rgb(91, 172, 204);
+}
 
 
 
@@ -142,13 +159,10 @@ height: 80%;
 
 
 
-
-
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 950px) {
    .ordercard_box {
     flex-direction: column;
-    height: 450px;
+    height: 700px;
     min-height: fit-content;
    }
    .order_container {
@@ -156,14 +170,11 @@ height: 80%;
    flex-direction: column;
 }
 .status_bar {
-    background-color: orange;
     height: 30px;
     width: 100%;
     border-radius: 10px;
     }
     .child_data {
-    border: solid rgb(255, 153, 0) 1px;
-    background-color: rgb(255, 207, 117);
     display: flex;
     flex-direction: column;
     height: 100px;
@@ -171,59 +182,54 @@ height: 80%;
     }
     
     .reservation {
-    border: solid rgb(0, 242, 255) 1px;
-    background-color: rgb(140, 255, 247);
     display: flex;
     flex-direction: column;
-    height: 200px;
+    height: 550px;
     width: 100%;
     }
     .reservation * {
         text-align: center;
+        margin: 2px 0;
     }
     .reservation_data {
-        border: solid rgb(0, 255, 21) 1px;
         display: flex;
+        flex-direction: column-reverse;
         justify-content: space-around;
+        margin-bottom: 10px;
         
     }
     
     .reservation_info {
-    border: solid rgb(255, 0, 0) 1px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
     
     }
     .comming_div {
-    border: solid rgb(255, 136, 0) 1px;
     display: flex;
     flex-direction: column;
     }
     .finish_div {
-    border: solid rgb(255, 255, 0) 1px;
     display: flex;
     flex-direction: column;
     }
     .total_time_div {
-    border: solid rgb(26, 255, 0) 1px;
     display: flex;
     flex-direction: column;
     }
     .action_box {
-    border: solid rgb(0, 255, 200) 1px;
-    background-color: rgb(251, 135, 135);
     height: fit-content;
     width: 100%;
     }
     .about_child {
-    border: solid rgb(0, 38, 255) 1px;
     display: flex;
     justify-content: space-around;
     height: 20%;
     margin: 5px 0;
     }
     .btn_box {
-    border: solid rgb(204, 0, 255) 1px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,3 +239,5 @@ height: 80%;
    height: fit-content;
     }
   }
+
+

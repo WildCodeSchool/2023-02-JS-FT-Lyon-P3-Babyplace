@@ -1,91 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
+import ParentCard from "./ParentCard";
+import { useModalContext } from "../../../contexts/ModalContext";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Orders() {
-  const reservations = [
-    {
-      id: 1,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 3,
-      statusInfo: "annulé",
-    },
-    {
-      id: 2,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 0,
-      statusInfo: "En attente",
-    },
-    {
-      id: 3,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 1,
-      statusInfo: "Accepté",
-    },
-    {
-      id: 4,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 2,
-      statusInfo: "Refusé",
-    },
-    {
-      id: 5,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 2,
-      statusInfo: "Refusé",
-    },
-    {
-      id: 6,
-      name: "Bébé Cannan",
-      age: "18 mois",
-      parent: "Ed Cannan",
-      parentProfile: "Profil 100%",
-      type: "Papa Poule",
-      dateArrive: "23 sept / 7:00",
-      dateRetour: "23 sept / 17:00",
-      nbHeures: 10,
-      status: 1,
-      statusInfo: "Accepté",
-    },
-  ];
-
   const [selectedValue, setSelectedValue] = useState(4);
+  const [reservations, setReservations] = useState([]);
+  const { openModal } = useModalContext();
+  // const [orderIndex, setOrderIndex] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/dashboard/reservations`)
+      .then((res) => {
+        setReservations(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const handleSelect = (e) => {
     setSelectedValue(e.target.id);
@@ -114,8 +51,18 @@ export default function Orders() {
     (reservation) => filterOrder(reservation) === parseInt(selectedValue, 10)
   );
 
+  if (openModal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
   return (
     <div className={styles.orders_box}>
+      {openModal && (
+        <div className={styles.blur_modal}>
+          <ParentCard reservation={reservations} />
+        </div>
+      )}
       <div className={styles.orders_header}>
         <h3>Toutes les réservations</h3>
         <div className={styles.filter_btn_box}>
@@ -173,3 +120,9 @@ export default function Orders() {
     </div>
   );
 }
+
+Orders.propTypes = {
+  reservation: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+  }).isRequired,
+};

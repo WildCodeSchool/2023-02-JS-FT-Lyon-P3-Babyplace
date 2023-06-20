@@ -9,26 +9,29 @@ import UserAuth from "./components/ProDashboard/UserAuth/UserAuth";
 import DashboardHome from "./components/ProDashboard/DashboardHome/DashboardHome";
 import ModifyData from "./components/ProDashboard/ModifyData/ModifyData";
 import { UserContextProvider } from "./contexts/UserContext";
+import { ModalContextProvider } from "./contexts/ModalContext";
 
 import "./App.css";
 
 function App() {
   return (
     <UserContextProvider>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/particulier" element={<Particulier />} />
-          <Route path="/pro-register" element={<ProRegister />} />
-          <Route path="/pro" element={<Dashboard />}>
-            <Route index element={<DashboardHome />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="authentification" element={<UserAuth />} />
-            <Route path="modify" element={<ModifyData />} />
-          </Route>
-        </Routes>
-      </div>
+      <ModalContextProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/particulier" element={<Particulier />} />
+            <Route path="/pro-register" element={<ProRegister />} />
+            <Route path="/pro" element={<Dashboard />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="authentification" element={<UserAuth />} />
+              <Route path="modify" element={<ModifyData />} />
+            </Route>
+          </Routes>
+        </div>
+      </ModalContextProvider>
     </UserContextProvider>
   );
 }

@@ -1,0 +1,51 @@
+.parent_home_folder_info_box {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(130deg, rgba(92,70,237,1) 0%, rgba(247,131,255,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.img_box {
+height: 150px;
+width: 150px;
+overflow: hidden;
+border-radius: 50%;
+margin-bottom: 10px;
+}
+
+.img_style {
+height: 100%;
+width: 100%;
+scale: 1.2;
+}
+
+.name_box {
+    margin-bottom: 40px;
+    color: white;
+}
+
+.info_box * {
+margin: 6px 0;
+text-align: center;
+}
+.info_box p {
+color: white;
+}
+.info_box h5 {
+text-align: center;
+font-size: 1.2rem;
+margin-bottom: 5px;
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .name_box {
+        margin-bottom: 10px;
+    }
+    
+}

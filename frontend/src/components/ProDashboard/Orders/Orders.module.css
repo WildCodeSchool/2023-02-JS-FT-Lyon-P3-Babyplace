@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .filter_btn_box {
@@ -29,6 +29,20 @@
     padding-bottom: 50px;
 }
 
+.blur_modal {
+    backdrop-filter: blur(4px);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 @media screen and (max-width: 1040px) {
     .orders_header {
         height: 15%;
@@ -42,9 +56,11 @@
         width: 70vw;
         
     }
+    
     .orders_header {
         flex-direction: column;
         height: 40%;
+        margin-bottom: 0;
     }
     .filter_btn_box {
         flex-direction: column;

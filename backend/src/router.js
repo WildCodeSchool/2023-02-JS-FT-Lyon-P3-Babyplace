@@ -5,6 +5,7 @@ const router = express.Router();
 const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
 const proControllers = require("./controllers/proControllers");
+const dashboardProControllers = require("./controllers/dashboardProControllers");
 const {
   getParentByEmail,
   getProByEmail,
@@ -29,5 +30,10 @@ router.get("/pro/:id", proControllers.read);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post("/pro/register", hashPassword);
 router.post("/pro", hashPassword, proControllers.add);
+
+router.get(
+  "/dashboard/reservations",
+  dashboardProControllers.browseReservations
+);
 
 module.exports = router;
