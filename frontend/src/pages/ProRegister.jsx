@@ -20,7 +20,10 @@ export default function ProRegister() {
   const [activeField, setActiveField] = useState(null);
   const fieldsToComplete = [
     { field: "Nom de la structure", data: ["name"] },
-    { field: "Type de structure", data: ["type"] },
+    {
+      field: "Type de structure",
+      data: ["Micro-crèche", "Crèche associative", "Crèche publique"],
+    },
     { field: "Téléphone", data: ["phone_number"] },
     { field: "Description", data: ["description"] },
     {
@@ -63,6 +66,7 @@ export default function ProRegister() {
           setActiveField={setActiveField}
           registerInfo={registerInfo}
           setRegisterInfo={setRegisterInfo}
+          fieldsToComplete={fieldsToComplete}
         />
       </div>
     </div>

@@ -1,38 +1,73 @@
 .recapPage {
-  padding: 1em;
   width: 50%;
   height: 100%;
-  font-size: calc(2vh + 1vw);
+}
+
+.recapPage > div {
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 .text {
-  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .recapBlock {
-  height: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: space-between;
-  gap: 5%;
+  align-items: center;
+}
+
+.recapBlock > div {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recapBlock > div > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recapFooter > button > div {
+  margin: auto;
+}
+
+.formButton {
+  width: 100%;
+  background-color: white;
+  margin: 0.5em auto 0 auto;
+  padding: 0.5em;
+}
+
+.formButton > div {
+  width: 70%;
 }
 
 .recapFooter {
-  height: 10%;
   display: flex;
   justify-content: flex-end;
   padding: 5%;
 }
 
+.recapFooter > button {
+  padding: 0.5em;
+}
+
 @media screen and (max-width: 950px) {
   .recapPage{
     width: 100%;
-    height: 50%;
   }
 }
