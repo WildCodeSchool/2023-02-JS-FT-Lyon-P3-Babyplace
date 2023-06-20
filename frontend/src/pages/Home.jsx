@@ -17,7 +17,7 @@ export default function Home() {
         </div>
         <div className={styles.particuliers}>
           <p>Je suis un particulier : </p>
-          <Link to="/particulier">
+          <Link to="/particulier/recherche">
             <Button variant="contained">Accéder au site particuliers</Button>
           </Link>
         </div>

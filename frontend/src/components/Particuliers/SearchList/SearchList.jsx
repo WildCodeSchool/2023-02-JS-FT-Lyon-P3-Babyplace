@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -27,48 +28,50 @@ export default function SearchList() {
     <div className={style.search_list_page}>
       <div className={style.logo_log_in}>
         <img src={user} alt="user" />
-        Log In
+        <Link to="/particulier">Log In</Link>
       </div>
       <h2>Liste des crèches disponibles</h2>
       <div className={style.card_media}>
         {pros.map((pro) => (
-          <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
-            <CardActionArea sx={{ padding: "10px" }}>
-              <div className="style.image">
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={pro1test}
-                  alt="profil_picture"
-                  sx={{
-                    position: "relative",
-                    zIndex: 10,
-                    background: "linear-gradient(to bottom, red, orange)",
-                  }}
-                />
-              </div>
+          <Link key={pro.id} to={`/pro/${pro.id}`}>
+            <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
+              <CardActionArea sx={{ padding: "10px" }}>
+                <div className="style.image">
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={pro1test}
+                    alt="profil_picture"
+                    sx={{
+                      position: "relative",
+                      zIndex: 10,
+                      background: "linear-gradient(to bottom, red, orange)",
+                    }}
+                  />
+                </div>
 
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="h1"
-                sx={{
-                  position: "absolute",
-                  top: "100px",
-                  left: "20px",
-                  color: "white",
-                  zIndex: 12,
-                }}
-              >
-                {pro.name}
-              </Typography>
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  <DispoPros id={pro.id} />
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="h1"
+                  sx={{
+                    position: "absolute",
+                    top: "100px",
+                    left: "20px",
+                    color: "white",
+                    zIndex: 12,
+                  }}
+                >
+                  {pro.name}
                 </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    <DispoPros id={pro.id} />
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
