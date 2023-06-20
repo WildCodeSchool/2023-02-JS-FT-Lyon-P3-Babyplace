@@ -35,10 +35,14 @@
   align-items: center;
 }
 
-.recapBlock > div > button {
+.recapBlock > div {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+}
+
+.recapBlock > div > div {
+  width: 70%;
 }
 
 .recapFooter > button > div {

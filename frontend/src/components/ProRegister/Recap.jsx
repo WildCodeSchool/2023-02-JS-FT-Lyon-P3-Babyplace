@@ -16,27 +16,26 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
           {fieldsToComplete.map((field) => {
             return (
               <Grid item xs={12}>
-                <button
-                  type="button"
-                  className={styles.formButton}
+                <TextField
+                  key={field.field}
+                  label={field.field}
+                  disabled
+                  content={field.field}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                />
+                <Button
+                  variant="contained"
                   onClick={() => {
                     console.warn("click");
                     setActiveField(field.field);
                   }}
                 >
-                  <TextField
-                    key={field.field}
-                    label={field.field}
-                    disabled
-                    content={field.field}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                    }}
-                  />
-                  <Button variant="contained">Modifier</Button>
-                </button>
+                  Modifier
+                </Button>
               </Grid>
             );
           })}
