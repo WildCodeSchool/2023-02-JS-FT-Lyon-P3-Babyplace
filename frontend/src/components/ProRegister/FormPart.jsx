@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { TextField, Switch, FormControlLabel } from "@mui/material";
 
 function FormPart({ data }) {
-  if (data.length === 1) {
-    return <TextField label={data} />;
-  }
+  // if (data.length === 1) {
+  //   return <TextField label={data.fieldname} />;
+  // }
   return data.map((row) => {
     if (typeof row === "string") {
       return (

@@ -4,10 +4,12 @@ import { Button } from "@mui/material";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
 
-function FormBlock({ activeField, fieldsToComplete }) {
+function FormBlock({ activeField, setActiveField, fieldsToComplete }) {
   const [formMessage, setFormMessage] = useState(null);
   useEffect(() => {
-    if (activeField === "Nom de la structure") {
+    if (activeField === "Informations de connexion") {
+      setFormMessage("Veuillez renseigner vos informations de connexion :");
+    } else if (activeField === "Nom de la structure") {
       setFormMessage("Veuillez indiquer le nom de votre structure :");
     } else if (activeField === "Téléphone") {
       setFormMessage(
@@ -47,13 +49,17 @@ function FormBlock({ activeField, fieldsToComplete }) {
             return null;
           })
         : null}
-      <div className={styles.formFooter}>
-        {activeField ? (
+
+      {activeField ? (
+        <div className={styles.formFooter}>
+          <Button variant="contained" onClick={() => setActiveField(null)}>
+            Retour
+          </Button>
           <Button variant="contained" disabled>
             OK
           </Button>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -62,5 +68,6 @@ export default FormBlock;
 
 FormBlock.propTypes = {
   activeField: PropTypes.string.isRequired,
+  setActiveField: PropTypes.func.isRequired,
   fieldsToComplete: PropTypes.arrayOf.isRequired,
 };

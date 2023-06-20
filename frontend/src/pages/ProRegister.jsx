@@ -7,6 +7,8 @@ export default function ProRegister() {
   const [registerInfo, setRegisterInfo] = useState({
     name: "",
     mail_address: "",
+    password: "",
+    verifyPassword: "",
     address: "",
     postcode: 1,
     city: "",
@@ -19,13 +21,30 @@ export default function ProRegister() {
 
   const [activeField, setActiveField] = useState(null);
   const fieldsToComplete = [
-    { field: "Nom de la structure", data: ["name"] },
+    {
+      field: "Informations de connexion",
+      data: [
+        { field: "mail_address", fieldname: "Adresse mail" },
+        { field: "password", fieldname: "Mot de passe" },
+        { field: "verifyPassword", fieldname: "Confirmez votre mot de passe" },
+      ],
+    },
+    {
+      field: "Nom de la structure",
+      data: [{ field: "name", fieldname: "Nom de la structure" }],
+    },
     {
       field: "Type de structure",
       data: ["Micro-crèche", "Crèche associative", "Crèche publique"],
     },
-    { field: "Téléphone", data: ["phone_number"] },
-    { field: "Description", data: ["description"] },
+    {
+      field: "Téléphone",
+      data: [{ field: "phone_number", fieldname: "Numéro de téléphone" }],
+    },
+    {
+      field: "Description",
+      data: [{ field: "description", fieldname: "Description" }],
+    },
     {
       field: "Adresse",
       data: [
@@ -46,7 +65,10 @@ export default function ProRegister() {
         "Dimanche",
       ],
     },
-    { field: "Nombre de places", data: ["places"] },
+    {
+      field: "Nombre de places",
+      data: [{ field: "places", fieldname: "Nombre de places" }],
+    },
   ];
 
   return (
