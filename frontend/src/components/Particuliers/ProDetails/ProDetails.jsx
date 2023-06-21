@@ -53,9 +53,11 @@ export default function ProDetails() {
             <div>
               <div>
                 <div className={style.button_reservation}>
-                  <button type="button" className={style.button}>
-                    Réserver
-                  </button>
+                  <Link to={`/particulier/recherche/${id}/date`}>
+                    <button type="button" className={style.button}>
+                      Réserver
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

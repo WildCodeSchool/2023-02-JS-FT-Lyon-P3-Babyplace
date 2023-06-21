@@ -123,7 +123,7 @@ CREATE TABLE parent_notification (
   INSERT INTO disponibility
   (day)
   VALUES
-  ('monday'), ('tuesday'), ('wednesday'), ('thursday'), ('friday'), ('saturday'), ('friday');
+  ('Lundi'), ('Mardi'), ('Mercredi'), ('Jeudi'), ('Vendredi'), ('Samedi'), ('Dimanche');
 
   INSERT into pro_disponibility
   (disponibility_id, pro_id)

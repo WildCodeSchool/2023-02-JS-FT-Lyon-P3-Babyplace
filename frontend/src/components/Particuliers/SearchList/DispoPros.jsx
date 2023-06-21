@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Chip, ListItem } from "@mui/material";
+import { Chip } from "@mui/material";
 import style from "./SearchList.module.css";
 
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
@@ -9,13 +9,13 @@ const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 export default function DispoPros({ id }) {
   const [dispos, setDispos] = useState(null);
   const [chipData] = useState([
-    { key: 0, label: "monday" },
-    { key: 1, label: "tuesday" },
-    { key: 2, label: "wednesday" },
-    { key: 3, label: "thursday" },
-    { key: 4, label: "friday" },
-    { key: 5, label: "saturday" },
-    { key: 6, label: "sunday" },
+    { key: 0, label: "Lundi" },
+    { key: 1, label: "Mardi" },
+    { key: 2, label: "Mercredi" },
+    { key: 3, label: "Jeudi" },
+    { key: 4, label: "Vendredi" },
+    { key: 5, label: "Samedi" },
+    { key: 6, label: "Dimanche" },
   ]);
   useEffect(() => {
     axios
@@ -38,9 +38,12 @@ export default function DispoPros({ id }) {
         }
 
         return (
-          <ListItem key={data.key}>
-            <Chip color={color} label={data.label} />
-          </ListItem>
+          <Chip
+            key={dispos.id}
+            color={color}
+            label={data.label}
+            sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}
+          />
         );
       })}
     </div>

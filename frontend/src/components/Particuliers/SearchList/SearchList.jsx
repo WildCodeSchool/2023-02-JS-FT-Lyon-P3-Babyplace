@@ -33,7 +33,7 @@ export default function SearchList() {
       <h2>Liste des crèches disponibles</h2>
       <div className={style.card_media}>
         {pros.map((pro) => (
-          <Link key={pro.id} to={`/pro/${pro.id}`}>
+          <Link key={pro.id} to={`/particulier/recherche/${pro.id}`}>
             <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
               <CardActionArea sx={{ padding: "10px" }}>
                 <div className="style.image">

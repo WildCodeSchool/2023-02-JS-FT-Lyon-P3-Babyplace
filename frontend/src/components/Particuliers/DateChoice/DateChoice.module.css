@@ -1,12 +1,11 @@
 .card {
-  background: var(--main-bg-gradient);
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--dark-color);
 }
+
 .header_card {
   display: flex;
   justify-content: center;
@@ -15,56 +14,49 @@
   padding: 10px;
   color: var(--main-color);
 }
-.name_type {
-  padding: 0 30px;
-}
+
 .button_back {
   background: transparent;
-  color: white;
+  color: var(--main-color);
+}
+.name_type {
+  padding: 0 20px;
 }
 .card h2 {
   margin-top: 1rem;
-  color: white;
-  font-size: large;
-}
-.card h3,
-.card p {
-  margin: 0.5rem;
-  font-size: small;
-}
-.card h4 {
-  color: white;
-  margin: 0.5rem;
-  font-size: small;
-}
-.card h3 {
   font-size: medium;
 }
-.card_global {
-  background-color: white;
+
+.card_body {
+  background: var(--main-bg-color);
   border-radius: 10px;
-  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
 }
-.image {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  position: inherit;
-  width: 100%;
-  height: 130px;
-  background-position: center;
+.days_of_week {
+  color: var(--main-color);
+  margin: 2rem 0.5rem 1rem;
 }
 
-.informations {
-  background: var(--main-bg-color);
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: var(--main-color);
+.chip {
+  margin: 1rem;
 }
-.tel_mail {
+.reservation {
+  margin: 1rem 0;
+  display: flex;
   flex-direction: column;
-  padding: 10px;
-  color: var(--dark-color);
+  justify-content: center;
+  align-items: center;
+}
+.reservation_day {
+  margin: 1rem;
+  padding: 0.5rem 2rem;
+  background: var(--main-bg-gradient);
+  border-radius: 8px;
+  color: white;
 }
 .button_reservation {
   display: flex;
@@ -78,28 +70,18 @@
   color: white;
   font-weight: bold;
 }
-
 @media screen and (min-width: 450px) {
-  .card_global {
+  .card_body {
     width: 70vw;
-  }
-  .image {
-    height: 200px;
   }
 }
 @media screen and (min-width: 768px) {
-  .card_global {
+  .card_body {
     width: 60vw;
-  }
-  .image {
-    height: 250px;
   }
 }
 @media screen and (min-width: 1024px) {
-  .card_global {
+  .card_body {
     width: 40vw;
-  }
-  .image {
-    height: 280px;
   }
 }
