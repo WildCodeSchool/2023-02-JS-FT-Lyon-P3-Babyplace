@@ -18,7 +18,17 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     if (data[0].multiple) {
       setState({ ...state, [event.target.name]: event.target.checked });
       if (event.target.checked) {
-        arrayOfData.current.push(event.target.name);
+        if (arrayOfData.length === 0) {
+          arrayOfData.current.push(event.target.name);
+        } else {
+          arrayOfData.current.push(
+            event.target.name.replace(
+              event.target.name,
+              ` ${event.target.name}`
+            )
+          );
+        }
+
         setFormBlockInfo({
           ...formBlockInfo,
           empty: false,
@@ -118,6 +128,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     return (
       <TextField
         label={row.fieldname}
+        margin="normal"
         type={
           row.fieldname === "Mot de passe" ||
           row.fieldname === "Confirmez votre mot de passe"

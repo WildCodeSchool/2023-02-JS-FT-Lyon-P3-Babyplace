@@ -41,13 +41,13 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
               <Grid item xs={12}>
                 <TextField
                   key={field.field}
-                  label={
-                    valuesToConcatenate
-                      ? valuesToConcatenate.join(", ")
-                      : field.field
+                  label={field.field}
+                  margin="normal"
+                  value={
+                    valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
                   }
-                  disabled
                   content={field.field}
+                  color={valuesToConcatenate ? "success" : "warning"}
                 />
                 <Button
                   variant="contained"

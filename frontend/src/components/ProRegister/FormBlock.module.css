@@ -45,5 +45,6 @@
 @media screen and (max-width: 950px) {
   .formBlockPage{
     width: 100%;
+    height: fit-content;
   }
 }

@@ -1,6 +1,7 @@
 .recapPage {
   width: 50%;
   height: 100%;
+  overflow: scroll;
 }
 
 .recapPage > div {
