@@ -14,11 +14,39 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
         </Grid>
         <div className={styles.recapBlock}>
           {fieldsToComplete.map((field) => {
+            const fieldsToConcatenate = [];
+            for (const fieldBlock of fieldsToComplete) {
+              if (fieldBlock.field === field.field) {
+                for (const row of fieldBlock.data) {
+                  fieldsToConcatenate.push(row.field);
+                }
+              }
+            }
+            let valuesToConcatenate;
+
+            Object.entries(registerInfo).forEach((array) => {
+              if (
+                fieldsToConcatenate.includes(array[0]) &&
+                array[0] !== "password" &&
+                array[0] !== "verifyPassword" &&
+                array[1] !== "" &&
+                array[1] !== null &&
+                array[1] !== []
+              ) {
+                valuesToConcatenate = [];
+                valuesToConcatenate.push(array[1]);
+              }
+            });
+
             return (
               <Grid item xs={12}>
                 <TextField
                   key={field.field}
-                  label={field.field}
+                  label={
+                    valuesToConcatenate
+                      ? valuesToConcatenate.join(", ")
+                      : field.field
+                  }
                   disabled
                   content={field.field}
                   sx={{

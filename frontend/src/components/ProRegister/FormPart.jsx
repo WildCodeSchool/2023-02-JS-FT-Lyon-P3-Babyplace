@@ -123,6 +123,12 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     return (
       <TextField
         label={row.fieldname}
+        type={
+          row.fieldname === "Mot de passe" ||
+          row.fieldname === "Confirmez votre mot de passe"
+            ? "password"
+            : "text"
+        }
         onChange={(e) => handleFieldChange(e, row.field)}
       />
     );

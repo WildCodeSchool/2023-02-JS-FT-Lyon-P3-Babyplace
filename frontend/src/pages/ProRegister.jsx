@@ -10,12 +10,12 @@ export default function ProRegister() {
     password: "",
     verifyPassword: "",
     address: "",
-    postcode: 1,
+    postcode: "",
     city: "",
     phone_number: null,
     description: "",
     type: "",
-    disponibility: [],
+    disponibility: "",
     places: null,
   });
 
