@@ -4,6 +4,9 @@ import { TextField, Button, Grid } from "@mui/material";
 import styles from "./Recap.module.css";
 
 function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
+  const handleSubmitRegister = () => {
+    console.warn("Submit !");
+  };
   return (
     <div className={styles.recapPage}>
       <Grid container spacing={3}>
@@ -65,6 +68,7 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
         <Grid item xs={12}>
           <div className={styles.recapFooter}>
             <Button
+              onClick={handleSubmitRegister}
               variant="contained"
               disabled={
                 Object.values(registerInfo).includes(null) ||
@@ -86,6 +90,5 @@ export default Recap;
 Recap.propTypes = {
   fieldsToComplete: PropTypes.arrayOf.isRequired,
   registerInfo: PropTypes.arrayOf.isRequired,
-  // activeField: PropTypes.string.isRequired,
   setActiveField: PropTypes.func.isRequired,
 };
