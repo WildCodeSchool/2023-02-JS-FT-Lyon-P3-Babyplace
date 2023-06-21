@@ -111,8 +111,8 @@ CREATE TABLE parent_notification (
   (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status)
   VALUES
   ('Picoti Picota', 'picotita@example.fr', 'testmdp', 'hashed password', '22 place du soleil', 99999, 'Ville fictive', 0600000001, 'La crèche « Picoti Picota » n’est pas qu’un lieu de garde c’est surtout un lieu d’échange et d’accueil  des enfants et des familles dans une confiance réciproque où le respect, l’autonomie et la sécurité sont des références privilégiées dans notre projet. ', 'Micro-crèche', false),
-  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', 'hashed password', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false);
-
+  ('Coucou les chouchous', 'chouchous@coucou.fr', 'coucoumdp', 'hashed password', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'On aime les bambins, et on en prend soin', 'Crèche associative', false),
+  ('Creche 3', 'creche@example.fr', '12345', '$argon2id$v=19$m=65536,t=5,p=1$PRp3VbzKhLRMsfvLIR84Kw$gGGsoTx8b+bf0335bbyS+8dE7EpJzrPGRxIESBc5vMA', '18 rue des Albatros', 99999, 'Ville fictive', 0600000002, 'Kikoo les zouzous', 'Micro-crèche', false);
   INSERT INTO child
   (lastname, firstname, birthdate, walking, doctor, parent_id)
   VALUES
