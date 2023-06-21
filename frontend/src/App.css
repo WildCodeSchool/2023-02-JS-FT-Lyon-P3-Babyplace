@@ -16,7 +16,8 @@ body {
   --danger-color: rgb(255, 61, 96);
   --main-font-family: "Red Hat Text", sans-serif;
   --second-font-family: "Adamina", serif;
-  --main-bg-gradient: linear-gradient(
+  --second-bg-color: rgb(249, 249, 249);
+  --main-bg-color: linear-gradient(
     148.74deg,
     rgba(71, 79, 255, 0.902) 2.49%,
     rgba(89, 84, 249, 0.91) 13.34%,
