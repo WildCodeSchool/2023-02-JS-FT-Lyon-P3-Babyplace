@@ -19,7 +19,7 @@ class DashboardProManager extends AbstractManager {
     return this.database.query(
       `select r.id, c.firstname prenom_enfant, c.lastname nom_enfant, c.walking,
     p.firstname prenom_parent, p.lastname nom_parent,
-	DATE_FORMAT(p.birthdate, "%d/%m/%Y") anniversaire,
+	DATE_FORMAT(c.birthdate, "%d/%m/%Y") anniversaire,
     p.mail_address email, p.address adresse, p.postcode, p.city, p.phone_number telephone from ${this.table} as r
    join child as c on c.id = r.child_id
    join parent as p on c.parent_id = p.id

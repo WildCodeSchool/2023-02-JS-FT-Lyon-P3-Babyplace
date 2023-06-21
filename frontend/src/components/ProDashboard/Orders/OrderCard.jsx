@@ -78,7 +78,6 @@ export default function OrderCard({ reservation }) {
               <h4>
                 {reservation.prenom_enfant} {reservation.nom_enfant}
               </h4>
-              <p>18 mois</p>
             </div>
             <div className={styles.child_more_info}>
               <Button sx={{ height: 80, width: 120 }} onClick={handleModalOpen}>

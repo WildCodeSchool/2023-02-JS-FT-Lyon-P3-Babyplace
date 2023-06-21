@@ -26,7 +26,6 @@ router.post("/parent/register", hashPassword);
 router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
-
 router.get("/pro", proControllers.browse);
 router.get("/pro/:id", proControllers.read);
 router.post("/pro/login", getProByEmail, verifyPassword);
@@ -41,7 +40,5 @@ router.get(
   "/dashboard/reservations/:id",
   dashboardProControllers.showMoreInfoOnOrder
 );
-
-
 
 module.exports = router;
