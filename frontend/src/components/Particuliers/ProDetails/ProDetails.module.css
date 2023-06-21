@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   color: var(--dark-color);
+  overflow: scroll;
 }
 .header_card {
   display: flex;

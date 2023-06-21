@@ -5,7 +5,8 @@
   align-items: center;
   background: var(--main-bg-gradient);
   color: white;
-  max-height: 100vh;
+  height: 100vh;
+  overflow: scroll;
 }
 .search_list_page h2 {
   margin-top: 4rem;
