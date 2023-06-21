@@ -55,7 +55,6 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
                 <Button
                   variant="contained"
                   onClick={() => {
-                    console.warn("click");
                     setActiveField(field.field);
                   }}
                 >

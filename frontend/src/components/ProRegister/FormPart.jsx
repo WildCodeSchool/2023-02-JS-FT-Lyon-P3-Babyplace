@@ -71,12 +71,6 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     });
   };
 
-  // useEffect(() => {
-  //   console.log(formBlockInfo);
-  //   console.log(Object.keys(formBlockInfo));
-  //   console.log(Object.entries(formBlockInfo));
-  // }, [formBlockInfo]);
-
   useEffect(() => {
     return setFormBlockInfo({ empty: true });
   }, []);

@@ -54,10 +54,6 @@ function FormBlock({
     setFormFields(arraOfFields);
   }, [activeField]);
 
-  // useEffect(() => {
-  //   console.log(registerInfo);
-  // }, [registerInfo]);
-
   const handleConfirm = () => {
     const displayedFields = [];
     for (const fieldBlock of fieldsToComplete) {
@@ -67,20 +63,7 @@ function FormBlock({
         }
       }
     }
-    console.warn(displayedFields);
-
-    if (
-      displayedFields.some(
-        (field) =>
-          Object.keys(formBlockInfo).includes(field) === false ||
-          Object.values(formBlockInfo).includes("")
-      )
-    ) {
-      console.warn("pas complet !");
-    } else {
-      console.warn("complet");
-      setRegisterInfo({ ...registerInfo, ...formBlockInfo });
-    }
+    setRegisterInfo({ ...registerInfo, ...formBlockInfo });
     setFormBlockInfo({ empty: true });
     setActiveField(null);
   };
