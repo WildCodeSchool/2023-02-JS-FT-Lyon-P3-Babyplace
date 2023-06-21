@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Chip, ListItem } from "@mui/material";
+import { Chip } from "@mui/material";
 import style from "./SearchList.module.css";
 
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
@@ -38,9 +38,11 @@ export default function DispoPros({ id }) {
         }
 
         return (
-          <ListItem key={data.key}>
-            <Chip color={color} label={data.label} />
-          </ListItem>
+          <Chip
+            color={color}
+            label={data.label}
+            sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}
+          />
         );
       })}
     </div>
