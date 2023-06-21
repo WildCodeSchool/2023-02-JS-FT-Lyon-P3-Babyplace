@@ -30,4 +30,6 @@ router.post("/pro/login", getProByEmail, verifyPassword);
 router.post("/pro/register", hashPassword);
 router.post("/pro", hashPassword, proControllers.add);
 
+router.get("/dispo/:id", proControllers.browseProAndDispo);
+
 module.exports = router;

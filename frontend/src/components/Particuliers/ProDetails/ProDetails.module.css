@@ -1,0 +1,106 @@
+.card {
+  background: var(--main-bg-color);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--dark-color);
+}
+.header_card {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: var(--main-color);
+}
+.name_type {
+  flex-direction: column;
+  padding: 0 30px;
+}
+.button_back {
+  background: transparent;
+  color: white;
+}
+.card h2 {
+  margin-top: 1rem;
+  color: white;
+  font-size: large;
+}
+.card h3,
+.card p {
+  margin: 0.5rem;
+  font-size: small;
+}
+.card h4 {
+  color: white;
+  margin: 0.5rem;
+  font-size: small;
+}
+.card h3 {
+  font-size: medium;
+}
+.card_global {
+  background-color: white;
+  border-radius: 10px;
+  width: 90vw;
+}
+.image {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: inherit;
+  width: 100%;
+  height: 130px;
+  background-position: center;
+}
+
+.informations {
+  background: var(--second-color);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: var(--main-color);
+}
+.tel_mail {
+  flex-direction: column;
+  padding: 10px;
+  color: var(--dark-color);
+}
+.button_reservation {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.button {
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--main-bg-color);
+  color: white;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 450px) {
+  .card_global {
+    width: 70vw;
+  }
+  .image {
+    height: 200px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .card_global {
+    width: 60vw;
+  }
+  .image {
+    height: 250px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .card_global {
+    width: 40vw;
+  }
+  .image {
+    height: 280px;
+  }
+}

@@ -11,6 +11,19 @@ const browse = (req, res) => {
       res.sendStatus(500);
     });
 };
+const browseProAndDispo = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  models.pro
+    .browseDispo(id)
+
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 const read = (req, res) => {
   models.pro
@@ -84,6 +97,7 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  browseProAndDispo,
   read,
   edit,
   add,
