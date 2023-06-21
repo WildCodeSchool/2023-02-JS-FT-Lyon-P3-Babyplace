@@ -90,6 +90,7 @@ function Login({ userType }) {
               id="password"
               label="Entrez votre mot de passe"
               onChange={handleChange}
+              type="password"
             />
           </div>
           <Button
