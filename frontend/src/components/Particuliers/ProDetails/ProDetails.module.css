@@ -16,7 +16,6 @@
   color: var(--main-color);
 }
 .name_type {
-  flex-direction: column;
   padding: 0 30px;
 }
 .button_back {
