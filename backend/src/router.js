@@ -35,5 +35,9 @@ router.get(
   "/dashboard/reservations",
   dashboardProControllers.browseReservations
 );
+router.get(
+  "/dashboard/reservations/:id",
+  dashboardProControllers.showMoreInfoOnOrder
+);
 
 module.exports = router;

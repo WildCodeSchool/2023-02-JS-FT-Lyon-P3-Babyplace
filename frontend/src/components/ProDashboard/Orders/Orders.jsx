@@ -4,15 +4,13 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
-import ParentCard from "./ParentCard";
-import { useModalContext } from "../../../contexts/ModalContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Orders() {
   const [selectedValue, setSelectedValue] = useState(4);
   const [reservations, setReservations] = useState([]);
-  const { openModal } = useModalContext();
+
   // const [orderIndex, setOrderIndex] = useState(null);
 
   useEffect(() => {
@@ -51,18 +49,8 @@ export default function Orders() {
     (reservation) => filterOrder(reservation) === parseInt(selectedValue, 10)
   );
 
-  if (openModal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
   return (
     <div className={styles.orders_box}>
-      {openModal && (
-        <div className={styles.blur_modal}>
-          <ParentCard reservation={reservations} />
-        </div>
-      )}
       <div className={styles.orders_header}>
         <h3>Toutes les réservations</h3>
         <div className={styles.filter_btn_box}>
