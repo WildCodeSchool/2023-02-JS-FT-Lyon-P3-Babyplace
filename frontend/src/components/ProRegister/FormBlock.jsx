@@ -94,10 +94,8 @@ function FormBlock({
       ) : (
         <h2>Sélectionnez un champ à compléter</h2>
       )}
+      {activeField ? <p className={styles.formMessage}>{formMessage}</p> : null}
       <div className={styles.formPart}>
-        {activeField ? (
-          <p className={styles.formMessage}>{formMessage}</p>
-        ) : null}
         {activeField
           ? fieldsToComplete.map((field) => {
               if (field.field === activeField) {
