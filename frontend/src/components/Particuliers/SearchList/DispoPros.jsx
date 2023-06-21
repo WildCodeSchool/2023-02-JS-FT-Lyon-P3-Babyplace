@@ -39,6 +39,7 @@ export default function DispoPros({ id }) {
 
         return (
           <Chip
+            key={dispos.id}
             color={color}
             label={data.label}
             sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}

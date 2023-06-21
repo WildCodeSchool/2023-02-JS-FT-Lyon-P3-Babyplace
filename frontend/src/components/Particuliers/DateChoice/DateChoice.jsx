@@ -34,7 +34,7 @@ export default function DateChoice() {
     const today = new Date();
     const futureDates = [];
 
-    for (let i = 0; i < 7; i = +1) {
+    for (let i = 0; i < 7; i += 1) {
       const futureDate = new Date(
         today.getFullYear(),
         today.getMonth(),
@@ -74,7 +74,7 @@ export default function DateChoice() {
             <h2>Choisissez une date</h2>
             <div>
               <div className={style.days_of_week}>
-                <h3>Jours de la semaine prochaine</h3>
+                <h3>Jours de la semaine prochaine:</h3>
               </div>
               <div className={style.chip}>
                 {getFutureDates().map((day) => (

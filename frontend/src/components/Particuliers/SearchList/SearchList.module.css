@@ -3,9 +3,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--main-bg-color);
+  background: var(--main-bg-gradient);
   color: white;
-  height: 100vh;
+  max-height: 100vh;
 }
 .search_list_page h2 {
   margin-top: 4rem;
