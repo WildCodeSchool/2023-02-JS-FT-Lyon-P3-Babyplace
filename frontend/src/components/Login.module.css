@@ -20,6 +20,14 @@
   align-items: center;
 }
 
+.switch {
+  padding: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: .5em;
+}
+
 .field {
   display: flex;
   flex-direction: column;

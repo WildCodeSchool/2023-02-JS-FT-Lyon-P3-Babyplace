@@ -5,16 +5,17 @@ body {
 
 #root {
   width: 100%;
-  --main-color: rgb(86, 100, 210);
-  --second-color: rgb(116, 120, 141);
-  --dark-color: rgb(52, 58, 64);
-  --pink-color: rgb(232, 62, 140);
-  --success-color: rgb(28, 187, 140);
-  --info-color: rgb(74, 163, 255);
-  --warning-color: rgb(252, 185, 44);
-  --danger-color: rgb(255, 61, 96);
-  --main-font-family: "Red Hat Text", sans-serif;
-  --second-font-family: "Adamina", serif;
+  --second-bg-color: rgb(249,249,249);
+  --main-color: rgb(86,100,210);
+  --second-color: rgb(116,120,141);
+  --dark-color: rgb(52,58,64);
+  --pink-color: rgb(232,62,140);
+  --success-color: rgb(28,187,140);
+  --info-color: rgb(74,163,255);
+  --warning-color: rgb(252,185,44);
+  --danger-color: rgb(255,61,96);
+  --main-font-family: 'Red Hat Text', sans-serif;
+  --second-font-family: 'Adamina', serif;
   --main-bg-color: linear-gradient(
     148.74deg,
     rgba(71, 79, 255, 0.9) 2.49%,
