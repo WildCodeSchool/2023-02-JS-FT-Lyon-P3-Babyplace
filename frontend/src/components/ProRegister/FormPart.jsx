@@ -22,12 +22,6 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
           empty: false,
           [data[0].field]: [...event.target.name],
         });
-      } else if ([data[0].field] === []) {
-        // TODO Voir avec Pierre pourquoi [vite] warning: Comparison using the "===" operator here is always false
-        setFormBlockInfo({
-          ...formBlockInfo,
-          empty: true,
-        });
       } else {
         setFormBlockInfo({
           ...formBlockInfo,

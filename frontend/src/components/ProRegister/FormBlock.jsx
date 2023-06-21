@@ -94,23 +94,26 @@ function FormBlock({
       ) : (
         <h2>Sélectionnez un champ à compléter</h2>
       )}
-      {activeField ? <p className={styles.formMessage}>{formMessage}</p> : null}
-      {activeField
-        ? fieldsToComplete.map((field) => {
-            if (field.field === activeField) {
-              return (
-                <FormPart
-                  data={field.data}
-                  activeField={activeField}
-                  formBlockInfo={formBlockInfo}
-                  setFormBlockInfo={setFormBlockInfo}
-                />
-              );
-            }
-            return null;
-          })
-        : null}
-
+      <div className={styles.formPart}>
+        {activeField ? (
+          <p className={styles.formMessage}>{formMessage}</p>
+        ) : null}
+        {activeField
+          ? fieldsToComplete.map((field) => {
+              if (field.field === activeField) {
+                return (
+                  <FormPart
+                    data={field.data}
+                    activeField={activeField}
+                    formBlockInfo={formBlockInfo}
+                    setFormBlockInfo={setFormBlockInfo}
+                  />
+                );
+              }
+              return null;
+            })
+          : null}
+      </div>
       {activeField ? (
         <div className={styles.formFooter}>
           <Button

@@ -17,6 +17,14 @@
   width: 100%;
 }
 
+.formPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .message {
   padding: 1em;
   text-align: center;

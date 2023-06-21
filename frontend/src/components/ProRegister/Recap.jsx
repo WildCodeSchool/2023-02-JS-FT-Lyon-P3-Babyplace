@@ -30,8 +30,7 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
                 array[0] !== "password" &&
                 array[0] !== "verifyPassword" &&
                 array[1] !== "" &&
-                array[1] !== null &&
-                array[1] !== []
+                array[1] !== null
               ) {
                 valuesToConcatenate = [];
                 valuesToConcatenate.push(array[1]);
