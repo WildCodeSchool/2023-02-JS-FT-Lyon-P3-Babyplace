@@ -13,6 +13,7 @@ function FormBlock({
 }) {
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
+  const [formFields, setFormFields] = useState([]);
   useEffect(() => {
     if (activeField === "Informations de connexion") {
       setFormMessage("Veuillez renseigner vos informations de connexion :");
@@ -41,6 +42,22 @@ function FormBlock({
     }
   }, [activeField]);
 
+  useEffect(() => {
+    const arraOfFields = [];
+    fieldsToComplete.forEach((field) => {
+      if (field.field === activeField) {
+        field.data.forEach((fieldData) => {
+          arraOfFields.push(fieldData.field);
+        });
+      }
+    });
+    setFormFields(arraOfFields);
+  }, [activeField]);
+
+  // useEffect(() => {
+  //   console.log(registerInfo);
+  // }, [registerInfo]);
+
   const handleConfirm = () => {
     const displayedFields = [];
     for (const fieldBlock of fieldsToComplete) {
@@ -64,7 +81,8 @@ function FormBlock({
       console.warn("complet");
       setRegisterInfo({ ...registerInfo, ...formBlockInfo });
     }
-    setFormBlockInfo({});
+    setFormBlockInfo({ empty: true });
+    setActiveField(null);
   };
 
   return (
@@ -107,7 +125,11 @@ function FormBlock({
           <Button
             variant="contained"
             onClick={handleConfirm}
-            disabled={Object.entries(formBlockInfo)[0]?.includes(true)}
+            disabled={
+              Object.entries(formBlockInfo)[0]?.includes(true) ||
+              Object.values(formBlockInfo)?.includes("") ||
+              Object.keys(formBlockInfo)?.length < formFields.length + 1
+            }
           >
             OK
           </Button>
