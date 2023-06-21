@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
   TextField,
@@ -12,34 +12,35 @@ import {
 
 function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
   const [state, setState] = useState({});
+  const arrayOfData = useRef([]);
 
   const handleSwitch = (event) => {
     if (data[0].multiple) {
       setState({ ...state, [event.target.name]: event.target.checked });
       if (event.target.checked) {
+        arrayOfData.current.push(event.target.name);
         setFormBlockInfo({
           ...formBlockInfo,
           empty: false,
-          [data[0].field]: [...event.target.name],
+          [data[0].field]: arrayOfData.current,
         });
       } else {
-        setFormBlockInfo({
-          ...formBlockInfo,
-          empty: false,
-          // TODO Voir avec Pierre pour cette condition
-          // [data[0].field]: data[0].data.filter(data => )
-        });
-      }
-    } else {
-      setState({ ...state, [event.target.name]: event.target.checked });
-      if (event.target.checked) {
-        setFormBlockInfo({
-          ...formBlockInfo,
-          empty: false,
-          [data[0].field]: event.target.name,
-        });
-      } else {
-        setFormBlockInfo({ empty: true });
+        arrayOfData.current.splice(
+          arrayOfData.current.indexOf(event.target.name, 1)
+        );
+        if (arrayOfData.current.length === 0) {
+          setFormBlockInfo({
+            ...formBlockInfo,
+            empty: true,
+            [data[0].field]: [],
+          });
+        } else {
+          setFormBlockInfo({
+            ...formBlockInfo,
+            empty: false,
+            [data[0].field]: arrayOfData.current,
+          });
+        }
       }
     }
   };

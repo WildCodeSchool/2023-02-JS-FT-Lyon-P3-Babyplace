@@ -48,11 +48,6 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
                   }
                   disabled
                   content={field.field}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
                 />
                 <Button
                   variant="contained"
