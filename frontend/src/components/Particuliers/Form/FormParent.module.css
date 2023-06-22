@@ -36,15 +36,8 @@
 }
 .form input {
   border-radius: 10px;
-  padding: 0.5rem 1rem;
-  margin-block: 0.2rem;
-}
-.form > div {
-  width: 100%;
-}
-
-.form > div > input {
-  width: 100%;
+  padding: 0.5rem 3rem;
+  margin: 0.2rem;
 }
 
 .button {
@@ -54,4 +47,13 @@
   background: var(--main-bg-gradient);
   color: white;
   font-weight: bold;
+}
+@media screen and (min-width: 1024px) {
+  .form {
+    padding: 1rem;
+  }
+  .form input {
+    padding: 1rem 3rem;
+    margin: 0.3rem;
+  }
 }
