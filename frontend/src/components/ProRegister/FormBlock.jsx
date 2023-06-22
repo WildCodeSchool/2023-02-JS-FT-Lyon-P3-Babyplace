@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "@mui/material";
+import { Button, Alert } from "@mui/material";
+import Joi from "joi";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
 
@@ -14,7 +15,74 @@ function FormBlock({
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   const [formFields, setFormFields] = useState([]);
-  // const [validationMessage, setValidationMessage] = useState(null);
+  const [validationMessage, setValidationMessage] = useState(null);
+
+  const schema = Joi.object().keys({
+    name: Joi.string().alphanum().min(3).max(80).messages({
+      "string.min":
+        "Votre nom doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre nom doit avoir une longueur maximale de 80 caractères.",
+      "string.alphanum":
+        "Votre nom doit être constitué uniquement de caractères alphanumériques.",
+    }),
+    mail_address: Joi.string()
+      .email({
+        // minDomainAtoms: 2,
+        tlds: { allow: ["com", "net", "fr"] },
+      })
+      .messages({
+        "string.email": "Vous devez entrez une adresse mail valide.",
+      }),
+    password: Joi.string()
+      .regex(/^[a-zA-Z0-9]{3,30}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 3 à 30 caractères.",
+      }),
+    verifyPassword: Joi.any().valid(Joi.ref("password")).messages({
+      "any.only": "Vos mots de passe ne correspondent pas.",
+    }),
+    address: Joi.string().alphanum().min(3).max(80).messages({
+      "string.min":
+        "Votre adresse doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre adresse doit avoir une longueur maximale de 80 caractères.",
+      "string.alphanum":
+        "Votre adresse doit être constitué uniquement de caractères alphanumériques.",
+    }),
+    postcode: Joi.number().integer().messages({
+      "number.base":
+        "Votre code postal doit être constitué uniquement de caractères numériques.",
+    }),
+    city: Joi.string().alphanum().min(3).max(45).messages({
+      "string.min":
+        "Le nom de la ville doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Le nom de la ville doit avoir une longueur maximale de 45 caractères.",
+      "string.alphanum":
+        "Le nom de la ville doit être constitué uniquement de caractères alphanumériques.",
+    }),
+    phone_number: Joi.number().integer().messages({
+      "number.base":
+        "Votre numéro de téléphone doit être constitué uniquement de caractères numériques.",
+    }),
+    description: Joi.string().alphanum().min(20).max(255).messages({
+      "string.min":
+        "La description doit avoir une longueur minimale de 20 caractères.",
+      "string.max":
+        "La description doit avoir une longueur maximale de 255 caractères.",
+      "string.alphanum":
+        "La description doit être constituée uniquement de caractères alphanumériques.",
+    }),
+    type: Joi.string(),
+    disponibility: Joi.array(),
+    places: Joi.number().integer().messages({
+      "number.base":
+        "Le nombre de places doit être constitué uniquement de caractères numériques.",
+    }),
+    empty: Joi.boolean(),
+  });
 
   // Le message de présentation du bloc de formulaire change en fonction du bloc de données à modifier
   useEffect(() => {
@@ -66,9 +134,17 @@ function FormBlock({
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
   // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
-    setRegisterInfo({ ...registerInfo, ...formBlockInfo });
-    setFormBlockInfo({ empty: true });
-    setActiveField(null);
+    const { error } = schema.validate(formBlockInfo, {
+      // abortEarly: false,
+    });
+    if (error) {
+      setValidationMessage(error.message);
+    } else {
+      setRegisterInfo({ ...registerInfo, ...formBlockInfo });
+      setFormBlockInfo({ empty: true });
+      setActiveField(null);
+      setValidationMessage(null);
+    }
   };
 
   return (
@@ -91,12 +167,16 @@ function FormBlock({
                     activeField={activeField}
                     formBlockInfo={formBlockInfo}
                     setFormBlockInfo={setFormBlockInfo}
+                    setValidationMessage={setValidationMessage}
                   />
                 );
               }
               return null;
             })
           : null}
+        {validationMessage ? (
+          <Alert severity="error">{validationMessage}</Alert>
+        ) : null}
       </div>
       {activeField ? (
         <div className={styles.formFooter}>
