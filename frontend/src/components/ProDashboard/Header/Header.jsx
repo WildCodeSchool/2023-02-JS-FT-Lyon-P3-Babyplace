@@ -6,7 +6,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import User from "../../../assets/user.png";
+import User from "../../../assets/icones/user.png";
 import styles from "./Header.module.css";
 
 export default function Header() {
