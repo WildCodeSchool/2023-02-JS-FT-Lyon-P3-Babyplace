@@ -49,9 +49,7 @@ const getProByEmail = (req, res, next) => {
 
 const hashPassword = (req, res, next) => {
   // hash the password using argon2 then call next()
-  console.log(req.body);
   argon2
-
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
       req.body.hashedPassword = hashedPassword;

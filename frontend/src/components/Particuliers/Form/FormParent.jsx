@@ -47,7 +47,7 @@ export default function FormParent() {
           <button
             type="button"
             className={style.button_back}
-            onClick={() => navigate(``)}
+            onClick={() => navigate(`/particulier/recherche/${id}/date`)}
           >
             <ArrowBackIosNewIcon />
           </button>
