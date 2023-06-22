@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import style from "./FormParent.module.css";
@@ -8,7 +8,6 @@ import style from "./FormParent.module.css";
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function FormParent() {
-  const { id } = useParams();
   const navigate = useNavigate();
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -47,7 +46,7 @@ export default function FormParent() {
           <button
             type="button"
             className={style.button_back}
-            onClick={() => navigate(`/particulier/recherche/${id}/date`)}
+            onClick={() => navigate(-2)}
           >
             <ArrowBackIosNewIcon />
           </button>
