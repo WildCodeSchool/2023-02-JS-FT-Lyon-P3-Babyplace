@@ -5,6 +5,7 @@ const router = express.Router();
 const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
 const proControllers = require("./controllers/proControllers");
+const dashboardProControllers = require("./controllers/dashboardProControllers");
 const {
   getParentByEmail,
   getProByEmail,
@@ -23,6 +24,7 @@ router.get("/parent/:id", parentControllers.read);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post("/parent/register", hashPassword);
 router.post("/parent", hashPassword, parentControllers.add);
+router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/pro", proControllers.browse);
 router.get("/pro/:id", proControllers.read);
@@ -30,6 +32,13 @@ router.post("/pro/login", getProByEmail, verifyPassword);
 router.post("/pro/register", hashPassword);
 router.post("/pro", hashPassword, proControllers.add);
 
-router.get("/dispo/:id", proControllers.browseProAndDispo);
+router.get(
+  "/dashboard/reservations",
+  dashboardProControllers.browseReservations
+);
+router.get(
+  "/dashboard/reservations/:id",
+  dashboardProControllers.showMoreInfoOnOrder
+);
 
 module.exports = router;
