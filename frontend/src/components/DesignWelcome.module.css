@@ -22,8 +22,8 @@
   background: transparent;
   color: white;
   position: fixed;
-  top: 3%;
-  left: 3%;
+  top: 4%;
+  left: 5%;
 }
 @media screen and (max-width: 950px) {
   .home {

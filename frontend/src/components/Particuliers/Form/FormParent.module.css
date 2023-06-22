@@ -15,6 +15,9 @@
 .button_back {
   background: transparent;
   color: var(--main-color);
+  position: fixed;
+  top: 5%;
+  left: 5%;
 }
 .name_type {
   padding: 0 20px;

@@ -22,6 +22,9 @@
 .button_back {
   background: transparent;
   color: white;
+  position: fixed;
+  top: 5%;
+  left: 5%;
 }
 .card h2 {
   margin-top: 1rem;
