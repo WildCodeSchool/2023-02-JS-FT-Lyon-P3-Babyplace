@@ -11,7 +11,7 @@ export default function FormParent() {
   const navigate = useNavigate();
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [birthdate, setBirthdate] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
@@ -46,7 +46,7 @@ export default function FormParent() {
           <button
             type="button"
             className={style.button_back}
-            onClick={() => navigate(-2)}
+            onClick={() => navigate(-1)}
           >
             <ArrowBackIosNewIcon />
           </button>

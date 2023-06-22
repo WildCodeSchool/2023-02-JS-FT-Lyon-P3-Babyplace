@@ -37,8 +37,16 @@
 .form input {
   border-radius: 10px;
   padding: 0.5rem 1rem;
-  margin: 0.2rem;
+  margin-block: 0.2rem;
 }
+.form > div {
+  width: 100%;
+}
+
+.form > div > input {
+  width: 100%;
+}
+
 .button {
   margin-top: 2rem;
   padding: 0.5rem 2rem;
