@@ -31,48 +31,50 @@ export default function SearchList() {
         <Link to="/particulier">Log In</Link>
       </div>
       <h2>Liste des crèches disponibles</h2>
-      <div className={style.card_media}>
-        {pros.map((pro) => (
-          <Link key={pro.id} to={`/particulier/recherche/${pro.id}`}>
-            <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
-              <CardActionArea sx={{ padding: "10px" }}>
-                <div className="style.image">
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={pro1test}
-                    alt="profil_picture"
-                    sx={{
-                      position: "relative",
-                      zIndex: 10,
-                      background: "linear-gradient(to bottom, red, orange)",
-                    }}
-                  />
-                </div>
+      <div className={style.cards_media}>
+        <div className={style.card_media}>
+          {pros.map((pro) => (
+            <Link key={pro.id} to={`/particulier/recherche/${pro.id}`}>
+              <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
+                <CardActionArea sx={{ padding: "10px" }}>
+                  <div className="style.image">
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={pro1test}
+                      alt="profil_picture"
+                      sx={{
+                        position: "relative",
+                        zIndex: 10,
+                        background: "linear-gradient(to bottom, red, orange)",
+                      }}
+                    />
+                  </div>
 
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="h1"
-                  sx={{
-                    position: "absolute",
-                    top: "100px",
-                    left: "20px",
-                    color: "white",
-                    zIndex: 12,
-                  }}
-                >
-                  {pro.name}
-                </Typography>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    <DispoPros id={pro.id} />
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h1"
+                    sx={{
+                      position: "absolute",
+                      top: "100px",
+                      left: "20px",
+                      color: "white",
+                      zIndex: 12,
+                    }}
+                  >
+                    {pro.name}
                   </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Link>
-        ))}
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      <DispoPros id={pro.id} />
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
