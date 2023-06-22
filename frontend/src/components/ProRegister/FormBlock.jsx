@@ -20,15 +20,15 @@ function FormBlock({
   const schema = Joi.object().keys({
     name: Joi.string().alphanum().min(3).max(80).messages({
       "string.min":
-        "Votre nom doit avoir une longueur minimale de 3 caractères.",
+        "Le nom de votre structure doit avoir une longueur minimale de 3 caractères.",
       "string.max":
-        "Votre nom doit avoir une longueur maximale de 80 caractères.",
+        "Le nom de votre structure doit avoir une longueur maximale de 80 caractères.",
       "string.alphanum":
-        "Votre nom doit être constitué uniquement de caractères alphanumériques.",
+        "Le nom de votre structure doit être constitué uniquement de caractères alphanumériques.",
     }),
     mail_address: Joi.string()
       .email({
-        // minDomainAtoms: 2,
+        minDomainSegments: 2,
         tlds: { allow: ["com", "net", "fr"] },
       })
       .messages({
@@ -49,7 +49,7 @@ function FormBlock({
       "string.max":
         "Votre adresse doit avoir une longueur maximale de 80 caractères.",
       "string.alphanum":
-        "Votre adresse doit être constitué uniquement de caractères alphanumériques.",
+        "Votre adresse doit être constituée uniquement de caractères alphanumériques.",
     }),
     postcode: Joi.number().integer().messages({
       "number.base":
@@ -125,6 +125,7 @@ function FormBlock({
       }
     });
     setFormFields(arraOfFields);
+    setValidationMessage(null);
   }, [activeField]);
 
   // useEffect(() => {
@@ -134,9 +135,7 @@ function FormBlock({
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
   // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
-    const { error } = schema.validate(formBlockInfo, {
-      // abortEarly: false,
-    });
+    const { error } = schema.validate(formBlockInfo);
     if (error) {
       setValidationMessage(error.message);
     } else {
