@@ -14,6 +14,9 @@ function FormBlock({
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   const [formFields, setFormFields] = useState([]);
+  // const [validationMessage, setValidationMessage] = useState(null);
+
+  // Le message de présentation du bloc de formulaire change en fonction du bloc de données à modifier
   useEffect(() => {
     if (activeField === "Informations de connexion") {
       setFormMessage("Veuillez renseigner vos informations de connexion :");
@@ -42,6 +45,8 @@ function FormBlock({
     }
   }, [activeField]);
 
+  // le state FormFields est mis en place pour vérifier que tous les champs du bloc de formulaire sont complétés avant d'activer le bouton OK.
+  // Celui-ci change à chaque fois que le activeField est modifié.
   useEffect(() => {
     const arraOfFields = [];
     fieldsToComplete.forEach((field) => {
@@ -54,15 +59,13 @@ function FormBlock({
     setFormFields(arraOfFields);
   }, [activeField]);
 
+  // useEffect(() => {
+  //   console.log(registerInfo);
+  // }, [registerInfo]);
+
+  // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
+  // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
-    const displayedFields = [];
-    for (const fieldBlock of fieldsToComplete) {
-      if (fieldBlock.field === activeField) {
-        for (const field of fieldBlock.data) {
-          displayedFields.push(field.field);
-        }
-      }
-    }
     setRegisterInfo({ ...registerInfo, ...formBlockInfo });
     setFormBlockInfo({ empty: true });
     setActiveField(null);

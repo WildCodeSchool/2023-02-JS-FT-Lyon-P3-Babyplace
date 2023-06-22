@@ -26,7 +26,7 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
               }
             }
             let valuesToConcatenate;
-
+            // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
             Object.entries(registerInfo).forEach((array) => {
               if (
                 fieldsToConcatenate.includes(array[0]) &&
@@ -66,6 +66,7 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
         </div>
         <Grid item xs={12}>
           <div className={styles.recapFooter}>
+            {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
             <Button
               onClick={handleSubmitRegister}
               variant="contained"
