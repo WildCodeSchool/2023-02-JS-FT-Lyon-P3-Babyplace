@@ -23,7 +23,6 @@ export default function ProRegister() {
   const fieldsToComplete = [
     {
       field: "Informations de connexion",
-      type: "enter",
       data: [
         { field: "mail_address", fieldname: "Adresse mail" },
         { field: "password", fieldname: "Mot de passe" },
@@ -32,12 +31,10 @@ export default function ProRegister() {
     },
     {
       field: "Nom de la structure",
-      type: "enter",
       data: [{ field: "name", fieldname: "Nom de la structure" }],
     },
     {
       field: "Type de structure",
-      type: "select",
       data: [
         {
           field: "type",
@@ -48,17 +45,14 @@ export default function ProRegister() {
     },
     {
       field: "Téléphone",
-      type: "enter",
       data: [{ field: "phone_number", fieldname: "Numéro de téléphone" }],
     },
     {
       field: "Description",
-      type: "enter",
       data: [{ field: "description", fieldname: "Description" }],
     },
     {
       field: "Adresse",
-      type: "enter",
       data: [
         { field: "address", fieldname: "Numéro et nom de la voie" },
         { field: "postcode", fieldname: "Code postal" },
@@ -67,7 +61,6 @@ export default function ProRegister() {
     },
     {
       field: "Disponibilité",
-      type: "select",
       data: [
         {
           field: "disponibility",
@@ -86,7 +79,6 @@ export default function ProRegister() {
     },
     {
       field: "Nombre de places",
-      type: "enter",
       data: [{ field: "places", fieldname: "Nombre de places" }],
     },
   ];
