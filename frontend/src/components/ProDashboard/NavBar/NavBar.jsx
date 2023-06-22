@@ -13,7 +13,7 @@ import styles from "./NavBar.module.css";
 import Logo from "../../../assets/babyplace-logo.png";
 
 export default function NavBar() {
-  const [openMenu, setOpenMenu] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);

@@ -58,7 +58,7 @@ CREATE TABLE reservation (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   date_time_reservation DATETIME NOT NULL,
   reservation_date DATE NOT NULL,
-  status VARCHAR(45) NOT NULL,
+  status INT NOT NULL,
   child_id INT NOT NULL,
   place_id INT NOT NULL,
   CONSTRAINT reservation_child FOREIGN KEY (child_id) REFERENCES child(id),
