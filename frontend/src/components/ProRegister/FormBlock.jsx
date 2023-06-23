@@ -128,10 +128,6 @@ function FormBlock({
     setValidationMessage(null);
   }, [activeField]);
 
-  // useEffect(() => {
-  //   console.log(registerInfo);
-  // }, [registerInfo]);
-
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
   // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
