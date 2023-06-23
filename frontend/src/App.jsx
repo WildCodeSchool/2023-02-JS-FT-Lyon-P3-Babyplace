@@ -12,6 +12,9 @@ import DashboardHome from "./components/ProDashboard/DashboardHome/DashboardHome
 import DateChoice from "./components/Particuliers/DateChoice/DateChoice";
 import ModifyData from "./components/ProDashboard/ModifyData/ModifyData";
 import FormParent from "./components/Particuliers/Form/FormParent";
+import FormCompletChildren from "./components/Particuliers/FormComplet/FormCompletChildren";
+import FormCompletParent from "./components/Particuliers/FormComplet/FormCompletParent";
+import FormCompletWelcome from "./components/Particuliers/FormComplet/FormCompletWelcome";
 import { UserContextProvider } from "./contexts/UserContext";
 
 import "./App.css";
@@ -30,6 +33,15 @@ function App() {
           <Route path="/particulier/recherche" element={<SearchList />} />
           <Route path="/particulier" element={<Particulier />} />
           <Route path="/particulier-register" element={<FormParent />} />
+          <Route path="/particulier/:id" element={<FormCompletWelcome />} />
+          <Route
+            path="/particulier/:id/child"
+            element={<FormCompletChildren />}
+          />
+          <Route
+            path="/particulier/:id/parent"
+            element={<FormCompletParent />}
+          />
           <Route path="/pro-register" element={<ProRegister />} />
           <Route path="/pro" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />
