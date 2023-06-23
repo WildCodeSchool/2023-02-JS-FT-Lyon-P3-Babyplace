@@ -11,6 +11,8 @@ const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 export default function DateChoice() {
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+
+  // Creation palette personnalisée pour MUI
   const theme = createTheme({
     palette: {
       primary: {
@@ -19,6 +21,7 @@ export default function DateChoice() {
     },
   });
 
+  // Mise en place du recueil des dates
   const [selectedDay, setSelectedDay] = useState("");
 
   const handleClick = (day) => {

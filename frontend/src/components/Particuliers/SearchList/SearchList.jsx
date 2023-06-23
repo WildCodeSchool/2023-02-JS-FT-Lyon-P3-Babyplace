@@ -6,8 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import pro1test from "../../../assets/pro1test.jpg";
-import user from "../../../assets/user.png";
+import pro1test from "../../../assets/images/pro1test.jpg";
+import user from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
@@ -67,6 +67,7 @@ export default function SearchList() {
                   </Typography>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
+                      {/*  Montage composant des disponibilités lié au back */}
                       <DispoPros id={pro.id} />
                     </Typography>
                   </CardContent>

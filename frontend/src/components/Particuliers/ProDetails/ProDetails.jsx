@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import pro1test from "../../../assets/pro1test.jpg";
+import pro1test from "../../../assets/images/pro1test.jpg";
 import DispoPros from "../SearchList/DispoPros";
 import style from "./ProDetails.module.css";
 
