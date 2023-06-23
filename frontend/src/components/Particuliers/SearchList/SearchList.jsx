@@ -67,6 +67,7 @@ export default function SearchList() {
                   </Typography>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
+                      {/*  Montage composant des disponibilités lié au back */}
                       <DispoPros id={pro.id} />
                     </Typography>
                   </CardContent>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Joi from "joi";
@@ -7,22 +8,67 @@ import style from "./FormParent.module.css";
 
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
-const schema = Joi.object({
-  lastname: Joi.string().required().label("Lastname"),
-  firstname: Joi.string().required().label("Firstname"),
-  /* birthdate: Joi.string()
-    .pattern(/^\d{2}\/\d{2}\/\d{4}$/)
-    .required()
-    .label("Birthdate"),
-  email: Joi.string().email().required().label("Email"),
-  password: Joi.string().required().label("Password"),
-  address: Joi.string().required().label("Address"),
-  postCode: Joi.string().required().label("Postcode"),
-  city: Joi.string().required().label("City"),
-  phoneNumber: Joi.string().required().label("Phone Number"), */
-});
 export default function FormParent() {
+  // Mise en place du schema pour les validateurs Joi
+  const schema = Joi.object({
+    lastname: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Votre nom doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre nom doit avoir une longueur maximale de 80 caractères.",
+    }),
+    firstname: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Votre prénom doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre prénom doit avoir une longueur maximale de 80 caractères.",
+    }),
+    birthdate: Joi.string()
+      .pattern(/^\d{2}\/\d{2}\/\d{4}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre date de naissance doit respecter le format JJ/MM/AAAA.",
+      }),
+    mail_address: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net", "fr"] },
+      })
+      .messages({
+        "string.email": "Vous devez entrez une adresse mail valide.",
+      }),
+    password: Joi.string()
+      .regex(/^[a-zA-Z0-9]{3,30}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 3 à 30 caractères.",
+      }),
+    address: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Votre adresse doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre adresse doit avoir une longueur maximale de 80 caractères.",
+    }),
+    postcode: Joi.number().integer().messages({
+      "number.base":
+        "Votre code postal doit être constitué uniquement de caractères numériques.",
+    }),
+    city: Joi.string().min(3).max(45).messages({
+      "string.min":
+        "Le nom de la ville doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Le nom de la ville doit avoir une longueur maximale de 45 caractères.",
+    }),
+    phone_number: Joi.number().less(10).integer().messages({
+      "number.base":
+        "Votre numéro de téléphone doit être constitué uniquement de caractères numériques.",
+      "number.less":
+        "Votre numéro de téléphone doit respecter le format requis.",
+    }),
+  });
   const navigate = useNavigate();
+  const [validationMessage, setValidationMessage] = useState(null);
+
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -49,9 +95,11 @@ export default function FormParent() {
     const { error } = schema.validate(formData);
 
     if (error) {
-      console.error(error);
-      return;
+      setValidationMessage(error.message);
+    } else {
+      setValidationMessage(null);
     }
+    // Envoi au back des données recueillies dans le form
     axios
       .post(`${backEndUrl}/parent`, formData)
       .then((response) => response.data)
@@ -97,7 +145,7 @@ export default function FormParent() {
         />
 
         <input
-          type="email"
+          type="text"
           name="mail_address"
           placeholder="Email"
           value={email}
@@ -138,6 +186,9 @@ export default function FormParent() {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
+        {validationMessage ? (
+          <Alert severity="error">{validationMessage}</Alert>
+        ) : null}
         <button type="submit" className={style.button}>
           Créer un compte
         </button>
