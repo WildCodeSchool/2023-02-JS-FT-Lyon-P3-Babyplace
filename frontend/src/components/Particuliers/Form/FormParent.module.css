@@ -51,9 +51,12 @@
 @media screen and (min-width: 1024px) {
   .form {
     padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
   .form input {
     padding: 1rem 3rem;
-    margin: 0.3rem;
+    margin: 0.7rem;
+    font-size: large;
   }
 }

@@ -2,16 +2,30 @@ import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Joi from "joi";
 import style from "./FormParent.module.css";
 
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
+const schema = Joi.object({
+  lastname: Joi.string().required().label("Lastname"),
+  firstname: Joi.string().required().label("Firstname"),
+  /* birthdate: Joi.string()
+    .pattern(/^\d{2}\/\d{2}\/\d{4}$/)
+    .required()
+    .label("Birthdate"),
+  email: Joi.string().email().required().label("Email"),
+  password: Joi.string().required().label("Password"),
+  address: Joi.string().required().label("Address"),
+  postCode: Joi.string().required().label("Postcode"),
+  city: Joi.string().required().label("City"),
+  phoneNumber: Joi.string().required().label("Phone Number"), */
+});
 export default function FormParent() {
   const navigate = useNavigate();
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [birthdate, setBirthdate] = useState(null);
+  const [birthdate, setBirthdate] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
@@ -32,7 +46,12 @@ export default function FormParent() {
       city,
       phone_number: phoneNumber,
     };
+    const { error } = schema.validate(formData);
 
+    if (error) {
+      console.error(error);
+      return;
+    }
     axios
       .post(`${backEndUrl}/parent`, formData)
       .then((response) => response.data)
