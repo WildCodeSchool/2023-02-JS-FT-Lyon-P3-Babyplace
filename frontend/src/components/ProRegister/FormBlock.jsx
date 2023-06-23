@@ -162,6 +162,7 @@ function FormBlock({
               if (field.field === activeField) {
                 return (
                   <FormPart
+                    key={field.field}
                     data={field.data}
                     activeField={activeField}
                     formBlockInfo={formBlockInfo}
