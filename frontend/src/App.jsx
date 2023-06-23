@@ -11,6 +11,7 @@ import UserAuth from "./components/ProDashboard/UserAuth/UserAuth";
 import DashboardHome from "./components/ProDashboard/DashboardHome/DashboardHome";
 import DateChoice from "./components/Particuliers/DateChoice/DateChoice";
 import ModifyData from "./components/ProDashboard/ModifyData/ModifyData";
+import FormParent from "./components/Particuliers/Form/FormParent";
 import { UserContextProvider } from "./contexts/UserContext";
 
 import "./App.css";
@@ -28,6 +29,7 @@ function App() {
           />
           <Route path="/particulier/recherche" element={<SearchList />} />
           <Route path="/particulier" element={<Particulier />} />
+          <Route path="/particulier-register" element={<FormParent />} />
           <Route path="/pro-register" element={<ProRegister />} />
           <Route path="/pro" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />
