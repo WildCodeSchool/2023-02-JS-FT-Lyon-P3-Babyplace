@@ -71,12 +71,22 @@ const verifyPassword = (req, res) => {
     .then((isPasswordOk) => {
       if (isPasswordOk) {
         // create token encoded with secret password in .env
-        const token = jwt.sign({ sub: req.user.id }, JWT_SECRET, {
-          algorithm: "HS512",
-          expiresIn: JWT_TIMING, // token expires after delay defined in .env
-        });
+        const token = jwt.sign(
+          { sub: req.user.id, role: req.user.role },
+          JWT_SECRET,
+          {
+            algorithm: "HS512",
+            expiresIn: JWT_TIMING, // token expires after delay defined in .env
+          }
+        );
         delete req.user.hashedPassword;
-        res.send({ token, user: req.user });
+        delete req.user.password;
+        res
+          .cookie("access_token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+          })
+          .send(req.user);
       } else res.sendStatus(401);
     })
     .catch((err) => {
@@ -95,10 +105,29 @@ const verifyIfRegistered = (req, res, next) => {
   });
 };
 
+const verifyToken = (req, res, next) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.sendStatus(403);
+    }
+    req.payloads = jwt.verify(token, JWT_SECRET);
+    return next();
+  } catch (err) {
+    return res.sendStatus(403);
+  }
+};
+
+const logout = (req, res) => {
+  res.clearCookie("access_token").sendStatus(200);
+};
+
 module.exports = {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
   verifyIfRegistered,
+  verifyToken,
+  logout,
 };

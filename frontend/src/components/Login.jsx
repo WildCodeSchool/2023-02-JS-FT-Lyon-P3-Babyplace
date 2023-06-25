@@ -13,7 +13,7 @@ function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
-  const { user, token, login } = useUserContext();
+  const { user, login } = useUserContext();
 
   const validateLogin =
     Object.values(loginInfo).length === 2 &&
@@ -35,8 +35,8 @@ function Login({ userType }) {
       axios
         .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
         .then((response) => {
+          login(response.data);
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          login(response.data.user, response.data.token);
           // TODO effectuer le changement de page ici
         })
         .catch((error) => {
@@ -54,7 +54,7 @@ function Login({ userType }) {
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          {user && token ? (
+          {user?.role ? (
             <Alert severity="warning">{`Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`}</Alert>
           ) : null}
           {infoMessage ? <Alert severity="warning">{infoMessage}</Alert> : null}

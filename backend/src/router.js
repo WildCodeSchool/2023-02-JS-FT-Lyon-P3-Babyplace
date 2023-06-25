@@ -12,6 +12,8 @@ const {
   verifyPassword,
   hashPassword,
   verifyIfRegistered,
+  verifyToken,
+  logout,
 } = require("./services/auth");
 
 router.get("/items", itemControllers.browse);
@@ -28,6 +30,8 @@ router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/pro", proControllers.browse);
+router.get("/pro/profile", verifyToken, proControllers.profile);
+router.get("/pro/logout", verifyToken, logout);
 router.get("/pro/:id", proControllers.read);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post(
@@ -36,7 +40,7 @@ router.post(
   hashPassword,
   proControllers.add
 );
-router.post("/pro", hashPassword, proControllers.add);
+// router.post("/pro", hashPassword, proControllers.add);
 
 router.get(
   "/dashboard/reservations",

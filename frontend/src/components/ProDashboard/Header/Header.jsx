@@ -13,7 +13,7 @@ import styles from "./Header.module.css";
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { logout } = useUserContext();
+  const { user, logout } = useUserContext();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -55,7 +55,7 @@ export default function Header() {
               <div className={styles.user_img_box}>
                 <img src={User} alt="User" />
               </div>
-              Marco
+              {user.name}
               <KeyboardArrowDownOutlinedIcon />
             </Button>
             <Menu

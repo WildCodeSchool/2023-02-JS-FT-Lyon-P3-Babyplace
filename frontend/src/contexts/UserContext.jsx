@@ -16,9 +16,8 @@ export function UserContextProvider({ children }) {
     if (!user?.id) navigate("/");
   }, [user?.id]);
 
-  const login = (_user, _token) => {
+  const login = (_user) => {
     setUser(_user);
-    setToken(_token);
   };
   const logout = () => {
     setUser(null);
