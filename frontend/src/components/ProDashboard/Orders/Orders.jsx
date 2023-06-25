@@ -20,7 +20,7 @@ export default function Orders() {
         setReservations(res.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [reservations]);
 
   const handleSelect = (e) => {
     setSelectedValue(e.target.id);
