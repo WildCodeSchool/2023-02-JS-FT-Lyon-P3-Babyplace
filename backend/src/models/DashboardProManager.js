@@ -27,6 +27,33 @@ class DashboardProManager extends AbstractManager {
       [id]
     );
   }
+
+  validThisOrder(id) {
+    return this.database.query(
+      `update ${this.table}
+      set status = 1
+      where id = ?`,
+      [id]
+    );
+  }
+
+  refuseThisOrder(id) {
+    return this.database.query(
+      `update ${this.table}
+      set status = 2
+      where id = ?`,
+      [id]
+    );
+  }
+
+  cancelThisOrder(id) {
+    return this.database.query(
+      `update ${this.table}
+      set status = 3
+      where id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = DashboardProManager;

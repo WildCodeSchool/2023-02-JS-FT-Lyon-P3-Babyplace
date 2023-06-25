@@ -1,0 +1,76 @@
+.blur_modal {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background_box {
+  height: fit-content;
+  width: fit-content;
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 800px;
+  max-height: 800px;
+  padding: 10px;
+  background-color: rgb(237, 237, 237);
+  border-radius: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  border: solid rgb(48, 48, 48) 2px;
+}
+
+.modal_border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  width: 90%;
+}
+
+.back_btn {
+  height: 40px;
+  width: 40px;
+  margin-top: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.close_img {
+  width: 100%;
+  height: 100%;
+}
+
+.back_btn:hover {
+  background-color: rgba(97, 97, 97, 0.41);
+}
+
+@media screen and (max-width: 500px) {
+  .background_box {
+    height: fit-content;
+    width: fit-content;
+    min-height: 200px;
+    min-width: 200px;
+    max-width: 600px;
+    max-height: 500px;
+    padding: 10px;
+  }
+}

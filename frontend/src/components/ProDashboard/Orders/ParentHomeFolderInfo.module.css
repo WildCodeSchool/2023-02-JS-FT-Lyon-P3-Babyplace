@@ -1,3 +1,8 @@
+.center_div {
+  text-align: center;
+  padding: 10px 0 5px 0;
+}
+
 .parent_home_folder_info_box {
   height: fit-content;
   width: fit-content;
@@ -44,6 +49,17 @@
   text-align: center;
   font-size: 1.2rem;
   margin-bottom: 5px;
+}
+
+.close_btn {
+  text-align: center;
+  height: 35px;
+  width: 90px;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  border-radius: 10px;
+  background-color: rgb(201, 144, 255);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {

@@ -9,7 +9,7 @@
     background: linear-gradient(130deg, rgba(92,70,237,1) 0%, rgba(247,131,255,1) 100%);
     position: relative;
     animation: opening-menu 1s ease;
-    z-index: 10;
+    z-index: 14;
 }
 
 .closed_menu {
@@ -18,7 +18,7 @@
     width: 70px;
     background: linear-gradient(130deg, rgba(92,70,237,1) 0%, rgba(247,131,255,1) 100%);
     animation: closing-menu 0.5s ease;
-    z-index: 10;
+    z-index: 14;
 }
 
 .diplay_none_class {

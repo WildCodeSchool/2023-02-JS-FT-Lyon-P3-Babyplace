@@ -6,10 +6,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import User from "../../../assets/icones/user.png";
+import { useUserContext } from "../../../contexts/UserContext";
+import User from "../../../assets/icones/user-logo.png";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const { user } = useUserContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -49,7 +51,7 @@ export default function Header() {
               <div className={styles.user_img_box}>
                 <img src={User} alt="User" />
               </div>
-              Marco
+              {user.name}
               <KeyboardArrowDownOutlinedIcon />
             </Button>
             <Menu
