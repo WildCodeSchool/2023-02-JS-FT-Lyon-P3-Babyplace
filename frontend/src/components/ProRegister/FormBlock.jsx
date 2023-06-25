@@ -18,13 +18,11 @@ function FormBlock({
   const [validationMessage, setValidationMessage] = useState(null);
 
   const schema = Joi.object().keys({
-    name: Joi.string().alphanum().min(3).max(80).messages({
+    name: Joi.string().min(3).max(80).messages({
       "string.min":
         "Le nom de votre structure doit avoir une longueur minimale de 3 caractères.",
       "string.max":
         "Le nom de votre structure doit avoir une longueur maximale de 80 caractères.",
-      "string.alphanum":
-        "Le nom de votre structure doit être constitué uniquement de caractères alphanumériques.",
     }),
     mail_address: Joi.string()
       .email({
@@ -43,19 +41,19 @@ function FormBlock({
     verifyPassword: Joi.any().valid(Joi.ref("password")).messages({
       "any.only": "Vos mots de passe ne correspondent pas.",
     }),
-    address: Joi.string().alphanum().min(3).max(80).messages({
+    address: Joi.string().min(3).max(80).messages({
       "string.min":
         "Votre adresse doit avoir une longueur minimale de 3 caractères.",
       "string.max":
         "Votre adresse doit avoir une longueur maximale de 80 caractères.",
-      "string.alphanum":
-        "Votre adresse doit être constituée uniquement de caractères alphanumériques.",
     }),
-    postcode: Joi.number().integer().messages({
-      "number.base":
-        "Votre code postal doit être constitué uniquement de caractères numériques.",
-    }),
-    city: Joi.string().alphanum().min(3).max(45).messages({
+    postcode: Joi.string()
+      .regex(/^[0-9]{5}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre code postal doit être constitué uniquement de 5 caractères numériques.",
+      }),
+    city: Joi.string().min(3).max(45).messages({
       "string.min":
         "Le nom de la ville doit avoir une longueur minimale de 3 caractères.",
       "string.max":
@@ -63,17 +61,17 @@ function FormBlock({
       "string.alphanum":
         "Le nom de la ville doit être constitué uniquement de caractères alphanumériques.",
     }),
-    phone_number: Joi.number().integer().messages({
-      "number.base":
-        "Votre numéro de téléphone doit être constitué uniquement de caractères numériques.",
-    }),
-    description: Joi.string().alphanum().min(20).max(255).messages({
+    phone_number: Joi.string()
+      .regex(/^[0-9]{10}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre numéro de téléphone doit être constitué uniquement de 10 caractères numériques.",
+      }),
+    description: Joi.string().min(20).max(255).messages({
       "string.min":
         "La description doit avoir une longueur minimale de 20 caractères.",
       "string.max":
         "La description doit avoir une longueur maximale de 255 caractères.",
-      "string.alphanum":
-        "La description doit être constituée uniquement de caractères alphanumériques.",
     }),
     type: Joi.string(),
     disponibility: Joi.array(),
@@ -149,31 +147,33 @@ function FormBlock({
           Veuillez compléter les informations ci-dessous
         </h2>
       ) : (
-        <h2>Sélectionnez un champ à compléter</h2>
+        <h2 className={styles.message}>Sélectionnez un champ à compléter</h2>
       )}
       {activeField ? <p className={styles.formMessage}>{formMessage}</p> : null}
-      <div className={styles.formPart}>
-        {activeField
-          ? fieldsToComplete.map((field) => {
-              if (field.field === activeField) {
-                return (
-                  <FormPart
-                    key={field.field}
-                    data={field.data}
-                    activeField={activeField}
-                    formBlockInfo={formBlockInfo}
-                    setFormBlockInfo={setFormBlockInfo}
-                    setValidationMessage={setValidationMessage}
-                  />
-                );
-              }
-              return null;
-            })
-          : null}
-        {validationMessage ? (
-          <Alert severity="error">{validationMessage}</Alert>
-        ) : null}
-      </div>
+      {activeField ? (
+        <div className={styles.formPart}>
+          {activeField
+            ? fieldsToComplete.map((field) => {
+                if (field.field === activeField) {
+                  return (
+                    <FormPart
+                      key={field.field}
+                      data={field.data}
+                      activeField={activeField}
+                      formBlockInfo={formBlockInfo}
+                      setFormBlockInfo={setFormBlockInfo}
+                      setValidationMessage={setValidationMessage}
+                    />
+                  );
+                }
+                return null;
+              })
+            : null}
+          {validationMessage ? (
+            <Alert severity="error">{validationMessage}</Alert>
+          ) : null}
+        </div>
+      ) : null}
       {activeField ? (
         <div className={styles.formFooter}>
           <Button

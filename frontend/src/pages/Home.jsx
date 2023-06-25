@@ -7,7 +7,7 @@ import styles from "./Home.module.css";
 export default function Home() {
   return (
     <div className={styles.home}>
-      <DesignWelcome />
+      <DesignWelcome home />
       <div className={styles.redirectWindow}>
         <div className={styles.pro}>
           <p>Je suis un professionnel : </p>

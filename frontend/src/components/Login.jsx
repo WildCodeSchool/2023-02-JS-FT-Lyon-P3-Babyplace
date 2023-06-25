@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Box, TextField, Button, InputLabel } from "@mui/material";
+import { Box, TextField, Button, InputLabel, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useUserContext } from "../contexts/UserContext";
@@ -15,10 +15,9 @@ function Login({ userType }) {
   // TODO Faire context pour utilisateur et token
   const { user, setUser, token, setToken } = useUserContext();
 
-  const validateLogin = () => {
-    return true;
-  };
-
+  const validateLogin =
+    Object.values(loginInfo).length === 2 &&
+    !Object.values(loginInfo).includes("");
   // Met à jour le state loginInfo à chaque fois qu'un des champs du formulaire est changé.
   const handleChange = (e) => {
     setLoginInfo({
@@ -56,12 +55,10 @@ function Login({ userType }) {
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          <p>
-            {user && token
-              ? `Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`
-              : null}
-          </p>
-          <p className={styles.infoMessage}>{infoMessage || null}</p>
+          {user && token ? (
+            <Alert severity="warning">{`Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`}</Alert>
+          ) : null}
+          {infoMessage ? <Alert severity="warning">{infoMessage}</Alert> : null}
         </div>
         <Box
           component="form"

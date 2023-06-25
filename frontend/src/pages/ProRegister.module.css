@@ -18,6 +18,19 @@
   align-items: center;
 }
 
+.header h1 {
+  color: white;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 4%;
+  left: 5%;
+}
+
 .stepper{
   width : 100%;
 }
