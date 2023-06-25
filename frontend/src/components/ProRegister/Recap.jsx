@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { TextField, Button, Grid } from "@mui/material";
+import { TextField, Button, Grid, Alert } from "@mui/material";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import styles from "./Recap.module.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
+  const [formValidationMessage, setFormValidationMessage] = useState(null);
   const handleSubmitRegister = () => {
-    console.warn("Submit !");
+    axios
+      .post(`${BACKEND_URL}/pro/register`, registerInfo)
+      .then((response) => {
+        if (response.status === 201) {
+          setFormValidationMessage(
+            "Compte créé. Vous pouvez désormais vous connecter."
+          );
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 400)
+          setFormValidationMessage("Veuillez utiliser une autre adresse mail");
+      });
   };
+
   return (
     <div className={styles.recapPage}>
       <Grid container spacing={3}>
@@ -65,19 +83,38 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
           })}
         </div>
         <Grid item xs={12}>
-          <div className={styles.recapFooter}>
-            {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
-            <Button
-              onClick={handleSubmitRegister}
-              variant="contained"
-              disabled={
-                Object.values(registerInfo).includes(null) ||
-                Object.values(registerInfo).includes([]) ||
-                Object.values(registerInfo).includes("")
+          {formValidationMessage ? (
+            <Alert
+              severity={
+                formValidationMessage ===
+                "Veuillez utiliser une autre adresse mail"
+                  ? "error"
+                  : "success"
               }
             >
-              Terminer
-            </Button>
+              {formValidationMessage}
+            </Alert>
+          ) : null}
+          <div className={styles.recapFooter}>
+            {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
+            {formValidationMessage ===
+            "Compte créé. Vous pouvez désormais vous connecter." ? (
+              <Link to="/pro">
+                <Button variant="contained">Se connecter</Button>
+              </Link>
+            ) : (
+              <Button
+                onClick={handleSubmitRegister}
+                variant="contained"
+                disabled={
+                  Object.values(registerInfo).includes(null) ||
+                  Object.values(registerInfo).includes([]) ||
+                  Object.values(registerInfo).includes("")
+                }
+              >
+                Terminer
+              </Button>
+            )}
           </div>
         </Grid>
       </Grid>

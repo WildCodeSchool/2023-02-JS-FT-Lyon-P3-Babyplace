@@ -85,9 +85,20 @@ const verifyPassword = (req, res) => {
     });
 };
 
+const verifyIfRegistered = (req, res, next) => {
+  models.pro.findProByEmail(req.body.mail_address).then(([rows]) => {
+    if (rows[0] == null) {
+      next();
+    } else {
+      res.sendStatus(400);
+    }
+  });
+};
+
 module.exports = {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
+  verifyIfRegistered,
 };

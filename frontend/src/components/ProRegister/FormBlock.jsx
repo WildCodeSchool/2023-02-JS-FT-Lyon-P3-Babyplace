@@ -18,13 +18,11 @@ function FormBlock({
   const [validationMessage, setValidationMessage] = useState(null);
 
   const schema = Joi.object().keys({
-    name: Joi.string().alphanum().min(3).max(80).messages({
+    name: Joi.string().min(3).max(80).messages({
       "string.min":
         "Le nom de votre structure doit avoir une longueur minimale de 3 caractères.",
       "string.max":
         "Le nom de votre structure doit avoir une longueur maximale de 80 caractères.",
-      "string.alphanum":
-        "Le nom de votre structure doit être constitué uniquement de caractères alphanumériques.",
     }),
     mail_address: Joi.string()
       .email({
@@ -43,19 +41,17 @@ function FormBlock({
     verifyPassword: Joi.any().valid(Joi.ref("password")).messages({
       "any.only": "Vos mots de passe ne correspondent pas.",
     }),
-    address: Joi.string().alphanum().min(3).max(80).messages({
+    address: Joi.string().min(3).max(80).messages({
       "string.min":
         "Votre adresse doit avoir une longueur minimale de 3 caractères.",
       "string.max":
         "Votre adresse doit avoir une longueur maximale de 80 caractères.",
-      "string.alphanum":
-        "Votre adresse doit être constituée uniquement de caractères alphanumériques.",
     }),
     postcode: Joi.number().integer().messages({
       "number.base":
         "Votre code postal doit être constitué uniquement de caractères numériques.",
     }),
-    city: Joi.string().alphanum().min(3).max(45).messages({
+    city: Joi.string().min(3).max(45).messages({
       "string.min":
         "Le nom de la ville doit avoir une longueur minimale de 3 caractères.",
       "string.max":
@@ -67,13 +63,11 @@ function FormBlock({
       "number.base":
         "Votre numéro de téléphone doit être constitué uniquement de caractères numériques.",
     }),
-    description: Joi.string().alphanum().min(20).max(255).messages({
+    description: Joi.string().min(20).max(255).messages({
       "string.min":
         "La description doit avoir une longueur minimale de 20 caractères.",
       "string.max":
         "La description doit avoir une longueur maximale de 255 caractères.",
-      "string.alphanum":
-        "La description doit être constituée uniquement de caractères alphanumériques.",
     }),
     type: Joi.string(),
     disponibility: Joi.array(),
