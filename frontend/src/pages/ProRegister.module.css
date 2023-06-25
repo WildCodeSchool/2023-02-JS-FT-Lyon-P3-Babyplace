@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.header h1 {
+  color: white;
+}
+
 .button_back {
   cursor: pointer;
   background: transparent;

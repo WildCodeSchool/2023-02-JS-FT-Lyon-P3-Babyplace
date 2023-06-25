@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TextField, Button, Grid, Alert } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./Recap.module.css";
@@ -61,6 +63,7 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
             return (
               <Grid item xs={12}>
                 <TextField
+                  disabled
                   key={field.field}
                   label={field.field}
                   margin="normal"
@@ -70,6 +73,11 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
                   content={field.field}
                   color={valuesToConcatenate ? "success" : "warning"}
                 />
+                {valuesToConcatenate ? (
+                  <CheckIcon color="success" />
+                ) : (
+                  <DoNotDisturbIcon color="warning" />
+                )}
                 <Button
                   variant="contained"
                   onClick={() => {
