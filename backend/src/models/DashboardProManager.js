@@ -54,6 +54,17 @@ class DashboardProManager extends AbstractManager {
       [id]
     );
   }
+
+  getChildOnThisDate(date) {
+    return this.database.query(
+      `select r.id,  DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation, c.firstname prenom_enfant, c.lastname nom_enfant,
+      r.status from reservation AS r
+     join child AS c ON c.id = r.child_id
+     where r.reservation_date = ?
+     and r.status = 1`,
+      [date]
+    );
+  }
 }
 
 module.exports = DashboardProManager;

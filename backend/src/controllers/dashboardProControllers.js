@@ -75,10 +75,27 @@ const cancelOrder = (req, res) => {
     });
 };
 
+const getDateOrder = (req, res) => {
+  models.dashboardpro
+    .getChildOnThisDate(req.params.date)
+    .then(([rows]) => {
+      if (rows == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
   validateOrder,
   refuseOrder,
   cancelOrder,
+  getDateOrder,
 };

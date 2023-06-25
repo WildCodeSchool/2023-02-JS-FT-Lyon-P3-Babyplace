@@ -58,5 +58,6 @@ router.put(
   "/dashboard/reservations/cancel/:id",
   dashboardProControllers.cancelOrder
 );
+router.get("/dashboard/calendar/:date", dashboardProControllers.getDateOrder);
 
 module.exports = router;

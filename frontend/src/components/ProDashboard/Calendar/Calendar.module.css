@@ -1,4 +1,32 @@
 .calendar_box {
-    
-    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left_container {
+    width: 500px;
+    height: 700px;
+    border: solid blue 2px;
+}
+
+.calendar_component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid orange 2px;
+    height: 80%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.right_container {
+    width: 300px;
+    height: 600px;
+    margin-left: 100px;
+    border: solid rgb(55, 255, 0) 2px;
 }
