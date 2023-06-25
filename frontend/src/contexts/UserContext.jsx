@@ -1,13 +1,29 @@
 import PropTypes from "prop-types";
-import { createContext, useState, useMemo, useContext } from "react";
+import { createContext, useEffect, useMemo, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const UserContext = createContext();
 
 export default UserContext;
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useLocalStorage("user", {});
+  const [token, setToken] = useLocalStorage("token", "");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id) navigate("/");
+  }, [user?.id]);
+
+  const login = (_user, _token) => {
+    setUser(_user);
+    setToken(_token);
+  };
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+  };
 
   const value = useMemo(
     () => ({
@@ -15,6 +31,8 @@ export function UserContextProvider({ children }) {
       setUser,
       token,
       setToken,
+      login,
+      logout,
     }),
     [user, token]
   );

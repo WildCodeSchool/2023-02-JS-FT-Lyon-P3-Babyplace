@@ -6,16 +6,22 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import { useUserContext } from "../../../contexts/UserContext";
 import User from "../../../assets/icones/user.png";
 import styles from "./Header.module.css";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const { logout } = useUserContext();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    logout();
     setAnchorEl(null);
   };
   return (
@@ -62,7 +68,7 @@ export default function Header() {
               }}
             >
               <MenuItem onClick={handleClose}>Mes paramètres</MenuItem>
-              <MenuItem onClick={handleClose}>Se déconnecter</MenuItem>
+              <MenuItem onClick={handleLogout}>Se déconnecter</MenuItem>
             </Menu>
           </div>
         </div>

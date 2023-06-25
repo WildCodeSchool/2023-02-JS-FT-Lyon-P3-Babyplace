@@ -13,7 +13,7 @@ function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
-  const { user, setUser, token, setToken } = useUserContext();
+  const { user, token, login } = useUserContext();
 
   const validateLogin =
     Object.values(loginInfo).length === 2 &&
@@ -36,8 +36,7 @@ function Login({ userType }) {
         .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
         .then((response) => {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          setUser(response.data.user);
-          setToken(response.data.token);
+          login(response.data.user, response.data.token);
           // TODO effectuer le changement de page ici
         })
         .catch((error) => {
