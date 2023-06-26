@@ -52,5 +52,17 @@ router.get(
   verifyToken,
   dashboardProControllers.showMoreInfoOnOrder
 );
+router.put(
+  "/dashboard/reservations/validate/:id",
+  dashboardProControllers.validateOrder
+);
+router.put(
+  "/dashboard/reservations/refuse/:id",
+  dashboardProControllers.refuseOrder
+);
+router.put(
+  "/dashboard/reservations/cancel/:id",
+  dashboardProControllers.cancelOrder
+);
 
 module.exports = router;

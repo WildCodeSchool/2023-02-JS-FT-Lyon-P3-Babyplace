@@ -7,7 +7,7 @@ import Badge from "@mui/material/Badge";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { useUserContext } from "../../../contexts/UserContext";
-import User from "../../../assets/icones/user.png";
+import User from "../../../assets/icones/user-logo.png";
 import styles from "./Header.module.css";
 
 export default function Header() {
