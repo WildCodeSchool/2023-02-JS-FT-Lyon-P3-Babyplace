@@ -75,4 +75,7 @@
   .recapPage{
     width: 100%;
   }
+  .recapBlock > div > div {
+    width: 50%;
+  }
 }

@@ -19,6 +19,7 @@
 }
 
 .button_back {
+  cursor: pointer;
   background: transparent;
   color: white;
   position: fixed;

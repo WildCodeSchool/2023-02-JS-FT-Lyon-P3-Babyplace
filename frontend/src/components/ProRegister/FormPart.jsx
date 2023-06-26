@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   TextField,
@@ -11,13 +11,15 @@ import {
 } from "@mui/material";
 
 function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
-  const [state, setState] = useState({});
   const arrayOfData = useRef([]);
 
+  // fonction qui gère le fonctionnement des boutons switch
+  // mise à jour d'un tableau des données (arrayOfData) pour lesquelles le bouton correspondant est activé
+  // et ajout de ce tableau dans le formBlockInfo
   const handleSwitch = (event) => {
     if (data[0].multiple) {
-      setState({ ...state, [event.target.name]: event.target.checked });
       if (event.target.checked) {
+        // dans le cas où le bouton est activé, on ajoute la donnée
         if (arrayOfData.length === 0) {
           arrayOfData.current.push(event.target.name);
         } else {
@@ -28,13 +30,14 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
             )
           );
         }
-
         setFormBlockInfo({
           ...formBlockInfo,
           empty: false,
           [data[0].field]: arrayOfData.current,
         });
       } else {
+        // dans le cas où le bouton est désactivé, on reti la donnée, et si le tableau est vide, on informe que le formBlockInfo est vide
+        // pour désactive le bouton OK
         arrayOfData.current.splice(
           arrayOfData.current.indexOf(event.target.name, 1)
         );
@@ -55,6 +58,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     }
   };
 
+  // La fonction suivante permet d'ajouter la données relative au bouton radio dans les données du formBlockInfo
   const handleRadioButtonChange = (e) => {
     setFormBlockInfo({
       ...formBlockInfo,
@@ -63,6 +67,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     });
   };
 
+  // La fonction suivante permet d'ajouter la données relative au champ de texte dans les données du formBlockInfo
   const handleFieldChange = (e, field) => {
     setFormBlockInfo({
       ...formBlockInfo,
@@ -71,6 +76,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     });
   };
 
+  // le formBlockInfo est remis à vide quand le composant est démonté
   useEffect(() => {
     return setFormBlockInfo({ empty: true });
   }, []);

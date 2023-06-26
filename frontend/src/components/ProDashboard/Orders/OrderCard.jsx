@@ -1,17 +1,24 @@
 import PropTypes from "prop-types";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useState } from "react";
-import ModalWrapper from "../../ModalWrapper";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import ParentHomeFolderInfo from "./ParentHomeFolderInfo";
 import styles from "./OrderCard.module.css";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function OrderCard({ reservation }) {
   const [openModal, setOpenModal] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const { id } = reservation;
+  const notifySuccess = (text) => toast.success(text);
+  const notifyFail = () => toast.error("Un problème est survenu");
 
   const getDetailStatus = () => {
     if (reservation.status === 0) {
@@ -52,17 +59,52 @@ export default function OrderCard({ reservation }) {
 
   const handleModalOpen = () => {
     setOrderId(id);
-    setOpenModal(!openModal);
+    setOpenModal(true);
+  };
+
+  const handleValidate = () => {
+    axios
+      .put(`${BACKEND_URL}/dashboard/reservations/validate/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          notifySuccess("Réservation acceptée");
+        } else {
+          notifyFail();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+  const handleCancel = () => {
+    if (reservation.status === 0) {
+      axios
+        .put(`${BACKEND_URL}/dashboard/reservations/refuse/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            notifySuccess("Réservation refusée");
+          } else {
+            notifyFail();
+          }
+        })
+        .catch((err) => console.error(err));
+    } else if (reservation.status === 1) {
+      axios
+        .put(`${BACKEND_URL}/dashboard/reservations/cancel/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            notifySuccess("Réservation annulée");
+          } else {
+            notifyFail();
+          }
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
     <>
       {openModal && (
-        <ModalWrapper
-          closeModalProp={setOpenModal}
-          closeModalPropte={openModal}
-        >
-          <ParentHomeFolderInfo orderId={orderId} />
+        <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
+          <ParentHomeFolderInfo orderId={orderId} closeModal={setOpenModal} />
         </ModalWrapper>
       )}
       <div className={styles.ordercard_box}>
@@ -134,6 +176,7 @@ export default function OrderCard({ reservation }) {
                   variant="contained"
                   color="success"
                   sx={{ borderRadius: 5, my: 1 }}
+                  onClick={handleValidate}
                 >
                   Accepter
                   <TaskAltOutlinedIcon />
@@ -146,6 +189,8 @@ export default function OrderCard({ reservation }) {
                   variant="contained"
                   color="error"
                   sx={{ borderRadius: 5, my: 1 }}
+                  id="cancel"
+                  onClick={handleCancel}
                 >
                   {reservation.status === 1 ? "Annuler" : "Refuser"}
                   <CancelOutlinedIcon />
@@ -154,6 +199,18 @@ export default function OrderCard({ reservation }) {
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     </>
   );
