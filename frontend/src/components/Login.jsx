@@ -2,18 +2,18 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Box, TextField, Button, InputLabel, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useUserContext } from "../contexts/UserContext";
 import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
+import instance from "../services/APIService";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
-  const { user, setUser, token, setToken } = useUserContext();
+  const { user, login } = useUserContext();
 
   const validateLogin =
     Object.values(loginInfo).length === 2 &&
@@ -32,12 +32,10 @@ function Login({ userType }) {
     event.preventDefault();
     if (validateLogin) {
       // TODO gérer l'authentification de manière plus approfondie lorsqu'on aura eu tous les cours sur le sujet
-      axios
-        .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
+      instance
+        .post(`/${userType}/login`, loginInfo)
         .then((response) => {
-          axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          setUser(response.data.user);
-          setToken(response.data.token);
+          login(response.data);
           // TODO effectuer le changement de page ici
         })
         .catch((error) => {
@@ -55,7 +53,7 @@ function Login({ userType }) {
       <DesignWelcome />
       <div className={styles.loginForm}>
         <div>
-          {user && token ? (
+          {user?.role ? (
             <Alert severity="warning">{`Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`}</Alert>
           ) : null}
           {infoMessage ? <Alert severity="warning">{infoMessage}</Alert> : null}
