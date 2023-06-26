@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Box, TextField, Button, InputLabel, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useUserContext } from "../contexts/UserContext";
 import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
+import instance from "../services/APIService";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
@@ -32,11 +32,10 @@ function Login({ userType }) {
     event.preventDefault();
     if (validateLogin) {
       // TODO gérer l'authentification de manière plus approfondie lorsqu'on aura eu tous les cours sur le sujet
-      axios
-        .post(`${BACKEND_URL}/${userType}/login`, loginInfo)
+      instance
+        .post(`/${userType}/login`, loginInfo)
         .then((response) => {
           login(response.data);
-          axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           // TODO effectuer le changement de page ici
         })
         .catch((error) => {

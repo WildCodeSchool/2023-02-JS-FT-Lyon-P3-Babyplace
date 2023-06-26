@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { createContext, useEffect, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
+import instance from "../services/APIService";
 
 const UserContext = createContext();
 
@@ -20,6 +21,7 @@ export function UserContextProvider({ children }) {
     setUser(_user);
   };
   const logout = () => {
+    instance.get("/logout");
     setUser(null);
     setToken(null);
   };

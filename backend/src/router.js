@@ -22,6 +22,8 @@ router.put("/items/:id", itemControllers.edit);
 router.post("/items", itemControllers.add);
 router.delete("/items/:id", itemControllers.destroy);
 
+router.get("/logout", logout);
+
 router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
 router.post("/parent/login", getParentByEmail, verifyPassword);
@@ -30,8 +32,7 @@ router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/pro", proControllers.browse);
-router.get("/pro/profile", verifyToken, proControllers.profile);
-router.get("/pro/logout", verifyToken, logout);
+router.get("/pro/profile", proControllers.profile);
 router.get("/pro/:id", proControllers.read);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post(
@@ -48,6 +49,7 @@ router.get(
 );
 router.get(
   "/dashboard/reservations/:id",
+  verifyToken,
   dashboardProControllers.showMoreInfoOnOrder
 );
 
