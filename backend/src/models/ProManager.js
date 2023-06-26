@@ -39,6 +39,13 @@ class ProManager extends AbstractManager {
       [email]
     );
   }
+
+  findProByEmail(email) {
+    return this.database.query(
+      `SELECT id FROM ${this.table} WHERE mail_address = ?`,
+      [email]
+    );
+  }
 }
 
 module.exports = ProManager;
