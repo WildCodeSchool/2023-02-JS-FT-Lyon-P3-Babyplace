@@ -1,0 +1,59 @@
+.welcomePage {
+  background: var(--main-bg-gradient);
+  height: 100vh;
+  width: 100vw;
+  color: white;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card img {
+  margin: 1.5rem 0 1rem;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text h3 {
+  margin: 1rem;
+  font-size: medium;
+}
+.text p {
+  max-width: 300px;
+  margin-top: 1rem;
+  font-size: small;
+}
+.file a,
+.fileLater a {
+  text-decoration: none;
+  color: white;
+}
+.file h3 {
+  cursor: pointer;
+  margin-top: 3rem;
+}
+.fileLater a {
+  display: flex;
+  margin-top: 2rem;
+}
+.button_back {
+  background: transparent;
+  color: white;
+}
+@media screen and (min-width: 1024px) {
+  .card img {
+    margin: 2rem 0 1.5rem;
+  }
+  .text h1 {
+    font-size: xxx-large;
+  }
+  .text h3 {
+    font-size: x-large;
+  }
+  .text p {
+    font-size: large;
+  }
+}

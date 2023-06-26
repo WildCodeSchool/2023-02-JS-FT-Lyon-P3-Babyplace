@@ -1,0 +1,243 @@
+.ordercard_box {
+    width: 90%;
+    height: 150px;
+    min-height: 150px;
+    box-shadow: 0px 0px 10px 0px rgba(76, 76, 76, 0.499);
+    margin: 15px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.order_container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.order_cancelled {
+    opacity: 0.5;
+}
+
+
+.status_bar {
+
+height: 100%;
+width: 30px;
+border-radius: 10px;
+}
+.child_data {
+display: flex;
+flex-direction: column;
+height: 100%;
+width: 15%;
+}
+.child_name_box {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 50%;
+}
+.child_more_info {
+height: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.reservation {
+display: flex;
+flex-direction: column;
+height: 100%;
+width: 60%;
+}
+.reservation_data {
+border-bottom: solid rgb(0, 0, 0) 1px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+height: 50%;
+}
+.parent_name {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.parent_type {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.status_detail_box {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.status_detail {
+display: flex;
+border-radius: 10px;
+
+width: 150px;
+height: 30px;
+justify-content: center;
+align-items: center;
+}
+.reservation_info {
+display: flex;
+justify-content: space-around;
+height: 50%;
+}
+.comming_div {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.finish_div {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.total_time_div {
+display: flex;
+flex-direction: column;
+width: 33%;
+justify-content: center;
+align-items: center;
+}
+.action_box {
+height: 100%;
+width: 25%;
+}
+.about_child {
+display: flex;
+justify-content: space-around;
+height: 20%;
+}
+.btn_box {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
+align-items: center;
+height: 80%;
+}
+
+.bold_text {
+    font-weight: bold;
+}
+
+
+.success_color {
+    background-color: rgb(100, 176, 100);
+}
+.error_color {
+    background-color: rgb(241, 87, 87);
+}
+.warning_color {
+    background-color: rgb(113, 113, 113);
+}
+.waiting_color {
+    background-color: rgb(91, 172, 204);
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 950px) {
+   .ordercard_box {
+    flex-direction: column;
+    height: 700px;
+    min-height: fit-content;
+   }
+   .order_container {
+    display: flex;
+   flex-direction: column;
+}
+.status_bar {
+    height: 30px;
+    width: 100%;
+    border-radius: 10px;
+    }
+    .child_data {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 100%;
+    }
+    
+    .reservation {
+    display: flex;
+    flex-direction: column;
+    height: 550px;
+    width: 100%;
+    }
+    .reservation * {
+        text-align: center;
+        margin: 2px 0;
+    }
+    .reservation_data {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-around;
+        margin-bottom: 10px;
+        
+    }
+    
+    .reservation_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    
+    }
+    .comming_div {
+    display: flex;
+    flex-direction: column;
+    }
+    .finish_div {
+    display: flex;
+    flex-direction: column;
+    }
+    .total_time_div {
+    display: flex;
+    flex-direction: column;
+    }
+    .action_box {
+    height: fit-content;
+    width: 100%;
+    }
+    .about_child {
+    display: flex;
+    justify-content: space-around;
+    height: 20%;
+    margin: 5px 0;
+    }
+    .btn_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0;
+   height: fit-content;
+    }
+  }
+
+

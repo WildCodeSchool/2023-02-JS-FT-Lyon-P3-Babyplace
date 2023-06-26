@@ -1,0 +1,52 @@
+.design {
+  width: 50%;
+  background: var(--main-bg-gradient);
+  color: white;
+}
+
+.design h1,
+.design h2 {
+  margin-top: 2vh;
+  padding-inline: 2vw;
+  text-align: center;
+}
+
+.design img {
+  margin: 10%;
+  margin-top: 20%;
+  width: 80%;
+  border-radius: 25px;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 4%;
+  left: 5%;
+}
+@media screen and (max-width: 950px) {
+  .home {
+    flex-direction: column;
+  }
+
+  .design {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .redirectWindow {
+    width: 100%;
+    height: 50%;
+    flex-direction: column;
+  }
+  .design img {
+    margin: auto;
+    width: auto;
+    height: 50%;
+    border-radius: 25px;
+  }
+}

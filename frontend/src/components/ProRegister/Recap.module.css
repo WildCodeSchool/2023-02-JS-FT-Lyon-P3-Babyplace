@@ -1,0 +1,81 @@
+.recapPage {
+  width: 50%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.recapPage > div {
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.recapBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recapBlock > div {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recapBlock > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.recapBlock > div > div {
+  width: 70%;
+}
+
+.recapFooter > button > div {
+  margin: auto;
+}
+
+.formButton {
+  width: 100%;
+  background-color: white;
+  margin: 0.5em auto 0 auto;
+  padding: 0.5em;
+}
+
+.formButton > div {
+  width: 70%;
+}
+
+.recapFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5%;
+}
+
+.recapFooter > button {
+  padding: 0.5em;
+}
+
+@media screen and (max-width: 950px) {
+  .recapPage{
+    width: 100%;
+  }
+  .recapBlock > div > div {
+    width: 50%;
+  }
+}

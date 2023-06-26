@@ -1,0 +1,51 @@
+.formBlockPage {
+  height: 100%;
+  width: 50%;
+  background-color: var(--second-bg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formBlockPage > div {
+  margin: 1em auto;
+  width: 70%;
+}
+
+.formBlockPage > div > div {
+  width: 100%;
+}
+
+.formPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.message {
+  padding: 1em;
+  text-align: center;
+}
+
+.formMessage {
+  padding: 1em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.formFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 950px) {
+  .formBlockPage{
+    width: 100%;
+    height: fit-content;
+    border: 1px solid black;
+  }
+}
