@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Chip } from "@mui/material";
+import { Chip, createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 import style from "./SearchList.module.css";
 
 const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(28, 187, 140)",
+    },
+  },
+});
 export default function DispoPros({ id }) {
   const [dispos, setDispos] = useState(null);
   const [chipData] = useState([
@@ -28,25 +36,27 @@ export default function DispoPros({ id }) {
 
   if (!dispos) return null;
   return (
-    <div className={style.dispos_pro}>
-      {chipData.map((data) => {
-        let color;
-        for (let i = 0; i < dispos.length; i += 1) {
-          if (data.label === dispos[i].day) {
-            color = "success";
+    <ThemeProvider theme={theme}>
+      <div className={style.dispos_pro}>
+        {chipData.map((data) => {
+          let color;
+          for (let i = 0; i < dispos.length; i += 1) {
+            if (data.label === dispos[i].day) {
+              color = "primary";
+            }
           }
-        }
 
-        return (
-          <Chip
-            key={data.label}
-            color={color}
-            label={data.label}
-            sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}
-          />
-        );
-      })}
-    </div>
+          return (
+            <Chip
+              key={data.label}
+              color={color}
+              label={data.label}
+              sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}
+            />
+          );
+        })}
+      </div>
+    </ThemeProvider>
   );
 }
 DispoPros.propTypes = {
