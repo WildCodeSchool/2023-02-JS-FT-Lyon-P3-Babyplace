@@ -95,6 +95,22 @@ const destroy = (req, res) => {
     });
 };
 
+const profile = (req, res) => {
+  const id = req.payloads.sub;
+  models.pro
+    .find(id)
+    .then(([users]) => {
+      if (users[0] === null) {
+        res.sendStatus(404);
+      }
+      res.send(users[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -102,4 +118,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  profile,
 };

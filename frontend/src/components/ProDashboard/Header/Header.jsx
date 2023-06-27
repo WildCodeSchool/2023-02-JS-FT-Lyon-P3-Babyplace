@@ -11,13 +11,17 @@ import User from "../../../assets/icones/user-logo.png";
 import styles from "./Header.module.css";
 
 export default function Header() {
-  const { user } = useUserContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const { user, logout } = useUserContext();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    logout();
     setAnchorEl(null);
   };
   return (
@@ -64,7 +68,7 @@ export default function Header() {
               }}
             >
               <MenuItem onClick={handleClose}>Mes paramètres</MenuItem>
-              <MenuItem onClick={handleClose}>Se déconnecter</MenuItem>
+              <MenuItem onClick={handleLogout}>Se déconnecter</MenuItem>
             </Menu>
           </div>
         </div>

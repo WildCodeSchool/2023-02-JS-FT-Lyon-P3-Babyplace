@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Joi from "joi";
 import style from "./FormParent.module.css";
@@ -95,9 +95,18 @@ export default function FormParent() {
     // Envoi au back des données recueillies dans le formulaire
     axios
       .post(`${backEndUrl}/parent`, formInfo)
-      .then((response) => response.data)
+      .then((response) => {
+        if (response.status === 201) {
+          setValidationMessage(
+            "Compte créé. Vous pouvez désormais vous connecter."
+          );
+        }
+      })
 
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response.status === 500)
+          setValidationMessage("Veuillez utiliser une autre adresse mail");
+      });
   };
   return (
     <div className={style.card}>
@@ -136,7 +145,6 @@ export default function FormParent() {
           pattern="\d{4}/\d{2}/\d{2}"
           onChange={handleChange}
         />
-
         <input
           type="email"
           name="mail_address"
@@ -145,7 +153,7 @@ export default function FormParent() {
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Mot de passe"
           value={formInfo.password}
@@ -179,13 +187,47 @@ export default function FormParent() {
           value={formInfo.phone_number}
           onChange={handleChange}
         />
-        {validationMessage ? (
-          <Alert severity="error">{validationMessage}</Alert>
-        ) : null}
-        <button type="submit" className={style.button}>
-          Créer un compte
-        </button>
       </form>
+      <div className={style.validationMessage}>
+        {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+          <Alert
+            severity={
+              validationMessage === "Veuillez utiliser une autre adresse mail"
+                ? "error"
+                : "success"
+            }
+          >
+            {validationMessage}
+          </Alert>
+        ) : null}
+        {validationMessage !==
+        "Compte créé. Vous pouvez désormais vous connecter." ? (
+          <button type="submit" className={style.button}>
+            Créer un compte
+          </button>
+        ) : null}
+      </div>
+      {validationMessage ===
+      "Compte créé. Vous pouvez désormais vous connecter." ? (
+        <Alert
+          severity={
+            validationMessage ===
+            "Compte créé. Vous pouvez désormais vous connecter."
+              ? "success"
+              : "error"
+          }
+        >
+          {validationMessage}
+        </Alert>
+      ) : null}
+      {validationMessage ===
+      "Compte créé. Vous pouvez désormais vous connecter." ? (
+        <Link to="/particulier">
+          <button type="button" className={style.button}>
+            Se connecter
+          </button>
+        </Link>
+      ) : null}
     </div>
   );
 }
