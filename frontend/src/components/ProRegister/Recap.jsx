@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField, Button, Grid, Alert } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
@@ -39,6 +39,10 @@ function Recap({ registerInfo }) {
       });
   };
 
+  useEffect(() => {
+    setInfoToModify({});
+  }, []);
+
   // Le bloc suivant gère le rendu dans le cas où l'utilisateur est connecté (partie modification du dashboard)
   if (user) {
     return (
@@ -62,7 +66,7 @@ function Recap({ registerInfo }) {
                   }
                 }
               }
-              let valuesToConcatenate;
+              const valuesToConcatenate = [];
               let modifiedField = false;
               // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
               Object.entries(user).forEach((array) => {
@@ -73,7 +77,6 @@ function Recap({ registerInfo }) {
                   array[1] !== "" &&
                   array[1] !== null
                 ) {
-                  valuesToConcatenate = [];
                   if (Object.keys(infoToModify).includes(array[0])) {
                     Object.entries(infoToModify).forEach((entry) => {
                       if (entry[0] === array[0]) {
@@ -95,10 +98,14 @@ function Recap({ registerInfo }) {
                     label={field.field}
                     margin="normal"
                     value={
-                      valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
+                      valuesToConcatenate.length >= 1
+                        ? valuesToConcatenate.join(", ")
+                        : ""
                     }
                     content={field.field}
-                    color={valuesToConcatenate ? "success" : "warning"}
+                    color={
+                      valuesToConcatenate.length >= 1 ? "success" : "warning"
+                    }
                   />
                   {modifiedField ? (
                     <EditIcon color="success" />
@@ -187,7 +194,7 @@ function Recap({ registerInfo }) {
                   }
                 }
               }
-              let valuesToConcatenate;
+              const valuesToConcatenate = [];
               // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
               Object.entries(registerInfo).forEach((array) => {
                 if (
@@ -197,7 +204,6 @@ function Recap({ registerInfo }) {
                   array[1] !== "" &&
                   array[1] !== null
                 ) {
-                  valuesToConcatenate = [];
                   valuesToConcatenate.push(array[1]);
                 }
               });
@@ -210,12 +216,14 @@ function Recap({ registerInfo }) {
                     label={field.field}
                     margin="normal"
                     value={
-                      valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
+                      valuesToConcatenate.length >= 1
+                        ? valuesToConcatenate.join(", ")
+                        : ""
                     }
                     content={field.field}
                     color={valuesToConcatenate ? "success" : "warning"}
                   />
-                  {valuesToConcatenate ? (
+                  {valuesToConcatenate.length >= 1 ? (
                     <CheckIcon color="success" />
                   ) : (
                     <DoNotDisturbIcon color="warning" />

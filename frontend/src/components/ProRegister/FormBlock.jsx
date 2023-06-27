@@ -19,7 +19,7 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     activeField,
     setActiveField,
   } = useUserInfoContext();
-  const { user } = useUserContext;
+  const { user } = useUserContext();
 
   const schema = Joi.object().keys({
     name: Joi.string().min(3).max(80).messages({
@@ -128,9 +128,7 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     });
     setFormFields(arraOfFields);
     setValidationMessage(null);
-    console.info(infoToModify);
   }, [activeField]);
-
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
   // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
@@ -138,12 +136,12 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     if (error) {
       setValidationMessage(error.message);
     } else if (user) {
-      setRegisterInfo({ ...registerInfo, ...formBlockInfo });
+      setInfoToModify({ ...infoToModify, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
       setValidationMessage(null);
-    } else {
-      setInfoToModify({ ...infoToModify, ...formBlockInfo });
+    } else if (!user) {
+      setRegisterInfo({ ...registerInfo, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
       setValidationMessage(null);

@@ -9,7 +9,7 @@ const UserContext = createContext();
 export default UserContext;
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useLocalStorage("user", {});
+  const [user, setUser] = useLocalStorage("user", null);
   const [token, setToken] = useLocalStorage("token", "");
   const navigate = useNavigate();
 
