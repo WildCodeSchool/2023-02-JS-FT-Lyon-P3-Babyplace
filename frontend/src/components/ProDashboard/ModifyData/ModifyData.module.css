@@ -1,4 +1,18 @@
 .modifydata_box {
-    
-    background-color: aqua;
+    margin: 30px 0em 0em 70px;
+    display: flex;
+    justify-content: flex-start;
+    height: calc(100vh - 30px);
+    width: calc(100vw - 60px);
+    overflow: auto;
 }
+
+@media screen and (max-width: 950px) {
+    .modifydata_box  {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      height: calc(100vh - 30px);
+      width: calc(100vw - 60px);
+    }
+  }

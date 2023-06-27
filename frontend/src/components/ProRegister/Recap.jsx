@@ -6,10 +6,14 @@ import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./Recap.module.css";
+import { useUserContext } from "../../contexts/UserContext";
+import { useUserInfoContext } from "../../contexts/UserInfoContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
+function Recap({ registerInfo }) {
+  const { user } = useUserContext();
+  const { fieldsToComplete, setActiveField } = useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
   const handleSubmitRegister = () => {
     axios
@@ -27,113 +31,216 @@ function Recap({ registerInfo, fieldsToComplete, setActiveField }) {
       });
   };
 
-  return (
-    <div className={styles.recapPage}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <div className={styles.text}>
-            <h2>Voici le résumé de vos informations</h2>
-          </div>
-        </Grid>
-        <div className={styles.recapBlock}>
-          {fieldsToComplete.map((field) => {
-            const fieldsToConcatenate = [];
-            for (const fieldBlock of fieldsToComplete) {
-              if (fieldBlock.field === field.field) {
-                for (const row of fieldBlock.data) {
-                  fieldsToConcatenate.push(row.field);
+  if (user) {
+    return (
+      <div className={styles.recapPage}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <div className={styles.text}>
+              <h2>Voici le résumé de vos informations</h2>
+            </div>
+          </Grid>
+          <div className={styles.recapBlock}>
+            {fieldsToComplete.map((field) => {
+              const fieldsToConcatenate = [];
+              for (const fieldBlock of fieldsToComplete) {
+                if (fieldBlock.field === field.field) {
+                  for (const row of fieldBlock.data) {
+                    fieldsToConcatenate.push(row.field);
+                  }
                 }
               }
-            }
-            let valuesToConcatenate;
-            // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
-            Object.entries(registerInfo).forEach((array) => {
-              if (
-                fieldsToConcatenate.includes(array[0]) &&
-                array[0] !== "password" &&
-                array[0] !== "verifyPassword" &&
-                array[1] !== "" &&
-                array[1] !== null
-              ) {
-                valuesToConcatenate = [];
-                valuesToConcatenate.push(array[1]);
-              }
-            });
+              let valuesToConcatenate;
+              // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
+              Object.entries(user).forEach((array) => {
+                if (
+                  fieldsToConcatenate.includes(array[0]) &&
+                  array[0] !== "password" &&
+                  array[0] !== "verifyPassword" &&
+                  array[1] !== "" &&
+                  array[1] !== null
+                ) {
+                  valuesToConcatenate = [];
+                  valuesToConcatenate.push(array[1]);
+                }
+              });
 
-            return (
-              <Grid item xs={12}>
-                <TextField
-                  disabled
-                  key={field.field}
-                  label={field.field}
-                  margin="normal"
-                  value={
-                    valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
-                  }
-                  content={field.field}
-                  color={valuesToConcatenate ? "success" : "warning"}
-                />
-                {valuesToConcatenate ? (
-                  <CheckIcon color="success" />
-                ) : (
-                  <DoNotDisturbIcon color="warning" />
-                )}
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setActiveField(field.field);
-                  }}
-                >
-                  Modifier
-                </Button>
-              </Grid>
-            );
-          })}
-        </div>
-        <Grid item xs={12}>
-          {formValidationMessage ? (
-            <Alert
-              severity={
-                formValidationMessage ===
-                "Veuillez utiliser une autre adresse mail"
-                  ? "error"
-                  : "success"
-              }
-            >
-              {formValidationMessage}
-            </Alert>
-          ) : null}
-          <div className={styles.recapFooter}>
-            {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
-            {formValidationMessage ===
-            "Compte créé. Vous pouvez désormais vous connecter." ? (
-              <Link to="/pro">
-                <Button variant="contained">Se connecter</Button>
-              </Link>
-            ) : (
-              <Button
-                onClick={handleSubmitRegister}
-                variant="contained"
-                disabled={
-                  Object.values(registerInfo).includes(null) ||
-                  Object.values(registerInfo).includes([]) ||
-                  Object.values(registerInfo).includes("")
+              return (
+                <Grid item xs={12}>
+                  <TextField
+                    disabled
+                    key={field.field}
+                    label={field.field}
+                    margin="normal"
+                    value={
+                      valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
+                    }
+                    content={field.field}
+                    color={valuesToConcatenate ? "success" : "warning"}
+                  />
+                  {valuesToConcatenate ? (
+                    <CheckIcon color="success" />
+                  ) : (
+                    <DoNotDisturbIcon color="warning" />
+                  )}
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setActiveField(field.field);
+                    }}
+                  >
+                    Modifier
+                  </Button>
+                </Grid>
+              );
+            })}
+          </div>
+          <Grid item xs={12}>
+            {formValidationMessage ? (
+              <Alert
+                severity={
+                  formValidationMessage ===
+                  "Veuillez utiliser une autre adresse mail"
+                    ? "error"
+                    : "success"
                 }
               >
-                Terminer
-              </Button>
-            )}
-          </div>
+                {formValidationMessage}
+              </Alert>
+            ) : null}
+            <div className={styles.recapFooter}>
+              {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
+              {formValidationMessage ===
+              "Compte créé. Vous pouvez désormais vous connecter." ? (
+                <Link to="/pro">
+                  <Button variant="contained">Se connecter</Button>
+                </Link>
+              ) : (
+                <Button
+                  onClick={handleSubmitRegister}
+                  variant="contained"
+                  disabled={
+                    Object.values(user).includes(null) ||
+                    Object.values(user).includes([]) ||
+                    Object.values(user).includes("")
+                  }
+                >
+                  Terminer
+                </Button>
+              )}
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
+
+  if (!user)
+    return (
+      <div className={styles.recapPage}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <div className={styles.text}>
+              <h2>Voici le résumé de vos informations</h2>
+            </div>
+          </Grid>
+          <div className={styles.recapBlock}>
+            {fieldsToComplete.map((field) => {
+              const fieldsToConcatenate = [];
+              for (const fieldBlock of fieldsToComplete) {
+                if (fieldBlock.field === field.field) {
+                  for (const row of fieldBlock.data) {
+                    fieldsToConcatenate.push(row.field);
+                  }
+                }
+              }
+              let valuesToConcatenate;
+              // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
+              Object.entries(registerInfo).forEach((array) => {
+                if (
+                  fieldsToConcatenate.includes(array[0]) &&
+                  array[0] !== "password" &&
+                  array[0] !== "verifyPassword" &&
+                  array[1] !== "" &&
+                  array[1] !== null
+                ) {
+                  valuesToConcatenate = [];
+                  valuesToConcatenate.push(array[1]);
+                }
+              });
+
+              return (
+                <Grid item xs={12}>
+                  <TextField
+                    disabled
+                    key={field.field}
+                    label={field.field}
+                    margin="normal"
+                    value={
+                      valuesToConcatenate ? valuesToConcatenate.join(", ") : ""
+                    }
+                    content={field.field}
+                    color={valuesToConcatenate ? "success" : "warning"}
+                  />
+                  {valuesToConcatenate ? (
+                    <CheckIcon color="success" />
+                  ) : (
+                    <DoNotDisturbIcon color="warning" />
+                  )}
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setActiveField(field.field);
+                    }}
+                  >
+                    Modifier
+                  </Button>
+                </Grid>
+              );
+            })}
+          </div>
+          <Grid item xs={12}>
+            {formValidationMessage ? (
+              <Alert
+                severity={
+                  formValidationMessage ===
+                  "Veuillez utiliser une autre adresse mail"
+                    ? "error"
+                    : "success"
+                }
+              >
+                {formValidationMessage}
+              </Alert>
+            ) : null}
+            <div className={styles.recapFooter}>
+              {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
+              {formValidationMessage ===
+              "Compte créé. Vous pouvez désormais vous connecter." ? (
+                <Link to="/pro">
+                  <Button variant="contained">Se connecter</Button>
+                </Link>
+              ) : (
+                <Button
+                  onClick={handleSubmitRegister}
+                  variant="contained"
+                  disabled={
+                    Object.values(registerInfo).includes(null) ||
+                    Object.values(registerInfo).includes([]) ||
+                    Object.values(registerInfo).includes("")
+                  }
+                >
+                  Terminer
+                </Button>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+    );
 }
 
 export default Recap;
 
 Recap.propTypes = {
-  fieldsToComplete: PropTypes.arrayOf.isRequired,
   registerInfo: PropTypes.arrayOf.isRequired,
-  setActiveField: PropTypes.func.isRequired,
 };
