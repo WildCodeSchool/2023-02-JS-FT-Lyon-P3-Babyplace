@@ -68,16 +68,18 @@ export function UserInfoContextProvider({ children }) {
       data: [{ field: "places", fieldname: "Nombre de places" }],
     },
   ];
-
+  const [infoToModify, setInfoToModify] = useState({});
   const [activeField, setActiveField] = useState(null);
 
   const value = useMemo(
     () => ({
+      infoToModify,
+      setInfoToModify,
       fieldsToComplete,
       activeField,
       setActiveField,
     }),
-    [activeField]
+    [infoToModify, activeField]
   );
   return (
     <UserInfoContext.Provider value={value}>

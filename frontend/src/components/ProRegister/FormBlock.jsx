@@ -5,14 +5,21 @@ import Joi from "joi";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
 import { useUserInfoContext } from "../../contexts/UserInfoContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 function FormBlock({ registerInfo, setRegisterInfo }) {
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   const [formFields, setFormFields] = useState([]);
   const [validationMessage, setValidationMessage] = useState(null);
-  const { fieldsToComplete, activeField, setActiveField } =
-    useUserInfoContext();
+  const {
+    infoToModify,
+    setInfoToModify,
+    fieldsToComplete,
+    activeField,
+    setActiveField,
+  } = useUserInfoContext();
+  const { user } = useUserContext;
 
   const schema = Joi.object().keys({
     name: Joi.string().min(3).max(80).messages({
@@ -121,6 +128,7 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     });
     setFormFields(arraOfFields);
     setValidationMessage(null);
+    console.info(infoToModify);
   }, [activeField]);
 
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
@@ -129,8 +137,13 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     const { error } = schema.validate(formBlockInfo);
     if (error) {
       setValidationMessage(error.message);
-    } else {
+    } else if (user) {
       setRegisterInfo({ ...registerInfo, ...formBlockInfo });
+      setFormBlockInfo({ empty: true });
+      setActiveField(null);
+      setValidationMessage(null);
+    } else {
+      setInfoToModify({ ...infoToModify, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
       setValidationMessage(null);

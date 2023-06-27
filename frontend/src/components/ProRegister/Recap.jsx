@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { TextField, Button, Grid, Alert } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./Recap.module.css";
@@ -13,10 +14,17 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Recap({ registerInfo }) {
   const { user } = useUserContext();
-  const { fieldsToComplete, setActiveField } = useUserInfoContext();
+  const { infoToModify, setInfoToModify, fieldsToComplete, setActiveField } =
+    useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
+
   const handleSubmitRegister = () => {
-    axios
+    // TODO Faire axios pour la modif d'info + créer route et méthodes
+    if (user) {
+      setInfoToModify({});
+      return setFormValidationMessage("Vos données ont bien été modifiées");
+    }
+    return axios
       .post(`${BACKEND_URL}/pro/register`, registerInfo)
       .then((response) => {
         if (response.status === 201) {
@@ -31,6 +39,7 @@ function Recap({ registerInfo }) {
       });
   };
 
+  // Le bloc suivant gère le rendu dans le cas où l'utilisateur est connecté (partie modification du dashboard)
   if (user) {
     return (
       <div className={styles.recapPage}>
@@ -42,6 +51,9 @@ function Recap({ registerInfo }) {
           </Grid>
           <div className={styles.recapBlock}>
             {fieldsToComplete.map((field) => {
+              if (field.field === "Informations de connexion") {
+                return null;
+              }
               const fieldsToConcatenate = [];
               for (const fieldBlock of fieldsToComplete) {
                 if (fieldBlock.field === field.field) {
@@ -51,6 +63,7 @@ function Recap({ registerInfo }) {
                 }
               }
               let valuesToConcatenate;
+              let modifiedField = false;
               // Les lignes suivantes concatènent les informations et les affichent dans les blocs du récap sous certaines conditions
               Object.entries(user).forEach((array) => {
                 if (
@@ -61,10 +74,19 @@ function Recap({ registerInfo }) {
                   array[1] !== null
                 ) {
                   valuesToConcatenate = [];
-                  valuesToConcatenate.push(array[1]);
+                  if (Object.keys(infoToModify).includes(array[0])) {
+                    Object.entries(infoToModify).forEach((entry) => {
+                      if (entry[0] === array[0]) {
+                        modifiedField = true;
+                        return valuesToConcatenate.push(entry[1]);
+                      }
+                      return null;
+                    });
+                  } else {
+                    valuesToConcatenate.push(array[1]);
+                  }
                 }
               });
-
               return (
                 <Grid item xs={12}>
                   <TextField
@@ -78,10 +100,10 @@ function Recap({ registerInfo }) {
                     content={field.field}
                     color={valuesToConcatenate ? "success" : "warning"}
                   />
-                  {valuesToConcatenate ? (
-                    <CheckIcon color="success" />
+                  {modifiedField ? (
+                    <EditIcon color="success" />
                   ) : (
-                    <DoNotDisturbIcon color="warning" />
+                    <DoNotDisturbIcon color="disabled" />
                   )}
                   <Button
                     variant="contained"
@@ -109,6 +131,15 @@ function Recap({ registerInfo }) {
               </Alert>
             ) : null}
             <div className={styles.recapFooter}>
+              <Button
+                variant="contained"
+                disabled={Object.values(infoToModify).length <= 1}
+                onClick={() => {
+                  setInfoToModify({});
+                }}
+              >
+                Annuler
+              </Button>
               {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
               {formValidationMessage ===
               "Compte créé. Vous pouvez désormais vous connecter." ? (
@@ -120,9 +151,10 @@ function Recap({ registerInfo }) {
                   onClick={handleSubmitRegister}
                   variant="contained"
                   disabled={
-                    Object.values(user).includes(null) ||
-                    Object.values(user).includes([]) ||
-                    Object.values(user).includes("")
+                    Object.values(infoToModify).length <= 1 ||
+                    Object.values(infoToModify).includes(null) ||
+                    Object.values(infoToModify).includes([]) ||
+                    Object.values(infoToModify).includes("")
                   }
                 >
                   Terminer
@@ -135,6 +167,7 @@ function Recap({ registerInfo }) {
     );
   }
 
+  // Le bloc suivant gère le rendu dans le cas où l'utilisateur n'est pas connecté (partie inscription)
   if (!user)
     return (
       <div className={styles.recapPage}>
