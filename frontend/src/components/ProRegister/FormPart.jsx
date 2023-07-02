@@ -13,7 +13,7 @@ import { useUserContext } from "../../contexts/UserContext";
 
 function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
   const arrayOfData = useRef([]);
-  const { user } = useUserContext;
+  const { user } = useUserContext();
   // fonction qui gère le fonctionnement des boutons switch
   // mise à jour d'un tableau des données (arrayOfData) pour lesquelles le bouton correspondant est activé
   // et ajout de ce tableau dans le formBlockInfo
@@ -82,7 +82,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     return setFormBlockInfo({ empty: true });
   }, []);
 
-  if (user) {
+  if (user?.id) {
     if (
       data[0].data &&
       typeof data[0].data[0] === "string" &&
@@ -147,7 +147,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     });
   }
 
-  if (!user) {
+  if (!user?.id) {
     if (
       data[0].data &&
       typeof data[0].data[0] === "string" &&

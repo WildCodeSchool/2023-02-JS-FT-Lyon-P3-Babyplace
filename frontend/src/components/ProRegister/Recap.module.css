@@ -67,6 +67,12 @@
   padding: 5%;
 }
 
+.modifyRecapFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5%;
+}
+
 .recapFooter > button {
   padding: 0.5em;
 }

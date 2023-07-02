@@ -20,6 +20,7 @@ export function UserContextProvider({ children }) {
   const login = (_user) => {
     setUser(_user);
   };
+
   const logout = () => {
     instance.get("/logout");
     setUser(null);

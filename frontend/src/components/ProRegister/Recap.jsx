@@ -44,7 +44,7 @@ function Recap({ registerInfo }) {
   }, []);
 
   // Le bloc suivant gère le rendu dans le cas où l'utilisateur est connecté (partie modification du dashboard)
-  if (user) {
+  if (user?.id) {
     return (
       <div className={styles.recapPage}>
         <Grid container spacing={3}>
@@ -175,7 +175,7 @@ function Recap({ registerInfo }) {
   }
 
   // Le bloc suivant gère le rendu dans le cas où l'utilisateur n'est pas connecté (partie inscription)
-  if (!user)
+  if (!user?.id)
     return (
       <div className={styles.recapPage}>
         <Grid container spacing={3}>
@@ -253,7 +253,7 @@ function Recap({ registerInfo }) {
                 {formValidationMessage}
               </Alert>
             ) : null}
-            <div className={styles.recapFooter}>
+            <div className={styles.modifyRecapFooter}>
               {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
               {formValidationMessage ===
               "Compte créé. Vous pouvez désormais vous connecter." ? (

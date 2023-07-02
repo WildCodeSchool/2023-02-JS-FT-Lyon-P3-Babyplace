@@ -135,12 +135,12 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     const { error } = schema.validate(formBlockInfo);
     if (error) {
       setValidationMessage(error.message);
-    } else if (user) {
+    } else if (user?.id) {
       setInfoToModify({ ...infoToModify, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
       setValidationMessage(null);
-    } else if (!user) {
+    } else if (!user?.id) {
       setRegisterInfo({ ...registerInfo, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
