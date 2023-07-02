@@ -42,20 +42,16 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const pro = req.body;
+  const info = req.body;
 
   // TODO validations (length, format...)
 
-  pro.id = parseInt(req.params.id, 10);
+  const id = parseInt(req.params.id, 10);
 
   models.pro
-    .update(pro)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
+    .update(info, id)
+    .then(() => {
+      res.sendStatus(204);
     })
     .catch((err) => {
       console.error(err);

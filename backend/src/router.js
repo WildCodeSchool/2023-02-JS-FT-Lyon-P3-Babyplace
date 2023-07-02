@@ -34,6 +34,7 @@ router.get("/dispo/:id", proControllers.browseProAndDispo);
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", proControllers.profile);
 router.get("/pro/:id", proControllers.read);
+router.patch("/pro/:id", proControllers.edit);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post(
   "/pro/register",

@@ -4,28 +4,53 @@ import { TextField, Button, Grid, Alert } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import instance from "../../services/APIService";
 import styles from "./Recap.module.css";
 import { useUserContext } from "../../contexts/UserContext";
 import { useUserInfoContext } from "../../contexts/UserInfoContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 function Recap({ registerInfo }) {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const { infoToModify, setInfoToModify, fieldsToComplete, setActiveField } =
     useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
 
   const handleSubmitRegister = () => {
-    // TODO Faire axios pour la modif d'info + créer route et méthodes
-    if (user) {
-      setInfoToModify({});
-      return setFormValidationMessage("Vos données ont bien été modifiées");
+    // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
+    if (user?.id) {
+      for (const info of Object.entries(infoToModify)) {
+        if (
+          info[0] !== "empty" &&
+          info[0] !== "places" &&
+          info[0] !== "disponibility"
+        )
+          instance
+            .patch(`/pro/${user.id}`, info)
+            .then((response) => {
+              if (response.status !== 204) {
+                setFormValidationMessage(
+                  "Il y a eu un problème, merci d'essayer plus tard."
+                );
+              }
+              setFormValidationMessage(
+                "Les modifications ont bien été enregistrées."
+              );
+            })
+            .catch((error) => {
+              setFormValidationMessage(
+                "Il y a eu un problème, merci d'essayer plus tard."
+              );
+              console.error(error);
+            });
+      }
+      setUser({ ...user, ...infoToModify });
+      return setInfoToModify({});
     }
-    return axios
-      .post(`${BACKEND_URL}/pro/register`, registerInfo)
+
+    // Si on est dans le contexte d'une inscription, la fonction fait une requête vers la base de données pour enregistrer l'utilisateur.
+    return instance
+      .post(`/pro/register`, registerInfo)
       .then((response) => {
         if (response.status === 201) {
           setFormValidationMessage(
