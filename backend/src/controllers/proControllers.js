@@ -67,7 +67,8 @@ const add = (req, res) => {
   models.pro
     .insert(pro)
     .then(([result]) => {
-      res.location(`/pro/${result.insertId}`).sendStatus(201);
+      res.send(result);
+      // res.location(`/pro/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);

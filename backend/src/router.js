@@ -6,6 +6,9 @@ const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
+const placeControllers = require("./controllers/placeControllers");
+const disponibilityControllers = require("./controllers/disponibilityControllers");
+const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
 const {
   getParentByEmail,
   getProByEmail,
@@ -42,7 +45,13 @@ router.post(
   hashPassword,
   proControllers.add
 );
-// router.post("/pro", hashPassword, proControllers.add);
+
+router.post("/place", placeControllers.add);
+router.post(
+  "/proDisponibility",
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add
+);
 
 router.get(
   "/dashboard/reservations",

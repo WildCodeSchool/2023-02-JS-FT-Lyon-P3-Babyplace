@@ -50,7 +50,32 @@ function Recap({ registerInfo }) {
     return instance
       .post(`/pro/register`, registerInfo)
       .then((response) => {
-        if (response.status === 201) {
+        console.warn(response);
+        if (response.status === 200) {
+          const id = response.data.insertId;
+          for (let i = 1; i <= registerInfo.places; i += 1) {
+            instance
+              .post(`/place`, { id })
+              .then((resp) => {
+                console.warn(resp);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
+          for (const day of registerInfo.disponibility) {
+            instance
+              .post(`/proDisponibility`, {
+                day: day.replace(" ", ""),
+                id,
+              })
+              .then((res) => {
+                console.warn(res);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
           setFormValidationMessage(
             "Compte créé. Vous pouvez désormais vous connecter."
           );
