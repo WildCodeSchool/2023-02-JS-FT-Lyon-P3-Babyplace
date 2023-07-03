@@ -32,9 +32,9 @@ router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/pro", proControllers.browse);
-router.get("/pro/profile", proControllers.profile);
+router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
-router.patch("/pro/:id", proControllers.edit);
+router.patch("/pro/:id", verifyToken, proControllers.edit);
 router.post("/pro/login", getProByEmail, verifyPassword);
 router.post(
   "/pro/register",
@@ -46,6 +46,7 @@ router.post(
 
 router.get(
   "/dashboard/reservations",
+  verifyToken,
   dashboardProControllers.browseReservations
 );
 router.get(
@@ -55,14 +56,17 @@ router.get(
 );
 router.put(
   "/dashboard/reservations/validate/:id",
+  verifyToken,
   dashboardProControllers.validateOrder
 );
 router.put(
   "/dashboard/reservations/refuse/:id",
+  verifyToken,
   dashboardProControllers.refuseOrder
 );
 router.put(
   "/dashboard/reservations/cancel/:id",
+  verifyToken,
   dashboardProControllers.cancelOrder
 );
 

@@ -25,6 +25,7 @@ export function UserContextProvider({ children }) {
     instance.get("/logout");
     setUser(null);
     setToken(null);
+    navigate("/");
   };
 
   const value = useMemo(

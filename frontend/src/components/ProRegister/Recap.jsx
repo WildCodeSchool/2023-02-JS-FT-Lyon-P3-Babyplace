@@ -11,7 +11,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { useUserInfoContext } from "../../contexts/UserInfoContext";
 
 function Recap({ registerInfo }) {
-  const { user, setUser } = useUserContext();
+  const { user, setUser, logout } = useUserContext();
   const { infoToModify, setInfoToModify, fieldsToComplete, setActiveField } =
     useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
@@ -29,18 +29,16 @@ function Recap({ registerInfo }) {
             .patch(`/pro/${user.id}`, info)
             .then((response) => {
               if (response.status !== 204) {
-                setFormValidationMessage(
+                return setFormValidationMessage(
                   "Il y a eu un problème, merci d'essayer plus tard."
                 );
               }
-              setFormValidationMessage(
+              return setFormValidationMessage(
                 "Les modifications ont bien été enregistrées."
               );
             })
             .catch((error) => {
-              setFormValidationMessage(
-                "Il y a eu un problème, merci d'essayer plus tard."
-              );
+              logout();
               console.error(error);
             });
       }
