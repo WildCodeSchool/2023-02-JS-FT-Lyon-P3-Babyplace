@@ -27,7 +27,7 @@ export default function FormParent() {
       .regex(/^\d{4}\/\d{2}\/\d{2}$/)
       .messages({
         "string.pattern.base":
-          "Votre date de naissance doit respecter le format JJ/MM/AAAA.",
+          "Votre date de naissance doit respecter le format AAAA/MM/JJ.",
       }),
     mail_address: Joi.string()
       .email({
@@ -140,7 +140,7 @@ export default function FormParent() {
         <input
           type="text"
           name="birthdate"
-          placeholder="Date de naissance"
+          placeholder="Date de naissance AAAA/MM/JJ"
           value={formInfo.birthdate}
           pattern="\d{4}/\d{2}/\d{2}"
           onChange={handleChange}

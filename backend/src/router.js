@@ -4,6 +4,7 @@ const router = express.Router();
 
 const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
+const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
 const {
@@ -30,6 +31,10 @@ router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post("/parent/register", hashPassword);
 router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
+
+router.get("/child", childControllers.browse);
+router.get("/child/:id", childControllers.read);
+router.post("/child", childControllers.add);
 
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", proControllers.profile);

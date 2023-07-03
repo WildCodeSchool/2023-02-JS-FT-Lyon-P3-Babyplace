@@ -1,11 +1,13 @@
 import React from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../../contexts/UserContext";
 import style from "./WelcomePage.module.css";
 import baby2 from "../../../assets/images/Babyplace.svg";
 import baby3 from "../../../assets/images/Babyplace3.svg";
 
 export default function WelcomePage() {
+  const { user } = useUserContext();
   return (
     <div className={style.welcomePage}>
       <div className={style.card}>
@@ -20,7 +22,7 @@ export default function WelcomePage() {
           </p>
           <div className={style.file}>
             {/* TO DO: LINK */}
-            <Link to="/">
+            <Link to={`/particulier/${user.id}`}>
               <h3>Compléter mon dossier</h3>
             </Link>
           </div>

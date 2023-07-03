@@ -31,6 +31,7 @@ const models = {};
 
 const ItemManager = require("./ItemManager");
 const ParentManager = require("./ParentManager");
+const ChildManager = require("./ChildManager");
 const ProManager = require("./ProManager");
 const DashboardProManager = require("./DashboardProManager");
 
@@ -38,6 +39,8 @@ models.item = new ItemManager();
 models.item.setDatabase(pool);
 models.parent = new ParentManager();
 models.parent.setDatabase(pool);
+models.child = new ChildManager();
+models.child.setDatabase(pool);
 models.pro = new ProManager();
 models.pro.setDatabase(pool);
 models.dashboardpro = new DashboardProManager();
