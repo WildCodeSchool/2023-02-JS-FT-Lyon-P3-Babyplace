@@ -15,6 +15,27 @@ const add = (req, res) => {
     });
 };
 
+const listProDisponibilities = (req, res, next) => {
+  models.proDisponibility
+    .findAll(req.user.id)
+    .then(([result]) => {
+      if (result) {
+        const disponibilities = [];
+        result.forEach((disponibility) => {
+          disponibilities.push(disponibility.day);
+        });
+        req.user.disponibility = disponibilities;
+        next();
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 module.exports = {
   add,
+  listProDisponibilities,
 };

@@ -11,6 +11,13 @@ class ProDisponibilityManager extends AbstractManager {
       [dayId, proId]
     );
   }
+
+  findAll(proId) {
+    return this.database.query(
+      `select d.day from ${this.table} as t join disponibility as d on d.id = t.disponibility_id where t.pro_id = ?`,
+      [proId]
+    );
+  }
 }
 
 module.exports = ProDisponibilityManager;

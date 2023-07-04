@@ -42,6 +42,7 @@ router.post(
   "/pro/login",
   getProByEmail,
   placeControllers.countPlaces,
+  proDisponibilityControllers.listProDisponibilities,
   verifyPassword
 );
 router.post(
