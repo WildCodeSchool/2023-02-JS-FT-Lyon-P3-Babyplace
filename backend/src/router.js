@@ -38,7 +38,12 @@ router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
 router.patch("/pro/:id", verifyToken, proControllers.edit);
-router.post("/pro/login", getProByEmail, verifyPassword);
+router.post(
+  "/pro/login",
+  getProByEmail,
+  placeControllers.countPlaces,
+  verifyPassword
+);
 router.post(
   "/pro/register",
   verifyIfRegistered,

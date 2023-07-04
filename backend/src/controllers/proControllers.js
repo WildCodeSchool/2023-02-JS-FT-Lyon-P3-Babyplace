@@ -11,11 +11,11 @@ const browse = (req, res) => {
       res.sendStatus(500);
     });
 };
+
 const browseProAndDispo = (req, res) => {
   const id = parseInt(req.params.id, 10);
   models.pro
     .browseDispo(id)
-
     .then(([rows]) => {
       res.send(rows);
     })

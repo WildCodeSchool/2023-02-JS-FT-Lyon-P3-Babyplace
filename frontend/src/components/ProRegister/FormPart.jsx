@@ -21,16 +21,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     if (data[0].multiple) {
       if (event.target.checked) {
         // dans le cas où le bouton est activé, on ajoute la donnée
-        if (arrayOfData.length === 0) {
-          arrayOfData.current.push(event.target.name);
-        } else {
-          arrayOfData.current.push(
-            event.target.name.replace(
-              event.target.name,
-              ` ${event.target.name}`
-            )
-          );
-        }
+        arrayOfData.current.push(event.target.name);
         setFormBlockInfo({
           ...formBlockInfo,
           empty: false,

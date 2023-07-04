@@ -20,6 +20,7 @@ function Recap({ registerInfo }) {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
     if (user?.id) {
       for (const info of Object.entries(infoToModify)) {
+        // console.log(infoToModify)
         if (
           info[0] !== "empty" &&
           info[0] !== "places" &&

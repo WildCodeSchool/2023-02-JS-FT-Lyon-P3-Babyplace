@@ -11,6 +11,13 @@ class PlaceManager extends AbstractManager {
       [id]
     );
   }
+
+  findPlaces(id) {
+    return this.database.query(
+      `select count(*) as place from ${this.table} where pro_id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = PlaceManager;
