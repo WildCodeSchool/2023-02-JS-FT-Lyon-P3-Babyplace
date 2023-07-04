@@ -16,6 +16,10 @@ function Recap({ registerInfo }) {
     useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
 
+  // useEffect(() => {
+  //   console.log(infoToModify)
+  // }, [infoToModify]);
+
   const handleSubmitRegister = () => {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
     if (user?.id) {
@@ -23,6 +27,7 @@ function Recap({ registerInfo }) {
         // console.log(infoToModify)
         if (info[0] === "place") {
           if (info[1] > user.place) {
+            // si l'utilisateur déclare plus de places que précédemment enregistrées, il faut en ajouter
             for (let i = 1; i <= info[1] - user.place; i += 1) {
               const { id } = user;
               instance
@@ -35,6 +40,7 @@ function Recap({ registerInfo }) {
                 });
             }
           } else if (info[1] < user.place) {
+            // si l'utilisateur déclare moins de places que précédemment enregistrées, il faut en supprimer
             const rowsToDelete = user.place - info[1];
             const { id } = user;
             instance
@@ -45,6 +51,38 @@ function Recap({ registerInfo }) {
               .catch((err) => {
                 console.error(err);
               });
+          }
+        }
+        if (info[0] === "disponibility") {
+          for (const day of info[1]) {
+            if (!user.disponibility.includes(day)) {
+              // les disponibilités précédemment enregistrées ne contiennent pas un jour que l'utilisateur indique dans ses données modifiées
+              // il faut donc ajouter le jour dans la base de données
+              const { id } = user;
+              instance
+                .post(`/proDisponibility`, { day, id })
+                .then((resp) => {
+                  console.warn(resp);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            }
+          }
+          for (const day of user.disponibility) {
+            if (!info[1].includes(day)) {
+              // les données modifiées ne contiennent pas un jour que l'utilisateur avait précédemment enregistré
+              // il faut donc supprimer le jour dans la base de données
+              const { id } = user;
+              instance
+                .put(`/proDisponibility`, { day, id })
+                .then((resp) => {
+                  console.warn(resp);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            }
           }
         }
         if (

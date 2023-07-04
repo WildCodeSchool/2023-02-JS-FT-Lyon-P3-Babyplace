@@ -18,6 +18,13 @@ class ProDisponibilityManager extends AbstractManager {
       [proId]
     );
   }
+
+  delete(dayId, proId) {
+    return this.database.query(
+      `delete from ${this.table} where disponibility_id = ? and pro_id = ? `,
+      [dayId, proId]
+    );
+  }
 }
 
 module.exports = ProDisponibilityManager;

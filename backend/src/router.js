@@ -52,13 +52,23 @@ router.post(
   proControllers.add
 );
 
-router.post("/place", placeControllers.add);
-router.put("/place", placeControllers.listPlaces, placeControllers.destroy);
+router.post("/place", verifyToken, placeControllers.add);
+router.put(
+  "/place",
+  verifyToken,
+  placeControllers.listPlaces,
+  placeControllers.destroy
+);
 
 router.post(
   "/proDisponibility",
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
+);
+router.put(
+  "/proDisponibility",
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.destroy
 );
 
 router.get(

@@ -35,7 +35,23 @@ const listProDisponibilities = (req, res, next) => {
     });
 };
 
+const destroy = (req, res) => {
+  models.proDisponibility
+    .delete(req.body.dayId, req.body.id)
+    .then(([result]) => {
+      if (result.affectedRows !== 0) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 module.exports = {
   add,
   listProDisponibilities,
+  destroy,
 };
