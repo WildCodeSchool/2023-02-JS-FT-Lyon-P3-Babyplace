@@ -79,9 +79,13 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     }),
     type: Joi.string(),
     disponibility: Joi.array(),
-    place: Joi.number().integer().messages({
+    place: Joi.number().integer().min(0).max(100).messages({
       "number.base":
         "Le nombre de places doit être constitué uniquement de caractères numériques.",
+      "number.min":
+        "Le nombre de places doit être un nombre entier positif ou nul et inférieur à 100.",
+      "number.max":
+        "Le nombre de places doit être un nombre entier positif ou nul et inférieur à 100.",
     }),
     empty: Joi.boolean(),
   });
