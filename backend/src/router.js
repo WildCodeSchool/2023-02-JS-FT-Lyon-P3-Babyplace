@@ -53,6 +53,8 @@ router.post(
 );
 
 router.post("/place", placeControllers.add);
+router.put("/place", placeControllers.listPlaces, placeControllers.destroy);
+
 router.post(
   "/proDisponibility",
   disponibilityControllers.findByName,

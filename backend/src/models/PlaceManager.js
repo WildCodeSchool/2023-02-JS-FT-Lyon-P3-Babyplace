@@ -18,6 +18,19 @@ class PlaceManager extends AbstractManager {
       [id]
     );
   }
+
+  findAllPlaces(proId) {
+    return this.database.query(
+      `select id from ${this.table} where pro_id = ?`,
+      [proId]
+    );
+  }
+
+  delete(values) {
+    return this.database.query(
+      `delete from ${this.table} where id in (${values})`
+    );
+  }
 }
 
 module.exports = PlaceManager;

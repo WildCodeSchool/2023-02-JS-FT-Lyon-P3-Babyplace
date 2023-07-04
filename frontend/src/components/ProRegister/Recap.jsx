@@ -21,10 +21,36 @@ function Recap({ registerInfo }) {
     if (user?.id) {
       for (const info of Object.entries(infoToModify)) {
         // console.log(infoToModify)
+        if (info[0] === "place") {
+          if (info[1] > user.place) {
+            for (let i = 1; i <= info[1] - user.place; i += 1) {
+              const { id } = user;
+              instance
+                .post(`/place`, { id })
+                .then((resp) => {
+                  console.warn(resp);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            }
+          } else if (info[1] < user.place) {
+            const rowsToDelete = user.place - info[1];
+            const { id } = user;
+            instance
+              .put(`/place`, { id, rowsToDelete })
+              .then((resp) => {
+                console.warn(resp);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
+        }
         if (
           info[0] !== "empty" &&
-          info[0] !== "place" &&
-          info[0] !== "disponibility"
+          info[0] !== "disponibility" &&
+          info[0] !== "place"
         )
           instance
             .patch(`/pro/${user.id}`, info)
