@@ -79,7 +79,7 @@ function FormBlock({ registerInfo, setRegisterInfo }) {
     }),
     type: Joi.string(),
     disponibility: Joi.array(),
-    places: Joi.number().integer().messages({
+    place: Joi.number().integer().messages({
       "number.base":
         "Le nombre de places doit être constitué uniquement de caractères numériques.",
     }),

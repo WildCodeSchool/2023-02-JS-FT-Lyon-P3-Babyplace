@@ -19,7 +19,7 @@ export default function ProRegister() {
     description: "",
     type: "",
     disponibility: "",
-    places: null,
+    place: null,
   });
 
   return (

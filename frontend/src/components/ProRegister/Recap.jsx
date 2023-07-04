@@ -23,7 +23,7 @@ function Recap({ registerInfo }) {
         // console.log(infoToModify)
         if (
           info[0] !== "empty" &&
-          info[0] !== "places" &&
+          info[0] !== "place" &&
           info[0] !== "disponibility"
         )
           instance
@@ -54,7 +54,7 @@ function Recap({ registerInfo }) {
         console.warn(response);
         if (response.status === 200) {
           const id = response.data.insertId;
-          for (let i = 1; i <= registerInfo.places; i += 1) {
+          for (let i = 1; i <= registerInfo.place; i += 1) {
             instance
               .post(`/place`, { id })
               .then((resp) => {

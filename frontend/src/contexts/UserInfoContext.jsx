@@ -65,7 +65,7 @@ export function UserInfoContextProvider({ children }) {
     },
     {
       field: "Nombre de places",
-      data: [{ field: "places", fieldname: "Nombre de places" }],
+      data: [{ field: "place", fieldname: "Nombre de places" }],
     },
   ];
   const [infoToModify, setInfoToModify] = useState({});
