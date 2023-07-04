@@ -36,6 +36,9 @@ function Recap({ registerInfo }) {
                   console.warn(resp);
                 })
                 .catch((err) => {
+                  if (err.response.status === 403) {
+                    logout();
+                  }
                   console.error(err);
                 });
             }
@@ -49,6 +52,9 @@ function Recap({ registerInfo }) {
                 console.warn(resp);
               })
               .catch((err) => {
+                if (err.response.status === 403) {
+                  logout();
+                }
                 console.error(err);
               });
           }
@@ -65,6 +71,9 @@ function Recap({ registerInfo }) {
                   console.warn(resp);
                 })
                 .catch((err) => {
+                  if (err.response.status === 403) {
+                    logout();
+                  }
                   console.error(err);
                 });
             }
@@ -80,6 +89,9 @@ function Recap({ registerInfo }) {
                   console.warn(resp);
                 })
                 .catch((err) => {
+                  if (err.response.status === 403) {
+                    logout();
+                  }
                   console.error(err);
                 });
             }
@@ -103,7 +115,9 @@ function Recap({ registerInfo }) {
               );
             })
             .catch((error) => {
-              logout();
+              if (error.response.status === 403) {
+                logout();
+              }
               console.error(error);
             });
       }

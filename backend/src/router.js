@@ -62,11 +62,13 @@ router.put(
 
 router.post(
   "/proDisponibility",
+  verifyToken,
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
 );
 router.put(
   "/proDisponibility",
+  verifyToken,
   disponibilityControllers.findByName,
   proDisponibilityControllers.destroy
 );
