@@ -108,6 +108,7 @@ const verifyIfRegistered = (req, res, next) => {
 const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
+    console.warn(token);
     if (!token) {
       return res.sendStatus(403);
     }

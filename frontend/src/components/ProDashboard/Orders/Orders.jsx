@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import instance from "../../../services/APIService";
 
 export default function Orders() {
   const [selectedValue, setSelectedValue] = useState(4);
@@ -14,8 +12,8 @@ export default function Orders() {
   // const [orderIndex, setOrderIndex] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/dashboard/reservations`)
+    instance
+      .get(`/dashboard/reservations`)
       .then((res) => {
         setReservations(res.data);
       })
