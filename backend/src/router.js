@@ -53,6 +53,7 @@ router.post(
 );
 
 router.post("/place", verifyToken, placeControllers.add);
+router.post("/register/place", placeControllers.add);
 router.put(
   "/place",
   verifyToken,
@@ -63,6 +64,11 @@ router.put(
 router.post(
   "/proDisponibility",
   verifyToken,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add
+);
+router.post(
+  "/register/proDisponibility",
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
 );
