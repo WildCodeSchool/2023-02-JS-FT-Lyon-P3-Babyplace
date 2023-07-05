@@ -16,7 +16,7 @@ export default function DateChoice() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "rgb(86, 100, 210)",
+        main: "rgb(28, 187, 140)",
       },
     },
   });
@@ -85,9 +85,12 @@ export default function DateChoice() {
                     key={day}
                     label={day}
                     onClick={() => handleClick(day)}
-                    variant="outlined"
                     color={`${selectedDay === day ? "primary" : "default"}`}
-                    sx={{ margin: "4px" }}
+                    sx={{
+                      margin: "4px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                    }}
                   />
                 ))}
               </div>

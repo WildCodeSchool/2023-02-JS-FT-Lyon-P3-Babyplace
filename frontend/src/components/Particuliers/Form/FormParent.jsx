@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Joi from "joi";
 import style from "./FormParent.module.css";
@@ -24,7 +24,7 @@ export default function FormParent() {
         "Votre prénom doit avoir une longueur maximale de 80 caractères.",
     }),
     birthdate: Joi.string()
-      .pattern(/^\d{2}\/\d{2}\/\d{4}$/)
+      .regex(/^\d{4}\/\d{2}\/\d{2}$/)
       .messages({
         "string.pattern.base":
           "Votre date de naissance doit respecter le format JJ/MM/AAAA.",
@@ -59,52 +59,54 @@ export default function FormParent() {
       "string.max":
         "Le nom de la ville doit avoir une longueur maximale de 45 caractères.",
     }),
-    phone_number: Joi.number().less(10).integer().messages({
-      "number.base":
-        "Votre numéro de téléphone doit être constitué uniquement de caractères numériques.",
-      "number.less":
-        "Votre numéro de téléphone doit respecter le format requis.",
-    }),
+    phone_number: Joi.string()
+      .regex(/^[0-9]{10}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre numéro de téléphone doit respecter le format requis.",
+      }),
   });
   const navigate = useNavigate();
   const [validationMessage, setValidationMessage] = useState(null);
-
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [postCode, setPostCode] = useState("");
-  const [city, setCity] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [formInfo, setFormInfo] = useState({
+    lastname: "",
+    firstname: "",
+    birthdate: "",
+    mail_address: "",
+    password: "",
+    address: "",
+    postcode: "",
+    city: "",
+    phone_number: "",
+  });
+  const handleChange = (event) => {
+    setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
-      lastname,
-      firstname,
-      birthdate,
-      mail_address: email,
-      password,
-      address,
-      postcode: postCode,
-      city,
-      phone_number: phoneNumber,
-    };
-    const { error } = schema.validate(formData);
+
+    const { error } = schema.validate(formInfo);
 
     if (error) {
       setValidationMessage(error.message);
     } else {
       setValidationMessage(null);
     }
-    // Envoi au back des données recueillies dans le form
+    // Envoi au back des données recueillies dans le formulaire
     axios
-      .post(`${backEndUrl}/parent`, formData)
-      .then((response) => response.data)
+      .post(`${backEndUrl}/parent`, formInfo)
+      .then((response) => {
+        if (response.status === 201) {
+          setValidationMessage(
+            "Compte créé. Vous pouvez désormais vous connecter."
+          );
+        }
+      })
 
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response.status === 500)
+          setValidationMessage("Veuillez utiliser une autre adresse mail");
+      });
   };
   return (
     <div className={style.card}>
@@ -125,74 +127,107 @@ export default function FormParent() {
           type="text"
           name="lastname"
           placeholder="Nom"
-          value={lastname}
-          onChange={(e) => setLastname(e.target.value)}
+          value={formInfo.lastname}
+          onChange={handleChange}
         />
         <input
           type="text"
           name="firstname"
           placeholder="Prénom"
-          value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
+          value={formInfo.firstname}
+          onChange={handleChange}
         />
         <input
           type="text"
           name="birthdate"
           placeholder="Date de naissance"
-          value={birthdate}
-          pattern="\d{2}/\d{2}/\d{4}"
-          onChange={(e) => setBirthdate(e.target.value)}
+          value={formInfo.birthdate}
+          pattern="\d{4}/\d{2}/\d{2}"
+          onChange={handleChange}
         />
-
         <input
-          type="text"
+          type="email"
           name="mail_address"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formInfo.mail_address}
+          onChange={handleChange}
         />
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formInfo.password}
+          onChange={handleChange}
         />
         <input
           type="text"
           name="address"
           placeholder="Numéro et nom de voie"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={formInfo.address}
+          onChange={handleChange}
         />
         <input
           type="number"
           name="postcode"
           placeholder="Code postal"
-          value={postCode}
-          onChange={(e) => setPostCode(e.target.value)}
+          value={formInfo.postcode}
+          onChange={handleChange}
         />
         <input
           type="text"
           name="city"
           placeholder="Ville"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
+          value={formInfo.city}
+          onChange={handleChange}
         />
         <input
           type="number"
           name="phone_number"
           placeholder="Téléphone mobile"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          value={formInfo.phone_number}
+          onChange={handleChange}
         />
-        {validationMessage ? (
-          <Alert severity="error">{validationMessage}</Alert>
-        ) : null}
-        <button type="submit" className={style.button}>
-          Créer un compte
-        </button>
       </form>
+      <div className={style.validationMessage}>
+        {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+          <Alert
+            severity={
+              validationMessage === "Veuillez utiliser une autre adresse mail"
+                ? "error"
+                : "success"
+            }
+          >
+            {validationMessage}
+          </Alert>
+        ) : null}
+        {validationMessage !==
+        "Compte créé. Vous pouvez désormais vous connecter." ? (
+          <button type="submit" className={style.button}>
+            Créer un compte
+          </button>
+        ) : null}
+      </div>
+      {validationMessage ===
+      "Compte créé. Vous pouvez désormais vous connecter." ? (
+        <Alert
+          severity={
+            validationMessage ===
+            "Compte créé. Vous pouvez désormais vous connecter."
+              ? "success"
+              : "error"
+          }
+        >
+          {validationMessage}
+        </Alert>
+      ) : null}
+      {validationMessage ===
+      "Compte créé. Vous pouvez désormais vous connecter." ? (
+        <Link to="/particulier">
+          <button type="button" className={style.button}>
+            Se connecter
+          </button>
+        </Link>
+      ) : null}
     </div>
   );
 }

@@ -156,10 +156,4 @@ CREATE TABLE parent_notification (
 -- Requête pour consulter les jours de disponibilité d'une crèche.
 SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
 
--- Requête pour connaître le nombre de places d'une crèche.
-SELECT count(pl.id) AS places_for_pro from place AS pl LEFT JOIN pro AS pr ON pr.id = pl.pro_id;
-
--- Requête pour lister les enfants d'un parent.
-SELECT c.lastname AS nom_enfant, c.firstname AS prenom_enfant, p.lastname AS nom_parent, p.firstname AS prenom_parent FROM child AS c LEFT JOIN parent AS p ON c.parent_id = p.id WHERE p.id = 2;
-
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 1;
