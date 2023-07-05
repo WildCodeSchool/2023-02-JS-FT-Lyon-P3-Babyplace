@@ -2,6 +2,7 @@
   width: 50%;
   height: 100%;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .recapPage > div {
@@ -62,6 +63,12 @@
 }
 
 .recapFooter {
+  display: flex;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.modifyRecapFooter {
   display: flex;
   justify-content: flex-end;
   padding: 5%;

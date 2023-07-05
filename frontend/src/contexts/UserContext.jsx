@@ -9,7 +9,7 @@ const UserContext = createContext();
 export default UserContext;
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useLocalStorage("user", {});
+  const [user, setUser] = useLocalStorage("user", null);
   const [token, setToken] = useLocalStorage("token", "");
   const navigate = useNavigate();
 
@@ -20,10 +20,12 @@ export function UserContextProvider({ children }) {
   const login = (_user) => {
     setUser(_user);
   };
+
   const logout = () => {
     instance.get("/logout");
     setUser(null);
     setToken(null);
+    navigate("/");
   };
 
   const value = useMemo(

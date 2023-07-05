@@ -11,11 +11,11 @@ const browse = (req, res) => {
       res.sendStatus(500);
     });
 };
+
 const browseProAndDispo = (req, res) => {
   const id = parseInt(req.params.id, 10);
   models.pro
     .browseDispo(id)
-
     .then(([rows]) => {
       res.send(rows);
     })
@@ -42,20 +42,16 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const pro = req.body;
+  const info = req.body;
 
   // TODO validations (length, format...)
 
-  pro.id = parseInt(req.params.id, 10);
+  const id = parseInt(req.params.id, 10);
 
   models.pro
-    .update(pro)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
+    .update(info, id)
+    .then(() => {
+      res.sendStatus(204);
     })
     .catch((err) => {
       console.error(err);
@@ -71,7 +67,8 @@ const add = (req, res) => {
   models.pro
     .insert(pro)
     .then(([result]) => {
-      res.location(`/pro/${result.insertId}`).sendStatus(201);
+      res.send(result);
+      // res.location(`/pro/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);

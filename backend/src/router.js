@@ -6,6 +6,9 @@ const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
+const placeControllers = require("./controllers/placeControllers");
+const disponibilityControllers = require("./controllers/disponibilityControllers");
+const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
 const {
   getParentByEmail,
   getProByEmail,
@@ -32,19 +35,47 @@ router.post("/parent", hashPassword, parentControllers.add);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/pro", proControllers.browse);
-router.get("/pro/profile", proControllers.profile);
+router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
-router.post("/pro/login", getProByEmail, verifyPassword);
+router.patch("/pro/:id", verifyToken, proControllers.edit);
+router.post(
+  "/pro/login",
+  getProByEmail,
+  placeControllers.countPlaces,
+  proDisponibilityControllers.listProDisponibilities,
+  verifyPassword
+);
 router.post(
   "/pro/register",
   verifyIfRegistered,
   hashPassword,
   proControllers.add
 );
-// router.post("/pro", hashPassword, proControllers.add);
+
+router.post("/place", verifyToken, placeControllers.add);
+router.put(
+  "/place",
+  verifyToken,
+  placeControllers.listPlaces,
+  placeControllers.destroy
+);
+
+router.post(
+  "/proDisponibility",
+  verifyToken,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add
+);
+router.put(
+  "/proDisponibility",
+  verifyToken,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.destroy
+);
 
 router.get(
   "/dashboard/reservations",
+  verifyToken,
   dashboardProControllers.browseReservations
 );
 router.get(
@@ -54,14 +85,17 @@ router.get(
 );
 router.put(
   "/dashboard/reservations/validate/:id",
+  verifyToken,
   dashboardProControllers.validateOrder
 );
 router.put(
   "/dashboard/reservations/refuse/:id",
+  verifyToken,
   dashboardProControllers.refuseOrder
 );
 router.put(
   "/dashboard/reservations/cancel/:id",
+  verifyToken,
   dashboardProControllers.cancelOrder
 );
 
