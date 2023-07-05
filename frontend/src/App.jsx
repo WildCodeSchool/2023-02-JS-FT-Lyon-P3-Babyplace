@@ -24,14 +24,13 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/particulier/recherche/:id" element={<ProDetails />} />
-            <Route
-              path="/particulier/recherche/:id/date"
-              element={<DateChoice />}
-            />
-            <Route path="/particulier/recherche" element={<SearchList />} />
-            <Route path="/particulier" element={<Particulier />} />
-            <Route path="/particulier-register" element={<FormParent />} />
+            <Route path="/particulier">
+              <Route index element={<Particulier />} />
+              <Route path="recherche" element={<SearchList />} />
+              <Route path="recherche/:id" element={<ProDetails />} />
+              <Route path="recherche/:id/date" element={<DateChoice />} />
+              <Route path="register" element={<FormParent />} />
+            </Route>
             <Route path="/pro-register" element={<ProRegister />} />
             <Route path="/pro" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />

@@ -101,7 +101,7 @@ function Login({ userType }) {
           ) : (
             <div className={styles.switch}>
               <p>Pas encore inscrit ?</p>
-              <Link to="/particulier-register"> Cliquez ici</Link>
+              <Link to="/particulier/register"> Cliquez ici</Link>
             </div>
           )}
         </Box>
