@@ -3,10 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import style from "./FormCompletChildrenParents.module.css";
 import FormChild from "./FormChild";
+import ResumeChild from "./ResumeChild";
 
 export default function FormCompletChildren() {
   const { id } = useParams();
   const [showForm, setShowForm] = useState(false);
+  const [showChild, setShowChild] = useState(false);
+
   return (
     <div className={style.card}>
       <div className={style.header_card}>
@@ -35,6 +38,14 @@ export default function FormCompletChildren() {
       <div className={style.file}>
         <h2>Dossier enfants</h2>
         <div>
+          <button
+            type="button"
+            className={style.button}
+            onClick={() => setShowChild(!showChild)}
+          >
+            Mes enfants
+          </button>
+          {showChild ? <ResumeChild /> : null}
           <button
             type="button"
             className={style.button}

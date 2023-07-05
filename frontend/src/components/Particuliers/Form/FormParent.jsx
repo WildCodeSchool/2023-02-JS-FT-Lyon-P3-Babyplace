@@ -94,7 +94,7 @@ export default function FormParent() {
     }
     // Envoi au back des données recueillies dans le formulaire
     axios
-      .post(`${backEndUrl}/parent`, formInfo)
+      .post(`${backEndUrl}/parent/register`, formInfo)
       .then((response) => {
         if (response.status === 201) {
           setValidationMessage(
@@ -187,39 +187,41 @@ export default function FormParent() {
           value={formInfo.phone_number}
           onChange={handleChange}
         />
-      </form>
-      <div className={style.validationMessage}>
-        {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+        <div className={style.validationMessage}>
+          {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+            <Alert
+              severity={
+                validationMessage === "Veuillez utiliser une autre adresse mail"
+                  ? "error"
+                  : "success"
+              }
+            >
+              {validationMessage}
+            </Alert>
+          ) : null}
+          {validationMessage !==
+          "Compte créé. Vous pouvez désormais vous connecter." ? (
+            <button type="submit" className={style.button}>
+              Créer un compte
+            </button>
+          ) : null}
+        </div>
+
+        {validationMessage ===
+        "Compte créé. Vous pouvez désormais vous connecter." ? (
           <Alert
             severity={
-              validationMessage === "Veuillez utiliser une autre adresse mail"
-                ? "error"
-                : "success"
+              validationMessage ===
+              "Compte créé. Vous pouvez désormais vous connecter."
+                ? "success"
+                : "error"
             }
           >
             {validationMessage}
           </Alert>
         ) : null}
-        {validationMessage !==
-        "Compte créé. Vous pouvez désormais vous connecter." ? (
-          <button type="submit" className={style.button}>
-            Créer un compte
-          </button>
-        ) : null}
-      </div>
-      {validationMessage ===
-      "Compte créé. Vous pouvez désormais vous connecter." ? (
-        <Alert
-          severity={
-            validationMessage ===
-            "Compte créé. Vous pouvez désormais vous connecter."
-              ? "success"
-              : "error"
-          }
-        >
-          {validationMessage}
-        </Alert>
-      ) : null}
+      </form>
+
       {validationMessage ===
       "Compte créé. Vous pouvez désormais vous connecter." ? (
         <Link to="/particulier">
