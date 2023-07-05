@@ -2,17 +2,18 @@
     margin: 30px 0em 0em 70px;
     display: flex;
     justify-content: flex-start;
-    height: calc(100vh - 30px);
-    width: calc(100vw - 60px);
+    height: calc(100% - 30px);
+    width: calc(100% - 70px);
     overflow: auto;
 }
 
 @media screen and (max-width: 950px) {
     .modifydata_box  {
+      margin: 60px 0px 0px 70px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       flex-direction: column;
-      height: calc(100vh - 30px);
-      width: calc(100vw - 60px);
+      height: calc(100% - 60px);
+      width: calc(100% - 70px);
     }
   }

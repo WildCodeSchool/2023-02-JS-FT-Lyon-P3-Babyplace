@@ -51,11 +51,10 @@ body {
   align-items: center;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 950px) {
   .dashboard_box {
     width: 100vw;
-    height: 96vh;
-    margin-left: 30px;
-    margin-top: 20px;
+    height: 100vh;
+    margin: 0px;
   }
 }
