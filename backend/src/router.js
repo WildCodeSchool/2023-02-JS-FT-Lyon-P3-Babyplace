@@ -49,11 +49,13 @@ router.post(
   "/pro/register",
   verifyIfRegistered,
   hashPassword,
-  proControllers.add
+  proControllers.add,
+  placeControllers.add,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add
 );
 
 router.post("/place", verifyToken, placeControllers.add);
-router.post("/register/place", placeControllers.add);
 router.put(
   "/place",
   verifyToken,
@@ -67,11 +69,7 @@ router.post(
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
 );
-router.post(
-  "/register/proDisponibility",
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
+
 router.put(
   "/proDisponibility",
   verifyToken,

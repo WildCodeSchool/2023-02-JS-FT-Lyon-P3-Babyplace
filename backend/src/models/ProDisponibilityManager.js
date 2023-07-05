@@ -5,10 +5,11 @@ class ProDisponibilityManager extends AbstractManager {
     super({ table: "pro_disponibility" });
   }
 
-  insert(dayId, proId) {
+  insert(disponibility, proId) {
+    const disponibilityArray = disponibility.map((dispo) => [dispo.id, proId]);
     return this.database.query(
-      `insert into ${this.table} (disponibility_id, pro_id) values (?, ?) `,
-      [dayId, proId]
+      `insert into ${this.table} (disponibility_id, pro_id) values ? `,
+      [disponibilityArray]
     );
   }
 
@@ -19,10 +20,11 @@ class ProDisponibilityManager extends AbstractManager {
     );
   }
 
-  delete(dayId, proId) {
+  delete(daysToRemove, proId) {
+    const disponibilityArray = daysToRemove.map((dispo) => dispo.id);
     return this.database.query(
-      `delete from ${this.table} where disponibility_id = ? and pro_id = ? `,
-      [dayId, proId]
+      `delete from ${this.table} where disponibility_id in (?) and pro_id = ? `,
+      [disponibilityArray, proId]
     );
   }
 }
