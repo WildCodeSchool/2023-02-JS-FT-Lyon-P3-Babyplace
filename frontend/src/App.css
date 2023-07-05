@@ -59,3 +59,22 @@ body {
     margin-top: 20px;
   }
 }
+
+.MuiPickersCalendarHeader-root {
+  position: relative;
+}
+
+.MuiPickersCalendarHeader-root .MuiPickersCalendarHeader-labelContainer {
+  background-color: rgb(103, 103, 242);
+  border-radius: 2px;
+  color: white;
+  padding:  5px 10px;
+  position: absolute;
+  left: 110px;
+}
+.MuiPickersCalendarHeader-root .MuiPickersCalendarHeader-switchViewButton {
+  display: none;
+}
+.MuiPickersArrowSwitcher-root .MuiPickersArrowSwitcher-spacer {
+  width: 215px;
+}

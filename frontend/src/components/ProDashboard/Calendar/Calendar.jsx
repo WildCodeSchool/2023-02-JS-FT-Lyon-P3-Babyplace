@@ -4,6 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import dayjs from "dayjs";
+import "dayjs/locale/fr";
 import DatePicker from "./CalendarInfo";
 import CalendarCard from "./CalendarCard";
 import styles from "./Calendar.module.css";
@@ -28,6 +29,7 @@ export default function Calendar() {
   // console.info(value);
   console.info(date);
   console.info(dateOrder);
+  console.info(value);
 
   useEffect(() => {
     axios
@@ -43,12 +45,27 @@ export default function Calendar() {
       <div className={styles.left_container}>
         <DatePicker />
         <div className={styles.calendar_component}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
             <StaticDatePicker
               orientation="portrait"
               value={value}
               onChange={(newValue) => {
                 setValue(newValue);
+              }}
+              slotProps={{
+                // The actions will be the same between desktop and mobile
+                actionBar: {
+                  actions: [],
+                },
+                tabs: {
+                  hidden: true,
+                },
+                toolbar: {
+                  hidden: true,
+                },
+                shortcuts: {
+                  hidden: true,
+                },
               }}
             />
           </LocalizationProvider>

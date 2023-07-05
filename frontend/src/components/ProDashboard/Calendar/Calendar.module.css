@@ -6,15 +6,15 @@
 
 .left_container {
     width: 500px;
-    height: 700px;
-    border: solid blue 2px;
+    height: 450px;
+    
 }
 
 .calendar_component {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid orange 2px;
+    background-color: #FFFFFF;
     height: 80%;
     overflow: hidden;
     display: flex;
@@ -25,8 +25,21 @@
 
 
 .right_container {
-    width: 300px;
+    width: 100px;
     height: 600px;
     margin-left: 100px;
     border: solid rgb(55, 255, 0) 2px;
+    display: none;
+}
+ .mui_calendar .MuiPickersCalendarHeader-labelContainerc{
+    display: none;
+}
+
+.custom-date-picker .MuiPickersArrowSwitcher-spacer {
+    width: 220px;
+  }
+
+#r5:-grid-label {
+    display: none;
+    opacity: 0;
 }
