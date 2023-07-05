@@ -7,7 +7,7 @@ class ChildManager extends AbstractManager {
 
   insert(child) {
     return this.database.query(
-      `insert into ${this.table} (lastname, firstname, birthdate, walking, doctor, parent_id) values (?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (lastname, firstname, birthdate, walking, doctor, parent_id) values (?, ?, ?, ?, ?,?)`,
       [
         child.lastname,
         child.firstname,

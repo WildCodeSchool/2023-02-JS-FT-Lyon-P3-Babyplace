@@ -32,6 +32,13 @@ class ParentManager extends AbstractManager {
     );
   }
 
+  findParentByEmail(email) {
+    return this.database.query(
+      `SELECT id FROM ${this.table} WHERE mail_address = ?`,
+      [email]
+    );
+  }
+
   joinChildWithParent(id) {
     return this.database.query(
       `select c.lastname, c.firstname, DATE_FORMAT(c.birthdate, "%d/%m/%Y") birthdate, c.doctor from ${this.table} as p

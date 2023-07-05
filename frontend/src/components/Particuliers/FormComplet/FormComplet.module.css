@@ -24,6 +24,7 @@
   position: fixed;
   top: 5%;
   left: 5%;
+  cursor: pointer;
 }
 
 .buttonChild,

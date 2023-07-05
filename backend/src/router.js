@@ -18,6 +18,7 @@ const {
   verifyIfRegistered,
   verifyToken,
   logout,
+  verifyIfParentRegistered,
 } = require("./services/auth");
 
 router.get("/items", itemControllers.browse);
@@ -32,7 +33,12 @@ router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
 router.get("/parent/child/:id", parentControllers.showChildWithParent);
 router.post("/parent/login", getParentByEmail, verifyPassword);
-router.post("/parent/register", hashPassword, parentControllers.add);
+router.post(
+  "/parent/register",
+  verifyIfParentRegistered,
+  hashPassword,
+  parentControllers.add
+);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/child", childControllers.browse);

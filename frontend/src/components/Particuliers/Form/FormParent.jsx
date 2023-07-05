@@ -129,6 +129,7 @@ export default function FormParent() {
           placeholder="Nom"
           value={formInfo.lastname}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -136,6 +137,7 @@ export default function FormParent() {
           placeholder="Prénom"
           value={formInfo.firstname}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -144,6 +146,7 @@ export default function FormParent() {
           value={formInfo.birthdate}
           pattern="\d{4}/\d{2}/\d{2}"
           onChange={handleChange}
+          required
         />
         <input
           type="email"
@@ -151,6 +154,7 @@ export default function FormParent() {
           placeholder="Email"
           value={formInfo.mail_address}
           onChange={handleChange}
+          required
         />
         <input
           type="password"
@@ -158,6 +162,7 @@ export default function FormParent() {
           placeholder="Mot de passe"
           value={formInfo.password}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -165,6 +170,7 @@ export default function FormParent() {
           placeholder="Numéro et nom de voie"
           value={formInfo.address}
           onChange={handleChange}
+          required
         />
         <input
           type="number"
@@ -172,6 +178,7 @@ export default function FormParent() {
           placeholder="Code postal"
           value={formInfo.postcode}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -179,6 +186,7 @@ export default function FormParent() {
           placeholder="Ville"
           value={formInfo.city}
           onChange={handleChange}
+          required
         />
         <input
           type="number"
@@ -186,6 +194,7 @@ export default function FormParent() {
           placeholder="Téléphone mobile"
           value={formInfo.phone_number}
           onChange={handleChange}
+          required
         />
         <div className={style.validationMessage}>
           {validationMessage === "Veuillez utiliser une autre adresse mail" ? (

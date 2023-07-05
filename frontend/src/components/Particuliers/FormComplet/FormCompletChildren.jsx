@@ -8,7 +8,7 @@ import ResumeChild from "./ResumeChild";
 export default function FormCompletChildren() {
   const { id } = useParams();
   const [showForm, setShowForm] = useState(false);
-  const [showChild, setShowChild] = useState(false);
+  const [showChild, setShowChild] = useState(true);
 
   return (
     <div className={style.card}>
@@ -37,7 +37,7 @@ export default function FormCompletChildren() {
       </div>
       <div className={style.file}>
         <h2>Dossier enfants</h2>
-        <div>
+        <div className={style.buttonHead}>
           <button
             type="button"
             className={style.button}
