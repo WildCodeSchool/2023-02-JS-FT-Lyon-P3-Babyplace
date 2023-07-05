@@ -16,15 +16,10 @@ function Recap({ registerInfo }) {
     useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
 
-  // useEffect(() => {
-  //   console.log(infoToModify)
-  // }, [infoToModify]);
-
   const handleSubmitRegister = () => {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
     if (user?.id) {
       for (const info of Object.entries(infoToModify)) {
-        // console.log(infoToModify)
         if (info[0] === "place") {
           if (info[1] > user.place) {
             // si l'utilisateur déclare plus de places que précédemment enregistrées, il faut en ajouter
@@ -134,7 +129,7 @@ function Recap({ registerInfo }) {
           const id = response.data.insertId;
           for (let i = 1; i <= registerInfo.place; i += 1) {
             instance
-              .post(`/place`, { id })
+              .post(`/register/place`, { id })
               .then((resp) => {
                 console.warn(resp);
               })
@@ -144,7 +139,7 @@ function Recap({ registerInfo }) {
           }
           for (const day of registerInfo.disponibility) {
             instance
-              .post(`/proDisponibility`, {
+              .post(`/register/proDisponibility`, {
                 day: day.replace(" ", ""),
                 id,
               })
