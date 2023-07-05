@@ -9,10 +9,11 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
+import { useUserContext } from "../../contexts/UserContext";
 
 function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
   const arrayOfData = useRef([]);
-
+  const { user } = useUserContext();
   // fonction qui gère le fonctionnement des boutons switch
   // mise à jour d'un tableau des données (arrayOfData) pour lesquelles le bouton correspondant est activé
   // et ajout de ce tableau dans le formBlockInfo
@@ -20,16 +21,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     if (data[0].multiple) {
       if (event.target.checked) {
         // dans le cas où le bouton est activé, on ajoute la donnée
-        if (arrayOfData.length === 0) {
-          arrayOfData.current.push(event.target.name);
-        } else {
-          arrayOfData.current.push(
-            event.target.name.replace(
-              event.target.name,
-              ` ${event.target.name}`
-            )
-          );
-        }
+        arrayOfData.current.push(event.target.name);
         setFormBlockInfo({
           ...formBlockInfo,
           empty: false,
@@ -81,64 +73,135 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
     return setFormBlockInfo({ empty: true });
   }, []);
 
-  if (data[0].data && typeof data[0].data[0] === "string" && data[0].multiple) {
-    return data[0].data.map((dataRow) => {
+  if (user?.id) {
+    if (
+      data[0].data &&
+      typeof data[0].data[0] === "string" &&
+      data[0].multiple
+    ) {
+      return data[0].data.map((dataRow) => {
+        return (
+          <FormControlLabel
+            value="top"
+            control={
+              <Switch name={dataRow} onChange={handleSwitch} color="primary" />
+            }
+            label={dataRow}
+            labelPlacement="top"
+          />
+        );
+      });
+    }
+    if (
+      data[0].data &&
+      typeof data[0].data[0] === "string" &&
+      !data[0].multiple
+    ) {
       return (
-        <FormControlLabel
-          value="top"
-          control={
-            <Switch name={dataRow} onChange={handleSwitch} color="primary" />
+        <FormControl>
+          <FormLabel id="demo-controlled-radio-buttons-group">
+            Type de structure
+          </FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name={data[0].data}
+            onChange={(e) => handleRadioButtonChange(e)}
+          >
+            {data[0].data.map((dataRow) => {
+              return (
+                <FormControlLabel
+                  value={dataRow}
+                  control={<Radio />}
+                  label={dataRow}
+                />
+              );
+            })}
+          </RadioGroup>
+        </FormControl>
+      );
+    }
+
+    return data.map((row) => {
+      return (
+        <TextField
+          label={row.fieldname}
+          margin="normal"
+          type={
+            row.fieldname === "Mot de passe" ||
+            row.fieldname === "Confirmez votre mot de passe"
+              ? "password"
+              : "text"
           }
-          label={dataRow}
-          labelPlacement="top"
+          onChange={(e) => handleFieldChange(e, row.field)}
         />
       );
     });
   }
-  if (
-    data[0].data &&
-    typeof data[0].data[0] === "string" &&
-    !data[0].multiple
-  ) {
-    return (
-      <FormControl>
-        <FormLabel id="demo-controlled-radio-buttons-group">
-          Type de structure
-        </FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name={data[0].data}
-          onChange={(e) => handleRadioButtonChange(e)}
-        >
-          {data[0].data.map((dataRow) => {
-            return (
-              <FormControlLabel
-                value={dataRow}
-                control={<Radio />}
-                label={dataRow}
-              />
-            );
-          })}
-        </RadioGroup>
-      </FormControl>
-    );
-  }
 
-  return data.map((row) => {
-    return (
-      <TextField
-        label={row.fieldname}
-        margin="normal"
-        type={
-          row.fieldname === "Mot de passe" ||
-          row.fieldname === "Confirmez votre mot de passe"
-            ? "password"
-            : "text"
-        }
-        onChange={(e) => handleFieldChange(e, row.field)}
-      />
-    );
-  });
+  if (!user?.id) {
+    if (
+      data[0].data &&
+      typeof data[0].data[0] === "string" &&
+      data[0].multiple
+    ) {
+      return data[0].data.map((dataRow) => {
+        return (
+          <FormControlLabel
+            value="top"
+            control={
+              <Switch name={dataRow} onChange={handleSwitch} color="primary" />
+            }
+            label={dataRow}
+            labelPlacement="top"
+          />
+        );
+      });
+    }
+    if (
+      data[0].data &&
+      typeof data[0].data[0] === "string" &&
+      !data[0].multiple
+    ) {
+      return (
+        <FormControl>
+          <FormLabel id="demo-controlled-radio-buttons-group">
+            Type de structure
+          </FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name={data[0].data}
+            onChange={(e) => handleRadioButtonChange(e)}
+          >
+            {data[0].data.map((dataRow) => {
+              return (
+                <FormControlLabel
+                  value={dataRow}
+                  control={<Radio />}
+                  label={dataRow}
+                />
+              );
+            })}
+          </RadioGroup>
+        </FormControl>
+      );
+    }
+
+    return data.map((row) => {
+      return (
+        <TextField
+          label={row.fieldname}
+          margin="normal"
+          type={
+            row.fieldname === "Mot de passe" ||
+            row.fieldname === "Confirmez votre mot de passe"
+              ? "password"
+              : "text"
+          }
+          onChange={(e) => handleFieldChange(e, row.field)}
+        />
+      );
+    });
+  }
 }
 
 export default FormPart;

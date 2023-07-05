@@ -4,18 +4,22 @@ import { Button, Alert } from "@mui/material";
 import Joi from "joi";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
+import { useUserInfoContext } from "../../contexts/UserInfoContext";
+import { useUserContext } from "../../contexts/UserContext";
 
-function FormBlock({
-  activeField,
-  setActiveField,
-  fieldsToComplete,
-  registerInfo,
-  setRegisterInfo,
-}) {
+function FormBlock({ registerInfo, setRegisterInfo }) {
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   const [formFields, setFormFields] = useState([]);
   const [validationMessage, setValidationMessage] = useState(null);
+  const {
+    infoToModify,
+    setInfoToModify,
+    fieldsToComplete,
+    activeField,
+    setActiveField,
+  } = useUserInfoContext();
+  const { user } = useUserContext();
 
   const schema = Joi.object().keys({
     name: Joi.string().min(3).max(80).messages({
@@ -75,9 +79,13 @@ function FormBlock({
     }),
     type: Joi.string(),
     disponibility: Joi.array(),
-    places: Joi.number().integer().messages({
+    place: Joi.number().integer().min(0).max(100).messages({
       "number.base":
         "Le nombre de places doit être constitué uniquement de caractères numériques.",
+      "number.min":
+        "Le nombre de places doit être un nombre entier positif ou nul et inférieur à 100.",
+      "number.max":
+        "Le nombre de places doit être un nombre entier positif ou nul et inférieur à 100.",
     }),
     empty: Joi.boolean(),
   });
@@ -125,14 +133,18 @@ function FormBlock({
     setFormFields(arraOfFields);
     setValidationMessage(null);
   }, [activeField]);
-
   // mise à jour du registerInfo avec les infos du bloc de formulaire lors de la validation du bloc
   // reset du formBlockInfo et de l'activeField
   const handleConfirm = () => {
     const { error } = schema.validate(formBlockInfo);
     if (error) {
       setValidationMessage(error.message);
-    } else {
+    } else if (user?.id) {
+      setInfoToModify({ ...infoToModify, ...formBlockInfo });
+      setFormBlockInfo({ empty: true });
+      setActiveField(null);
+      setValidationMessage(null);
+    } else if (!user?.id) {
       setRegisterInfo({ ...registerInfo, ...formBlockInfo });
       setFormBlockInfo({ empty: true });
       setActiveField(null);
@@ -205,9 +217,6 @@ function FormBlock({
 export default FormBlock;
 
 FormBlock.propTypes = {
-  activeField: PropTypes.string.isRequired,
-  setActiveField: PropTypes.func.isRequired,
   registerInfo: PropTypes.string.isRequired,
   setRegisterInfo: PropTypes.func.isRequired,
-  fieldsToComplete: PropTypes.arrayOf.isRequired,
 };

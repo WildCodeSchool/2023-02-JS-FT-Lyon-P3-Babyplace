@@ -36,7 +36,6 @@ function Login({ userType }) {
         .post(`/${userType}/login`, loginInfo)
         .then((response) => {
           login(response.data);
-          // TODO effectuer le changement de page ici
         })
         .catch((error) => {
           if (error.response?.status === 401)
