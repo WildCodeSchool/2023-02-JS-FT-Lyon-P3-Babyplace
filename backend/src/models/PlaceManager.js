@@ -5,11 +5,14 @@ class PlaceManager extends AbstractManager {
     super({ table: "place" });
   }
 
-  insert(id) {
-    return this.database.query(
-      `insert into ${this.table} (pro_id) values (?)`,
-      [id]
-    );
+  insert(id, place) {
+    const placesArray = [];
+    for (let i = 1; i <= place; i += 1) {
+      placesArray.push([id]);
+    }
+    return this.database.query(`insert into ${this.table} (pro_id) values ?`, [
+      placesArray,
+    ]);
   }
 
   findPlaces(id) {

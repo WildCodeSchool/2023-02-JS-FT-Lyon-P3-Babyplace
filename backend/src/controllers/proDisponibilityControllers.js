@@ -1,13 +1,14 @@
 const models = require("../models");
 
 const add = (req, res) => {
+  const id = req.payloads?.sub || req.proId;
   models.proDisponibility
-    .insert(req.body.dayId, req.body.id)
+    .insert(req.body.disponibilities, id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(500);
       } else {
-        res.sendStatus(201);
+        res.sendStatus(200);
       }
     })
     .catch((err) => {
@@ -36,8 +37,9 @@ const listProDisponibilities = (req, res, next) => {
 };
 
 const destroy = (req, res) => {
+  const id = req.payloads.sub;
   models.proDisponibility
-    .delete(req.body.dayId, req.body.id)
+    .delete(req.body.disponibilities, id)
     .then(([result]) => {
       if (result.affectedRows !== 0) {
         res.sendStatus(200);
