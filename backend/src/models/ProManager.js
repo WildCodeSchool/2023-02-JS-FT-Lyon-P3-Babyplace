@@ -33,7 +33,7 @@ class ProManager extends AbstractManager {
   }
 
   update(values, id) {
-        return this.database.query(
+  return this.database.query(
       `update ${this.table} set ${values} where id = ?`,
       [id]
     );
