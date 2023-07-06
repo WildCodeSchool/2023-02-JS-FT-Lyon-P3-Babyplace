@@ -10,12 +10,25 @@
   height: 100vh;
   overflow: scroll;
 }
+.button_back {
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+}
 .search_list_page h2 {
   margin-top: 4rem;
 }
 .cards_media {
+  margin-top: 1rem;
   height: fit-content;
-  overflow: scroll;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.cards_media::-webkit-scrollbar {
+  display: none;
 }
 .logo_log_in {
   position: fixed;
@@ -28,9 +41,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  cursor: pointer;
 }
 .logo_log_in img {
   margin-right: 5px;
+  cursor: pointer;
 }
 .search_list_page a {
   text-decoration: none;
@@ -44,6 +59,7 @@
 .dispos_pro {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  cursor: pointer;
 }
 .dispos_pro li {
   padding: 1px;

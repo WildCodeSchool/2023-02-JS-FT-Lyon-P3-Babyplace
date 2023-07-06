@@ -4,6 +4,7 @@ const router = express.Router();
 
 const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
+const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
 const placeControllers = require("./controllers/placeControllers");
@@ -17,6 +18,7 @@ const {
   verifyIfRegistered,
   verifyToken,
   logout,
+  verifyIfParentRegistered,
 } = require("./services/auth");
 
 router.get("/items", itemControllers.browse);
@@ -29,10 +31,18 @@ router.get("/logout", logout);
 
 router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
+router.get("/parent/child/:id", parentControllers.showChildWithParent);
 router.post("/parent/login", getParentByEmail, verifyPassword);
-router.post("/parent/register", hashPassword);
-router.post("/parent", hashPassword, parentControllers.add);
+router.post(
+  "/parent/register",
+  verifyIfParentRegistered,
+  hashPassword,
+  parentControllers.add
+);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
+
+router.get("/child", childControllers.browse);
+router.post("/child/register", childControllers.add);
 
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);

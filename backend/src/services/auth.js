@@ -104,6 +104,15 @@ const verifyIfRegistered = (req, res, next) => {
     }
   });
 };
+const verifyIfParentRegistered = (req, res, next) => {
+  models.parent.findParentByEmail(req.body.mail_address).then(([rows]) => {
+    if (rows[0] == null) {
+      next();
+    } else {
+      res.sendStatus(400);
+    }
+  });
+};
 
 const verifyToken = (req, res, next) => {
   try {
@@ -128,6 +137,7 @@ module.exports = {
   verifyPassword,
   hashPassword,
   verifyIfRegistered,
+  verifyIfParentRegistered,
   verifyToken,
   logout,
 };
