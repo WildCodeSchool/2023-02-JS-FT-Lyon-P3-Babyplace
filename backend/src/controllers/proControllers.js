@@ -42,20 +42,45 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const info = req.body;
+  let values = "";
+  Object.entries(req.body).forEach((array) => {
+    if (
+      array[0] !== "empty" &&
+      array[0] !== "disponibility" &&
+      array[0] !== "place" &&
+      array[0] !== "disponibilities" &&
+      array[0] !== "placesToAdd" &&
+      array[0] !== "rowsToDelete" &&
+      array[0] !== "proId" &&
+      array[0] !== "placeId" &&
+      array[0] !== "disponibilitiesToRemove" &&
+      array[0] !== "disponibilitiesToAdd" &&
+      array[0] !== "daysToRemove" &&
+      array[0] !== "daysToAdd" &&
+      array !== undefined
+    ) {
+      values += `, ${array[0]} = "${array[1]}"`;
+    }
+  });
+  values = values?.replace(", ", "");
+  if (!values) {
+    return res.sendStatus(204);
+  }
 
   // TODO validations (length, format...)
 
   const id = req.payloads.sub;
 
-  models.pro
-    .update(info, id)
-    .then(() => {
-      res.sendStatus(204);
+  return models.pro
+    .update(values, id)
+    .then(([result]) => {
+      if (result.affectedRows !== 0) {
+        return res.sendStatus(204);
+      }
+      return res.sendStatus(500);
     })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500);
     });
 };
 

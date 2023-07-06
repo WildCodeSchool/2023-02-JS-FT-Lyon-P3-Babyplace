@@ -37,7 +37,18 @@ router.get("/dispo/:id", proControllers.browseProAndDispo);
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
-router.patch("/pro/:id", verifyToken, proControllers.edit);
+router.patch(
+  "/pro/:id",
+  verifyToken,
+  placeControllers.listPlaces,
+  placeControllers.destroy,
+  placeControllers.add,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.destroy,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add,
+  proControllers.edit
+);
 router.post(
   "/pro/login",
   getProByEmail,
@@ -53,28 +64,6 @@ router.post(
   placeControllers.add,
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
-);
-
-router.post("/place", verifyToken, placeControllers.add);
-router.put(
-  "/place",
-  verifyToken,
-  placeControllers.listPlaces,
-  placeControllers.destroy
-);
-
-router.post(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-
-router.put(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.destroy
 );
 
 router.get(

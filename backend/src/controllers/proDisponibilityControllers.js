@@ -1,15 +1,19 @@
 const models = require("../models");
 
-const add = (req, res) => {
+const add = (req, res, next) => {
+  if (
+    !req.body.disponibilitiesToAdd ||
+    req.body.disponibilitiesToAdd?.length === 0
+  )
+    return next();
   const id = req.payloads?.sub || req.proId;
-  models.proDisponibility
-    .insert(req.body.disponibilities, id)
+  return models.proDisponibility
+    .insert(req.body.disponibilitiesToAdd, id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(200);
+        return res.sendStatus(500);
       }
+      return next();
     })
     .catch((err) => {
       console.error(err);
@@ -27,8 +31,6 @@ const listProDisponibilities = (req, res, next) => {
         });
         req.user.disponibility = disponibilities;
         next();
-      } else {
-        res.sendStatus(404);
       }
     })
     .catch((err) => {
@@ -36,16 +38,20 @@ const listProDisponibilities = (req, res, next) => {
     });
 };
 
-const destroy = (req, res) => {
+const destroy = (req, res, next) => {
+  if (
+    !req.body.disponibilitiesToRemove ||
+    req.body.disponibilitiesToRemove?.length === 0
+  )
+    return next();
   const id = req.payloads.sub;
-  models.proDisponibility
-    .delete(req.body.disponibilities, id)
+  return models.proDisponibility
+    .delete(req.body.disponibilitiesToRemove, id)
     .then(([result]) => {
       if (result.affectedRows !== 0) {
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(404);
+        return next();
       }
+      return res.sendStatus(404);
     })
     .catch((err) => {
       console.error(err);
