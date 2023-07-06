@@ -1,11 +1,15 @@
 const models = require("../models");
 
-const add = (req, res) => {
-  models.place.insert(req.body.id).then(([result]) => {
+const add = (req, res, next) => {
+  const id = req.payloads?.sub || req.proId;
+  const place = req.body.placeId || req.body.place;
+  models.place.insert(id, place).then(([result]) => {
     if (result.affectedRows === 0) {
       res.sendStatus(404);
+    } else if (req.proId) {
+      next();
     } else {
-      res.sendStatus(204);
+      res.sendStatus(200);
     }
   });
 };
@@ -25,7 +29,8 @@ const countPlaces = (req, res, next) => {
 };
 
 const listPlaces = (req, res, next) => {
-  models.place.findAllPlaces(req.body.id).then(([result]) => {
+  const id = req.payloads.sub;
+  models.place.findAllPlaces(id).then(([result]) => {
     if (result) {
       const placeId = [];
       result.forEach((place) => {

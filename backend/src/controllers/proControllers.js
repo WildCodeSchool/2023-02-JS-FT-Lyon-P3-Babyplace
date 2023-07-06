@@ -46,7 +46,7 @@ const edit = (req, res) => {
 
   // TODO validations (length, format...)
 
-  const id = parseInt(req.params.id, 10);
+  const id = req.payloads.sub;
 
   models.pro
     .update(info, id)
@@ -59,7 +59,7 @@ const edit = (req, res) => {
     });
 };
 
-const add = (req, res) => {
+const add = (req, res, next) => {
   const pro = req.body;
 
   // TODO validations (length, format...)
@@ -67,8 +67,8 @@ const add = (req, res) => {
   models.pro
     .insert(pro)
     .then(([result]) => {
-      res.send(result);
-      // res.location(`/pro/${result.insertId}`).sendStatus(201);
+      req.proId = result.insertId;
+      next();
     })
     .catch((err) => {
       console.error(err);

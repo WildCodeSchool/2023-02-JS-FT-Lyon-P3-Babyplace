@@ -7,8 +7,6 @@ import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
 import instance from "../services/APIService";
 
-// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);

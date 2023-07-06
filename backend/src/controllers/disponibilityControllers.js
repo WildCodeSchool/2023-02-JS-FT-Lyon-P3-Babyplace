@@ -2,10 +2,10 @@ const models = require("../models");
 
 const findByName = (req, res, next) => {
   models.disponibility
-    .find(req.body.day)
+    .find(req.body.disponibility || req.body.daysToRemove)
     .then(([result]) => {
       if (result[0]) {
-        req.body.dayId = result[0].id;
+        req.body.disponibilities = result;
         next();
       } else {
         res.sendStatus(500);

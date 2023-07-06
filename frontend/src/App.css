@@ -42,19 +42,15 @@ body {
 .dashboard_box {
   position: absolute;
   width: 100vw;
-  margin-left: 10px;
-  margin-top: 30px;
+  margin-left: 70px;
+  margin-top: 60px;
   height: 100vh;
   top: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @media screen and (max-width: 950px) {
   .dashboard_box {
     width: 100vw;
     height: 100vh;
-    margin: 0px;
   }
 }

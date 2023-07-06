@@ -59,7 +59,10 @@ router.post(
   "/pro/register",
   verifyIfRegistered,
   hashPassword,
-  proControllers.add
+  proControllers.add,
+  placeControllers.add,
+  disponibilityControllers.findByName,
+  proDisponibilityControllers.add
 );
 
 router.post("/place", verifyToken, placeControllers.add);
@@ -76,6 +79,7 @@ router.post(
   disponibilityControllers.findByName,
   proDisponibilityControllers.add
 );
+
 router.put(
   "/proDisponibility",
   verifyToken,
