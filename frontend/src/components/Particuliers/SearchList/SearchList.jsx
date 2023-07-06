@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import pro1test from "../../../assets/images/pro1test.jpg";
 import user from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
@@ -26,6 +27,11 @@ export default function SearchList() {
   if (!pros) return null;
   return (
     <div className={style.search_list_page}>
+      <Link to="/">
+        <button type="button" className={style.button_back}>
+          <ArrowBackIosNewIcon />
+        </button>
+      </Link>
       <div className={style.logo_log_in}>
         <img src={user} alt="user" />
         <Link to="/particulier">Log In</Link>
