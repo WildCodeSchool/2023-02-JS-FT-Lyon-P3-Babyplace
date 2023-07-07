@@ -42,7 +42,8 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  let values = "";
+  // console.log(res.headersSent);
+  let pro = {};
   Object.entries(req.body).forEach((array) => {
     if (
       array[0] !== "empty" &&
@@ -59,27 +60,28 @@ const edit = (req, res) => {
       array[0] !== "daysToAdd" &&
       array !== undefined
     ) {
-      values += `, ${array[0]} = "${array[1]}"`;
+      pro = { ...pro, [array[0]]: array[1] };
+      // pro[array[0]] = array[1];
     }
   });
-  values = values?.replace(", ", "");
-  if (!values) {
-    return res.sendStatus(204);
-  }
-
+  // if (values.length === 0) {
+  //   res.sendStatus(204);
+  // }
   // TODO validations (length, format...)
-
-  const id = req.payloads.sub;
-
-  return models.pro
-    .update(values, id)
-    .then(([result]) => {
-      if (result.affectedRows !== 0) {
-        return res.sendStatus(204);
-      }
-      return res.sendStatus(500);
+  pro.id = req.payloads.sub;
+  // console.log(res.headersSent)
+  models.pro
+    .update(pro)
+    .then(() => {
+      // .then(([result]) => {
+      // console.log("la");
+      // console.log(result)
+      // console.log(res.headersSent);
+      res.sendStatus(204);
     })
     .catch((err) => {
+      // console.log("ici");
+      // console.log(res.headersSent)
       console.error(err);
     });
 };

@@ -47,7 +47,7 @@ router.post("/child/register", childControllers.add);
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
-router.patch(
+router.put(
   "/pro/:id",
   verifyToken,
   placeControllers.listPlaces,

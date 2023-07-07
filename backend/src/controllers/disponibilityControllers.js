@@ -12,10 +12,9 @@ const findByName = (req, res, next) => {
         if (result[0]) {
           req.body.disponibilitiesToRemove = result;
           req.body.daysToRemove = [];
-          next();
-        } else {
-          res.sendStatus(500);
+          return next();
         }
+        return next();
       })
       .catch((err) => {
         console.error(err);
@@ -28,10 +27,9 @@ const findByName = (req, res, next) => {
         if (result[0]) {
           req.body.disponibilitiesToAdd = result;
           req.body.daysToAdd = [];
-          next();
-        } else {
-          res.sendStatus(500);
+          return next();
         }
+        return next();
       })
       .catch((err) => {
         console.error(err);
@@ -44,10 +42,9 @@ const findByName = (req, res, next) => {
       .then(([result]) => {
         if (result[0]) {
           req.body.disponibilitiesToAdd = result;
-          next();
-        } else {
-          res.sendStatus(500);
+          return next();
         }
+        return next();
       })
       .catch((err) => {
         console.error(err);

@@ -8,10 +8,7 @@ const add = (req, res, next) => {
   const place = req.body.placesToAdd || req.body.place;
   return models.place
     .insert(id, place)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        return res.sendStatus(404);
-      }
+    .then(() => {
       return next();
     })
     .catch((err) => {
@@ -48,7 +45,7 @@ const listPlaces = (req, res, next) => {
         req.body.placeId = placeId;
         return next();
       }
-      return res.sendStatus(404);
+      return next();
     })
     .catch((err) => {
       console.error(err);
@@ -66,11 +63,8 @@ const destroy = (req, res, next) => {
   }
   return models.place
     .delete(values.join(", "))
-    .then(([result]) => {
-      if (result.affectedRows !== 0) {
-        return next();
-      }
-      return res.sendStatus(404);
+    .then(() => {
+      return next();
     })
     .catch((err) => {
       console.error(err);

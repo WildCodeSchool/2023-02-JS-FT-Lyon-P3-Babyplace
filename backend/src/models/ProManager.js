@@ -32,11 +32,12 @@ class ProManager extends AbstractManager {
     );
   }
 
-  update(values, id) {
-    return this.database.query(
-      `update ${this.table} set ${values} where id = ?`,
-      [id]
-    );
+  update(pro) {
+    // console.log(pro)
+    return this.database.query(`update ${this.table} set ? where id = ?`, [
+      pro,
+      pro.id,
+    ]);
   }
 
   findByEmailWithPassword(email) {

@@ -52,7 +52,7 @@ function Recap({ registerInfo }) {
       }
 
       return instance
-        .patch(`/pro/${user.id}`, {
+        .put(`/pro/${user.id}`, {
           ...infoToModify,
           rowsToDelete,
           placesToAdd,

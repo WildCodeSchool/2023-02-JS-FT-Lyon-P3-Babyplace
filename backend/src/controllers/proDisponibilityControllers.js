@@ -9,10 +9,7 @@ const add = (req, res, next) => {
   const id = req.payloads?.sub || req.proId;
   return models.proDisponibility
     .insert(req.body.disponibilitiesToAdd, id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        return res.sendStatus(500);
-      }
+    .then(() => {
       return next();
     })
     .catch((err) => {
@@ -45,17 +42,16 @@ const destroy = (req, res, next) => {
   )
     return next();
   const id = req.payloads.sub;
-  return models.proDisponibility
+  models.proDisponibility
     .delete(req.body.disponibilitiesToRemove, id)
-    .then(([result]) => {
-      if (result.affectedRows !== 0) {
-        return next();
-      }
-      return res.sendStatus(404);
+    .then(() => {
+      return next();
     })
     .catch((err) => {
       console.error(err);
+      return next();
     });
+  return next();
 };
 
 module.exports = {
