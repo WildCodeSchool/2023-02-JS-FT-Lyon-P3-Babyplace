@@ -33,22 +33,6 @@ class ProManager extends AbstractManager {
   }
 
   update(values, id) {
-    // const dataToUpdate = [];
-    // const valuesToUpdate = [];
-    // for (const data of Object.entries(info)) {
-    //   if (
-    //     data[0] !== "empty" &&
-    //     data[0] !== "disponibility" &&
-    //     data[0] !== "place" &&
-    //     data[0] !== "disponibilities" &&
-    //     data[0] !== "placesToAdd" &&
-    //     data[0] !== "rowsToRemove" &&
-    //     data[0] !== "proId"
-    //   ) {
-    //     dataToUpdate.push([data[0]]);
-    //     valuesToUpdate.push([data[1]]);
-    //   }
-    // }
     return this.database.query(
       `update ${this.table} set ${values} where id = ?`,
       [id]
