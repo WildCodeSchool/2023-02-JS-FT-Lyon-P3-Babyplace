@@ -41,49 +41,76 @@ const read = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  // console.log(res.headersSent);
-  let pro = {};
-  Object.entries(req.body).forEach((array) => {
-    if (
-      array[0] !== "empty" &&
-      array[0] !== "disponibility" &&
-      array[0] !== "place" &&
-      array[0] !== "disponibilities" &&
-      array[0] !== "placesToAdd" &&
-      array[0] !== "rowsToDelete" &&
-      array[0] !== "proId" &&
-      array[0] !== "placeId" &&
-      array[0] !== "disponibilitiesToRemove" &&
-      array[0] !== "disponibilitiesToAdd" &&
-      array[0] !== "daysToRemove" &&
-      array[0] !== "daysToAdd" &&
-      array !== undefined
-    ) {
-      pro = { ...pro, [array[0]]: array[1] };
-      // pro[array[0]] = array[1];
-    }
-  });
-  // if (values.length === 0) {
-  //   res.sendStatus(204);
-  // }
-  // TODO validations (length, format...)
-  pro.id = req.payloads.sub;
-  // console.log(res.headersSent)
-  models.pro
-    .update(pro)
-    .then(() => {
-      // .then(([result]) => {
-      // console.log("la");
-      // console.log(result)
-      // console.log(res.headersSent);
-      res.sendStatus(204);
-    })
-    .catch((err) => {
-      // console.log("ici");
-      // console.log(res.headersSent)
-      console.error(err);
+const edit = async (req, res) => {
+  try {
+    let pro = {};
+    Object.entries(req.body).forEach((array) => {
+      if (
+        array[0] !== "empty" &&
+        array[0] !== "disponibility" &&
+        array[0] !== "place" &&
+        array[0] !== "disponibilities" &&
+        array[0] !== "placesToAdd" &&
+        array[0] !== "rowsToDelete" &&
+        array[0] !== "daysToRemove" &&
+        array[0] !== "daysToAdd" &&
+        array !== undefined
+      ) {
+        pro = { ...pro, [array[0]]: array[1] };
+      }
     });
+    pro.id = req.payloads?.sub;
+
+    await models.pro
+      .update(pro)
+      .then(([result]) => {
+        if (result.affectedRows === 0) {
+          return res.sendStatus(404);
+        }
+        return null;
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.send(500);
+      });
+
+    if (req.body.placesToAdd > 0) {
+      await models.place
+        .insert(req.body.placesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(404);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+
+    if (req.body.daysToAdd.length > 0) {
+      const [disponibilitiesToAdd] = await models.disponibility.find(
+        req.body.daysToAdd
+      );
+      await models.proDisponibility
+        .insert(disponibilitiesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(404);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
 };
 
 const add = (req, res, next) => {

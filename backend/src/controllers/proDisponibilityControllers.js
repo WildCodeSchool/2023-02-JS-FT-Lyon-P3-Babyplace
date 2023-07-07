@@ -1,11 +1,6 @@
 const models = require("../models");
 
 const add = (req, res, next) => {
-  if (
-    !req.body.disponibilitiesToAdd ||
-    req.body.disponibilitiesToAdd?.length === 0
-  )
-    return next();
   const id = req.payloads?.sub || req.proId;
   return models.proDisponibility
     .insert(req.body.disponibilitiesToAdd, id)
@@ -36,11 +31,6 @@ const listProDisponibilities = (req, res, next) => {
 };
 
 const destroy = (req, res, next) => {
-  if (
-    !req.body.disponibilitiesToRemove ||
-    req.body.disponibilitiesToRemove?.length === 0
-  )
-    return next();
   const id = req.payloads.sub;
   models.proDisponibility
     .delete(req.body.disponibilitiesToRemove, id)

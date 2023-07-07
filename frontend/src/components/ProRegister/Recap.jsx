@@ -49,14 +49,16 @@ function Recap({ registerInfo }) {
             daysToRemove.push(day);
           }
         }
+        if (daysToRemove.length > 0 || rowsToDelete > 0) {
+          // TODO mettre en place un toast dans un premier temps, disant que la suppression de places ou de dispo n'est pas possible
+          // Si on a le temps avant la fin du projet, on mettra en place un système de vérification sur la semaine qui vient, et si la suppression rentre en conflit
+          // avec des réservations, un message en informera l'utilisateur pour qu'il règle manuellement les conflits et se charge de la communication aux parents.
+        }
       }
-
       return instance
-        .put(`/pro/${user.id}`, {
+        .patch(`/pro/${user.id}`, {
           ...infoToModify,
-          rowsToDelete,
           placesToAdd,
-          daysToRemove,
           daysToAdd,
         })
         .then((response) => {
