@@ -75,10 +75,40 @@ const cancelOrder = (req, res) => {
     });
 };
 
+const getDateOrder = (req, res) => {
+  models.dashboardpro
+    .getChildOnThisDate(req.params.date)
+    .then(([rows]) => {
+      if (rows == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
+const getAllReservationsForCalendar = (req, res) => {
+  models.dashboardpro
+    .getAllTheReservations(req.params.month)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
   validateOrder,
   refuseOrder,
   cancelOrder,
+  getDateOrder,
+  getAllReservationsForCalendar,
 };
