@@ -23,28 +23,39 @@ function Recap({ registerInfo }) {
         if (info[0] === "place") {
           if (info[1] > user.place) {
             // si l'utilisateur déclare plus de places que précédemment enregistrées, il faut en ajouter
-            for (let i = 1; i <= info[1] - user.place; i += 1) {
-              const { id } = user;
-              instance
-                .post(`/place`, { id })
-                .then((resp) => {
-                  console.warn(resp);
-                })
-                .catch((err) => {
-                  if (err.response.status === 403) {
-                    logout();
-                  }
-                  console.error(err);
-                });
-            }
+            instance
+              .post(`/place`, { place: info[1] - user.place })
+              .then((response) => {
+                if (response.status !== 200) {
+                  return setFormValidationMessage(
+                    "Il y a eu un problème, merci d'essayer plus tard."
+                  );
+                }
+                return setFormValidationMessage(
+                  "Les informations ont bien été mises à jour."
+                );
+              })
+              .catch((err) => {
+                if (err.response.status === 403) {
+                  logout();
+                }
+                console.error(err);
+              });
           } else if (info[1] < user.place) {
             // si l'utilisateur déclare moins de places que précédemment enregistrées, il faut en supprimer
             const rowsToDelete = user.place - info[1];
             const { id } = user;
             instance
               .put(`/place`, { id, rowsToDelete })
-              .then((resp) => {
-                console.warn(resp);
+              .then((response) => {
+                if (response.status !== 200) {
+                  return setFormValidationMessage(
+                    "Il y a eu un problème, merci d'essayer plus tard."
+                  );
+                }
+                return setFormValidationMessage(
+                  "Les informations ont bien été mises à jour."
+                );
               })
               .catch((err) => {
                 if (err.response.status === 403) {
@@ -55,41 +66,63 @@ function Recap({ registerInfo }) {
           }
         }
         if (info[0] === "disponibility") {
+          const { id } = user;
+          const daysToAdd = [];
+          const daysToRemove = [];
           for (const day of info[1]) {
             if (!user.disponibility.includes(day)) {
               // les disponibilités précédemment enregistrées ne contiennent pas un jour que l'utilisateur indique dans ses données modifiées
               // il faut donc ajouter le jour dans la base de données
-              const { id } = user;
-              instance
-                .post(`/proDisponibility`, { day, id })
-                .then((resp) => {
-                  console.warn(resp);
-                })
-                .catch((err) => {
-                  if (err.response.status === 403) {
-                    logout();
-                  }
-                  console.error(err);
-                });
+              daysToAdd.push(day);
             }
           }
+          if (daysToAdd.length > 0) {
+            instance
+              .post(`/proDisponibility`, { disponibility: daysToAdd, id })
+              .then((response) => {
+                if (response.status !== 200) {
+                  return setFormValidationMessage(
+                    "Il y a eu un problème, merci d'essayer plus tard."
+                  );
+                }
+                return setFormValidationMessage(
+                  "Les informations ont bien été mises à jour."
+                );
+              })
+              .catch((err) => {
+                if (err.response.status === 403) {
+                  logout();
+                }
+                console.error(err);
+              });
+          }
+
           for (const day of user.disponibility) {
             if (!info[1].includes(day)) {
               // les données modifiées ne contiennent pas un jour que l'utilisateur avait précédemment enregistré
               // il faut donc supprimer le jour dans la base de données
-              const { id } = user;
-              instance
-                .put(`/proDisponibility`, { day, id })
-                .then((resp) => {
-                  console.warn(resp);
-                })
-                .catch((err) => {
-                  if (err.response.status === 403) {
-                    logout();
-                  }
-                  console.error(err);
-                });
+              daysToRemove.push(day);
             }
+          }
+          if (daysToRemove.length > 0) {
+            instance
+              .put(`/proDisponibility`, { daysToRemove, id })
+              .then((response) => {
+                if (response.status !== 200) {
+                  return setFormValidationMessage(
+                    "Il y a eu un problème, merci d'essayer plus tard."
+                  );
+                }
+                return setFormValidationMessage(
+                  "Les informations ont bien été mises à jour."
+                );
+              })
+              .catch((err) => {
+                if (err.response.status === 403) {
+                  logout();
+                }
+                console.error(err);
+              });
           }
         }
         if (
@@ -100,13 +133,13 @@ function Recap({ registerInfo }) {
           instance
             .patch(`/pro/${user.id}`, info)
             .then((response) => {
-              if (response.status !== 204) {
+              if (response.status !== 200) {
                 return setFormValidationMessage(
                   "Il y a eu un problème, merci d'essayer plus tard."
                 );
               }
               return setFormValidationMessage(
-                "Les modifications ont bien été enregistrées."
+                "Les informations ont bien été mises à jour."
               );
             })
             .catch((error) => {
@@ -126,30 +159,6 @@ function Recap({ registerInfo }) {
       .then((response) => {
         console.warn(response);
         if (response.status === 200) {
-          const id = response.data.insertId;
-          for (let i = 1; i <= registerInfo.place; i += 1) {
-            instance
-              .post(`/register/place`, { id })
-              .then((resp) => {
-                console.warn(resp);
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          }
-          for (const day of registerInfo.disponibility) {
-            instance
-              .post(`/register/proDisponibility`, {
-                day: day.replace(" ", ""),
-                id,
-              })
-              .then((res) => {
-                console.warn(res);
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          }
           setFormValidationMessage(
             "Compte créé. Vous pouvez désormais vous connecter."
           );

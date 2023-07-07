@@ -19,6 +19,7 @@
   position: fixed;
   top: 5%;
   left: 5%;
+  cursor: pointer;
 }
 .name_type {
   padding: 0 20px;
@@ -48,6 +49,7 @@
   background-color: var(--main-color);
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 .validationMessage {
   margin-top: 0.8rem;

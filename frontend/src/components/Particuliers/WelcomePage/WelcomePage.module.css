@@ -39,9 +39,18 @@
   display: flex;
   margin-top: 2rem;
 }
+.button_next {
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
 .button_back {
   background: transparent;
   color: white;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
 }
 @media screen and (min-width: 1024px) {
   .card img {
@@ -51,9 +60,9 @@
     font-size: xxx-large;
   }
   .text h3 {
-    font-size: x-large;
+    font-size: large;
   }
   .text p {
-    font-size: large;
+    font-size: medium;
   }
 }

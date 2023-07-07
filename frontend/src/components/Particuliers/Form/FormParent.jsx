@@ -27,7 +27,7 @@ export default function FormParent() {
       .regex(/^\d{4}\/\d{2}\/\d{2}$/)
       .messages({
         "string.pattern.base":
-          "Votre date de naissance doit respecter le format JJ/MM/AAAA.",
+          "Votre date de naissance doit respecter le format AAAA/MM/JJ.",
       }),
     mail_address: Joi.string()
       .email({
@@ -94,7 +94,7 @@ export default function FormParent() {
     }
     // Envoi au back des données recueillies dans le formulaire
     axios
-      .post(`${backEndUrl}/parent`, formInfo)
+      .post(`${backEndUrl}/parent/register`, formInfo)
       .then((response) => {
         if (response.status === 201) {
           setValidationMessage(
@@ -129,6 +129,7 @@ export default function FormParent() {
           placeholder="Nom"
           value={formInfo.lastname}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -136,14 +137,16 @@ export default function FormParent() {
           placeholder="Prénom"
           value={formInfo.firstname}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
           name="birthdate"
-          placeholder="Date de naissance"
+          placeholder="Date de naissance AAAA/MM/JJ"
           value={formInfo.birthdate}
           pattern="\d{4}/\d{2}/\d{2}"
           onChange={handleChange}
+          required
         />
         <input
           type="email"
@@ -151,6 +154,7 @@ export default function FormParent() {
           placeholder="Email"
           value={formInfo.mail_address}
           onChange={handleChange}
+          required
         />
         <input
           type="password"
@@ -158,6 +162,7 @@ export default function FormParent() {
           placeholder="Mot de passe"
           value={formInfo.password}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -165,6 +170,7 @@ export default function FormParent() {
           placeholder="Numéro et nom de voie"
           value={formInfo.address}
           onChange={handleChange}
+          required
         />
         <input
           type="number"
@@ -172,6 +178,7 @@ export default function FormParent() {
           placeholder="Code postal"
           value={formInfo.postcode}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -179,6 +186,7 @@ export default function FormParent() {
           placeholder="Ville"
           value={formInfo.city}
           onChange={handleChange}
+          required
         />
         <input
           type="number"
@@ -186,40 +194,43 @@ export default function FormParent() {
           placeholder="Téléphone mobile"
           value={formInfo.phone_number}
           onChange={handleChange}
+          required
         />
-      </form>
-      <div className={style.validationMessage}>
-        {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+        <div className={style.validationMessage}>
+          {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+            <Alert
+              severity={
+                validationMessage === "Veuillez utiliser une autre adresse mail"
+                  ? "error"
+                  : "success"
+              }
+            >
+              {validationMessage}
+            </Alert>
+          ) : null}
+          {validationMessage !==
+          "Compte créé. Vous pouvez désormais vous connecter." ? (
+            <button type="submit" className={style.button}>
+              Créer un compte
+            </button>
+          ) : null}
+        </div>
+
+        {validationMessage ===
+        "Compte créé. Vous pouvez désormais vous connecter." ? (
           <Alert
             severity={
-              validationMessage === "Veuillez utiliser une autre adresse mail"
-                ? "error"
-                : "success"
+              validationMessage ===
+              "Compte créé. Vous pouvez désormais vous connecter."
+                ? "success"
+                : "error"
             }
           >
             {validationMessage}
           </Alert>
         ) : null}
-        {validationMessage !==
-        "Compte créé. Vous pouvez désormais vous connecter." ? (
-          <button type="submit" className={style.button}>
-            Créer un compte
-          </button>
-        ) : null}
-      </div>
-      {validationMessage ===
-      "Compte créé. Vous pouvez désormais vous connecter." ? (
-        <Alert
-          severity={
-            validationMessage ===
-            "Compte créé. Vous pouvez désormais vous connecter."
-              ? "success"
-              : "error"
-          }
-        >
-          {validationMessage}
-        </Alert>
-      ) : null}
+      </form>
+
       {validationMessage ===
       "Compte créé. Vous pouvez désormais vous connecter." ? (
         <Link to="/particulier">
