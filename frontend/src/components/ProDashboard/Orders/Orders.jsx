@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
@@ -106,9 +105,3 @@ export default function Orders() {
     </div>
   );
 }
-
-Orders.propTypes = {
-  reservation: PropTypes.shape({
-    status: PropTypes.string.isRequired,
-  }).isRequired,
-};

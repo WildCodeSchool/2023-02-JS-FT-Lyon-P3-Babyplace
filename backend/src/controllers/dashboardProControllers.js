@@ -91,6 +91,18 @@ const getDateOrder = (req, res) => {
     });
 };
 
+const getAllReservationsForCalendar = (req, res) => {
+  models.dashboardpro
+    .getAllTheReservations(req.params.month)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
@@ -98,4 +110,5 @@ module.exports = {
   refuseOrder,
   cancelOrder,
   getDateOrder,
+  getAllReservationsForCalendar,
 };

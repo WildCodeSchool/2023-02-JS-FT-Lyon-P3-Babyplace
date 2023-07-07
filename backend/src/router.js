@@ -105,5 +105,9 @@ router.put(
   dashboardProControllers.cancelOrder
 );
 router.get("/dashboard/calendar/:date", dashboardProControllers.getDateOrder);
+router.get(
+  "/dashboard/overview/calendar/:month",
+  dashboardProControllers.getAllReservationsForCalendar
+);
 
 module.exports = router;

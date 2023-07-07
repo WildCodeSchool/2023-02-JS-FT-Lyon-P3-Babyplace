@@ -65,11 +65,15 @@ body {
   color: white;
   padding:  5px 10px;
   position: absolute;
-  left: 110px;
+  left: 100px;
 }
 .MuiPickersCalendarHeader-root .MuiPickersCalendarHeader-switchViewButton {
   display: none;
 }
 .MuiPickersArrowSwitcher-root .MuiPickersArrowSwitcher-spacer {
   width: 215px;
+}
+
+.greenBadge .MuiBadge-badge {
+  background-color: green;
 }
