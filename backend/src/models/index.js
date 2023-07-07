@@ -31,17 +31,29 @@ const models = {};
 
 const ItemManager = require("./ItemManager");
 const ParentManager = require("./ParentManager");
+const ChildManager = require("./ChildManager");
 const ProManager = require("./ProManager");
 const DashboardProManager = require("./DashboardProManager");
+const PlaceManager = require("./PlaceManager");
+const DisponibilityManager = require("./DisponibilityManager");
+const ProDisponibilityManager = require("./ProDisponibilityManager");
 
 models.item = new ItemManager();
 models.item.setDatabase(pool);
 models.parent = new ParentManager();
 models.parent.setDatabase(pool);
+models.child = new ChildManager();
+models.child.setDatabase(pool);
 models.pro = new ProManager();
 models.pro.setDatabase(pool);
 models.dashboardpro = new DashboardProManager();
 models.dashboardpro.setDatabase(pool);
+models.place = new PlaceManager();
+models.place.setDatabase(pool);
+models.disponibility = new DisponibilityManager();
+models.disponibility.setDatabase(pool);
+models.proDisponibility = new ProDisponibilityManager();
+models.proDisponibility.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

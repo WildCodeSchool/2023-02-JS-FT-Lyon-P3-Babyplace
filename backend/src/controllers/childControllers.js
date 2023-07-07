@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.pro
+  models.child
     .findAll()
     .then(([rows]) => {
       res.send(rows);
@@ -12,21 +12,8 @@ const browse = (req, res) => {
     });
 };
 
-const browseProAndDispo = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  models.pro
-    .browseDispo(id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
 const read = (req, res) => {
-  models.pro
+  models.child
     .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
@@ -42,16 +29,20 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const info = req.body;
+  const child = req.body;
 
   // TODO validations (length, format...)
 
-  const id = req.payloads.sub;
+  child.id = parseInt(req.params.id, 10);
 
-  models.pro
-    .update(info, id)
-    .then(() => {
-      res.sendStatus(204);
+  models.child
+    .update(child)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -59,16 +50,15 @@ const edit = (req, res) => {
     });
 };
 
-const add = (req, res, next) => {
-  const pro = req.body;
+const add = (req, res) => {
+  const child = req.body;
 
   // TODO validations (length, format...)
 
-  models.pro
-    .insert(pro)
+  models.child
+    .insert(child)
     .then(([result]) => {
-      req.proId = result.insertId;
-      next();
+      res.location(`/child/registrer/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);
@@ -77,7 +67,7 @@ const add = (req, res, next) => {
 };
 
 const destroy = (req, res) => {
-  models.pro
+  models.child
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
@@ -92,28 +82,10 @@ const destroy = (req, res) => {
     });
 };
 
-const profile = (req, res) => {
-  const id = req.payloads.sub;
-  models.pro
-    .find(id)
-    .then(([users]) => {
-      if (users[0] === null) {
-        res.sendStatus(404);
-      }
-      res.send(users[0]);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
 module.exports = {
   browse,
-  browseProAndDispo,
   read,
   edit,
   add,
   destroy,
-  profile,
 };

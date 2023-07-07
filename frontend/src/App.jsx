@@ -12,35 +12,50 @@ import DashboardHome from "./components/ProDashboard/DashboardHome/DashboardHome
 import DateChoice from "./components/Particuliers/DateChoice/DateChoice";
 import ModifyData from "./components/ProDashboard/ModifyData/ModifyData";
 import FormParent from "./components/Particuliers/Form/FormParent";
+import FormCompletChildren from "./components/Particuliers/FormComplet/FormCompletChildren";
+import FormCompletParent from "./components/Particuliers/FormComplet/FormCompletParent";
+import FormCompletWelcome from "./components/Particuliers/FormComplet/FormCompletWelcome";
 import { UserContextProvider } from "./contexts/UserContext";
+import { UserInfoContextProvider } from "./contexts/UserInfoContext";
 
 import "./App.css";
 
 function App() {
   return (
-    <UserContextProvider>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/particulier/recherche/:id" element={<ProDetails />} />
-          <Route
-            path="/particulier/recherche/:id/date"
-            element={<DateChoice />}
-          />
-          <Route path="/particulier/recherche" element={<SearchList />} />
-          <Route path="/particulier" element={<Particulier />} />
-          <Route path="/particulier-register" element={<FormParent />} />
-          <Route path="/pro-register" element={<ProRegister />} />
-          <Route path="/pro" element={<Dashboard />}>
-            <Route index element={<DashboardHome />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="authentification" element={<UserAuth />} />
-            <Route path="modify" element={<ModifyData />} />
-          </Route>
-        </Routes>
-      </div>
-    </UserContextProvider>
+    <UserInfoContextProvider>
+      <UserContextProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/particulier/recherche/:id" element={<ProDetails />} />
+            <Route
+              path="/particulier/recherche/:id/date"
+              element={<DateChoice />}
+            />
+            <Route path="/particulier/recherche" element={<SearchList />} />
+            <Route path="/particulier" element={<Particulier />} />
+            <Route path="/particulier-register" element={<FormParent />} />
+            <Route path="/particulier/:id" element={<FormCompletWelcome />} />
+            <Route
+              path="/particulier/:id/child"
+              element={<FormCompletChildren />}
+            />
+            <Route
+              path="/particulier/:id/parent"
+              element={<FormCompletParent />}
+            />
+            <Route path="/pro-register" element={<ProRegister />} />
+            <Route path="/pro" element={<Dashboard />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="authentification" element={<UserAuth />} />
+              <Route path="modify" element={<ModifyData />} />
+            </Route>
+          </Routes>
+        </div>
+      </UserContextProvider>
+    </UserInfoContextProvider>
   );
 }
 

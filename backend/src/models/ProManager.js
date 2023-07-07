@@ -32,6 +32,13 @@ class ProManager extends AbstractManager {
     );
   }
 
+  update(info, id) {
+    return this.database.query(
+      `update ${this.table} set ${info[0]} = ? where id = ?`,
+      [info[1], id]
+    );
+  }
+
   findByEmailWithPassword(email) {
     // TODO changer la méthode pour ne sélectionner que les infos importantes
     return this.database.query(
