@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,19 +6,18 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import instance from "../../../services/APIService";
 import pro1test from "../../../assets/images/pro1test.jpg";
 import user from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
-
 export default function SearchList() {
   const [pros, setPros] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/pro`)
+    instance
+      .get(`/pro`)
       .then((response) => setPros(response.data))
       .catch((err) => console.error(err));
   }, []);

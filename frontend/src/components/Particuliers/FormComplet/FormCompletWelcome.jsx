@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import axios from "axios";
+import instance from "../../../services/APIService";
 import style from "./FormComplet.module.css";
 import profilePicture from "../../../assets/ed-cannan.png";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function FormCompletWelcome() {
   const { id } = useParams();
   const [parent, setParent] = useState(null);
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/parent/${id}`)
+    instance
+      .get(`/parent/${id}`)
       .then((response) => {
         setParent(response.data);
       })

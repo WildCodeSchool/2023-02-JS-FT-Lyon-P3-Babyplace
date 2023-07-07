@@ -39,6 +39,8 @@ router.post(
   hashPassword,
   parentControllers.add
 );
+router.patch("/parent/register/:id", verifyToken, parentControllers.edit);
+
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/child", childControllers.browse);

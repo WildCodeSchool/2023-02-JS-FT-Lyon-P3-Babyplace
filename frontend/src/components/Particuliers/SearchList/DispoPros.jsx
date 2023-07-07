@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { Chip, createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import instance from "../../../services/APIService";
 import style from "./SearchList.module.css";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 const theme = createTheme({
   palette: {
@@ -26,8 +24,8 @@ export default function DispoPros({ id }) {
     { key: 6, label: "Dimanche" },
   ]);
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/dispo/${id}`)
+    instance
+      .get(`/dispo/${id}`)
       .then((response) => {
         setDispos(response.data);
       })

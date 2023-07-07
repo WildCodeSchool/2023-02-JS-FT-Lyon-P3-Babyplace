@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Alert } from "@mui/material";
-import axios from "axios";
 import Joi from "joi";
+import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function FormChild() {
   const { user } = useUserContext();
@@ -39,8 +37,8 @@ export default function FormChild() {
       setValidationMessage(null);
     }
     // Envoi au back des données recueillies dans le formulaire
-    axios
-      .post(`${backEndUrl}/child/register`, formInfo)
+    instance
+      .post(`/child/register`, formInfo)
       .then((response) => {
         if (response.status === 201) {
           setValidationMessage("Votre enfant a bien été ajouté.");

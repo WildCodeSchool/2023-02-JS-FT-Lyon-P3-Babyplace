@@ -29,14 +29,14 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const parent = req.body;
+  const info = req.body;
 
   // TODO validations (length, format...)
 
-  parent.id = parseInt(req.params.id, 10);
+  info.id = parseInt(req.params.id, 10);
 
   models.parent
-    .update(parent)
+    .update(info)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);

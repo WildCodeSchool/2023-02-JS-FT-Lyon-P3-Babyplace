@@ -1,15 +1,14 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 
 export default function ResumeChild() {
   const { user } = useUserContext();
   const [childs, setChilds] = useState(null);
-  const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/parent/child/${user.id}`)
+    instance
+      .get(`/parent/child/${user.id}`)
       .then((response) => {
         setChilds(response.data);
       })

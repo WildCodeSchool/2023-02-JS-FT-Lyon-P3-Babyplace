@@ -25,6 +25,21 @@ class ParentManager extends AbstractManager {
     );
   }
 
+  update(info) {
+    return this.database.query(
+      `update ${this.table} set lastname = ?, firstname = ?, address = ?, postcode = ?, city = ?, phone_number = ? where id = ?`,
+      [
+        info.lastname,
+        info.firstname,
+        info.address,
+        info.postcode,
+        info.city,
+        info.phone_number,
+        info.id,
+      ]
+    );
+  }
+
   findByEmailWithPassword(email) {
     return this.database.query(
       `SELECT * FROM ${this.table} WHERE mail_address = ?`,
