@@ -8,8 +8,6 @@ export default function Orders() {
   const [selectedValue, setSelectedValue] = useState(4);
   const [reservations, setReservations] = useState([]);
 
-  // const [orderIndex, setOrderIndex] = useState(null);
-
   useEffect(() => {
     instance
       .get(`/dashboard/reservations`)

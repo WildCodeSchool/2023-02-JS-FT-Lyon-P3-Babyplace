@@ -1,6 +1,10 @@
 .orders_box {
-    width: 80vw;
-    height: 85vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .orders_header {
@@ -8,8 +12,8 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-bottom: 20px;
-    margin-top: 30px;
+    margin-bottom: 0px;
+    margin-top: 60px;
 }
 
 .filter_btn_box {
@@ -27,8 +31,8 @@
     align-items: center;
     overflow: scroll;
     overflow-x: hidden;
-    padding-bottom: 50px;
-    margin-left: 50px;
+    padding-bottom: 100px;
+    margin-left: 20px;
 }
 
 .orders_container::-webkit-scrollbar {
@@ -58,20 +62,19 @@
 
 
 @media screen and (max-width: 500px) {
-    .orders_box {
-        width: 70vw;
-        
-    }
+   
     
     .orders_header {
         flex-direction: column;
-        height: 40%;
+        height: 30%;
         margin-bottom: 0;
+        margin-left: 60px;
+        margin-top: 70px;
     }
     .filter_btn_box {
         flex-direction: column;
     }
     .orders_container {
-        padding-bottom: 200px;
+        padding-bottom: 300px;
     }
   }

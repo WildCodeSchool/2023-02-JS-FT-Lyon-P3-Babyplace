@@ -112,9 +112,14 @@ router.put(
   verifyToken,
   dashboardProControllers.cancelOrder
 );
-router.get("/dashboard/calendar/:date", dashboardProControllers.getDateOrder);
+router.get(
+  "/dashboard/calendar/:date",
+  verifyToken,
+  dashboardProControllers.getDateOrder
+);
 router.get(
   "/dashboard/overview/calendar/:month",
+  verifyToken,
   dashboardProControllers.getAllReservationsForCalendar
 );
 

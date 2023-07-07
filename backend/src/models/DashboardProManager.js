@@ -5,14 +5,18 @@ class DashboardProManager extends AbstractManager {
     super({ table: "reservation" });
   }
 
-  showAllReservations() {
+  showAllReservations(id) {
     // TODO changer la méthode pour ne sélectionner que les infos importantes
-    return this.database
-      .query(`select r.id, c.firstname prenom_enfant, c.lastname nom_enfant,
-    p.firstname prenom_parent, p.lastname nom_parent, DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation,  DATE_FORMAT(date_time_reservation, "%d/%m/%Y") date_enregistrement, r.status from ${this.table} as r
+    return this.database.query(
+      `select r.id, c.firstname prenom_enfant, c.lastname nom_enfant,
+    p.firstname prenom_parent, p.lastname nom_parent, DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation,  DATE_FORMAT(date_time_reservation, "%d/%m/%Y") date_enregistrement, r.status,  r.place_id, place.pro_id from ${this.table} as r
    join child as c on c.id = r.child_id
    join parent as p on c.parent_id = p.id
-   order by r.reservation_date asc`);
+   join place on r.place_id = place.id
+   WHERE place.pro_id = ?
+   order by r.reservation_date asc`,
+      [id]
+    );
   }
 
   moreDetailOrder(id) {
@@ -55,21 +59,23 @@ class DashboardProManager extends AbstractManager {
     );
   }
 
-  getChildOnThisDate(date) {
+  getChildOnThisDate(date, id) {
     return this.database.query(
       `select r.id, DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation, c.firstname prenom_enfant, c.lastname nom_enfant,
-      r.status from reservation AS r
+      r.status from ${this.table} AS r
      join child AS c ON c.id = r.child_id
+     join place on r.place_id = place.id
      where r.reservation_date = ?
+     and place.pro_id = ?
      and r.status = 1`,
-      [date]
+      [date, id]
     );
   }
 
-  getAllTheReservations(month) {
+  getAllTheReservations(month, id) {
     return this.database.query(
-      `select id, DATE_FORMAT(reservation_date, "%d") date_reservation, status from ${this.table} where status = 1 and MONTH(reservation_date) = ?`,
-      [month]
+      `select r.id, DATE_FORMAT(reservation_date, "%d") date_reservation, r.status from ${this.table} as r join place on r.place_id = place.id where r.status = 1 and MONTH(reservation_date) = ? and place.pro_id = ?`,
+      [month, id]
     );
   }
 }

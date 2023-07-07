@@ -1,8 +1,9 @@
 const models = require("../models");
 
 const browseReservations = (req, res) => {
+  const id = req.payloads.sub;
   models.dashboardpro
-    .showAllReservations()
+    .showAllReservations(id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -76,8 +77,9 @@ const cancelOrder = (req, res) => {
 };
 
 const getDateOrder = (req, res) => {
+  const id = req.payloads.sub;
   models.dashboardpro
-    .getChildOnThisDate(req.params.date)
+    .getChildOnThisDate(req.params.date, id)
     .then(([rows]) => {
       if (rows == null) {
         res.sendStatus(404);
@@ -92,8 +94,9 @@ const getDateOrder = (req, res) => {
 };
 
 const getAllReservationsForCalendar = (req, res) => {
+  const id = req.payloads.sub;
   models.dashboardpro
-    .getAllTheReservations(req.params.month)
+    .getAllTheReservations(req.params.month, id)
     .then(([rows]) => {
       res.send(rows);
     })

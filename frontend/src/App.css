@@ -35,12 +35,12 @@ body {
 
 .dashboard_bg_color {
   background-color: rgb(230, 242, 243);
-  position: relative;
-  overflow: hidden;
+  
+  
 }
 
 .dashboard_box {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   margin-left: 70px;
   margin-top: 60px;
