@@ -31,13 +31,13 @@ export default function NavBarParent() {
           borderColor: "var(--main-color)",
         }}
       >
-        <NavLink to="">
+        <NavLink to={user?.role === "parent" ? "" : null}>
           <BottomNavigationAction icon={<HomeIcon />} />
         </NavLink>
         <NavLink to="recherche">
           <BottomNavigationAction icon={<SearchIcon />} />
         </NavLink>
-        <NavLink to={`${user.id}`}>
+        <NavLink to={user?.role === "parent" ? `${user.id}` : null}>
           <BottomNavigationAction icon={<PersonIcon />} />
         </NavLink>
         <NavLink>
