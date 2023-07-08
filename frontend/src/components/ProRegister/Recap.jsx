@@ -85,7 +85,7 @@ function Recap({ registerInfo }) {
     return instance
       .post(`/pro/register`, registerInfo)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           setFormValidationMessage(
             "Compte créé. Vous pouvez désormais vous connecter."
           );

@@ -7,15 +7,13 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
-const placeControllers = require("./controllers/placeControllers");
-const disponibilityControllers = require("./controllers/disponibilityControllers");
-const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
+
 const {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
-  verifyIfRegistered,
+  verifyIfProRegistered,
   verifyToken,
   logout,
   verifyIfParentRegistered,
@@ -53,12 +51,9 @@ router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
 
 router.post(
   "/pro/register",
-  verifyIfRegistered,
+  verifyIfProRegistered,
   hashPassword,
-  proControllers.add,
-  placeControllers.add,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
+  proControllers.register
 );
 
 router.get(

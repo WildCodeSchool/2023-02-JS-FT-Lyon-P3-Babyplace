@@ -192,6 +192,64 @@ const login = async (req, res) => {
     });
 };
 
+const register = async (req, res) => {
+  try {
+    const pro = req.body;
+
+    // TODO validations (length, format...)
+    await models.pro
+      .insert(pro)
+      .then(([result]) => {
+        if (result.insertId) {
+          pro.id = result.insertId;
+          return null;
+        }
+        return res.send(500);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+
+    if (pro.place > 0) {
+      await models.place
+        .insert(pro.place, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(500);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+
+    if (pro.disponibility.length > 0) {
+      const [disponibilitiesToAdd] = await models.disponibility.find(
+        pro.disponibility
+      );
+      await models.proDisponibility
+        .insert(disponibilitiesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(500);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+    return res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -201,4 +259,5 @@ module.exports = {
   destroy,
   profile,
   login,
+  register,
 };

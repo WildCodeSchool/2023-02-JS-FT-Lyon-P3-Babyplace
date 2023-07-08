@@ -96,7 +96,7 @@ const verifyPassword = (req, res, next) => {
     });
 };
 
-const verifyIfRegistered = (req, res, next) => {
+const verifyIfProRegistered = (req, res, next) => {
   models.pro.findProByEmail(req.body.mail_address).then(([rows]) => {
     if (rows[0] == null) {
       next();
@@ -105,6 +105,7 @@ const verifyIfRegistered = (req, res, next) => {
     }
   });
 };
+
 const verifyIfParentRegistered = (req, res, next) => {
   models.parent.findParentByEmail(req.body.mail_address).then(([rows]) => {
     if (rows[0] == null) {
@@ -137,7 +138,7 @@ module.exports = {
   getProByEmail,
   verifyPassword,
   hashPassword,
-  verifyIfRegistered,
+  verifyIfProRegistered,
   verifyIfParentRegistered,
   verifyToken,
   logout,
