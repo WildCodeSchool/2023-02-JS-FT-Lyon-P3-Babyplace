@@ -1,15 +1,11 @@
 const models = require("../models");
 
-const add = (req, res) => {
+const add = (req, res, next) => {
   const id = req.payloads?.sub || req.proId;
-  models.proDisponibility
-    .insert(req.body.disponibilities, id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(200);
-      }
+  return models.proDisponibility
+    .insert(req.body.disponibilitiesToAdd, id)
+    .then(() => {
+      return next();
     })
     .catch((err) => {
       console.error(err);
@@ -27,8 +23,6 @@ const listProDisponibilities = (req, res, next) => {
         });
         req.user.disponibility = disponibilities;
         next();
-      } else {
-        res.sendStatus(404);
       }
     })
     .catch((err) => {
@@ -36,20 +30,18 @@ const listProDisponibilities = (req, res, next) => {
     });
 };
 
-const destroy = (req, res) => {
+const destroy = (req, res, next) => {
   const id = req.payloads.sub;
   models.proDisponibility
-    .delete(req.body.disponibilities, id)
-    .then(([result]) => {
-      if (result.affectedRows !== 0) {
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(404);
-      }
+    .delete(req.body.disponibilitiesToRemove, id)
+    .then(() => {
+      return next();
     })
     .catch((err) => {
       console.error(err);
+      return next();
     });
+  return next();
 };
 
 module.exports = {

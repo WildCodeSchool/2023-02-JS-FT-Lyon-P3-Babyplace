@@ -7,15 +7,13 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
-const placeControllers = require("./controllers/placeControllers");
-const disponibilityControllers = require("./controllers/disponibilityControllers");
-const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
+
 const {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
-  verifyIfRegistered,
+  verifyIfProRegistered,
   verifyToken,
   logout,
   verifyIfParentRegistered,
@@ -48,43 +46,14 @@ router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
 router.patch("/pro/:id", verifyToken, proControllers.edit);
-router.post(
-  "/pro/login",
-  getProByEmail,
-  placeControllers.countPlaces,
-  proDisponibilityControllers.listProDisponibilities,
-  verifyPassword
-);
+
+router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
+
 router.post(
   "/pro/register",
-  verifyIfRegistered,
+  verifyIfProRegistered,
   hashPassword,
-  proControllers.add,
-  placeControllers.add,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-
-router.post("/place", verifyToken, placeControllers.add);
-router.put(
-  "/place",
-  verifyToken,
-  placeControllers.listPlaces,
-  placeControllers.destroy
-);
-
-router.post(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-
-router.put(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.destroy
+  proControllers.register
 );
 
 router.get(
