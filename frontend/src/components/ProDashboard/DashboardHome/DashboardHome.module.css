@@ -1,4 +1,7 @@
 .dashboardhome_box {
-    
-    background-color: aqua;
+    width: 40vw;
+    height: 50vh;
+    margin-top: 100px;
+    margin-left: 300px;
+    background-color: rgb(84, 140, 140);
 }

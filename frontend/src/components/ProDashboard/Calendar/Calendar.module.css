@@ -1,4 +1,54 @@
 .calendar_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     
-    background-color: aqua;
+
 }
+
+.left_container {
+    width: 500px;
+    height: 450px;
+    box-shadow: 0 0 100px 10px rgba(40, 40, 40, 0.296);
+}
+
+.calendar_component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    height: 80%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.right_container {
+    width: 300px;
+    height: 600px;
+    margin-left: 100px;
+    box-shadow: 0 0 100px 10px rgba(40, 40, 40, 0.296);
+    background-color: #FFFFFF;
+    overflow: scroll;
+    overflow-x: hidden;
+    
+}
+.right_container h1 {
+    text-align: center;
+}
+
+.right_container::-webkit-scrollbar {
+    display: none;
+  }
+
+.greenBadge .MuiBadge-badge {
+    background-color: green;
+  }

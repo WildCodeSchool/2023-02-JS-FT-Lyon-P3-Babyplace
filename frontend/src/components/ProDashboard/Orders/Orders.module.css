@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-around;
     margin-bottom: 20px;
+    margin-top: 30px;
 }
 
 .filter_btn_box {
@@ -27,7 +28,12 @@
     overflow: scroll;
     overflow-x: hidden;
     padding-bottom: 50px;
+    margin-left: 50px;
 }
+
+.orders_container::-webkit-scrollbar {
+    display: none;
+  }
 
 .blur_modal {
     backdrop-filter: blur(4px);

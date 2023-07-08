@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -10,8 +9,7 @@ import { useState } from "react";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import ParentHomeFolderInfo from "./ParentHomeFolderInfo";
 import styles from "./OrderCard.module.css";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import instance from "../../../services/APIService";
 
 export default function OrderCard({ reservation }) {
   const [openModal, setOpenModal] = useState(false);
@@ -63,8 +61,8 @@ export default function OrderCard({ reservation }) {
   };
 
   const handleValidate = () => {
-    axios
-      .put(`${BACKEND_URL}/dashboard/reservations/validate/${id}`)
+    instance
+      .put(`/dashboard/reservations/validate/${id}`)
       .then((res) => {
         if (res.status === 200) {
           notifySuccess("Réservation acceptée");
@@ -76,8 +74,8 @@ export default function OrderCard({ reservation }) {
   };
   const handleCancel = () => {
     if (reservation.status === 0) {
-      axios
-        .put(`${BACKEND_URL}/dashboard/reservations/refuse/${id}`)
+      instance
+        .put(`/dashboard/reservations/refuse/${id}`)
         .then((res) => {
           if (res.status === 200) {
             notifySuccess("Réservation refusée");
@@ -87,8 +85,8 @@ export default function OrderCard({ reservation }) {
         })
         .catch((err) => console.error(err));
     } else if (reservation.status === 1) {
-      axios
-        .put(`${BACKEND_URL}/dashboard/reservations/cancel/${id}`)
+      instance
+        .put(`/dashboard/reservations/cancel/${id}`)
         .then((res) => {
           if (res.status === 200) {
             notifySuccess("Réservation annulée");
