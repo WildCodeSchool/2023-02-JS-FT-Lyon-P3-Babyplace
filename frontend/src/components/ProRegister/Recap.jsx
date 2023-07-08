@@ -20,20 +20,21 @@ function Recap({ registerInfo }) {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
 
     if (user?.id) {
-      let rowsToDelete = 0;
       let placesToAdd = 0;
       if (infoToModify.place) {
         if (infoToModify.place < user.place) {
-          // si l'utilisateur déclare moins de places que précédemment enregistrées, il faut en supprimer
-          rowsToDelete = user.place - infoToModify.place;
+          // TODO si l'utilisateur déclare moins de places que précédemment enregistrées, il faut en supprimer.
+          setInfoToModify({});
+          return setFormValidationMessage(
+            "Vous ne pouvez pas supprimer de places. Veuillez recommencer."
+          );
         }
         if (infoToModify.place > user.place) {
-          // si l'utilisateur déclare moins de places que précédemment enregistrées, il faut en supprimer
+          // si l'utilisateur déclare plus de places que précédemment enregistrées, il faut en ajouter
           placesToAdd = infoToModify.place - user.place;
         }
       }
       const daysToAdd = [];
-      const daysToRemove = [];
       if (infoToModify.disponibility) {
         for (const day of infoToModify.disponibility) {
           if (!user.disponibility.includes(day)) {
@@ -44,15 +45,12 @@ function Recap({ registerInfo }) {
         }
         for (const day of user.disponibility) {
           if (!infoToModify.disponibility.includes(day)) {
-            // les données modifiées ne contiennent pas un jour que l'utilisateur avait précédemment enregistré
-            // il faut donc supprimer le jour dans la base de données
-            daysToRemove.push(day);
+            // TODO si l'utilisateur déclare moins de disponibilités que précédemment enregistrées, il faut en supprimer.
+            setInfoToModify({});
+            return setFormValidationMessage(
+              "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer."
+            );
           }
-        }
-        if (daysToRemove.length > 0 || rowsToDelete > 0) {
-          // TODO mettre en place un toast dans un premier temps, disant que la suppression de places ou de dispo n'est pas possible
-          // Si on a le temps avant la fin du projet, on mettra en place un système de vérification sur la semaine qui vient, et si la suppression rentre en conflit
-          // avec des réservations, un message en informera l'utilisateur pour qu'il règle manuellement les conflits et se charge de la communication aux parents.
         }
       }
       return instance
@@ -192,7 +190,11 @@ function Recap({ registerInfo }) {
               <Alert
                 severity={
                   formValidationMessage ===
-                  "Veuillez utiliser une autre adresse mail"
+                    "Vous ne pouvez pas supprimer de places. Veuillez recommencer." ||
+                  formValidationMessage ===
+                    "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer." ||
+                  formValidationMessage ===
+                    "Il y a eu un problème. Réessayez plus tard."
                     ? "error"
                     : "success"
                 }
@@ -205,6 +207,7 @@ function Recap({ registerInfo }) {
                 variant="contained"
                 disabled={Object.values(infoToModify).length <= 1}
                 onClick={() => {
+                  setFormValidationMessage(null);
                   setInfoToModify({});
                 }}
               >
@@ -308,7 +311,9 @@ function Recap({ registerInfo }) {
               <Alert
                 severity={
                   formValidationMessage ===
-                  "Veuillez utiliser une autre adresse mail"
+                    "Veuillez utiliser une autre adresse mail" ||
+                  formValidationMessage ===
+                    "Il y a eu un problème. Réessayez plus tard."
                     ? "error"
                     : "success"
                 }
