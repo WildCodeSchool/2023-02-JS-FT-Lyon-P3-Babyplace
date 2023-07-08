@@ -48,13 +48,12 @@ const getProByEmail = (req, res, next) => {
 };
 
 const hashPassword = (req, res, next) => {
-  // hash the password using argon2 then call next()
+  // hash du password avec argon2 puis next()
   argon2
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
       req.body.hashedPassword = hashedPassword;
-      // TODO delete the password so only the hashedPassword remains
-      // delete req.body.password;
+      delete req.body.password;
       next();
     })
     .catch((err) => {
@@ -64,19 +63,19 @@ const hashPassword = (req, res, next) => {
 };
 
 const verifyPassword = (req, res, next) => {
-  // check if the req.user.hashedPassword from previous is the same as the password given through the login
-  // if so => we delete the hashedPassword from the req.user and give a token
+  // vérification que le hash du password fourni par l'utilisateur est le même que dans la base de données
+  // Si oui => suppression du hashedPassword et du password et on fournit un token
   argon2
     .verify(req.user.hashed_password, req.body.password, hashingOptions)
     .then((isPasswordOk) => {
       if (isPasswordOk) {
-        // create token encoded with secret password in .env
+        // Création du token avec le mdp secret défini dans le .env
         const token = jwt.sign(
           { sub: req.user.id, role: req.user.role },
           JWT_SECRET,
           {
             algorithm: "HS512",
-            expiresIn: JWT_TIMING, // token expires after delay defined in .env
+            expiresIn: JWT_TIMING, // le token expire après le délai défini dans le .env
           }
         );
         delete req.user.hashedPassword;
@@ -86,6 +85,9 @@ const verifyPassword = (req, res, next) => {
           secure: process.env.NODE_ENV === "production",
         });
         next();
+        if (req.user.role === "parent") {
+          res.send(req.user);
+        }
       } else {
         res.sendStatus(401);
       }

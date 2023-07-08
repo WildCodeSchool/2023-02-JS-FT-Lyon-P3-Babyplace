@@ -14,11 +14,10 @@ class ProManager extends AbstractManager {
 
   insert(pro) {
     return this.database.query(
-      `insert into ${this.table} (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status, role) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (name, mail_address, hashed_password, address, postcode, city, phone_number, description, type, notification_status, role) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         pro.name,
         pro.mail_address,
-        pro.password,
         pro.hashedPassword,
         pro.address,
         pro.postcode,

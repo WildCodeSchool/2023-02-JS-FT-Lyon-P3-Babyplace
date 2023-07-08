@@ -42,6 +42,7 @@ const read = (req, res) => {
 };
 
 const edit = async (req, res) => {
+  // TODO validations (length, format...)
   try {
     let pro = {};
     Object.entries(req.body).forEach((array) => {
