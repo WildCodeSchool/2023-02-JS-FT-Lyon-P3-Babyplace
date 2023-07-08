@@ -18,8 +18,8 @@ export default function WelcomePage() {
         </button>
       </Link>
       <div className={style.card}>
-        <img src={baby3} alt="logo" />
-        <img src={baby2} alt="baby and mommy" />
+        <img className={style.logo1} src={baby3} alt="logo" />
+        <img className={style.logo2} src={baby2} alt="baby and mommy" />
         <div className={style.text}>
           <h1> Bienvenue !</h1>
           <h3>Votre compte a été créé avec succès!</h3>
@@ -32,16 +32,14 @@ export default function WelcomePage() {
               <h3>Compléter mon dossier</h3>
             </Link>
           </div>
-          <div>
-            <div className={style.fileLater}>
-              {/* TO DO: LINK */}
-              <Link to="/">
-                <h3>Je complèterais plus tard</h3>
-                <button type="button" className={style.button_next}>
-                  <ArrowForwardIosIcon />
-                </button>
-              </Link>
-            </div>
+          <div className={style.fileLater}>
+            {/* TO DO: LINK */}
+            <Link to="/">
+              <h3>Je complèterais plus tard</h3>
+              <button type="button" className={style.button_next}>
+                <ArrowForwardIosIcon />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

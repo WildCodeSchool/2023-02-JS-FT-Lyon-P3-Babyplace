@@ -4,10 +4,12 @@ import Joi from "joi";
 import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
+import ResumeChild from "./ResumeChild";
 
 export default function FormChild() {
   const { user } = useUserContext();
   const [validationMessage, setValidationMessage] = useState(null);
+  const [showChild, setShowChild] = useState(false);
   const [formInfo, setFormInfo] = useState({
     lastname: "",
     firstname: "",
@@ -50,86 +52,96 @@ export default function FormChild() {
           setValidationMessage("Erreur: Veuillez recommencer.");
       });
   };
+
   return (
     <div>
-      <form className={style.form} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="lastname"
-          placeholder="Nom"
-          value={formInfo.lastname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="firstname"
-          placeholder="Prénom"
-          value={formInfo.firstname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="birthdate"
-          placeholder="Date de naissance AAAA/MM/JJ"
-          value={formInfo.birthdate}
-          pattern="\d{4}/\d{2}/\d{2}"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="doctor"
-          placeholder="Medecin traitant"
-          value={formInfo.doctor}
-          onChange={handleChange}
-          required
-        />
-        <fieldset className={style.radios}>
-          <label htmlFor="walking">Marcheur?</label>
-          <div className={style.radio}>
-            <div>
-              <input
-                type="radio"
-                id="1"
-                name="walking"
-                value="1"
-                onChange={handleChange}
-              />
-              <label htmlFor="1">Oui</label>
-            </div>
+      {showChild ? <ResumeChild /> : null}
+      <div>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="lastname"
+            placeholder="Nom"
+            value={formInfo.lastname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="firstname"
+            placeholder="Prénom"
+            value={formInfo.firstname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="birthdate"
+            placeholder="Date de naissance AAAA/MM/JJ"
+            value={formInfo.birthdate}
+            pattern="\d{4}/\d{2}/\d{2}"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="doctor"
+            placeholder="Medecin traitant"
+            value={formInfo.doctor}
+            onChange={handleChange}
+            required
+          />
+          <fieldset className={style.radios}>
+            <label htmlFor="walking">Marcheur?</label>
+            <div className={style.radio}>
+              <div>
+                <input
+                  type="radio"
+                  id="1"
+                  name="walking"
+                  value="1"
+                  onChange={handleChange}
+                />
+                <label htmlFor="1">Oui</label>
+              </div>
 
-            <div>
-              <input
-                type="radio"
-                id="0"
-                name="walking"
-                value="0"
-                onChange={handleChange}
-              />
-              <label htmlFor="0">Non</label>
+              <div>
+                <input
+                  type="radio"
+                  id="0"
+                  name="walking"
+                  value="0"
+                  onChange={handleChange}
+                />
+                <label htmlFor="0">Non</label>
+              </div>
             </div>
-          </div>
-        </fieldset>
+          </fieldset>
 
-        <div className={style.validationMessage}>
-          {validationMessage === "Votre enfant a bien été ajouté." ? (
-            <Alert
-              severity={
-                validationMessage === "Votre enfant a bien été ajouté."
-                  ? "success"
-                  : "error"
-              }
+          <div className={style.validation_message}>
+            {validationMessage === "Votre enfant a bien été ajouté." ? (
+              <Alert
+                severity={
+                  validationMessage === "Votre enfant a bien été ajouté."
+                    ? "success"
+                    : "error"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+            <button
+              type="submit"
+              className={style.button_validation}
+              onClick={() => {
+                setShowChild(!showChild);
+              }}
             >
-              {validationMessage}
-            </Alert>
-          ) : null}
-          <button type="submit" className={style.button}>
-            Valider
-          </button>
-        </div>
-      </form>
+              Valider
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

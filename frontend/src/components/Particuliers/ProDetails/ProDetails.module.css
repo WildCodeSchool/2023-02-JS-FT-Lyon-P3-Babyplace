@@ -38,7 +38,7 @@
 }
 .page h4 {
   color: white;
-  margin: 0.5rem;
+  margin: 1rem;
   font-size: small;
 }
 .page h3 {
@@ -107,20 +107,25 @@
   }
 }
 @media screen and (min-width: 1024px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .card_global {
-    padding: 3rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90%;
-    height: 70%;
+    box-shadow: 5px 5px 5px var(--second-color);
   }
   .card_left {
-    max-width: 450px;
-    padding: 3rem;
+    padding: 2rem;
+    width: 550px;
   }
   .image {
     height: 250px;
+    width: auto;
     border-radius: 20px;
   }
   .card_bottom {

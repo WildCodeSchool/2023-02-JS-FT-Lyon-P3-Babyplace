@@ -20,7 +20,7 @@ export default function FormCompletWelcome() {
   if (!parent) return null;
 
   return (
-    <div className={style.card}>
+    <div className={style.page}>
       <Link to="/particulier">
         <button type="button" className={style.button_back}>
           <ArrowBackIosNewIcon />

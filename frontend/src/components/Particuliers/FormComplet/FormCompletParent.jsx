@@ -9,7 +9,7 @@ export default function FormCompletParent() {
   const { user } = useUserContext();
 
   return (
-    <div className={style.card}>
+    <div className={style.page}>
       <div className={style.header_card}>
         <Link to={`/particulier/${user.id}/child`}>
           <button type="button" className={style.button_back}>
@@ -35,7 +35,7 @@ export default function FormCompletParent() {
       </div>
       <div className={style.file}>
         <h2>Dossier parents</h2>
-        <div>
+        <div className={style.form_parent}>
           <FormParent />
         </div>
       </div>

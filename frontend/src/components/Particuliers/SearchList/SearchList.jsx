@@ -25,21 +25,29 @@ export default function SearchList() {
   if (!pros) return null;
   return (
     <div className={style.search_list_page}>
+      <div className={style.logo_log_in}>
+        <img src={user} alt="user" />
+        <Link to="/particulier">Log In</Link>
+      </div>
       <Link to="/">
         <button type="button" className={style.button_back}>
           <ArrowBackIosNewIcon />
         </button>
       </Link>
-      <div className={style.logo_log_in}>
-        <img src={user} alt="user" />
-        <Link to="/particulier">Log In</Link>
-      </div>
       <h2>Liste des crèches disponibles</h2>
       <div className={style.cards_media}>
         <div className={style.card_media}>
           {pros.map((pro) => (
             <Link key={pro.id} to={`/particulier/recherche/${pro.id}`}>
-              <Card key={pro.id} sx={{ maxWidth: 345, margin: 2 }}>
+              <Card
+                key={pro.id}
+                sx={{
+                  maxWidth: 345,
+                  margin: 2,
+                  borderRadius: "20px",
+                  boxShadow: 3,
+                }}
+              >
                 <CardActionArea sx={{ padding: "10px" }}>
                   <div className="style.image">
                     <CardMedia
@@ -50,7 +58,8 @@ export default function SearchList() {
                       sx={{
                         position: "relative",
                         zIndex: 10,
-                        background: "linear-gradient(to bottom, red, orange)",
+                        borderTopRightRadius: "20px",
+                        borderTopLeftRadius: "20px",
                       }}
                     />
                   </div>

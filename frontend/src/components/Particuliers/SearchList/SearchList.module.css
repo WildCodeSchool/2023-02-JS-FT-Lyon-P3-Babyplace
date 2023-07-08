@@ -17,6 +17,7 @@
   top: 5%;
   left: 5%;
   cursor: pointer;
+  z-index: 300;
 }
 .search_list_page h2 {
   margin-top: 4rem;
@@ -71,5 +72,15 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    
+  }
+  .logo_log_in {
+    right: 5%;
+    top: 5%;
+    font-size: x-large;
+  }
+  .logo_log_in img {
+    margin-right: 10px;
+    cursor: pointer;
   }
 }
