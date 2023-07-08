@@ -58,6 +58,7 @@
   }
   .header_card img {
     margin: 0 0 1.5rem;
+    box-shadow: 5px 5px 5px var(--second-color);
   }
 
   .header_card h3 {
@@ -74,5 +75,6 @@
     width: 30rem;
     margin: 1rem;
     font-size: large;
+    box-shadow: 5px 5px 5px var(--second-color);
   }
 }

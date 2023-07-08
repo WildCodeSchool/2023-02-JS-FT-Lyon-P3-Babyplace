@@ -85,6 +85,8 @@
 }
 .card_child h4 {
   color: var(--pink-color);
+  margin: 0.5rem;
+  font-size: large;
 }
 .card_child h3 {
   color: var(--main-color);
@@ -99,7 +101,7 @@
 .button,
 .button_validation {
   padding: 0.5rem 2rem;
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: var(--main-color);
   color: white;
   font-weight: bold;
@@ -122,6 +124,7 @@
 }
 ::placeholder {
   color: var(--main-color);
+  padding-right: 300px;
 }
 
 .validation_message {
@@ -129,6 +132,7 @@
 }
 .radios {
   margin-top: 1.5rem;
+  color: var(--dark-color);
 }
 .radio {
   margin-top: 1rem;
@@ -142,4 +146,68 @@
 /* Partie des parents uniquement*/
 .form_parent {
   margin-top: 1rem;
+}
+
+/* Media Queries */
+@media screen and (min-width: 1024px) {
+  .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .buttonChild,
+  .buttonParent {
+    margin: 0 10rem;
+    padding: 1.5rem 10rem;
+    font-size: large;
+    box-shadow: 5px 5px 5px var(--second-color);
+  }
+  .button_head {
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0 2rem;
+    gap: 2rem;
+  }
+  .file h2 {
+    font-size: x-large;
+  }
+  .button,
+  .button_validation {
+    padding: 1.5rem 10rem;
+    font-size: large;
+    box-shadow: 5px 5px 5px var(--second-color);
+  }
+  .cards_child {
+    display: flex;
+    flex-direction: row;
+  }
+  .card_child {
+    padding: 2rem 5rem;
+    font-size: x-large;
+  }
+  .card_child h4 {
+    margin: 1rem;
+    font-size: xx-large;
+  }
+  .form {
+    margin-top: 0.5rem;
+    padding: 3rem;
+    box-shadow: 5px 5px 5px var(--second-color);
+  }
+  .form input {
+    border-radius: 10px;
+    padding: 0.8rem 7rem;
+    margin: 0.5rem;
+  }
+  ::placeholder {
+    padding-right: 300px;
+  }
+
+  .validation_message {
+    margin: 1rem;
+  }
+
+  .button_validation {
+    margin-top: 1rem;
+  }
 }

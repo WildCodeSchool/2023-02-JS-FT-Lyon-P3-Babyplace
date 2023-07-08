@@ -18,7 +18,7 @@ export default function ResumeChild() {
 
   if (!childs) return null;
   return (
-    <div>
+    <div className={style.cards_child}>
       {childs.map((child) => (
         <div className={style.card_child}>
           <h3>Enfant:</h3>
