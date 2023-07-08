@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.parent
+  models.child
     .findAll()
     .then(([rows]) => {
       res.send(rows);
@@ -13,7 +13,7 @@ const browse = (req, res) => {
 };
 
 const read = (req, res) => {
-  models.parent
+  models.child
     .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
@@ -29,14 +29,14 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const parent = req.body;
+  const child = req.body;
 
   // TODO validations (length, format...)
 
-  parent.id = parseInt(req.params.id, 10);
+  child.id = parseInt(req.params.id, 10);
 
-  models.parent
-    .update(parent)
+  models.child
+    .update(child)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
@@ -51,14 +51,14 @@ const edit = (req, res) => {
 };
 
 const add = (req, res) => {
-  const parent = req.body;
+  const child = req.body;
 
   // TODO validations (length, format...)
 
-  models.parent
-    .insert(parent)
+  models.child
+    .insert(child)
     .then(([result]) => {
-      res.location(`/parent/${result.insertId}`).sendStatus(201);
+      res.location(`/child/registrer/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);
@@ -67,7 +67,7 @@ const add = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  models.parent
+  models.child
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
@@ -81,17 +81,6 @@ const destroy = (req, res) => {
       res.sendStatus(500);
     });
 };
-const showChildWithParent = (req, res) => {
-  models.parent
-    .joinChildWithParent(req.params.id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
 
 module.exports = {
   browse,
@@ -99,5 +88,4 @@ module.exports = {
   edit,
   add,
   destroy,
-  showChildWithParent,
 };

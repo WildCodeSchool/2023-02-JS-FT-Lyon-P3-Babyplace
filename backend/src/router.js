@@ -4,19 +4,19 @@ const router = express.Router();
 
 const itemControllers = require("./controllers/itemControllers");
 const parentControllers = require("./controllers/parentControllers");
+const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
-const placeControllers = require("./controllers/placeControllers");
-const disponibilityControllers = require("./controllers/disponibilityControllers");
-const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
+
 const {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
-  verifyIfRegistered,
+  verifyIfProRegistered,
   verifyToken,
   logout,
+  verifyIfParentRegistered,
 } = require("./services/auth");
 
 router.get("/items", itemControllers.browse);
@@ -29,54 +29,31 @@ router.get("/logout", logout);
 
 router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
+router.get("/parent/child/:id", parentControllers.showChildWithParent);
 router.post("/parent/login", getParentByEmail, verifyPassword);
-router.post("/parent/register", hashPassword);
-router.post("/parent", hashPassword, parentControllers.add);
+router.post(
+  "/parent/register",
+  verifyIfParentRegistered,
+  hashPassword,
+  parentControllers.add
+);
 router.get("/dispo/:id", proControllers.browseProAndDispo);
+
+router.get("/child", childControllers.browse);
+router.post("/child/register", childControllers.add);
 
 router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
 router.patch("/pro/:id", verifyToken, proControllers.edit);
-router.post(
-  "/pro/login",
-  getProByEmail,
-  placeControllers.countPlaces,
-  proDisponibilityControllers.listProDisponibilities,
-  verifyPassword
-);
+
+router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
+
 router.post(
   "/pro/register",
-  verifyIfRegistered,
+  verifyIfProRegistered,
   hashPassword,
-  proControllers.add
-);
-
-router.post("/place", verifyToken, placeControllers.add);
-router.post("/register/place", placeControllers.add);
-router.put(
-  "/place",
-  verifyToken,
-  placeControllers.listPlaces,
-  placeControllers.destroy
-);
-
-router.post(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-router.post(
-  "/register/proDisponibility",
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-router.put(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.destroy
+  proControllers.register
 );
 
 router.get(
@@ -103,6 +80,11 @@ router.put(
   "/dashboard/reservations/cancel/:id",
   verifyToken,
   dashboardProControllers.cancelOrder
+);
+router.get("/dashboard/calendar/:date", dashboardProControllers.getDateOrder);
+router.get(
+  "/dashboard/overview/calendar/:month",
+  dashboardProControllers.getAllReservationsForCalendar
 );
 
 module.exports = router;

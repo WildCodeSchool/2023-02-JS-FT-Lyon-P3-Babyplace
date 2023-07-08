@@ -41,25 +41,80 @@ const read = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  const info = req.body;
-
+const edit = async (req, res) => {
   // TODO validations (length, format...)
-
-  const id = parseInt(req.params.id, 10);
-
-  models.pro
-    .update(info, id)
-    .then(() => {
-      res.sendStatus(204);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+  try {
+    let pro = {};
+    Object.entries(req.body).forEach((array) => {
+      if (
+        array[0] !== "empty" &&
+        array[0] !== "disponibility" &&
+        array[0] !== "place" &&
+        array[0] !== "disponibilities" &&
+        array[0] !== "placesToAdd" &&
+        array[0] !== "rowsToDelete" &&
+        array[0] !== "daysToRemove" &&
+        array[0] !== "daysToAdd" &&
+        array !== undefined
+      ) {
+        pro = { ...pro, [array[0]]: array[1] };
+      }
     });
+    pro.id = req.payloads?.sub;
+
+    await models.pro
+      .update(pro)
+      .then(([result]) => {
+        if (result.affectedRows === 0) {
+          return res.sendStatus(404);
+        }
+        return null;
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.send(500);
+      });
+
+    if (req.body.placesToAdd > 0) {
+      await models.place
+        .insert(req.body.placesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(404);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+
+    if (req.body.daysToAdd.length > 0) {
+      const [disponibilitiesToAdd] = await models.disponibility.find(
+        req.body.daysToAdd
+      );
+      await models.proDisponibility
+        .insert(disponibilitiesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(404);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
 };
 
-const add = (req, res) => {
+const add = (req, res, next) => {
   const pro = req.body;
 
   // TODO validations (length, format...)
@@ -67,8 +122,8 @@ const add = (req, res) => {
   models.pro
     .insert(pro)
     .then(([result]) => {
-      // on renvoie le résultat pour récupérer l'insertId dans le front
-      res.send(result);
+      req.proId = result.insertId;
+      next();
     })
     .catch((err) => {
       console.error(err);
@@ -108,6 +163,94 @@ const profile = (req, res) => {
     });
 };
 
+const login = async (req, res) => {
+  await models.place
+    .findPlaces(req.user.id)
+    .then(([result]) => {
+      if (result) {
+        req.user.place = result[0].place;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  models.proDisponibility
+    .findAll(req.user.id)
+    .then(([result]) => {
+      if (result) {
+        const disponibilities = [];
+        result.forEach((disponibility) => {
+          disponibilities.push(disponibility.day);
+        });
+        req.user.disponibility = disponibilities;
+        res.send(req.user);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const register = async (req, res) => {
+  try {
+    const pro = req.body;
+
+    // TODO validations (length, format...)
+    await models.pro
+      .insert(pro)
+      .then(([result]) => {
+        if (result.insertId) {
+          pro.id = result.insertId;
+          return null;
+        }
+        return res.send(500);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+
+    if (pro.place > 0) {
+      await models.place
+        .insert(pro.place, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(500);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+
+    if (pro.disponibility.length > 0) {
+      const [disponibilitiesToAdd] = await models.disponibility.find(
+        pro.disponibility
+      );
+      await models.proDisponibility
+        .insert(disponibilitiesToAdd, pro.id)
+        .then(([result]) => {
+          if (result.affectedRows === 0) {
+            return res.sendStatus(500);
+          }
+          return null;
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.send(500);
+        });
+    }
+    return res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -116,4 +259,6 @@ module.exports = {
   add,
   destroy,
   profile,
+  login,
+  register,
 };

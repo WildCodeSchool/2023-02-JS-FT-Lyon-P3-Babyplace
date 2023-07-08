@@ -22,7 +22,7 @@ export default function ProDetails() {
 
   if (!pro) return null;
   return (
-    <div className={style.card}>
+    <div className={style.page}>
       <div className={style.header_card}>
         <Link to="/particulier/recherche">
           <button type="button" className={style.button_back}>
@@ -36,10 +36,13 @@ export default function ProDetails() {
         </div>
       </div>
       <div className={style.card_global}>
-        <img src={pro1test} alt="profile_picture" className={style.image} />
-        <div className={style.presentation}>
+        <div className={style.card_left}>
+          <img src={pro1test} alt="profile_picture" className={style.image} />
+
           <h3>Présentation</h3>
           <p>{pro.description}</p>
+        </div>
+        <div className={style.card_bottom}>
           <div className={style.informations}>
             <InfoIcon />
             <div className={style.tel_mail}>
@@ -50,16 +53,12 @@ export default function ProDetails() {
           <div>
             <h3>Disponibilités</h3>
             <DispoPros id={pro.id} />
-            <div>
-              <div>
-                <div className={style.button_reservation}>
-                  <Link to={`/particulier/recherche/${id}/date`}>
-                    <button type="button" className={style.button}>
-                      Réserver
-                    </button>
-                  </Link>
-                </div>
-              </div>
+            <div className={style.button_reservation}>
+              <Link to={`/particulier/recherche/${id}/date`}>
+                <button type="button" className={style.button}>
+                  Réserver
+                </button>
+              </Link>
             </div>
           </div>
         </div>

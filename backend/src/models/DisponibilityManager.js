@@ -5,10 +5,11 @@ class DisponibilityManager extends AbstractManager {
     super({ table: "disponibility" });
   }
 
-  find(day) {
-    return this.database.query(`select id from ${this.table} where day = ?`, [
-      day,
-    ]);
+  find(disponibility) {
+    return this.database.query(
+      `select id from ${this.table} where day in (?)`,
+      [disponibility]
+    );
   }
 }
 
