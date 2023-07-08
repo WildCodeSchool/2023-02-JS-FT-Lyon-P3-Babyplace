@@ -162,6 +162,36 @@ const profile = (req, res) => {
     });
 };
 
+const login = async (req, res) => {
+  await models.place
+    .findPlaces(req.user.id)
+    .then(([result]) => {
+      if (result) {
+        req.user.place = result[0].place;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  models.proDisponibility
+    .findAll(req.user.id)
+    .then(([result]) => {
+      if (result) {
+        const disponibilities = [];
+        result.forEach((disponibility) => {
+          disponibilities.push(disponibility.day);
+        });
+        req.user.disponibility = disponibilities;
+        res.send(req.user);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -170,4 +200,5 @@ module.exports = {
   add,
   destroy,
   profile,
+  login,
 };
