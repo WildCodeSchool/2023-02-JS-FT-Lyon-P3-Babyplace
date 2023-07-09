@@ -1,3 +1,10 @@
+.formScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
 .banner {
   display: flex;
   gap: 5%;
@@ -22,7 +29,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  overflow-y: scroll;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form div {
+  width: 100%;
+}
+
+form div div {
+  width: 100%;
 }
 
 .separator {
@@ -30,7 +50,8 @@
 }
 
 @media screen and (min-width: 950px) {
-  .separator {
-    margin: 2% 0;
+  .form {
+    width: 50%;
+    overflow-y: auto;
   }
 }

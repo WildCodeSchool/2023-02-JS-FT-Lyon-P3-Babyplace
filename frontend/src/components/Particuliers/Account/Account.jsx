@@ -13,39 +13,41 @@ function Account() {
   const [accountScreen, setAccountScreen] = useState("menu");
 
   if (user?.role === "parent") {
-    if (accountScreen === "orders") {
-      return <Orders setAccountScreen={setAccountScreen} />;
-    }
-    if (accountScreen === "authentication") {
-      return <AuthenticationChange setAccountScreen={setAccountScreen} />;
-    }
     return (
       <div>
         <AccountHeader />
-        <ul className={styles.menu}>
-          <li>
-            <button
-              type="button"
-              onClick={() => {
-                setAccountScreen("authentication");
-              }}
-            >
-              <LockOutlinedIcon sx={{ color: "var(--main-color)" }} />
-              <p>Données d'authentification</p>
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => {
-                setAccountScreen("orders");
-              }}
-            >
-              <BookmarkBorderIcon sx={{ color: "var(--main-color)" }} />
-              <p>Réservations</p>
-            </button>
-          </li>
-        </ul>
+        {accountScreen === "orders" ? (
+          <Orders setAccountScreen={setAccountScreen} />
+        ) : null}
+        {accountScreen === "authentication" ? (
+          <AuthenticationChange setAccountScreen={setAccountScreen} />
+        ) : null}
+        {accountScreen === "menu" ? (
+          <ul className={styles.menu}>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setAccountScreen("authentication");
+                }}
+              >
+                <LockOutlinedIcon sx={{ color: "var(--main-color)" }} />
+                <p>Données d'authentification</p>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setAccountScreen("orders");
+                }}
+              >
+                <BookmarkBorderIcon sx={{ color: "var(--main-color)" }} />
+                <p>Réservations</p>
+              </button>
+            </li>
+          </ul>
+        ) : null}
       </div>
     );
   }
