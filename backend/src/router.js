@@ -91,5 +91,15 @@ router.get(
   verifyToken,
   dashboardProControllers.getAllReservationsForCalendar
 );
+router.get(
+  "/dashboard/preview",
+  verifyToken,
+  dashboardProControllers.getProInfoForPreview
+);
+router.get(
+  "/dashboard/days",
+  verifyToken,
+  dashboardProControllers.getProDaysForPreview
+);
 
 module.exports = router;

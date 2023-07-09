@@ -61,7 +61,7 @@ class DashboardProManager extends AbstractManager {
 
   getChildOnThisDate(date, id) {
     return this.database.query(
-      `select r.id, DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation, c.firstname prenom_enfant, c.lastname nom_enfant,
+      `select r.id, DATE_FORMAT(reservation_date, "%d/%m/%Y") date_reservation,DATE_FORMAT(c.birthdate, "%d/%m/%Y") anniversaire, c.walking, c.firstname prenom_enfant, c.lastname nom_enfant,
       r.status from ${this.table} AS r
      join child AS c ON c.id = r.child_id
      join place on r.place_id = place.id
@@ -78,6 +78,18 @@ class DashboardProManager extends AbstractManager {
       [month, id]
     );
   }
+
+  getPreviewInfos(id) {
+    return this.database.query(`select * from pro where id = ?`, [id]);
+  }
+
+  getPreviewDays(id) {
+    return this.database.query(
+      `SELECT day from pro AS p JOIN pro_disponibility AS pd ON p.id= pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id WHERE p.id= ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = DashboardProManager;
+// select d.day from pro_disponibility AS p join disponibility as d on p.disponibility_id = d.id where p.pro_id = ?

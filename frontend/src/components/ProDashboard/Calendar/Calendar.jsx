@@ -25,7 +25,6 @@ export default function Calendar() {
 
   // --------------------------------------------------------------------
   const actualMonth = thisMonth.format("MM");
-  console.info(user.id);
   useEffect(() => {
     instance
       .get(`/dashboard/overview/calendar/${actualMonth}`)
@@ -34,8 +33,6 @@ export default function Calendar() {
       })
       .catch((err) => console.error(err));
   }, [thisMonth]);
-
-  console.info(allOrders);
 
   algoToFilterReservationsInCalendar(
     allOrders,

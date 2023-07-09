@@ -134,7 +134,7 @@ CREATE TABLE parent_notification (
   INSERT into place
   (pro_id)
   VALUES
-  (1), (1), (1), (1), (1), (2), (2), (2);
+  (1), (1), (1), (1), (1), (2), (2), (2), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3);
 
   INSERT INTO `reservation`(`date_time_reservation`, `reservation_date`, `status`, `child_id`, `place_id`) VALUES
 ('2023-07-05 10:00:00', '2023-07-08', 0, 1, 9),
@@ -174,10 +174,10 @@ CREATE TABLE parent_notification (
 ('2023-07-05 10:00:00', '2023-07-10', 1, 1, 25),
 ('2023-07-05 10:00:00', '2023-07-10', 1, 2, 26),
 ('2023-07-05 10:00:00', '2023-07-10', 1, 1, 27),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 28),
+('2023-07-05 10:00:00', '2023-07-10', 1, 1, 28);
 
 
 -- Requête pour consulter les jours de disponibilité d'une crèche.
-SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
+-- SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -106,6 +106,31 @@ const getAllReservationsForCalendar = (req, res) => {
     });
 };
 
+const getProInfoForPreview = (req, res) => {
+  const id = req.payloads.sub;
+  models.dashboardpro
+    .getPreviewInfos(id)
+    .then(([rows]) => {
+      res.send(rows[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+const getProDaysForPreview = (req, res) => {
+  const id = req.payloads.sub;
+  models.dashboardpro
+    .getPreviewDays(id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
@@ -114,4 +139,6 @@ module.exports = {
   cancelOrder,
   getDateOrder,
   getAllReservationsForCalendar,
+  getProInfoForPreview,
+  getProDaysForPreview,
 };
