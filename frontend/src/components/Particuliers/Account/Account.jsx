@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import avatar from "../../../assets/ed-cannan.png";
 import { useUserContext } from "../../../contexts/UserContext";
 import Login from "../../Login";
 import styles from "./Account.module.css";
 import AuthenticationChange from "./AuthenticationChange";
 import Orders from "./Orders";
+import AccountHeader from "./AccountHeader";
 
 function Account() {
   const { user } = useUserContext();
@@ -14,22 +14,14 @@ function Account() {
 
   if (user?.role === "parent") {
     if (accountScreen === "orders") {
-      return <Orders />;
+      return <Orders setAccountScreen={setAccountScreen} />;
     }
     if (accountScreen === "authentication") {
-      return <AuthenticationChange />;
+      return <AuthenticationChange setAccountScreen={setAccountScreen} />;
     }
     return (
       <div>
-        <div className={styles.header}>
-          <div className={styles.avatarWrap}>
-            <img className={styles.avatar} src={avatar} alt="avatar" />
-          </div>
-          <div className={styles.name}>
-            <h1>{user.firstname}</h1>
-            <h1>{user.lastname}</h1>
-          </div>
-        </div>
+        <AccountHeader />
         <ul className={styles.menu}>
           <li>
             <button

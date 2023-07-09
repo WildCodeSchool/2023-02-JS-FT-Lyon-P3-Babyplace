@@ -1,0 +1,36 @@
+.banner {
+  display: flex;
+  gap: 5%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.banner p {
+  font-size: 1.5em;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: black;
+  margin-left: 5%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  overflow-y: scroll;
+}
+
+.separator {
+  margin: 5% 0;
+}
+
+@media screen and (min-width: 950px) {
+  .separator {
+    margin: 2% 0;
+  }
+}
