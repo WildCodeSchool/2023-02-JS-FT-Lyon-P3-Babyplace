@@ -20,6 +20,7 @@ function AuthenticationChange({ setAccountScreen }) {
   const passwordErrorMessages = [
     "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 3 à 30 caractères.",
     "Vos mots de passe ne correspondent pas.",
+    "Quelque chose s'est mal passé, réessayez plus tard.",
   ];
 
   const schema = Joi.object().keys({
@@ -69,10 +70,19 @@ function AuthenticationChange({ setAccountScreen }) {
     if (error) {
       return setMessage(error.message);
     }
-    instance.patch("/parent/password");
-    setPassword("");
-    setVerifyPassword("");
-    return setMessage("Votre mot de passe a bien été modifié.");
+    return instance
+      .patch("/parent/password", { password })
+      .then(() => {
+        setMessage("Votre mot de passe a bien été modifié.");
+        setPassword("");
+        setVerifyPassword("");
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          logout();
+        }
+        setMessage(passwordErrorMessages[2]);
+      });
   };
 
   const handleChange = (e) => {

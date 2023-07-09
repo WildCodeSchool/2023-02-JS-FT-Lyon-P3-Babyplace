@@ -34,9 +34,14 @@ router.patch(
   "/parent/mail",
   verifyToken,
   verifyIfParentRegistered,
-  parentControllers.changeMailAddress
+  parentControllers.edit
 );
-router.patch("/parent/password");
+router.patch(
+  "/parent/password",
+  verifyToken,
+  hashPassword,
+  parentControllers.edit
+);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",

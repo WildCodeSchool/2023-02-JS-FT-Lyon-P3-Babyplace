@@ -18,7 +18,7 @@ class ProManager extends AbstractManager {
       [
         pro.name,
         pro.mail_address,
-        pro.hashedPassword,
+        pro.hashed_password,
         pro.address,
         pro.postcode,
         pro.city,

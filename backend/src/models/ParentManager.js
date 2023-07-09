@@ -13,7 +13,7 @@ class ParentManager extends AbstractManager {
         parent.firstname,
         parent.birthdate,
         parent.mail_address,
-        parent.hashedPassword,
+        parent.hashed_password,
         parent.address,
         parent.postcode,
         parent.city,

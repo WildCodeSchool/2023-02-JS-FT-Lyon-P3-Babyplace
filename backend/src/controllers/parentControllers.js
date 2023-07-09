@@ -29,24 +29,22 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
+  req.body.id = req.payloads.sub;
   const parent = req.body;
 
   // TODO validations (length, format...)
 
-  parent.id = parseInt(req.params.id, 10);
-
   models.parent
     .update(parent)
     .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
       }
+      return null;
     })
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500);
+      return res.sendStatus(500);
     });
 };
 
