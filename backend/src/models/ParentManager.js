@@ -46,6 +46,13 @@ class ParentManager extends AbstractManager {
       [id]
     );
   }
+
+  update(parent) {
+    return this.database.query(`update ${this.table} set ? where id = ?`, [
+      parent,
+      parent.id,
+    ]);
+  }
 }
 
 module.exports = ParentManager;

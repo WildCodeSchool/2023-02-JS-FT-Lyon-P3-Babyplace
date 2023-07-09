@@ -30,6 +30,13 @@ router.get("/logout", logout);
 router.get("/parent", parentControllers.browse);
 router.get("/parent/:id", parentControllers.read);
 router.get("/parent/child/:id", parentControllers.showChildWithParent);
+router.patch(
+  "/parent/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  parentControllers.changeMailAddress
+);
+router.patch("/parent/password");
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",
@@ -37,6 +44,7 @@ router.post(
   hashPassword,
   parentControllers.add
 );
+
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/child", childControllers.browse);

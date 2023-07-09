@@ -4,8 +4,11 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Box, TextField, Button, InputLabel, Alert } from "@mui/material";
 import Joi from "joi";
 import styles from "./AuthenticationChange.module.css";
+import instance from "../../../services/APIService";
+import { useUserContext } from "../../../contexts/UserContext";
 
 function AuthenticationChange({ setAccountScreen }) {
+  const { logout } = useUserContext();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
@@ -44,8 +47,20 @@ function AuthenticationChange({ setAccountScreen }) {
     if (error) {
       return setMessage(error.message);
     }
-    setMail("");
-    return setMessage("Votre adresse mail a bien été modifiée.");
+    return instance
+      .patch("/parent/mail", { mail_address: mail })
+      .then(() => {
+        setMail("");
+        setMessage("Votre adresse mail a bien été modifiée.");
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          logout();
+        }
+        if (err.response.status === 400) {
+          setMessage(mailErrorMessages[1]);
+        }
+      });
   };
 
   const handleSubmitPassword = (e) => {
@@ -54,6 +69,7 @@ function AuthenticationChange({ setAccountScreen }) {
     if (error) {
       return setMessage(error.message);
     }
+    instance.patch("/parent/password");
     setPassword("");
     setVerifyPassword("");
     return setMessage("Votre mot de passe a bien été modifié.");

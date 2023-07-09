@@ -32,7 +32,6 @@ class ProManager extends AbstractManager {
   }
 
   update(pro) {
-    // console.log(pro)
     return this.database.query(`update ${this.table} set ? where id = ?`, [
       pro,
       pro.id,

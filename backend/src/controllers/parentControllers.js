@@ -81,6 +81,7 @@ const destroy = (req, res) => {
       res.sendStatus(500);
     });
 };
+
 const showChildWithParent = (req, res) => {
   models.parent
     .joinChildWithParent(req.params.id)
@@ -93,6 +94,23 @@ const showChildWithParent = (req, res) => {
     });
 };
 
+const changeMailAddress = (req, res) => {
+  req.body.id = req.payloads.sub;
+  const parent = req.body;
+  models.parent
+    .update(parent)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -100,4 +118,5 @@ module.exports = {
   add,
   destroy,
   showChildWithParent,
+  changeMailAddress,
 };
