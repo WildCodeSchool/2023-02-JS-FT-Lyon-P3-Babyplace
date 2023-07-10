@@ -1,0 +1,57 @@
+.formScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.banner {
+  display: flex;
+  gap: 5%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.banner p {
+  font-size: 1.5em;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: black;
+  margin-left: 5%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form div {
+  width: 100%;
+}
+
+form div div {
+  width: 100%;
+}
+
+.separator {
+  margin: 5% 0;
+}
+
+@media screen and (min-width: 950px) {
+  .form {
+    width: 50%;
+    overflow-y: auto;
+  }
+}

@@ -13,7 +13,7 @@ class ParentManager extends AbstractManager {
         parent.firstname,
         parent.birthdate,
         parent.mail_address,
-        parent.hashedPassword,
+        parent.hashed_password,
         parent.address,
         parent.postcode,
         parent.city,
@@ -45,6 +45,13 @@ class ParentManager extends AbstractManager {
    where p.id = ?`,
       [id]
     );
+  }
+
+  update(parent) {
+    return this.database.query(`update ${this.table} set ? where id = ?`, [
+      parent,
+      parent.id,
+    ]);
   }
 }
 

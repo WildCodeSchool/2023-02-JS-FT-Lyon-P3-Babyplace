@@ -28,8 +28,30 @@ router.delete("/items/:id", itemControllers.destroy);
 router.get("/logout", logout);
 
 router.get("/parent", parentControllers.browse);
+router.get(
+  "/parent/reservations",
+  verifyToken,
+  parentControllers.getReservations
+);
 router.get("/parent/:id", parentControllers.read);
 router.get("/parent/child/:id", parentControllers.showChildWithParent);
+router.patch(
+  "/parent/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  parentControllers.edit
+);
+router.patch(
+  "/parent/password",
+  verifyToken,
+  hashPassword,
+  parentControllers.edit
+);
+router.patch(
+  "/parent/reservation",
+  verifyToken,
+  parentControllers.cancelReservation
+);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",
@@ -37,6 +59,7 @@ router.post(
   hashPassword,
   parentControllers.add
 );
+
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/child", childControllers.browse);
