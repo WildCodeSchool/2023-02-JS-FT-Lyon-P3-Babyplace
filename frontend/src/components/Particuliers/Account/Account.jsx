@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
+import BasicModal from "../../ModalWrapper/BasicModal";
 import { useUserContext } from "../../../contexts/UserContext";
 import Login from "../../Login";
 import styles from "./Account.module.css";
@@ -9,9 +12,8 @@ import Orders from "./Orders";
 import AccountHeader from "./AccountHeader";
 
 function Account() {
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
   const [accountScreen, setAccountScreen] = useState("menu");
-
   if (user?.role === "parent") {
     return (
       <div>
@@ -21,6 +23,17 @@ function Account() {
         ) : null}
         {accountScreen === "authentication" ? (
           <AuthenticationChange setAccountScreen={setAccountScreen} />
+        ) : null}
+        {accountScreen === "logout" ? (
+          <ModalWrapper>
+            {" "}
+            <BasicModal
+              modalText="Voulez-vous vraiment vous déconnecter ?"
+              closeModal={() => setAccountScreen("menu")}
+              actionYesButton={() => logout()}
+              actionNoButton={() => setAccountScreen("menu")}
+            />
+          </ModalWrapper>
         ) : null}
         {accountScreen === "menu" ? (
           <ul className={styles.menu}>
@@ -44,6 +57,17 @@ function Account() {
               >
                 <BookmarkBorderIcon sx={{ color: "var(--main-color)" }} />
                 <p>Réservations</p>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setAccountScreen("logout");
+                }}
+              >
+                <LogoutIcon sx={{ color: "var(--main-color)" }} />
+                <p>Se déconnecter</p>
               </button>
             </li>
           </ul>
