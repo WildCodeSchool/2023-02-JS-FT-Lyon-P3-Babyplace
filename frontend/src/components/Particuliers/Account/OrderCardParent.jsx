@@ -5,11 +5,13 @@ import Button from "@mui/material/Button";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useState } from "react";
+import instance from "../../../services/APIService";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import styles from "./OrderCardParent.module.css";
 
 function OrderCardParent({ reservation }) {
   const [openModal, setOpenModal] = useState(false);
+  const [message, setMessage] = useState(null);
   // const [orderId, setOrderId] = useState(null);
 
   const getDetailStatus = () => {
@@ -50,15 +52,75 @@ function OrderCardParent({ reservation }) {
     return null;
   };
 
-  const handleCancel = () => {
-    console.info("nope");
+  const handleAction = () => {
+    instance
+      .patch("/parent/reservation", { id: reservation.id })
+      .then((res) => {
+        if (res.status === 200) {
+          setMessage("La réservation a bien été annulée.");
+        }
+        console.info(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
     <>
-      {openModal && (
+      {openModal && !message && (
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
-          <div>Test</div>
+          <div className={styles.basic_modal_container}>
+            <p className={styles.modal_text}>Bla bla bla</p>
+            <button
+              type="button"
+              className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
+              onClick={() => {
+                setOpenModal(false);
+                setMessage(null);
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </ModalWrapper>
+      )}
+      {openModal && message && (
+        <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
+          <div className={styles.basic_modal_container}>
+            <p className={styles.modal_text}>{message}</p>
+            <div className={styles.btn_modal_box}>
+              {message === "La réservation a bien été annulée." ? (
+                <button
+                  type="button"
+                  className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
+                  onClick={() => {
+                    setOpenModal(false);
+                    setMessage(null);
+                  }}
+                >
+                  OK
+                </button>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className={`${styles.btn_inside_modal} ${styles.btn_for_no}`}
+                    onClick={() => setOpenModal(false)}
+                  >
+                    Non
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
+                    onClick={() => handleAction()}
+                  >
+                    Oui
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </ModalWrapper>
       )}
       <div className={`${styles.order_container} ${getCancelledColor() || ""}`}>
@@ -75,7 +137,9 @@ function OrderCardParent({ reservation }) {
             <div className={styles.pro_more_info}>
               <Button
                 sx={{ height: 80, width: 120 }}
-                onClick={() => console.info("click")}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
               >
                 <ZoomInIcon sx={{ height: 60, width: 120, color: "black" }} />
               </Button>
@@ -88,7 +152,12 @@ function OrderCardParent({ reservation }) {
                     color="error"
                     sx={{ borderRadius: 5, my: 1 }}
                     id="cancel"
-                    onClick={handleCancel}
+                    onClick={() => {
+                      setMessage(
+                        "Êtes-vous sûr(e) de vouloir annuler cette réservation ?"
+                      );
+                      setOpenModal(true);
+                    }}
                   >
                     Annuler
                     <CancelOutlinedIcon />
@@ -140,6 +209,7 @@ export default OrderCardParent;
 
 OrderCardParent.propTypes = {
   reservation: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,

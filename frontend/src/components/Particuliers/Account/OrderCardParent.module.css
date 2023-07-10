@@ -150,3 +150,49 @@ height: 50%;
 .waiting_color {
   background-color: rgb(91, 172, 204);
 }
+
+.basic_modal_container {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.modal_text {
+  margin: 5px 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+.btn_modal_box {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+
+.btn_inside_modal {
+  padding: 10px 20px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.btn_inside_modal:hover {
+  filter: brightness(0.6);
+}
+
+.btn_for_no {
+  margin-right: 10px;
+  background-color: var(--danger-color);
+}
+
+.btn_for_yes {
+  margin-left: 10px;
+  background-color: var(--success-color);
+}

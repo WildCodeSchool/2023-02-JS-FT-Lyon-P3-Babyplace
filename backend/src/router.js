@@ -47,6 +47,11 @@ router.patch(
   hashPassword,
   parentControllers.edit
 );
+router.patch(
+  "/parent/reservation",
+  verifyToken,
+  parentControllers.cancelReservation
+);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",

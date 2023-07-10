@@ -130,6 +130,21 @@ const getReservations = (req, res) => {
     });
 };
 
+const cancelReservation = (req, res) => {
+  models.reservation
+    .delete(req.payloads.sub, req.body.id)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(404);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -139,4 +154,5 @@ module.exports = {
   showChildWithParent,
   changeMailAddress,
   getReservations,
+  cancelReservation,
 };

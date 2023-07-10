@@ -25,14 +25,14 @@ export default function BasicModal({
           className={`${styles.btn_inside_modal} ${styles.btn_for_no}`}
           onClick={handleModalClose}
         >
-          No
+          Non
         </button>
         <button
           type="button"
           className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
           onClick={handleAction}
         >
-          Yes
+          Oui
         </button>
       </div>
     </div>
