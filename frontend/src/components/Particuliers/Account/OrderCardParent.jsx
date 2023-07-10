@@ -12,7 +12,7 @@ import styles from "./OrderCardParent.module.css";
 function OrderCardParent({ reservation }) {
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState(null);
-  // const [orderId, setOrderId] = useState(null);
+  const [pro, setPro] = useState(null);
 
   const getDetailStatus = () => {
     if (reservation.status === 0) {
@@ -71,11 +71,27 @@ function OrderCardParent({ reservation }) {
       {openModal && !message && (
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
           <div className={styles.basic_modal_container}>
-            <p className={styles.modal_text}>Bla bla bla</p>
+            <p className={styles.modal_text}>
+              {pro ? (
+                <>
+                  <h2>Crèche : {pro.name}</h2>
+                  <br />
+                  <p>
+                    <b>Adresse : </b> {pro.address} {pro.postcode} {pro.city}
+                  </p>
+                  <br />
+                  <p>
+                    <b> Téléphone : </b> {pro.phone_number}
+                  </p>
+                  <br />
+                </>
+              ) : null}
+            </p>
             <button
               type="button"
               className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
               onClick={() => {
+                setPro(null);
                 setOpenModal(false);
                 setMessage(null);
               }}
@@ -139,6 +155,15 @@ function OrderCardParent({ reservation }) {
                 sx={{ height: 80, width: 120 }}
                 onClick={() => {
                   setOpenModal(true);
+                  instance
+                    .get(`/pro/${reservation.proId}`)
+                    .then((response) => {
+                      setPro(response.data);
+                    })
+                    .catch(() => {
+                      setPro(null);
+                      setOpenModal(false);
+                    });
                 }}
               >
                 <ZoomInIcon sx={{ height: 60, width: 120, color: "black" }} />
@@ -209,6 +234,7 @@ export default OrderCardParent;
 
 OrderCardParent.propTypes = {
   reservation: PropTypes.shape({
+    proId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
