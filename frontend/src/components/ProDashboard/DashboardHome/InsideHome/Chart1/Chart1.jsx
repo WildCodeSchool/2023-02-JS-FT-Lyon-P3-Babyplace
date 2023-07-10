@@ -21,7 +21,7 @@ export default function Chart1() {
       <div className={styles.img_box}>
         <img className={styles.img} src={Award} alt="Award-logo" />
       </div>
-      <h3 className={styles.name}>Bienvenue chez {user.name}</h3>
+      <h3 className={styles.name}>Bienvenue {user.name}</h3>
       <p className={styles.text}>Vous êtes sur votre espace professionnel.</p>
     </div>
   );

@@ -4,7 +4,6 @@ import styles from "./Chart2.module.css";
 import BabyplaceBg from "../../../../../assets/images/Babyplace-2.png";
 import instance from "../../../../../services/APIService";
 import { useUserContext } from "../../../../../contexts/UserContext";
-import TransformData from "./TransformDatas";
 
 export default function Chart2() {
   const { user } = useUserContext();
@@ -12,6 +11,8 @@ export default function Chart2() {
   const [waitingOrders, setWaitingOrders] = useState(null);
   const [getDate] = useState(dayjs());
   const date = getDate.format("YYYY-MM-DD");
+  // const date = "2023-07-11";
+  let ChildrensWalking = 0;
 
   useEffect(() => {
     instance
@@ -31,18 +32,24 @@ export default function Chart2() {
       .catch((err) => console.error(err));
   }, []);
 
-  TransformData(data);
+  data.forEach((child) => {
+    if (child.walking) {
+      ChildrensWalking += 1;
+    }
+  });
+
   return (
     <div className={styles.chart2_container}>
       <p>
-        Nombre d'enfants aujourd'hui :<span>/ {user.place}</span>{" "}
+        Nombre d'enfants aujourd'hui :
+        <span>
+          {data.length} / {user.place}
+        </span>{" "}
       </p>
       <p>
-        Enfant(s) non marcheur :<span>555</span>{" "}
+        Enfant(s) non marcheur :<span>{ChildrensWalking}</span>{" "}
       </p>
-      <p>
-        Enfants inscrit à la cantine :<span>555</span>{" "}
-      </p>
+
       <p>
         Réservations en attente :<span>{waitingOrders}</span>{" "}
       </p>

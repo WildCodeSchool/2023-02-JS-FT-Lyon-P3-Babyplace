@@ -111,5 +111,17 @@ router.get(
   verifyToken,
   dashboardProControllers.browseReservationsWaiting
 );
+router.patch(
+  "/pro/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  proControllers.editAuth
+);
+router.patch(
+  "/pro/password",
+  verifyToken,
+  hashPassword,
+  proControllers.editAuth
+);
 
 module.exports = router;

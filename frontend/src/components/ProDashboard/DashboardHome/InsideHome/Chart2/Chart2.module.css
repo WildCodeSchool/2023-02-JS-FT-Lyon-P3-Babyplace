@@ -24,6 +24,7 @@ border-bottom: dotted black 1px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
   .chart2_container img {

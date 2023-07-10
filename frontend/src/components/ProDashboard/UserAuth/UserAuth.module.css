@@ -23,11 +23,14 @@ align-items: center;
 }
 
 .userauth_box {
-    height: 90%;
+    height: 80%;
     width: 90%;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .right_container {
@@ -50,6 +53,23 @@ opacity: 0.7;
         display: none;
     }
     .left_container {
-        width: 80%;
+        width: 100%;
+    }
+    .userauth_box {
+        height: 90%;
+        width: 95%;
+    }
+}
+@media screen and (max-width: 380px){
+    .right_container {
+        display: none;
+    }
+    .left_container {
+        height: 100%;
+    
+    }
+    .userauth_box {
+        height: 90%;
+        width: 95%;
     }
 }

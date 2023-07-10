@@ -251,6 +251,26 @@ const register = async (req, res) => {
   }
 };
 
+const editAuth = (req, res) => {
+  req.body.id = req.payloads.sub;
+  const pro = req.body;
+
+  // TODO validations (length, format...)
+
+  models.pro
+    .update(pro)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -261,4 +281,5 @@ module.exports = {
   profile,
   login,
   register,
+  editAuth,
 };
