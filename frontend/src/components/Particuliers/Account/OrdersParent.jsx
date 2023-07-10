@@ -18,7 +18,7 @@ function Orders({ setAccountScreen }) {
       })
       .catch((err) => {
         if (err.response.status === 403) {
-          logout();
+          logout(true);
         }
       });
   }, []);

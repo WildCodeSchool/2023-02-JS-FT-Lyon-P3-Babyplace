@@ -30,7 +30,7 @@ function Account() {
             <BasicModal
               modalText="Voulez-vous vraiment vous déconnecter ?"
               closeModal={() => setAccountScreen("menu")}
-              actionYesButton={() => logout()}
+              actionYesButton={() => logout(false)}
               actionNoButton={() => setAccountScreen("menu")}
             />
           </ModalWrapper>

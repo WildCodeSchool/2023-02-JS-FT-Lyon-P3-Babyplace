@@ -56,7 +56,7 @@ function AuthenticationChange({ setAccountScreen }) {
       })
       .catch((err) => {
         if (err.response.status === 403) {
-          logout();
+          logout(true);
         }
         if (err.response.status === 400) {
           setMessage(mailErrorMessages[1]);
@@ -79,7 +79,7 @@ function AuthenticationChange({ setAccountScreen }) {
       })
       .catch((err) => {
         if (err.response.status === 403) {
-          logout();
+          logout(true);
         }
         setMessage(passwordErrorMessages[2]);
       });

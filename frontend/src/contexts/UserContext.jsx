@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { createContext, useEffect, useMemo, useContext } from "react";
+import { createContext, useEffect, useMemo, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 import instance from "../services/APIService";
@@ -11,6 +11,7 @@ export default UserContext;
 export function UserContextProvider({ children }) {
   const [user, setUser] = useLocalStorage("user", null);
   const [token, setToken] = useLocalStorage("token", "");
+  const [sessionWarning, setSessionWarning] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,13 +20,17 @@ export function UserContextProvider({ children }) {
 
   const login = (_user) => {
     setUser(_user);
+    setSessionWarning(null);
   };
 
-  const logout = () => {
+  const logout = (sessionExpired) => {
     instance.get("/logout");
     setUser(null);
     setToken(null);
     navigate("/");
+    if (sessionExpired === true) {
+      setSessionWarning("Votre session a expiré. Veuillez vous reconnecter.");
+    }
   };
 
   const value = useMemo(
@@ -36,8 +41,10 @@ export function UserContextProvider({ children }) {
       setToken,
       login,
       logout,
+      sessionWarning,
+      setSessionWarning,
     }),
-    [user, token]
+    [user, token, sessionWarning]
   );
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
