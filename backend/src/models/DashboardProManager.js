@@ -89,6 +89,28 @@ class DashboardProManager extends AbstractManager {
       [id]
     );
   }
+
+  getChartData(date, id) {
+    return this.database.query(
+      `select r.id, c.walking, r.status from ${this.table} AS r
+     join child AS c ON c.id = r.child_id
+     join place on r.place_id = place.id
+     where r.reservation_date = ?
+     and place.pro_id = ?
+     and r.status = 1 `,
+      [date, id]
+    );
+  }
+
+  getReservationsToReview(id) {
+    return this.database.query(
+      `SELECT COUNT(*) as orders FROM ${this.table} as r
+       join place on r.place_id = place.id
+        WHERE status = 0
+        and place.pro_id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = DashboardProManager;

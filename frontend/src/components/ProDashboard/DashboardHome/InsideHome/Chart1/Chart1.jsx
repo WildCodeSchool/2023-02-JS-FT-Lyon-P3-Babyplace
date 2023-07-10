@@ -1,92 +1,28 @@
-import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 import styles from "./Chart1.module.css";
-import getDays from "./GetDays";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-getDays();
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-      labels: {
-        color: "black",
-      },
-    },
-    tooltip: {
-      bodyColor: "white",
-    },
-  },
-  scales: {
-    y: {
-      ticks: {
-        color: "black",
-      },
-    },
-    x: {
-      ticks: {
-        color: "black",
-      },
-    },
-  },
-};
-
-const labels = [
-  "Janvier",
-  "Février",
-  "Mars",
-  "Avril",
-  "Mai",
-  "Juin",
-  "Juillet",
-];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Résultat",
-      data: [30, 36, 39, 46, 51, 60, 64],
-      borderColor: "#c299ff",
-      backgroundColor: "#c299ff",
-    },
-    {
-      label: "Prévisions",
-      data: [40, 45, 50, 50, 55, 55, 55],
-      borderColor: "#8080ff",
-      backgroundColor: "#8080ff",
-    },
-  ],
-};
+import LeftDecoration from "../../../../../assets/images/decore-left.png";
+import RightDecoration from "../../../../../assets/images/decore-right.png";
+import Award from "../../../../../assets/images/award.png";
+import { useUserContext } from "../../../../../contexts/UserContext";
 
 export default function Chart1() {
+  const { user } = useUserContext();
   return (
     <div className={styles.chart1_container}>
-      <div className={styles.chart1}>
-        <p>Recettes mensuelle</p>
-        <Line options={options} data={data} className={styles.inside_chart} />
+      <img
+        className={styles.left_decoration}
+        src={LeftDecoration}
+        alt="left-decoration"
+      />
+      <img
+        className={styles.right_decoration}
+        src={RightDecoration}
+        alt="right-decoration"
+      />
+      <div className={styles.img_box}>
+        <img className={styles.img} src={Award} alt="Award-logo" />
       </div>
+      <h3 className={styles.name}>Bienvenue chez {user.name}</h3>
+      <p className={styles.text}>Vous êtes sur votre espace professionnel.</p>
     </div>
   );
 }

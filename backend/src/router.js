@@ -101,5 +101,15 @@ router.get(
   verifyToken,
   dashboardProControllers.getProDaysForPreview
 );
+router.get(
+  "/dashboard/chart/:date",
+  verifyToken,
+  dashboardProControllers.getDataForToday
+);
+router.get(
+  "/dashboard/waiting-order",
+  verifyToken,
+  dashboardProControllers.browseReservationsWaiting
+);
 
 module.exports = router;

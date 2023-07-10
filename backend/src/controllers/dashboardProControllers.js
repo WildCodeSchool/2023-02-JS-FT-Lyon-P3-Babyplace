@@ -118,6 +118,7 @@ const getProInfoForPreview = (req, res) => {
       res.status(500).send("There is a problem");
     });
 };
+
 const getProDaysForPreview = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -131,6 +132,32 @@ const getProDaysForPreview = (req, res) => {
     });
 };
 
+const getDataForToday = (req, res) => {
+  const id = req.payloads.sub;
+  models.dashboardpro
+    .getChartData(req.params.date, id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
+const browseReservationsWaiting = (req, res) => {
+  const id = req.payloads.sub;
+  models.dashboardpro
+    .getReservationsToReview(id)
+    .then(([rows]) => {
+      res.send(rows[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.Status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
@@ -141,4 +168,6 @@ module.exports = {
   getAllReservationsForCalendar,
   getProInfoForPreview,
   getProDaysForPreview,
+  getDataForToday,
+  browseReservationsWaiting,
 };

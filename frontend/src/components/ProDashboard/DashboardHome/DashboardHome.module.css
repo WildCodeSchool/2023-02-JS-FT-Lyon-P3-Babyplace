@@ -14,18 +14,18 @@
 }
 
 .first_chart_container {
-max-width: 500px;
+max-width: 600px;
 width: 90%;
 margin: 10px;
 height: 300px;
-background-color: rgb(250, 250, 250);
+background: linear-gradient(0deg, rgba(126,114,242,1) 0%, rgba(165,165,255,1) 100%);
 box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
 border-radius: 10px;
 
 }
 
 .second_chart_container {
-max-width: 450px;
+max-width: 400px;
 width: 90%;
 margin: 10px;
 height: 300px;
@@ -36,7 +36,7 @@ border-radius: 10px;
 }
 
 .diagram_container {
-max-width: 650px;
+max-width: 600px;
 width: 90%;
 margin: 10px;
 height: 300px;
@@ -47,7 +47,7 @@ border-radius: 10px;
 }
 
 .preview_box {
-max-width: 300px;
+max-width: 400px;
 width: 90%;
 margin: 10px;
 height: 300px;
