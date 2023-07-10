@@ -1,0 +1,36 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.menu p {
+  font-size: 2em;
+}
+
+.menu button {
+  cursor: pointer;
+  width: 100%;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  gap: 1.5em;
+}
+
+@media screen and (min-width: 950px) {
+  .name {
+    flex-direction: row;
+    gap: 0.5em;
+    font-size: 200%;
+  }
+  .menu li {
+    display: flex;
+    justify-content: center;
+  }
+  .menu button {
+    width: fit-content;
+  }
+}

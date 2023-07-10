@@ -37,6 +37,7 @@ const DashboardProManager = require("./DashboardProManager");
 const PlaceManager = require("./PlaceManager");
 const DisponibilityManager = require("./DisponibilityManager");
 const ProDisponibilityManager = require("./ProDisponibilityManager");
+const ReservationManager = require("./ReservationManager");
 
 models.item = new ItemManager();
 models.item.setDatabase(pool);
@@ -54,6 +55,8 @@ models.disponibility = new DisponibilityManager();
 models.disponibility.setDatabase(pool);
 models.proDisponibility = new ProDisponibilityManager();
 models.proDisponibility.setDatabase(pool);
+models.reservation = new ReservationManager();
+models.reservation.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

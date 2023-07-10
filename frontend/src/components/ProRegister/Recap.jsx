@@ -73,7 +73,7 @@ function Recap({ registerInfo }) {
         })
         .catch((error) => {
           if (error.response.status === 403) {
-            logout();
+            logout(true);
           }
           console.error(error);
         });
