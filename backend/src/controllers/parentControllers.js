@@ -110,8 +110,17 @@ const changeMailAddress = (req, res) => {
 };
 
 const getReservations = (req, res) => {
+  let requestDate = new Date();
+  requestDate = [
+    `${requestDate.getFullYear()}`,
+    `${requestDate.getMonth() + 1}`,
+    `${requestDate.getDate()}`,
+  ]
+    .map((string) => (string.length === 1 ? `0${string}` : string))
+    .join("-");
+
   models.reservation
-    .findParentReservation(req.payloads.sub)
+    .findParentReservation(req.payloads.sub, requestDate)
     .then(([result]) => {
       res.send(result);
     })
