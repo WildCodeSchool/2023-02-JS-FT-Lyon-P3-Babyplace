@@ -8,7 +8,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 import Login from "../../Login";
 import styles from "./Account.module.css";
 import AuthenticationChange from "./AuthenticationChange";
-import Orders from "./Orders";
+import OrdersParent from "./OrdersParent";
 import AccountHeader from "./AccountHeader";
 
 function Account() {
@@ -16,10 +16,10 @@ function Account() {
   const [accountScreen, setAccountScreen] = useState("menu");
   if (user?.role === "parent") {
     return (
-      <div>
+      <div className={styles.accountScreens}>
         <AccountHeader />
         {accountScreen === "orders" ? (
-          <Orders setAccountScreen={setAccountScreen} />
+          <OrdersParent setAccountScreen={setAccountScreen} />
         ) : null}
         {accountScreen === "authentication" ? (
           <AuthenticationChange setAccountScreen={setAccountScreen} />

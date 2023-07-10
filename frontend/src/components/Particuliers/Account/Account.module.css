@@ -20,6 +20,8 @@
   gap: 1.5em;
 }
 
+
+
 @media screen and (min-width: 950px) {
   .name {
     flex-direction: row;

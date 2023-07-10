@@ -16,3 +16,11 @@
   color: black;
   margin-left: 5%;
 }
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  overflow: scroll;
+}

@@ -28,6 +28,11 @@ router.delete("/items/:id", itemControllers.destroy);
 router.get("/logout", logout);
 
 router.get("/parent", parentControllers.browse);
+router.get(
+  "/parent/reservations",
+  verifyToken,
+  parentControllers.getReservations
+);
 router.get("/parent/:id", parentControllers.read);
 router.get("/parent/child/:id", parentControllers.showChildWithParent);
 router.patch(

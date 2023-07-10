@@ -109,6 +109,18 @@ const changeMailAddress = (req, res) => {
     });
 };
 
+const getReservations = (req, res) => {
+  models.reservation
+    .findParentReservation(req.payloads.sub)
+    .then(([result]) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -117,4 +129,5 @@ module.exports = {
   destroy,
   showChildWithParent,
   changeMailAddress,
+  getReservations,
 };
