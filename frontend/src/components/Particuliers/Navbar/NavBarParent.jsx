@@ -32,16 +32,24 @@ export default function NavBarParent() {
         }}
       >
         <NavLink to={user?.role === "parent" ? "" : null}>
-          <BottomNavigationAction icon={<HomeIcon />} />
+          <BottomNavigationAction
+            icon={<HomeIcon sx={{ color: "var(--info-color)" }} />}
+          />
         </NavLink>
         <NavLink to="recherche">
-          <BottomNavigationAction icon={<SearchIcon />} />
+          <BottomNavigationAction
+            icon={<SearchIcon sx={{ color: "var(--info-color)" }} />}
+          />
         </NavLink>
         <NavLink to={user?.role === "parent" ? `${user.id}` : null}>
-          <BottomNavigationAction icon={<PersonIcon />} />
+          <BottomNavigationAction
+            icon={<PersonIcon sx={{ color: "var(--info-color)" }} />}
+          />
         </NavLink>
         <NavLink>
-          <BottomNavigationAction icon={<NotificationsIcon />} />
+          <BottomNavigationAction
+            icon={<NotificationsIcon sx={{ color: "var(--info-color)" }} />}
+          />
         </NavLink>
       </BottomNavigation>
     </div>

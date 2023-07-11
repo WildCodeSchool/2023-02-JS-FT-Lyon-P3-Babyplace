@@ -1,0 +1,27 @@
+.banner {
+  display: flex;
+  gap: 5%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.banner p {
+  font-size: 1.5em;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: black;
+  margin-left: 5%;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  overflow-y: scroll;
+  height: calc(100vh - 15vh - 8em - 63px);
+}

@@ -38,10 +38,10 @@
 
 .btn_for_no {
   margin-right: 10px;
-  background-color: rgba(150, 150, 150, 0.508);
+  background-color: var(--danger-color);
 }
 
 .btn_for_yes {
   margin-left: 10px;
-  background-color: rgba(244, 37, 37, 0.695);
+  background-color: var(--success-color);
 }

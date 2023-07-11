@@ -18,7 +18,7 @@ class ProManager extends AbstractManager {
       [
         pro.name,
         pro.mail_address,
-        pro.hashedPassword,
+        pro.hashed_password,
         pro.address,
         pro.postcode,
         pro.city,
@@ -32,7 +32,6 @@ class ProManager extends AbstractManager {
   }
 
   update(pro) {
-    // console.log(pro)
     return this.database.query(`update ${this.table} set ? where id = ?`, [
       pro,
       pro.id,

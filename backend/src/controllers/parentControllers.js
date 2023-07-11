@@ -93,11 +93,65 @@ const destroy = (req, res) => {
       res.sendStatus(500);
     });
 };
+
 const showChildWithParent = (req, res) => {
   models.parent
     .joinChildWithParent(req.params.id)
     .then(([rows]) => {
       res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const changeMailAddress = (req, res) => {
+  req.body.id = req.payloads.sub;
+  const parent = req.body;
+  models.parent
+    .update(parent)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.sendStatus(500);
+    });
+};
+
+const getReservations = (req, res) => {
+  let requestDate = new Date();
+  requestDate = [
+    `${requestDate.getFullYear()}`,
+    `${requestDate.getMonth() + 1}`,
+    `${requestDate.getDate()}`,
+  ]
+    .map((string) => (string.length === 1 ? `0${string}` : string))
+    .join("-");
+
+  models.reservation
+    .findParentReservation(req.payloads.sub, requestDate)
+    .then(([result]) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const cancelReservation = (req, res) => {
+  models.reservation
+    .delete(req.payloads.sub, req.body.id)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return res.sendStatus(404);
     })
     .catch((err) => {
       console.error(err);
@@ -112,4 +166,7 @@ module.exports = {
   add,
   destroy,
   showChildWithParent,
+  changeMailAddress,
+  getReservations,
+  cancelReservation,
 };
