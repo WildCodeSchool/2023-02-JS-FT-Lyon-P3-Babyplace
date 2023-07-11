@@ -1,33 +1,34 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
 import FormChild from "./FormChild";
 import ResumeChild from "./ResumeChild";
 
 export default function FormCompletChildren() {
-  const { id } = useParams();
+  const { user } = useUserContext();
   const [showForm, setShowForm] = useState(false);
   const [showChild, setShowChild] = useState(true);
 
   return (
-    <div className={style.card}>
+    <div className={style.page}>
       <div className={style.header_card}>
-        <Link to={`/particulier/${id}`}>
+        <Link to={`/particulier/${user.id}`}>
           <button type="button" className={style.button_back}>
             <ArrowBackIosNewIcon />
           </button>
         </Link>
         <div className={style.buttons}>
           <div>
-            <Link to={`/particulier/${id}/child`}>
+            <Link to={`/particulier/${user.id}/child`}>
               <button type="button" className={style.buttonChild}>
                 Enfants
               </button>
             </Link>
           </div>
           <div>
-            <Link to={`/particulier/${id}/parent`}>
+            <Link to={`/particulier/${user.id}/parent`}>
               <button type="button" className={style.buttonParent}>
                 Parents
               </button>
@@ -37,7 +38,7 @@ export default function FormCompletChildren() {
       </div>
       <div className={style.file}>
         <h2>Dossier enfants</h2>
-        <div className={style.buttonHead}>
+        <div className={style.button_head}>
           <button
             type="button"
             className={style.button}
@@ -45,16 +46,19 @@ export default function FormCompletChildren() {
           >
             Mes enfants
           </button>
-          {showChild ? <ResumeChild /> : null}
           <button
             type="button"
             className={style.button}
-            onClick={() => setShowForm(!showForm)}
+            onClick={() => {
+              setShowForm(!showForm);
+              setShowChild(false);
+            }}
           >
             Ajouter un enfant
           </button>
-          {showForm ? <FormChild /> : null}
         </div>
+        {showChild ? <ResumeChild /> : null}
+        {showForm ? <FormChild /> : null}
       </div>
     </div>
   );

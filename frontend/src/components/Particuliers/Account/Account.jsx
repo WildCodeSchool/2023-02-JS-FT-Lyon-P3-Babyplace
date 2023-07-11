@@ -10,6 +10,7 @@ import styles from "./Account.module.css";
 import AuthenticationChange from "./AuthenticationChange";
 import OrdersParent from "./OrdersParent";
 import AccountHeader from "./AccountHeader";
+import baby from "../../../assets/images/baby-6087761_1280.jpg";
 
 function Account() {
   const { user, logout } = useUserContext();
@@ -36,41 +37,44 @@ function Account() {
           </ModalWrapper>
         ) : null}
         {accountScreen === "menu" ? (
-          <ul className={styles.menu}>
-            <li>
-              <button
-                type="button"
-                onClick={() => {
-                  setAccountScreen("authentication");
-                }}
-              >
-                <LockOutlinedIcon sx={{ color: "var(--main-color)" }} />
-                <p>Données d'authentification</p>
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={() => {
-                  setAccountScreen("orders");
-                }}
-              >
-                <BookmarkBorderIcon sx={{ color: "var(--main-color)" }} />
-                <p>Réservations</p>
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={() => {
-                  setAccountScreen("logout");
-                }}
-              >
-                <LogoutIcon sx={{ color: "var(--main-color)" }} />
-                <p>Se déconnecter</p>
-              </button>
-            </li>
-          </ul>
+          <div className={styles.menuScreen}>
+            <ul className={styles.menu}>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAccountScreen("authentication");
+                  }}
+                >
+                  <LockOutlinedIcon sx={{ color: "var(--main-color)" }} />
+                  <p>Données d'authentification</p>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAccountScreen("orders");
+                  }}
+                >
+                  <BookmarkBorderIcon sx={{ color: "var(--main-color)" }} />
+                  <p>Réservations</p>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAccountScreen("logout");
+                  }}
+                >
+                  <LogoutIcon sx={{ color: "var(--main-color)" }} />
+                  <p>Se déconnecter</p>
+                </button>
+              </li>
+            </ul>
+            <img className={styles.babyPic} src={baby} alt="baby playing" />
+          </div>
         ) : null}
       </div>
     );

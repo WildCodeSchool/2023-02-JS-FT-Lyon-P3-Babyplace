@@ -1,21 +1,19 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import instance from "../../../services/APIService";
 import pro1test from "../../../assets/images/pro1test.jpg";
 import DispoPros from "../SearchList/DispoPros";
 import style from "./ProDetails.module.css";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProDetails() {
   const { id } = useParams();
   const [pro, setPro] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/pro/${id}`)
+    instance
+      .get(`/pro/${id}`)
       .then((response) => setPro(response.data))
       .catch((err) => console.error(err));
   }, []);
