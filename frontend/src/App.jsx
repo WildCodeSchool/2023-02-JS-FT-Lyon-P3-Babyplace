@@ -16,6 +16,7 @@ import FormParent from "./components/Particuliers/Form/FormParent";
 import FormCompletChildren from "./components/Particuliers/FormComplet/FormCompletChildren";
 import FormCompletParent from "./components/Particuliers/FormComplet/FormCompletParent";
 import FormCompletWelcome from "./components/Particuliers/FormComplet/FormCompletWelcome";
+import WelcomePage from "./components/Particuliers/WelcomePage/WelcomePage";
 import { UserContextProvider } from "./contexts/UserContext";
 import { UserInfoContextProvider } from "./contexts/UserInfoContext";
 
@@ -35,7 +36,7 @@ function App() {
               <Route path="recherche/:id" element={<ProDetails />} />
               <Route path="recherche/:id/date" element={<DateChoice />} />
               <Route path="register" element={<FormParent />} />
-              <Route path="register" element={<FormParent />} />
+              <Route path="register/welcome" element={<WelcomePage />} />
               <Route path=":id" element={<FormCompletWelcome />} />
               <Route path=":id/child" element={<FormCompletChildren />} />
               <Route path=":id/parent" element={<FormCompletParent />} />

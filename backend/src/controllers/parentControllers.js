@@ -28,24 +28,38 @@ const read = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  req.body.id = req.payloads.sub;
-  const parent = req.body;
-
-  // TODO validations (length, format...)
-
-  models.parent
-    .update(parent)
-    .then(([result]) => {
-      if (result.affectedRows > 0) {
-        return res.sendStatus(200);
+const edit = async (req, res) => {
+  try {
+    let updatedParent = {};
+    Object.entries(req.body).forEach((array) => {
+      if (
+        array[0] !== "birthdate" &&
+        array[0] !== "mail_address" &&
+        array[0] !== "password" &&
+        array[0] !== "hashed_password" &&
+        array[0] !== "notification_status" &&
+        array[0] !== "role" &&
+        array[1] !== "" &&
+        array !== undefined
+      ) {
+        updatedParent = { ...updatedParent, [array[0]]: array[1] };
       }
-      return null;
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.sendStatus(500);
     });
+    updatedParent.id = req.payloads?.sub;
+
+    // Effectuer la mise à jour de l'objet parent dans la base de données
+    const [result] = await models.parent.update(updatedParent);
+
+    if (result.affectedRows === 0) {
+      return res.sendStatus(404);
+    }
+    const [[parent]] = await models.parent.find(updatedParent.id);
+
+    return res.status(201).send(parent);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
 };
 
 const add = (req, res) => {

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Alert } from "@mui/material";
-import axios from "axios";
 import Joi from "joi";
+import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
+import ResumeChild from "./ResumeChild";
 
 export default function FormChild() {
   const { user } = useUserContext();
   const [validationMessage, setValidationMessage] = useState(null);
+  const [showChild, setShowChild] = useState(false);
   const [formInfo, setFormInfo] = useState({
     lastname: "",
     firstname: "",
@@ -39,8 +39,8 @@ export default function FormChild() {
       setValidationMessage(null);
     }
     // Envoi au back des données recueillies dans le formulaire
-    axios
-      .post(`${backEndUrl}/child/register`, formInfo)
+    instance
+      .post(`/child/register`, formInfo)
       .then((response) => {
         if (response.status === 201) {
           setValidationMessage("Votre enfant a bien été ajouté.");
@@ -52,8 +52,10 @@ export default function FormChild() {
           setValidationMessage("Erreur: Veuillez recommencer.");
       });
   };
+
   return (
-    <div>
+    <div className={style.formContainer}>
+      {showChild ? <ResumeChild /> : null}
       <form className={style.form} onSubmit={handleSubmit}>
         <input
           type="text"
@@ -115,7 +117,7 @@ export default function FormChild() {
           </div>
         </fieldset>
 
-        <div className={style.validationMessage}>
+        <div className={style.validation_message}>
           {validationMessage === "Votre enfant a bien été ajouté." ? (
             <Alert
               severity={
@@ -127,7 +129,13 @@ export default function FormChild() {
               {validationMessage}
             </Alert>
           ) : null}
-          <button type="submit" className={style.button}>
+          <button
+            type="submit"
+            className={style.button_validation}
+            onClick={() => {
+              setShowChild(!showChild);
+            }}
+          >
             Valider
           </button>
         </div>

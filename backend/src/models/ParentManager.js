@@ -24,6 +24,13 @@ class ParentManager extends AbstractManager {
     );
   }
 
+  update(parent) {
+    return this.database.query(`update ${this.table} set ? where id = ?`, [
+      parent,
+      parent.id,
+    ]);
+  }
+
   findByEmailWithPassword(email) {
     return this.database.query(
       `SELECT * FROM ${this.table} WHERE mail_address = ?`,
@@ -45,13 +52,6 @@ class ParentManager extends AbstractManager {
    where p.id = ?`,
       [id]
     );
-  }
-
-  update(parent) {
-    return this.database.query(`update ${this.table} set ? where id = ?`, [
-      parent,
-      parent.id,
-    ]);
   }
 }
 

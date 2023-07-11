@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Chip } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import style from "./DateChoice.module.css";
-
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
+import instance from "../../../services/APIService";
 
 export default function DateChoice() {
   const { id } = useParams();
@@ -49,8 +47,8 @@ export default function DateChoice() {
     return futureDates;
   };
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/pro/${id}`)
+    instance
+      .get(`/pro/${id}`)
       .then((response) => setPro(response.data))
       .catch((err) => console.error(err));
   }, []);

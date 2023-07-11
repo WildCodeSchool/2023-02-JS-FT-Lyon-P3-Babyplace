@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import axios from "axios";
+import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormComplet.module.css";
 import profilePicture from "../../../assets/ed-cannan.png";
 
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
-
 export default function FormCompletWelcome() {
-  const { id } = useParams();
-  const [parent, setParent] = useState(null);
-  useEffect(() => {
-    axios
-      .get(`${backEndUrl}/parent/${id}`)
-      .then((response) => {
-        setParent(response.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  if (!parent) return null;
+  const { user } = useUserContext();
 
   return (
-    <div className={style.card}>
+    <div className={style.page}>
       <Link to="/particulier">
         <button type="button" className={style.button_back}>
           <ArrowBackIosNewIcon />
@@ -32,7 +19,7 @@ export default function FormCompletWelcome() {
         <div>
           <img src={profilePicture} alt="profilepicture" />
           <h3>
-            {parent.lastname} {parent.firstname}
+            {user.lastname} {user.firstname}
           </h3>
           <div>
             <p>
@@ -41,14 +28,14 @@ export default function FormCompletWelcome() {
             </p>
           </div>
           <div>
-            <Link to={`/particulier/${id}/child`}>
+            <Link to={`/particulier/${user.id}/child`}>
               <button type="button" className={style.buttonChild}>
                 Dossier enfant
               </button>
             </Link>
           </div>
           <div>
-            <Link to={`/particulier/${id}/parent`}>
+            <Link to={`/particulier/${user.id}/parent`}>
               <button type="button" className={style.buttonParent}>
                 Dossier parent
               </button>
