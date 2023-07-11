@@ -1,0 +1,48 @@
+.selectChildScreen {
+  background: var(--main-bg-gradient);
+  height: calc(100vh - 53px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.button_back {
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+}
+
+.selectChildScreen h1 {
+  margin: 2rem 0;
+  color: white;
+}
+
+.card {
+  padding: 2em;
+  background: white;
+  width: 50%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  color: var(--main-color);
+  box-shadow: 5px 5px 5px var(--second-color);
+}
+
+@media screen and (max-width: 768px) {
+  .requirementsScreen {
+    overflow-y: scroll;
+  }
+  .card {
+    width: 90vw;
+  }
+}
+
