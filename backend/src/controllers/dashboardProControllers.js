@@ -1,16 +1,27 @@
 const models = require("../models");
 
-const browseReservations = (req, res) => {
+const browseReservations = async (req, res) => {
   const id = req.payloads.sub;
-  models.dashboardpro
-    .showAllReservations(id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.Status(500).send("There is a problem");
-    });
+  const { status } = req.query;
+  const { page } = req.query;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+  console.warn(`le status est ${status}`);
+  try {
+    const [[{ total }]] = await models.dashboardpro.countOrders(id, status);
+
+    const [orders] = await models.dashboardpro.showAllReservations(
+      id,
+      limit,
+      offset,
+      status
+    );
+    // console.info(orders);
+    res.send({ total, datas: orders });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
 const showMoreInfoOnOrder = (req, res) => {
@@ -158,6 +169,19 @@ const browseReservationsWaiting = (req, res) => {
     });
 };
 
+const getOccupationRates = (req, res) => {
+  const id = req.payloads.sub;
+  models.dashboardpro
+    .getOccupation(req.params.date, id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("There is a problem");
+    });
+};
+
 module.exports = {
   browseReservations,
   showMoreInfoOnOrder,
@@ -170,4 +194,5 @@ module.exports = {
   getProDaysForPreview,
   getDataForToday,
   browseReservationsWaiting,
+  getOccupationRates,
 };

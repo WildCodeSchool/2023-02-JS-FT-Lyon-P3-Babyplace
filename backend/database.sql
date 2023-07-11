@@ -116,9 +116,9 @@ CREATE TABLE parent_notification (
   VALUES
   ('Dupont', 'Marcel', '20221224', false, 'Docteur Qui', 1),
   ('Dupond', 'Noe', '20191103', false, 'Docteur Folamour', 2),
-  ('Dupond', 'Jade', '20191103', true, 'Docteur Folamour', 3),
-  ('Dupond', 'Martin', '20191016', false, 'Docteur Folamour', 3),
-  ('Michel', 'Martin', '20151016', true, 'Docteur Folamour', 4);
+  ('Dupond', 'Jade', '20191103', true, 'Docteur Folamour', 1),
+  ('Dupond', 'Martin', '20191016', false, 'Docteur Folamour', 2),
+  ('Michel', 'Martin', '20151016', true, 'Docteur Folamour', 2);
 
   INSERT INTO disponibility
   (day)

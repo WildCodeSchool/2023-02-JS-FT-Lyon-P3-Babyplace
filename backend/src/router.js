@@ -27,6 +27,18 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/logout", logout);
 
+router.patch(
+  "/pro/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  proControllers.editAuth
+);
+router.patch(
+  "/pro/password",
+  verifyToken,
+  hashPassword,
+  proControllers.editAuth
+);
 router.get("/parent", parentControllers.browse);
 router.get(
   "/parent/reservations",
@@ -134,17 +146,14 @@ router.get(
   verifyToken,
   dashboardProControllers.browseReservationsWaiting
 );
-router.patch(
-  "/pro/mail",
+router.get(
+  "/dashboard/occupation/:date",
   verifyToken,
-  verifyIfParentRegistered,
-  proControllers.editAuth
+  dashboardProControllers.getDataForToday
 );
-router.patch(
-  "/pro/password",
+router.get(
+  "/occupation/:date",
   verifyToken,
-  hashPassword,
-  proControllers.editAuth
+  dashboardProControllers.getOccupationRates
 );
-
 module.exports = router;

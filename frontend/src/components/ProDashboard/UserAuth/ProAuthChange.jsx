@@ -118,7 +118,18 @@ export default function ProAuthChange() {
               onChange={(e) => handleChange(e)}
             />
           </div>
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "rgb(165,165,255)",
+              "&:hover": {
+                backgroundColor: "rgb(126,114,242)",
+              },
+            }}
+          >
             Changer l'adresse mail
           </Button>
         </Box>
@@ -164,7 +175,18 @@ export default function ProAuthChange() {
               type="password"
             />
           </div>
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "rgb(165,165,255)",
+              "&:hover": {
+                backgroundColor: "rgb(126,114,242)",
+              },
+            }}
+          >
             Changer le mot de passe
           </Button>
         </Box>

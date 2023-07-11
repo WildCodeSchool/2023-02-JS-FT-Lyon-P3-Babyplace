@@ -47,7 +47,7 @@ export default function Chart2() {
         </span>{" "}
       </p>
       <p>
-        Enfant(s) non marcheur :<span>{ChildrensWalking}</span>{" "}
+        Enfant(s) marcheur :<span>{ChildrensWalking}</span>{" "}
       </p>
 
       <p>
