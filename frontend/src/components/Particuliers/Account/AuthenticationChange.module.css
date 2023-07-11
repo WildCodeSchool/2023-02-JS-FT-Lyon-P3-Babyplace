@@ -1,8 +1,15 @@
+.auth {
+  overflow-y: scroll;
+  height: calc(100vh - 15vh - 8em - 63px);
+}
+
 .formScreen {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow-y: scroll;
+  height: calc(100vh - 15vh - 8em - 63px);
 }
 
 .banner {
@@ -51,7 +58,13 @@ form div div {
 
 @media screen and (min-width: 950px) {
   .form {
-    width: 50%;
-    overflow-y: auto;
+    padding: 2em;
+    width: 60%;
+    border: 5px solid var(--main-color);
+    border-radius: 25px;
+  }
+  
+  .formScreen {
+    height: calc(100vh - 15vh - 11em - 63px);
   }
 }
