@@ -32,7 +32,7 @@ jobs:
           fi
 
   deploy:
-    if: needs.check-secrets.outputs.caprover-server == 'true' && github.event.pull_request.merged == true
+    if: needs.check-secrets.outputs.caprover-server == 'true' && (github.event.pull_request.merged || github.event_name == 'push')
 
     runs-on: ubuntu-latest
 
