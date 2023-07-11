@@ -9,8 +9,7 @@ on:
     branches:
       - main
       - master
-    types:
-        - closed
+    types: [closed]
 
 jobs:
   check-secrets: # thx https://stackoverflow.com/a/70249520/6612932
