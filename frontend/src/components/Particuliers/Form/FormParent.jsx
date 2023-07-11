@@ -8,7 +8,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormParent.module.css";
 
 export default function FormParent() {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
 
   // Mise en place du schema pour les validateurs Joi
   const schema = Joi.object({
@@ -80,9 +80,11 @@ export default function FormParent() {
     city: "",
     phone_number: "",
   });
+
   const handleChange = (event) => {
     setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -106,29 +108,31 @@ export default function FormParent() {
         })
 
         .catch((err) => {
-          if (err.response.status === 500)
+          if (err.response.status === 400)
             setValidationMessage("Veuillez utiliser une autre adresse mail");
         });
     } else {
       instance
-        .patch(`/parent/register/${user.id}`, formInfo)
+        .patch(`/parent/modify`, formInfo)
         .then((response) => {
           if (response.status === 201) {
             setValidationMessage(
               "Les validations ont bien été prises en compte."
             );
+            setUser(response.data);
           }
         })
 
         .catch((err) => {
-          if (err.response.status === 500)
+          if (err.response.status === 400)
             setValidationMessage("Veuillez réessayer plus tard.");
         });
     }
   };
-  if (!user?.id)
+
+  if (!user?.id) {
     return (
-      <div className={style.card}>
+      <div className={style.page}>
         <div className={style.header_card}>
           <button
             type="button"
@@ -237,101 +241,116 @@ export default function FormParent() {
             ) : null}
             {validationMessage !==
             "Compte créé. Vous pouvez désormais vous connecter." ? (
-              <button type="submit" className={style.button}>
+              <button type="submit" className={style.buttonSubmit}>
                 Créer un compte
               </button>
             ) : null}
-          </div>
 
-          {validationMessage ===
-          "Compte créé. Vous pouvez désormais vous connecter." ? (
-            <Alert
-              severity={
-                validationMessage ===
-                "Compte créé. Vous pouvez désormais vous connecter."
-                  ? "success"
-                  : "error"
-              }
-            >
-              {validationMessage}
-            </Alert>
-          ) : null}
+            {validationMessage ===
+            "Compte créé. Vous pouvez désormais vous connecter." ? (
+              <Alert
+                severity={
+                  validationMessage ===
+                  "Compte créé. Vous pouvez désormais vous connecter."
+                    ? "success"
+                    : "error"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+          </div>
         </form>
 
         {validationMessage ===
         "Compte créé. Vous pouvez désormais vous connecter." ? (
-          <Link to="/particulier">
-            <button type="button" className={style.button}>
-              Se connecter
+          <Link to="/particulier/register/welcome">
+            <button type="button" className={style.buttonNext}>
+              Suivant
             </button>
           </Link>
         ) : null}
       </div>
     );
+  }
   if (user?.id) {
     return (
-      <form className={style.form} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="lastname"
-          placeholder={user.lastname}
-          value={formInfo.lastname}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="firstname"
-          placeholder={user.firstname}
-          value={formInfo.firstname}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder={user.address}
-          value={formInfo.address}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="postcode"
-          placeholder={user.postcode}
-          value={formInfo.postcode}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="city"
-          placeholder={user.city}
-          value={formInfo.city}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="phone_number"
-          placeholder={user.phone_number}
-          value={formInfo.phone_number}
-          onChange={handleChange}
-        />
-        <div className={style.validationMessage}>
-          {validationMessage ===
-          "Les validations ont bien été prises en compte." ? (
-            <Alert
-              severity={
-                validationMessage ===
-                "Les validations ont bien été prises en compte."
-                  ? "success"
-                  : "error"
-              }
-            >
-              {validationMessage}
-            </Alert>
-          ) : null}
-        </div>
-        <button type="submit" className={style.button}>
-          Valider les modifications
-        </button>
-      </form>
+      <div>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="lastname"
+            placeholder={user.lastname}
+            value={formInfo.lastname}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="firstname"
+            placeholder={user.firstname}
+            value={formInfo.firstname}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder={user.address}
+            value={formInfo.address}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="postcode"
+            placeholder={user.postcode}
+            value={formInfo.postcode}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder={user.city}
+            value={formInfo.city}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="phone_number"
+            placeholder={user.phone_number}
+            value={formInfo.phone_number}
+            onChange={handleChange}
+          />
+          <div className={style.validationMessage}>
+            {validationMessage === "Veuillez réessayer plus tard." ? (
+              <Alert
+                severity={
+                  validationMessage === "Veuillez réessayer plus tard."
+                    ? "error"
+                    : "success"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+
+            {validationMessage ===
+            "Les validations ont bien été prises en compte." ? (
+              <Alert
+                severity={
+                  validationMessage ===
+                  "Les validations ont bien été prises en compte."
+                    ? "success"
+                    : "error"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+            <button type="submit" className={style.buttonSubmit}>
+              Valider les informations
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

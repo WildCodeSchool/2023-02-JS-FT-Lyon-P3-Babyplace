@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Box, TextField, Button, InputLabel, Alert } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import styles from "./Login.module.css";
 import DesignWelcome from "./DesignWelcome";
@@ -12,6 +12,7 @@ function Login({ userType }) {
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
   const { user, login } = useUserContext();
+  const navigate = useNavigate();
 
   const validateLogin =
     Object.values(loginInfo).length === 2 &&
@@ -28,12 +29,18 @@ function Login({ userType }) {
   // la route utilisée change donc selon le profil de l'utilisateur
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (validateLogin) {
       // TODO gérer l'authentification de manière plus approfondie lorsqu'on aura eu tous les cours sur le sujet
       instance
         .post(`/${userType}/login`, loginInfo)
         .then((response) => {
           login(response.data);
+          if (response.data.role === "parent") {
+            navigate(`/particulier/${response.data.id}`);
+          } else {
+            navigate("/");
+          }
         })
         .catch((error) => {
           if (error.response?.status === 401)

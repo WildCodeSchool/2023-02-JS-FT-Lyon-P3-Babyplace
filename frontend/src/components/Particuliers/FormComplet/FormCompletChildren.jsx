@@ -57,10 +57,8 @@ export default function FormCompletChildren() {
             Ajouter un enfant
           </button>
         </div>
-        <div>
-          {showChild ? <ResumeChild /> : null}
-          {showForm ? <FormChild /> : null}
-        </div>
+        {showChild ? <ResumeChild /> : null}
+        {showForm ? <FormChild /> : null}
       </div>
     </div>
   );
