@@ -101,7 +101,7 @@ export default function DateChoice() {
               )}
             </div>
             <div className={style.button_reservation}>
-              <Link to="/particulier">
+              <Link to="/particulier/reservation/info">
                 <button type="button" className={style.button}>
                   Suivant
                 </button>

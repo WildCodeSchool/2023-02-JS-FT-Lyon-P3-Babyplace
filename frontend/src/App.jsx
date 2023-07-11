@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import Requirements from "./components/Particuliers/Requirements/Requirements";
 import SearchList from "./components/Particuliers/SearchList/SearchList";
 import ProDetails from "./components/Particuliers/ProDetails/ProDetails";
 import ProRegister from "./pages/ProRegister";
@@ -21,6 +22,7 @@ import { UserContextProvider } from "./contexts/UserContext";
 import { UserInfoContextProvider } from "./contexts/UserInfoContext";
 
 import "./App.css";
+import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 
 function App() {
   return (
@@ -29,7 +31,6 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route path="/particulier" element={<Particulier />}>
               <Route index element={<Account />} />
               <Route path="recherche" element={<SearchList />} />
@@ -37,11 +38,22 @@ function App() {
               <Route path="recherche/:id/date" element={<DateChoice />} />
               <Route path="register" element={<FormParent />} />
               <Route path="register/welcome" element={<WelcomePage />} />
+              <Route
+                path="/particulier/reservation/info"
+                element={<Requirements />}
+              />
+              <Route
+                path="/particulier/reservation/enfant"
+                element={<SelectChild />}
+              />
+              {/* <Route
+                path="/particulier/reservation/confirmation"
+                element={}
+              /> */}
               <Route path=":id" element={<FormCompletWelcome />} />
               <Route path=":id/child" element={<FormCompletChildren />} />
               <Route path=":id/parent" element={<FormCompletParent />} />
             </Route>
-
             <Route path="/pro-register" element={<ProRegister />} />
             <Route path="/pro" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />
