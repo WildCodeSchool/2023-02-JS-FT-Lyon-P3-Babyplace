@@ -4,7 +4,6 @@ import Joi from "joi";
 import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
-import ResumeChild from "./ResumeChild";
 
 export default function FormChild() {
   const { user } = useUserContext();
@@ -25,8 +24,15 @@ export default function FormChild() {
     birthdate: Joi.number().integer().min(1900).required(),
     doctor: Joi.string().alphanum().min(3).max(30).required(),
   });
+
   const handleChange = (event) => {
-    setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
+    const field = event.target.name;
+
+    if (field === "walking") {
+      setFormInfo({ ...formInfo, walking: event.target.value });
+    } else {
+      setFormInfo({ ...formInfo, [field]: event.target.value });
+    }
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,6 +44,7 @@ export default function FormChild() {
     } else {
       setValidationMessage(null);
     }
+
     // Envoi au back des données recueillies dans le formulaire
     instance
       .post(`/child/register`, formInfo)
@@ -54,12 +61,30 @@ export default function FormChild() {
   };
 
   return (
-    <div className={style.formContainer}>
-      {showChild ? <ResumeChild /> : null}
-      <form className={style.form} onSubmit={handleSubmit}>
+    <div className={style.form_container}>
+      {showChild ? (
+        <div className={style.card_child}>
+          <h3>Enfant:</h3>
+          <div>
+            <h4>
+              {formInfo.lastname} {formInfo.firstname}
+            </h4>
+          </div>
+          <div>Né(e) le: {formInfo.birthdate}</div>
+
+          <div>Médecin traitant: {formInfo.doctor}</div>
+          <div>{formInfo.walking === "1" ? "Marcheur" : "Non marcheur"}</div>
+        </div>
+      ) : null}
+      <form
+        className={style.form}
+        onSubmit={(e) => handleSubmit(e)}
+        name="form"
+      >
         <input
           type="text"
           name="lastname"
+          id="lastname"
           placeholder="Nom"
           value={formInfo.lastname}
           onChange={handleChange}
@@ -68,6 +93,7 @@ export default function FormChild() {
         <input
           type="text"
           name="firstname"
+          id="firstname"
           placeholder="Prénom"
           value={formInfo.firstname}
           onChange={handleChange}
@@ -76,6 +102,7 @@ export default function FormChild() {
         <input
           type="text"
           name="birthdate"
+          id="birthdate"
           placeholder="Date de naissance AAAA/MM/JJ"
           value={formInfo.birthdate}
           pattern="\d{4}/\d{2}/\d{2}"
@@ -85,6 +112,7 @@ export default function FormChild() {
         <input
           type="text"
           name="doctor"
+          id="doctor"
           placeholder="Medecin traitant"
           value={formInfo.doctor}
           onChange={handleChange}
@@ -100,6 +128,7 @@ export default function FormChild() {
                 name="walking"
                 value="1"
                 onChange={handleChange}
+                required
               />
               <label htmlFor="1">Oui</label>
             </div>
@@ -132,8 +161,9 @@ export default function FormChild() {
           <button
             type="submit"
             className={style.button_validation}
+            disabled={Object.values(formInfo)?.includes("")}
             onClick={() => {
-              setShowChild(!showChild);
+              setShowChild(true);
             }}
           >
             Valider

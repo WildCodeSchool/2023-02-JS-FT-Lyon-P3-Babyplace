@@ -29,6 +29,13 @@
 .card h2 {
   font-size: large;
 }
+.form_modify {
+}
+.form_modify h3 {
+  font-size: large;
+  color: var(--main-color);
+  margin: 1rem 0;
+}
 .form {
   background: transparent;
   width: 100%;

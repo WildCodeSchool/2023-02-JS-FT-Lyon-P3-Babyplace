@@ -29,14 +29,14 @@ export default function FormCompletWelcome() {
           </div>
           <div>
             <Link to={`/particulier/${user.id}/child`}>
-              <button type="button" className={style.buttonChild}>
+              <button type="button" className={style.button_child}>
                 Dossier enfant
               </button>
             </Link>
           </div>
           <div>
             <Link to={`/particulier/${user.id}/parent`}>
-              <button type="button" className={style.buttonParent}>
+              <button type="button" className={style.button_parent}>
                 Dossier parent
               </button>
             </Link>

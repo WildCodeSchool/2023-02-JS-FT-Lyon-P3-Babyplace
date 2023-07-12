@@ -7,7 +7,7 @@
   align-items: center;
   background: var(--main-bg-gradient);
   color: white;
-  height: 100vh;
+  height: calc(100vh - 53px);
   overflow: scroll;
 }
 .button_back {
@@ -24,6 +24,7 @@
 }
 .cards_media {
   margin-top: 1rem;
+  width: fit-content;
   height: fit-content;
   overflow-y: auto;
   scrollbar-width: none;
@@ -54,9 +55,7 @@
   color: white;
   margin-right: 25px;
 }
-.card {
-  padding: 20px;
-}
+
 .dispos_pro {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -67,13 +66,27 @@
   display: flex;
   justify-content: center;
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
+  .cards_media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+  }
+  .card_media {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 1200px) {
+  .search_list_page h2 {
+    margin-top: 0rem;
+  }
   .card_media {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    
   }
+
   .logo_log_in {
     right: 5%;
     top: 5%;
