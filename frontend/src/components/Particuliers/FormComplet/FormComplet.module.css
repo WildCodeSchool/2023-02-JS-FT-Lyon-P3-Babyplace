@@ -33,8 +33,8 @@
   cursor: pointer;
 }
 
-.buttonChild,
-.buttonParent {
+.button_child,
+.button_parent {
   width: 18rem;
   padding: 1rem 2rem;
   border-radius: 10px;
@@ -42,10 +42,10 @@
   color: white;
   cursor: pointer;
 }
-.buttonChild {
+.button_child {
   background-color: var(--info-color);
 }
-.buttonParent {
+.button_parent {
   background-color: var(--success-color);
 }
 
@@ -70,8 +70,8 @@
     width: 30rem;
     font-size: x-large;
   }
-  .buttonChild,
-  .buttonParent {
+  .button_child,
+  .button_parent {
     width: 30rem;
     margin: 1rem;
     font-size: large;

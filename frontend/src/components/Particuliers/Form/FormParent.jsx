@@ -275,7 +275,8 @@ export default function FormParent() {
   }
   if (user?.id) {
     return (
-      <div>
+      <div className={style.form_modify}>
+        <h3>Modifier vos informations :</h3>
         <form className={style.form} onSubmit={handleSubmit}>
           <input
             type="text"
@@ -346,7 +347,7 @@ export default function FormParent() {
               </Alert>
             ) : null}
             <button type="submit" className={style.buttonSubmit}>
-              Valider les informations
+              Valider les modifications
             </button>
           </div>
         </form>

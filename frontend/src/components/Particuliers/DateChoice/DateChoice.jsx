@@ -71,41 +71,43 @@ export default function DateChoice() {
               <h3>Crèche {pro.name}</h3>
             </div>
           </div>
-          <div className={style.card_body}>
-            <h2>Choisissez une date</h2>
-            <div>
-              <div className={style.days_of_week}>
-                <h3>Jours de la semaine prochaine:</h3>
+          <div className={style.cards_media}>
+            <div className={style.card_body}>
+              <h2>Choisissez une date</h2>
+              <div>
+                <div className={style.days_of_week}>
+                  <h3>Jours de la semaine prochaine:</h3>
+                </div>
+                <div className={style.chip}>
+                  {getFutureDates().map((day) => (
+                    <Chip
+                      key={day}
+                      label={day}
+                      onClick={() => handleClick(day)}
+                      color={`${selectedDay === day ? "primary" : "default"}`}
+                      sx={{
+                        margin: "4px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className={style.chip}>
-                {getFutureDates().map((day) => (
-                  <Chip
-                    key={day}
-                    label={day}
-                    onClick={() => handleClick(day)}
-                    color={`${selectedDay === day ? "primary" : "default"}`}
-                    sx={{
-                      margin: "4px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
 
-            <div className={style.reservation}>
-              <p>Vous souhaitez une réservation pour le:</p>
-              {selectedDay && (
-                <p className={style.reservation_day}> {selectedDay}</p>
-              )}
-            </div>
-            <div className={style.button_reservation}>
-              <Link to="/particulier">
-                <button type="button" className={style.button}>
-                  Suivant
-                </button>
-              </Link>
+              <div className={style.reservation}>
+                <p>Vous souhaitez une réservation pour le:</p>
+                {selectedDay && (
+                  <p className={style.reservation_day}> {selectedDay}</p>
+                )}
+              </div>
+              <div className={style.button_reservation}>
+                <Link to="/particulier">
+                  <button type="button" className={style.button}>
+                    Suivant
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
