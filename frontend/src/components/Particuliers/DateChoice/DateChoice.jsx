@@ -29,7 +29,12 @@ export default function DateChoice() {
   };
 
   const handleNext = () => {
-    setReservation({ ...reservation, proId: id, date: selectedDay });
+    setReservation({
+      ...reservation,
+      proId: id,
+      proName: pro.name,
+      date: selectedDay,
+    });
   };
   const options = {
     weekday: "long",

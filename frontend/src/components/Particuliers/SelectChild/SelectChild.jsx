@@ -15,6 +15,12 @@ function SelectChild() {
   const { reservation, setReservation } = useReservationContext();
   const [value, setValue] = useState(null);
 
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  };
+
   const handleRadioChange = (e) => {
     setValue(e.target.value);
   };
@@ -38,14 +44,16 @@ function SelectChild() {
         </button>
       </Link>
       <div className={styles.title}>
-        <h1>Réservation chez Picoti Picota</h1>
+        <h1>Réservation</h1>
       </div>
       <div className={styles.card}>
         <form>
           <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">
               {" "}
-              Sélectionnez l'enfant que vous souhaitez faire garder :{" "}
+              Sélectionnez l'enfant que vous souhaitez faire garder chez{" "}
+              {reservation.proName} le{" "}
+              {reservation.date.toLocaleString("fr-FR", options)} :
             </FormLabel>
             <RadioGroup
               value={value}
