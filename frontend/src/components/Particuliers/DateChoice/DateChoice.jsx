@@ -29,18 +29,29 @@ export default function DateChoice() {
   };
 
   const handleNext = () => {
+    const day = [
+      `${selectedDay.getFullYear()}`,
+      `${selectedDay.getMonth() + 1}`,
+      `${selectedDay.getDate()}`,
+    ]
+      .map((string) => (string.length === 1 ? `0${string}` : string))
+      .join("-");
+
     setReservation({
       ...reservation,
       proId: id,
       proName: pro.name,
       date: selectedDay,
+      day,
     });
   };
+
   const options = {
     weekday: "long",
     month: "long",
     day: "numeric",
   };
+
   const getFutureDates = () => {
     const today = new Date();
     const futureDates = [];

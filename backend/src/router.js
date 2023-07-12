@@ -52,6 +52,7 @@ router.patch(
   verifyToken,
   parentControllers.cancelReservation
 );
+router.patch("/parent/modify", verifyToken, parentControllers.edit);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",
@@ -59,7 +60,11 @@ router.post(
   hashPassword,
   parentControllers.add
 );
-router.patch("/parent/modify", verifyToken, parentControllers.edit);
+router.post(
+  "/parent/reservation",
+  verifyToken,
+  parentControllers.saveReservation
+);
 
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 

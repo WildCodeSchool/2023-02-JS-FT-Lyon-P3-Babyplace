@@ -159,6 +159,27 @@ const cancelReservation = (req, res) => {
     });
 };
 
+const saveReservation = async (req, res) => {
+  try {
+    // on compte d'abord le nombre de places maximum du professionnel
+    const [proPlaces] = await models.place.findAllPlaces(req.body.proId);
+    // on ensuite le nombre de places du professionnel déjà prises (status "en attente" (0) ou "accepté" (1)) pour le jour concerné
+    const [[result]] = await models.place.findTakenPlaces(
+      req.body.proId,
+      req.body.day
+    );
+    const { takenPlaces } = result;
+    // on vérifie si le nombre de places prises n'a pas atteint le maximum de la structure
+    if (takenPlaces >= proPlaces.length) {
+      return res.sendStatus(406);
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
+};
+
 module.exports = {
   browse,
   read,
@@ -169,4 +190,5 @@ module.exports = {
   changeMailAddress,
   getReservations,
   cancelReservation,
+  saveReservation,
 };

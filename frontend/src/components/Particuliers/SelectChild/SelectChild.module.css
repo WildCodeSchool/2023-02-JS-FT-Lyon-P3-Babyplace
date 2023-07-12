@@ -1,12 +1,18 @@
-.selectChildScreen {
-  background: var(--main-bg-gradient);
+.container {
   height: calc(100vh - 53px);
+  overflow-y: auto;
+}
+
+.selectChildScreen {
+  position: relative;
+  background: var(--main-bg-gradient);
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+
 }
 
 .button_back {
