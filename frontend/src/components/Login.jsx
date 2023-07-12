@@ -39,7 +39,7 @@ function Login({ userType }) {
           if (response.data.role === "parent") {
             navigate(`/particulier/${response.data.id}`);
           } else {
-            navigate("/");
+            navigate("/pro");
           }
         })
         .catch((error) => {

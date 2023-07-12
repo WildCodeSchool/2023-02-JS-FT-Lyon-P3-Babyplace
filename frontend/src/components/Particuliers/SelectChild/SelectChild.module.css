@@ -37,6 +37,30 @@
   box-shadow: 5px 5px 5px var(--second-color);
 }
 
+.card form > div > label {
+  color: var(--main-color);
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card form div > div {
+  width: fit-content;
+}
+
+.card form > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer {
+  max-width: 35ch;
+  text-align: left;
+  width: 90%;
+  margin: 2rem 0;
+}
+
 @media screen and (max-width: 768px) {
   .requirementsScreen {
     overflow-y: scroll;
