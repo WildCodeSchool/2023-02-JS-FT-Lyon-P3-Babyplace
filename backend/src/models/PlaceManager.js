@@ -16,9 +16,9 @@ class PlaceManager extends AbstractManager {
   }
 
   findTakenPlaces(id, day) {
-    let query = `select count(r.place_id) as takenPlaces from ${this.table} as t`;
+    let query = `select t.id from ${this.table} as t`;
     if (day) {
-      query += ` join reservation as r on t.id = r.place_id where pro_id = ? and r.reservation_date = ? and r.status in (0, 1)`;
+      query += ` join reservation as r on t.id = r.place_id where t.pro_id = ? and r.reservation_date = ? and r.status in (0, 1)`;
     } else {
       query += ` where pro_id = ?`;
     }

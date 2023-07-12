@@ -5,6 +5,13 @@ class ReservationManager extends AbstractManager {
     super({ table: "reservation" });
   }
 
+  add(data) {
+    return this.database.query(
+      `INSERT INTO ${this.table} (date_time_reservation, reservation_date, status, child_id, place_id) VALUES (NOW(), ?, '0', ?, ?)`,
+      [data.day, data.childId, data.placeId]
+    );
+  }
+
   findParentReservation(id, date) {
     // TODO changer la méthode pour ne sélectionner que les infos importantes
     return this.database.query(

@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { ToastContainer, toast } from "react-toastify";
 import instance from "../../../services/APIService";
 import styles from "./SelectChild.module.css";
 import { useUserContext } from "../../../contexts/UserContext";
 import { useReservationContext } from "../../../contexts/ReservationContext";
+import "react-toastify/dist/ReactToastify.css";
 
 function SelectChild() {
   const { userChildren } = useUserContext();
   const { reservation, setReservation } = useReservationContext();
   const [value, setValue] = useState(null);
+  const [message, setMessage] = useState(null);
+  const notifyFail = (text) => toast.error(text);
+  const navigate = useNavigate();
 
   const options = {
     weekday: "long",
@@ -22,19 +27,35 @@ function SelectChild() {
     day: "numeric",
   };
 
+  useEffect(() => {
+    if (message) {
+      notifyFail(message);
+    }
+  }, [message]);
+
   const handleRadioChange = (e) => {
     setValue(e.target.value);
   };
 
   const handleSubmit = () => {
     setReservation({ ...reservation, child: value });
+    const childName = `${
+      userChildren.find((child) => child.id === parseInt(value, 10)).firstname
+    } ${
+      userChildren.find((child) => child.id === parseInt(value, 10)).lastname
+    }`;
     instance
-      .post("/parent/reservation", { ...reservation, child: value })
+      .post("/parent/reservation", { ...reservation, childId: value })
       .then((response) => {
-        console.info(response);
+        if (response.status === 201) {
+          setReservation({ ...reservation, childName });
+          return navigate("/particulier/reservation/confirmation");
+        }
+        return setMessage(response.data);
       })
       .catch((err) => {
         console.warn(err);
+        return setMessage(err.data);
       });
     setValue(null);
   };
@@ -45,6 +66,18 @@ function SelectChild() {
 
   return (
     <div className={styles.container}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className={styles.selectChildScreen}>
         <Link to="/particulier">
           <button type="button" className={styles.button_back}>
@@ -87,7 +120,7 @@ function SelectChild() {
               </RadioGroup>
               <button
                 type="submit"
-                disabled={false}
+                disabled={!value}
                 className={value ? styles.button : styles.disabledButton}
               >
                 Valider la réservation

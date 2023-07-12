@@ -18,8 +18,9 @@ import FormCompletChildren from "./components/Particuliers/FormComplet/FormCompl
 import FormCompletParent from "./components/Particuliers/FormComplet/FormCompletParent";
 import FormCompletWelcome from "./components/Particuliers/FormComplet/FormCompletWelcome";
 import WelcomePage from "./components/Particuliers/WelcomePage/WelcomePage";
-import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import Reservation from "./components/Particuliers/Reservation/Reservation";
+import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
+import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
 import { UserContextProvider } from "./contexts/UserContext";
 import { UserInfoContextProvider } from "./contexts/UserInfoContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
@@ -45,6 +46,7 @@ function App() {
                   <Route index element={<Reservation />} />
                   <Route path="info" element={<Requirements />} />
                   <Route path="enfant" element={<SelectChild />} />
+                  <Route path="confirmation" element={<ReservationConfirm />} />
                 </Route>
                 <Route path=":id" element={<FormCompletWelcome />} />
                 <Route path=":id/child" element={<FormCompletChildren />} />

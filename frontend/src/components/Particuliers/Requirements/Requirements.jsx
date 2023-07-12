@@ -20,6 +20,10 @@ function Requirements() {
       .catch((err) => console.error(err));
   }, []);
 
+  if (!user?.id) {
+    navigate("/");
+  }
+
   return (
     <div className={styles.requirementsScreen}>
       <Link to="/particulier">
