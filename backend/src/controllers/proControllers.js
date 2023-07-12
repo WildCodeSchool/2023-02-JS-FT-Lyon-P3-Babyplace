@@ -75,7 +75,7 @@ const edit = async (req, res) => {
         return res.send(500);
       });
 
-    if (req.body.placesToAdd > 0) {
+    if (req.body.placesToAdd && req.body.placesToAdd > 0) {
       await models.place
         .insert(req.body.placesToAdd, pro.id)
         .then(([result]) => {
@@ -90,7 +90,7 @@ const edit = async (req, res) => {
         });
     }
 
-    if (req.body.daysToAdd.length > 0) {
+    if (req.body.daysToAdd && req.body.daysToAdd.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         req.body.daysToAdd
       );
@@ -251,6 +251,26 @@ const register = async (req, res) => {
   }
 };
 
+const editAuth = (req, res) => {
+  req.body.id = req.payloads.sub;
+  const pro = req.body;
+  console.warn(pro);
+  // TODO validations (length, format...)
+
+  models.pro
+    .update(pro)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -261,4 +281,5 @@ module.exports = {
   profile,
   login,
   register,
+  editAuth,
 };
