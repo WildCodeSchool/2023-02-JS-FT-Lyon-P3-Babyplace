@@ -18,7 +18,7 @@
   align-items: center;
 }
 .text h3 {
-  margin: 1rem;
+  margin: 0.5rem;
   font-size: medium;
 }
 .text p {
@@ -37,7 +37,7 @@
 }
 .fileLater a {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 .button_next {
   background: transparent;
@@ -53,14 +53,24 @@
   cursor: pointer;
 }
 @media screen and (min-width: 1024px) {
-  .card img {
-    margin: 2rem 0 1.5rem;
+  .welcomePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo1 {
+    height: 8vh;
+    width: auto;
+  }
+  .logo2 {
+    height: 30vh;
+    width: auto;
   }
   .text h1 {
     font-size: xxx-large;
   }
   .text h3 {
-    font-size: large;
+    font-size: x-large;
   }
   .text p {
     font-size: medium;

@@ -1,0 +1,70 @@
+.auth {
+  overflow-y: scroll;
+  height: calc(100vh - 15vh - 8em - 63px);
+}
+
+.formScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+  height: calc(100vh - 15vh - 8em - 63px);
+}
+
+.banner {
+  display: flex;
+  gap: 5%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.banner p {
+  font-size: 1.5em;
+}
+
+.button_back {
+  cursor: pointer;
+  background: transparent;
+  color: black;
+  margin-left: 5%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form div {
+  width: 100%;
+}
+
+form div div {
+  width: 100%;
+}
+
+.separator {
+  margin: 5% 0;
+}
+
+@media screen and (min-width: 950px) {
+  .form {
+    padding: 2em;
+    width: 60%;
+    border: 5px solid var(--main-color);
+    border-radius: 25px;
+  }
+  
+  .formScreen {
+    height: calc(100vh - 15vh - 11em - 63px);
+  }
+}

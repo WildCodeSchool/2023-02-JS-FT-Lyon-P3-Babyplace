@@ -1,15 +1,15 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
+import style from "./FormCompletChildrenParents.module.css";
 
 export default function ResumeChild() {
   const { user } = useUserContext();
   const [childs, setChilds] = useState(null);
-  const backEndUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    axios
-      .get(`${backEndUrl}/parent/child/${user.id}`)
+    instance
+      .get(`/parent/child/${user.id}`)
       .then((response) => {
         setChilds(response.data);
       })
@@ -18,12 +18,14 @@ export default function ResumeChild() {
 
   if (!childs) return null;
   return (
-    <div>
+    <div className={style.cards_child}>
       {childs.map((child) => (
-        <div>
+        <div className={style.card_child}>
           <h3>Enfant:</h3>
           <div>
-            {child.lastname} {child.firstname}
+            <h4>
+              {child.lastname} {child.firstname}
+            </h4>
           </div>
           <div>Né(e) le: {child.birthdate}</div>
 

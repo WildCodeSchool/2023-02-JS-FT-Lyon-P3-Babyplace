@@ -93,7 +93,13 @@
   }
 }
 @media screen and (min-width: 1024px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .card_body {
     width: 40vw;
+    box-shadow: 5px 5px 5px var(--second-color);
   }
 }

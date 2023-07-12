@@ -1,12 +1,18 @@
-.card {
+.page {
   background: var(--main-bg-gradient);
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   overflow: scroll;
+}
+.header_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .header_card img {
   border-radius: 10px;
@@ -14,7 +20,7 @@
 }
 .header_card p,
 .header_card h3 {
-  width: 300px;
+  width: 18rem;
   margin: 1.5rem;
   color: white;
 }
@@ -29,7 +35,7 @@
 
 .buttonChild,
 .buttonParent {
-  width: 300px;
+  width: 18rem;
   padding: 1rem 2rem;
   border-radius: 10px;
   margin: 0.8rem;
@@ -44,4 +50,31 @@
 }
 
 @media screen and (min-width: 1024px) {
+  .page {
+    justify-content: center;
+  }
+  .header_card {
+    height: auto;
+  }
+  .header_card img {
+    margin: 0 0 1.5rem;
+    box-shadow: 5px 5px 5px var(--second-color);
+  }
+
+  .header_card h3 {
+    width: 30rem;
+    margin: 1rem;
+    font-size: xx-large;
+  }
+  .header_card p {
+    width: 30rem;
+    font-size: x-large;
+  }
+  .buttonChild,
+  .buttonParent {
+    width: 30rem;
+    margin: 1rem;
+    font-size: large;
+    box-shadow: 5px 5px 5px var(--second-color);
+  }
 }

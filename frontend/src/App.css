@@ -35,12 +35,12 @@ body {
 
 .dashboard_bg_color {
   background-color: rgb(230, 242, 243);
-  position: relative;
-  overflow: hidden;
+  
+  
 }
 
 .dashboard_box {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   margin-left: 70px;
   margin-top: 60px;
@@ -53,4 +53,27 @@ body {
     width: 100vw;
     height: 100vh;
   }
+}
+
+.MuiPickersCalendarHeader-root {
+  position: relative;
+}
+
+.MuiPickersCalendarHeader-root .MuiPickersCalendarHeader-labelContainer {
+  background-color: rgb(103, 103, 242);
+  border-radius: 2px;
+  color: white;
+  padding:  5px 10px;
+  position: absolute;
+  left: 100px;
+}
+.MuiPickersCalendarHeader-root .MuiPickersCalendarHeader-switchViewButton {
+  display: none;
+}
+.MuiPickersArrowSwitcher-root .MuiPickersArrowSwitcher-spacer {
+  width: 215px;
+}
+
+.greenBadge .MuiBadge-badge {
+  background-color: green;
 }

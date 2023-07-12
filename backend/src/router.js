@@ -7,15 +7,13 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
-const placeControllers = require("./controllers/placeControllers");
-const disponibilityControllers = require("./controllers/disponibilityControllers");
-const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
+
 const {
   getParentByEmail,
   getProByEmail,
   verifyPassword,
   hashPassword,
-  verifyIfRegistered,
+  verifyIfProRegistered,
   verifyToken,
   logout,
   verifyIfParentRegistered,
@@ -29,9 +27,43 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/logout", logout);
 
+router.patch(
+  "/pro/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  proControllers.editAuth
+);
+router.patch(
+  "/pro/password",
+  verifyToken,
+  hashPassword,
+  proControllers.editAuth
+);
 router.get("/parent", parentControllers.browse);
+router.get(
+  "/parent/reservations",
+  verifyToken,
+  parentControllers.getReservations
+);
 router.get("/parent/:id", parentControllers.read);
 router.get("/parent/child/:id", parentControllers.showChildWithParent);
+router.patch(
+  "/parent/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  parentControllers.edit
+);
+router.patch(
+  "/parent/password",
+  verifyToken,
+  hashPassword,
+  parentControllers.edit
+);
+router.patch(
+  "/parent/reservation",
+  verifyToken,
+  parentControllers.cancelReservation
+);
 router.post("/parent/login", getParentByEmail, verifyPassword);
 router.post(
   "/parent/register",
@@ -39,6 +71,8 @@ router.post(
   hashPassword,
   parentControllers.add
 );
+router.patch("/parent/modify", verifyToken, parentControllers.edit);
+
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
 router.get("/child", childControllers.browse);
@@ -48,43 +82,14 @@ router.get("/pro", proControllers.browse);
 router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
 router.patch("/pro/:id", verifyToken, proControllers.edit);
-router.post(
-  "/pro/login",
-  getProByEmail,
-  placeControllers.countPlaces,
-  proDisponibilityControllers.listProDisponibilities,
-  verifyPassword
-);
+
+router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
+
 router.post(
   "/pro/register",
-  verifyIfRegistered,
+  verifyIfProRegistered,
   hashPassword,
-  proControllers.add,
-  placeControllers.add,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-
-router.post("/place", verifyToken, placeControllers.add);
-router.put(
-  "/place",
-  verifyToken,
-  placeControllers.listPlaces,
-  placeControllers.destroy
-);
-
-router.post(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.add
-);
-
-router.put(
-  "/proDisponibility",
-  verifyToken,
-  disponibilityControllers.findByName,
-  proDisponibilityControllers.destroy
+  proControllers.register
 );
 
 router.get(
@@ -112,5 +117,44 @@ router.put(
   verifyToken,
   dashboardProControllers.cancelOrder
 );
-
+router.get(
+  "/dashboard/calendar/:date",
+  verifyToken,
+  dashboardProControllers.getDateOrder
+);
+router.get(
+  "/dashboard/overview/calendar/:month",
+  verifyToken,
+  dashboardProControllers.getAllReservationsForCalendar
+);
+router.get(
+  "/dashboard/preview",
+  verifyToken,
+  dashboardProControllers.getProInfoForPreview
+);
+router.get(
+  "/dashboard/days",
+  verifyToken,
+  dashboardProControllers.getProDaysForPreview
+);
+router.get(
+  "/dashboard/chart/:date",
+  verifyToken,
+  dashboardProControllers.getDataForToday
+);
+router.get(
+  "/dashboard/waiting-order",
+  verifyToken,
+  dashboardProControllers.browseReservationsWaiting
+);
+router.get(
+  "/dashboard/occupation/:date",
+  verifyToken,
+  dashboardProControllers.getDataForToday
+);
+router.get(
+  "/occupation/:date",
+  verifyToken,
+  dashboardProControllers.getOccupationRates
+);
 module.exports = router;

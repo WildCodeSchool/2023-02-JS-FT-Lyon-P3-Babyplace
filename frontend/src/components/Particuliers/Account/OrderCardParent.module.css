@@ -1,0 +1,198 @@
+.order_container {
+  height: 150px;
+  min-height: 150px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0px 0px 10px 0px rgba(76, 76, 76, 0.499);
+  border-radius: 10px;
+}
+
+.status_detail_box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.status_detail {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.orderDetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 30px);
+}
+
+.child_data {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+.child_name_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
+.actions {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pro_more_info {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.8;
+  width: 100%;
+}
+
+.reservation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.reservation_data {
+border-bottom: solid rgb(0, 0, 0) 1px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+height: 50%;
+}
+
+.child_name {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 0.2em;
+  justify-content: center;
+  align-items: center;
+}
+
+.reservation_type {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 0.2em;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.reservation_data {
+  border-bottom: solid rgb(0, 0, 0) 1px;
+  padding: 3px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70%;
+  }
+
+.reservation_info {
+  display: flex;
+  justify-content: space-around;
+  height: 30%;
+  width: 100%;
+}
+
+.total_time_div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.bold_text {
+  font-weight: bold;
+}
+
+.action_box {
+  height: 100%;
+  width: 100%;
+  scale: 0.8;
+}
+
+.btn_box {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.order_cancelled {
+  opacity: 0.5;
+}
+
+.success_color {
+  background-color: rgb(100, 176, 100);
+}
+.error_color {
+  background-color: rgb(241, 87, 87);
+}
+.warning_color {
+  background-color: rgb(113, 113, 113);
+}
+.waiting_color {
+  background-color: rgb(91, 172, 204);
+}
+
+.basic_modal_container {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.modal_text {
+  margin: 5px 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+.btn_modal_box {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+
+.btn_inside_modal {
+  padding: 10px 20px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.btn_inside_modal:hover {
+  filter: brightness(0.6);
+}
+
+.btn_for_no {
+  margin-right: 10px;
+  background-color: var(--danger-color);
+}
+
+.btn_for_yes {
+  margin-left: 10px;
+  background-color: var(--success-color);
+}

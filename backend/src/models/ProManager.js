@@ -14,12 +14,11 @@ class ProManager extends AbstractManager {
 
   insert(pro) {
     return this.database.query(
-      `insert into ${this.table} (name, mail_address, password, hashed_password, address, postcode, city, phone_number, description, type, notification_status, role) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (name, mail_address, hashed_password, address, postcode, city, phone_number, description, type, notification_status, role) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         pro.name,
         pro.mail_address,
-        pro.password,
-        pro.hashedPassword,
+        pro.hashed_password,
         pro.address,
         pro.postcode,
         pro.city,
@@ -32,11 +31,11 @@ class ProManager extends AbstractManager {
     );
   }
 
-  update(info, id) {
-    return this.database.query(
-      `update ${this.table} set ${info[0]} = ? where id = ?`,
-      [info[1], id]
-    );
+  update(pro) {
+    return this.database.query(`update ${this.table} set ? where id = ?`, [
+      pro,
+      pro.id,
+    ]);
   }
 
   findByEmailWithPassword(email) {

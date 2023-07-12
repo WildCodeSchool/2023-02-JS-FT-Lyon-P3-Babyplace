@@ -1,71 +1,80 @@
 .orders_box {
-    width: 80vw;
-    height: 85vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .orders_header {
-    height: 8%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-bottom: 20px;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 0px;
+  margin-top: 60px;
 }
 
 .filter_btn_box {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: fit-content;
-   }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+}
 
 .orders_container {
-    width: 100%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: scroll;
-    overflow-x: hidden;
-    padding-bottom: 50px;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+  margin-left: 20px;
+}
+
+.orders_container::-webkit-scrollbar {
+  display: none;
 }
 
 .blur_modal {
-    backdrop-filter: blur(4px);
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  backdrop-filter: blur(4px);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.pagination_btn_container {
+  margin-top: 40px;
+}
 
 @media screen and (max-width: 1040px) {
-    .orders_header {
-        height: 15%;
-        flex-direction: column;
-    }
+  .orders_header {
+    height: 15%;
+    flex-direction: column;
   }
-
+}
 
 @media screen and (max-width: 500px) {
-    .orders_box {
-        width: 70vw;
-        
-    }
-    
-    .orders_header {
-        flex-direction: column;
-        height: 40%;
-        margin-bottom: 0;
-    }
-    .filter_btn_box {
-        flex-direction: column;
-    }
-    .orders_container {
-        padding-bottom: 200px;
-    }
+  .orders_header {
+    flex-direction: column;
+    height: 30%;
+    margin-bottom: 0;
+    margin-left: 60px;
+    margin-top: 75px;
   }
+  .filter_btn_box {
+    flex-direction: column;
+  }
+  .orders_container {
+    padding-bottom: 300px;
+  }
+}

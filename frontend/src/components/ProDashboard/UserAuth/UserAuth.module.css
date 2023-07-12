@@ -1,4 +1,75 @@
+.userauth_container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-left: 70px;
+    padding-top: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+.left_container {
+height: 80%;
+width: 30%;
+min-width: 300px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
 .userauth_box {
+    height: 80%;
+    width: 90%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right_container {
+height: 80%;
+width: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.bg_img {
+scale: 1.4;
+opacity: 0.7;
+
+}
+
+
+@media screen and (max-width: 1068px){
+    .right_container {
+        display: none;
+    }
+    .left_container {
+        width: 100%;
+    }
+    .userauth_box {
+        height: 90%;
+        width: 95%;
+    }
+}
+@media screen and (max-width: 380px){
+    .right_container {
+        display: none;
+    }
+    .left_container {
+        height: 100%;
     
-    background-color: aqua;
+    }
+    .userauth_box {
+        height: 90%;
+        width: 95%;
+    }
 }

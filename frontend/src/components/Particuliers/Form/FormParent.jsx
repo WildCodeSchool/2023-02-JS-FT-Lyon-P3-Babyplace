@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Alert } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Joi from "joi";
+import instance from "../../../services/APIService";
+import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormParent.module.css";
 
-const backEndUrl = import.meta.env.VITE_BACKEND_URL;
-
 export default function FormParent() {
+  const { user, setUser } = useUserContext();
+
   // Mise en place du schema pour les validateurs Joi
   const schema = Joi.object({
     lastname: Joi.string().min(3).max(80).messages({
@@ -79,9 +80,11 @@ export default function FormParent() {
     city: "",
     phone_number: "",
   });
+
   const handleChange = (event) => {
     setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -93,152 +96,261 @@ export default function FormParent() {
       setValidationMessage(null);
     }
     // Envoi au back des données recueillies dans le formulaire
-    axios
-      .post(`${backEndUrl}/parent/register`, formInfo)
-      .then((response) => {
-        if (response.status === 201) {
-          setValidationMessage(
-            "Compte créé. Vous pouvez désormais vous connecter."
-          );
-        }
-      })
+    if (!user?.id) {
+      instance
+        .post("/parent/register", formInfo)
+        .then((response) => {
+          if (response.status === 201) {
+            setValidationMessage(
+              "Compte créé. Vous pouvez désormais vous connecter."
+            );
+          }
+        })
 
-      .catch((err) => {
-        if (err.response.status === 500)
-          setValidationMessage("Veuillez utiliser une autre adresse mail");
-      });
+        .catch((err) => {
+          if (err.response.status === 400)
+            setValidationMessage("Veuillez utiliser une autre adresse mail");
+        });
+    } else {
+      instance
+        .patch(`/parent/modify`, formInfo)
+        .then((response) => {
+          if (response.status === 201) {
+            setValidationMessage(
+              "Les validations ont bien été prises en compte."
+            );
+            setUser(response.data);
+          }
+        })
+
+        .catch((err) => {
+          if (err.response.status === 400)
+            setValidationMessage("Veuillez réessayer plus tard.");
+        });
+    }
   };
-  return (
-    <div className={style.card}>
-      <div className={style.header_card}>
-        <button
-          type="button"
-          className={style.button_back}
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
-        <div className={style.name_type}>
-          <h2>Création de compte</h2>
+
+  if (!user?.id) {
+    return (
+      <div className={style.page}>
+        <div className={style.header_card}>
+          <button
+            type="button"
+            className={style.button_back}
+            onClick={() => navigate(-1)}
+          >
+            <ArrowBackIosNewIcon />
+          </button>
+          <div className={style.name_type}>
+            <h2>Création de compte</h2>
+          </div>
         </div>
-      </div>
-      <form className={style.form} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="lastname"
-          placeholder="Nom"
-          value={formInfo.lastname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="firstname"
-          placeholder="Prénom"
-          value={formInfo.firstname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="birthdate"
-          placeholder="Date de naissance AAAA/MM/JJ"
-          value={formInfo.birthdate}
-          pattern="\d{4}/\d{2}/\d{2}"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="mail_address"
-          placeholder="Email"
-          value={formInfo.mail_address}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={formInfo.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Numéro et nom de voie"
-          value={formInfo.address}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="postcode"
-          placeholder="Code postal"
-          value={formInfo.postcode}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="city"
-          placeholder="Ville"
-          value={formInfo.city}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="phone_number"
-          placeholder="Téléphone mobile"
-          value={formInfo.phone_number}
-          onChange={handleChange}
-          required
-        />
-        <div className={style.validationMessage}>
-          {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
-            <Alert
-              severity={
-                validationMessage === "Veuillez utiliser une autre adresse mail"
-                  ? "error"
-                  : "success"
-              }
-            >
-              {validationMessage}
-            </Alert>
-          ) : null}
-          {validationMessage !==
-          "Compte créé. Vous pouvez désormais vous connecter." ? (
-            <button type="submit" className={style.button}>
-              Créer un compte
-            </button>
-          ) : null}
-        </div>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="lastname"
+            placeholder="Nom"
+            value={formInfo.lastname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="firstname"
+            placeholder="Prénom"
+            value={formInfo.firstname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="birthdate"
+            placeholder="Date de naissance AAAA/MM/JJ"
+            value={formInfo.birthdate}
+            pattern="\d{4}/\d{2}/\d{2}"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="mail_address"
+            placeholder="Email"
+            value={formInfo.mail_address}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            value={formInfo.password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="verifyPassword"
+            placeholder="Confirmez votre mot de passe"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Numéro et nom de voie"
+            value={formInfo.address}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="postcode"
+            placeholder="Code postal"
+            value={formInfo.postcode}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder="Ville"
+            value={formInfo.city}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="phone_number"
+            placeholder="Téléphone mobile"
+            value={formInfo.phone_number}
+            onChange={handleChange}
+            required
+          />
+          <div className={style.validationMessage}>
+            {validationMessage ===
+            "Veuillez utiliser une autre adresse mail" ? (
+              <Alert
+                severity={
+                  validationMessage ===
+                  "Veuillez utiliser une autre adresse mail"
+                    ? "error"
+                    : "success"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+            {validationMessage !==
+            "Compte créé. Vous pouvez désormais vous connecter." ? (
+              <button type="submit" className={style.buttonSubmit}>
+                Créer un compte
+              </button>
+            ) : null}
+
+            {validationMessage ===
+            "Compte créé. Vous pouvez désormais vous connecter." ? (
+              <Alert
+                severity={
+                  validationMessage ===
+                  "Compte créé. Vous pouvez désormais vous connecter."
+                    ? "success"
+                    : "error"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+          </div>
+        </form>
 
         {validationMessage ===
         "Compte créé. Vous pouvez désormais vous connecter." ? (
-          <Alert
-            severity={
-              validationMessage ===
-              "Compte créé. Vous pouvez désormais vous connecter."
-                ? "success"
-                : "error"
-            }
-          >
-            {validationMessage}
-          </Alert>
+          <Link to="/particulier/register/welcome">
+            <button type="button" className={style.buttonNext}>
+              Suivant
+            </button>
+          </Link>
         ) : null}
-      </form>
+      </div>
+    );
+  }
+  if (user?.id) {
+    return (
+      <div>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="lastname"
+            placeholder={user.lastname}
+            value={formInfo.lastname}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="firstname"
+            placeholder={user.firstname}
+            value={formInfo.firstname}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder={user.address}
+            value={formInfo.address}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="postcode"
+            placeholder={user.postcode}
+            value={formInfo.postcode}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder={user.city}
+            value={formInfo.city}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="phone_number"
+            placeholder={user.phone_number}
+            value={formInfo.phone_number}
+            onChange={handleChange}
+          />
+          <div className={style.validationMessage}>
+            {validationMessage === "Veuillez réessayer plus tard." ? (
+              <Alert
+                severity={
+                  validationMessage === "Veuillez réessayer plus tard."
+                    ? "error"
+                    : "success"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
 
-      {validationMessage ===
-      "Compte créé. Vous pouvez désormais vous connecter." ? (
-        <Link to="/particulier">
-          <button type="button" className={style.button}>
-            Se connecter
-          </button>
-        </Link>
-      ) : null}
-    </div>
-  );
+            {validationMessage ===
+            "Les validations ont bien été prises en compte." ? (
+              <Alert
+                severity={
+                  validationMessage ===
+                  "Les validations ont bien été prises en compte."
+                    ? "success"
+                    : "error"
+                }
+              >
+                {validationMessage}
+              </Alert>
+            ) : null}
+            <button type="submit" className={style.buttonSubmit}>
+              Valider les informations
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 }

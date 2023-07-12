@@ -5,7 +5,7 @@ class PlaceManager extends AbstractManager {
     super({ table: "place" });
   }
 
-  insert(id, place) {
+  insert(place, id) {
     const placesArray = [];
     for (let i = 1; i <= place; i += 1) {
       placesArray.push([id]);

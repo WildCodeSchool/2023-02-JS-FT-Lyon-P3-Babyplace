@@ -21,7 +21,7 @@ export default function Header() {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    logout();
+    logout(false);
     setAnchorEl(null);
   };
   return (

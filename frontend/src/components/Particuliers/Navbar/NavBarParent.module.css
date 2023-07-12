@@ -1,0 +1,15 @@
+.NavBarParent div a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--main-color);
+}
+
+.NavBarParent div a button {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
