@@ -27,7 +27,6 @@ const algoToFilterReservationsInCalendar = (
 
   // Affichage des résultats
   countMap.forEach((count, value) => {
-    // console.info(`La valeur ${value} apparaît ${count} fois.`);
     if (count === maxProSlot) {
       arrayFullDays.push(value);
     } else if (count >= 10 && count <= 19) {

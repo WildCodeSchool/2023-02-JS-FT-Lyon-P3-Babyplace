@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import styles from "./Chart2.module.css";
+import styles from "./DayResume.module.css";
 import BabyplaceBg from "../../../../../assets/images/Babyplace-2.png";
 import instance from "../../../../../services/APIService";
 import { useUserContext } from "../../../../../contexts/UserContext";
@@ -11,7 +11,6 @@ export default function Chart2() {
   const [waitingOrders, setWaitingOrders] = useState(null);
   const [getDate] = useState(dayjs());
   const date = getDate.format("YYYY-MM-DD");
-  // const date = "2023-07-11";
   let ChildrensWalking = 0;
 
   useEffect(() => {

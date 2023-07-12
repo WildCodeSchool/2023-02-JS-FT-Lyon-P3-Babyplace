@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "./DashboardHome.module.css";
-import Chart1 from "./InsideHome/Chart1/Chart1";
-import Chart2 from "./InsideHome/Chart2/Chart2";
-import Chart3 from "./InsideHome/Chart3/Chart3";
+import Chart1 from "./InsideHome/WelcomeBox/WelcomeBox";
+import Chart2 from "./InsideHome/DayResume/DayResume";
+import Chart3 from "./InsideHome/OccupationChart/OccupationChart";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import Preview from "./InsideHome/Preview/Preview";
 

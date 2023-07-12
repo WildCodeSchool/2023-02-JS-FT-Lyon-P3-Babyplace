@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
-import styles from "./Chart3.module.css";
+import styles from "./OccupationChart.module.css";
 import instance from "../../../../../services/APIService";
 import { useUserContext } from "../../../../../contexts/UserContext";
 
@@ -29,7 +29,7 @@ export default function Chart3() {
   const [occupationRate, setOccoupationRate] = useState([]);
   const [getDate] = useState(dayjs());
   const thisDate = getDate.format("YYYY-MM-DD");
-  // const thisDate = "2023-07-10";
+
   useEffect(() => {
     instance
       .get(`/dashboard/days`)

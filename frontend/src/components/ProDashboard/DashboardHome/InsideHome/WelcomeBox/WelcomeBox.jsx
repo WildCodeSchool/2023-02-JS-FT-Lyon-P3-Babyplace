@@ -1,4 +1,4 @@
-import styles from "./Chart1.module.css";
+import styles from "./WelcomeBox.module.css";
 import LeftDecoration from "../../../../../assets/images/decore-left.png";
 import RightDecoration from "../../../../../assets/images/decore-right.png";
 import Award from "../../../../../assets/images/award.png";
