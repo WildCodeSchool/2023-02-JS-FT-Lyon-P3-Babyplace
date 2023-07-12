@@ -55,34 +55,32 @@ export default function Orders() {
       }
       return params;
     });
-
+    const scrollToTop = () => {
+      if (reservationsContainerRef.current) {
+        reservationsContainerRef.current.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    };
     instance
       .get(`/dashboard/reservations?page=${currentPage}&status=${status}`)
       .then((res) => {
         setReservations(res.data.datas);
         setNumberOfResults(res.data.total);
         setMaxPage(Math.ceil(res.data.total / limitPerPage));
+        scrollToTop();
       })
       .catch((err) => console.error(err));
   }, [currentPage, selectedValue]);
 
-  const scrollToTop = () => {
-    if (reservationsContainerRef.current) {
-      reservationsContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  };
-
   const handlePrev = () => {
-    setCurrentPage(currentPage - 1);
-    scrollToTop();
+    setCurrentPage((prev) => prev - 1);
   };
   const handleNext = () => {
-    setCurrentPage(currentPage + 1);
-    scrollToTop();
+    setCurrentPage((prev) => prev + 1);
   };
+
   return (
     <div className={styles.orders_box}>
       <div className={styles.orders_header}>
