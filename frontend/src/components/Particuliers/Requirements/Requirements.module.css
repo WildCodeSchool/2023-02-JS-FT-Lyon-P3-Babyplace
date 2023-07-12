@@ -58,7 +58,7 @@
 .button {
   padding: 0.5rem 2rem;
   border-radius: 10px;
-  background: var(--main-color);
+  background: var(--main-bg-gradient);
   color: white;
   font-weight: bold;
   cursor: pointer;

@@ -5,8 +5,10 @@ import { Chip } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import style from "./DateChoice.module.css";
 import instance from "../../../services/APIService";
+import { useReservationContext } from "../../../contexts/ReservationContext";
 
 export default function DateChoice() {
+  const { reservation, setReservation } = useReservationContext();
   const { id } = useParams();
   const [pro, setPro] = useState(null);
 
@@ -26,12 +28,15 @@ export default function DateChoice() {
     setSelectedDay(day);
   };
 
+  const handleNext = () => {
+    setReservation({ ...reservation, proId: id, date: selectedDay });
+  };
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  };
   const getFutureDates = () => {
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-    };
     const today = new Date();
     const futureDates = [];
 
@@ -41,7 +46,7 @@ export default function DateChoice() {
         today.getMonth(),
         today.getDate() + i + 1
       );
-      futureDates.push(futureDate.toLocaleString("fr-FR", options));
+      futureDates.push(futureDate);
     }
 
     return futureDates;
@@ -81,7 +86,7 @@ export default function DateChoice() {
                 {getFutureDates().map((day) => (
                   <Chip
                     key={day}
-                    label={day}
+                    label={day.toLocaleString("fr-FR", options)}
                     onClick={() => handleClick(day)}
                     color={`${selectedDay === day ? "primary" : "default"}`}
                     sx={{
@@ -97,12 +102,20 @@ export default function DateChoice() {
             <div className={style.reservation}>
               <p>Vous souhaitez une réservation pour le:</p>
               {selectedDay && (
-                <p className={style.reservation_day}> {selectedDay}</p>
+                <p className={style.reservation_day}>
+                  {" "}
+                  {selectedDay.toLocaleString("fr-FR", options)}
+                </p>
               )}
             </div>
             <div className={style.button_reservation}>
               <Link to="/particulier/reservation/info">
-                <button type="button" className={style.button}>
+                <button
+                  type="button"
+                  className={selectedDay ? style.button : style.disabledButton}
+                  onClick={() => handleNext()}
+                  disabled={!selectedDay}
+                >
                   Suivant
                 </button>
               </Link>
