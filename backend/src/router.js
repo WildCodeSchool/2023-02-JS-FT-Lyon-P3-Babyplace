@@ -27,6 +27,18 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/logout", logout);
 
+router.patch(
+  "/pro/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  proControllers.editAuth
+);
+router.patch(
+  "/pro/password",
+  verifyToken,
+  hashPassword,
+  proControllers.editAuth
+);
 router.get("/parent", parentControllers.browse);
 router.get(
   "/parent/reservations",
@@ -105,10 +117,44 @@ router.put(
   verifyToken,
   dashboardProControllers.cancelOrder
 );
-router.get("/dashboard/calendar/:date", dashboardProControllers.getDateOrder);
+router.get(
+  "/dashboard/calendar/:date",
+  verifyToken,
+  dashboardProControllers.getDateOrder
+);
 router.get(
   "/dashboard/overview/calendar/:month",
+  verifyToken,
   dashboardProControllers.getAllReservationsForCalendar
 );
-
+router.get(
+  "/dashboard/preview",
+  verifyToken,
+  dashboardProControllers.getProInfoForPreview
+);
+router.get(
+  "/dashboard/days",
+  verifyToken,
+  dashboardProControllers.getProDaysForPreview
+);
+router.get(
+  "/dashboard/chart/:date",
+  verifyToken,
+  dashboardProControllers.getDataForToday
+);
+router.get(
+  "/dashboard/waiting-order",
+  verifyToken,
+  dashboardProControllers.browseReservationsWaiting
+);
+router.get(
+  "/dashboard/occupation/:date",
+  verifyToken,
+  dashboardProControllers.getDataForToday
+);
+router.get(
+  "/occupation/:date",
+  verifyToken,
+  dashboardProControllers.getOccupationRates
+);
 module.exports = router;

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import styles from "./ParentHomeFolderInfo.module.css";
 import ParentPicture from "../../../assets/ed-cannan.png";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import instance from "../../../services/APIService";
 
 export default function ParentHomeFolderInfo({ orderId, closeModal }) {
   const [orderInfo, setOrderInfo] = useState([]);
@@ -13,8 +11,8 @@ export default function ParentHomeFolderInfo({ orderId, closeModal }) {
   };
 
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/dashboard/reservations/${orderId}`)
+    instance
+      .get(`/dashboard/reservations/${orderId}`)
       .then((res) => {
         setOrderInfo(res.data);
       })
