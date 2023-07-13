@@ -125,7 +125,7 @@ export default function DateChoice() {
               )}
             </div>
             <div className={style.button_reservation}>
-              <Link to="/particulier/reservation/info">
+              <Link to="/particulier/reservation">
                 <button
                   type="button"
                   className={selectedDay ? style.button : style.disabledButton}

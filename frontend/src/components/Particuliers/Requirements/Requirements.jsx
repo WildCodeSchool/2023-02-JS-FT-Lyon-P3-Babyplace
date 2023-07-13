@@ -12,17 +12,17 @@ function Requirements() {
   const { user, userChildren, setUserChildren } = useUserContext();
 
   useEffect(() => {
-    instance
-      .get(`/parent/child/${user.id}`)
-      .then((response) => {
-        setUserChildren(response.data);
-      })
-      .catch((err) => console.error(err));
+    if (!user?.id) {
+      navigate("/particulier");
+    } else {
+      instance
+        .get(`/parent/child/${user.id}`)
+        .then((response) => {
+          setUserChildren(response.data);
+        })
+        .catch((err) => console.error(err));
+    }
   }, []);
-
-  if (!user?.id) {
-    navigate("/");
-  }
 
   return (
     <div className={styles.requirementsScreen}>

@@ -26,6 +26,13 @@ class PlaceManager extends AbstractManager {
     return this.database.query(query, [id, day]);
   }
 
+  countPlaces(proId) {
+    return this.database.query(
+      `select count(id) place from ${this.table} where pro_id = ?`,
+      [proId]
+    );
+  }
+
   findAllPlaces(proId) {
     return this.database.query(
       `select id from ${this.table} where pro_id = ?`,

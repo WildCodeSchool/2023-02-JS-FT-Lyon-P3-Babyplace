@@ -31,7 +31,7 @@ export default function NavBarParent() {
           borderColor: "var(--main-color)",
         }}
       >
-        <NavLink to={user?.role === "parent" ? "" : null}>
+        <NavLink to="">
           <BottomNavigationAction
             icon={<HomeIcon sx={{ color: "var(--info-color)" }} />}
           />
@@ -41,7 +41,7 @@ export default function NavBarParent() {
             icon={<SearchIcon sx={{ color: "var(--info-color)" }} />}
           />
         </NavLink>
-        <NavLink to={user?.role === "parent" ? `${user.id}` : null}>
+        <NavLink to={user?.role === "parent" ? `${user.id}` : ""}>
           <BottomNavigationAction
             icon={<PersonIcon sx={{ color: "var(--info-color)" }} />}
           />

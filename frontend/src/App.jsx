@@ -42,9 +42,8 @@ function App() {
                 <Route path="recherche/:id/date" element={<DateChoice />} />
                 <Route path="register" element={<FormParent />} />
                 <Route path="register/welcome" element={<WelcomePage />} />
-                <Route path="reservation">
-                  <Route index element={<Reservation />} />
-                  <Route path="info" element={<Requirements />} />
+                <Route path="reservation" element={<Reservation />}>
+                  <Route index element={<Requirements />} />
                   <Route path="enfant" element={<SelectChild />} />
                   <Route path="confirmation" element={<ReservationConfirm />} />
                 </Route>

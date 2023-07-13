@@ -14,7 +14,7 @@ import { useReservationContext } from "../../../contexts/ReservationContext";
 import "react-toastify/dist/ReactToastify.css";
 
 function SelectChild() {
-  const { userChildren } = useUserContext();
+  const { userChildren, logout } = useUserContext();
   const { reservation, setReservation } = useReservationContext();
   const [value, setValue] = useState(null);
   const [message, setMessage] = useState(null);
@@ -30,6 +30,7 @@ function SelectChild() {
   useEffect(() => {
     if (message) {
       notifyFail(message);
+      setMessage(null);
     }
   }, [message]);
 
@@ -54,15 +55,15 @@ function SelectChild() {
         return setMessage(response.data);
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          logout(true);
+        }
         console.warn(err);
+        setMessage("Il y a eu une erreur. Réessayez plus tard.");
         return setMessage(err.data);
       });
     setValue(null);
   };
-
-  useEffect(() => {
-    console.info(reservation);
-  }, [reservation]);
 
   return (
     <div className={styles.container}>
@@ -111,6 +112,7 @@ function SelectChild() {
                   userChildren.map((child) => {
                     return (
                       <FormControlLabel
+                        key={child.id}
                         value={child.id}
                         control={<Radio />}
                         label={`${child.firstname} ${child.lastname}`}
