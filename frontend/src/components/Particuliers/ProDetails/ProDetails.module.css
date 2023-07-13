@@ -1,6 +1,6 @@
 .page {
   background: var(--main-bg-gradient);
-  height: 100vh;
+  height: calc(100vh - 53px);
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@
   top: 5%;
   left: 5%;
   cursor: pointer;
+  z-index: 300;
 }
 .page h2 {
   margin-top: 1rem;
@@ -46,7 +47,16 @@
   margin: 0.5rem;
   color: var(--main-color);
 }
+
+.card_global::-webkit-scrollbar {
+  display: none;
+}
 .card_global {
+  margin-top: 1rem;
+  height: fit-content;
+  overflow-y: auto;
+  scrollbar-width: none;
+
   background-color: white;
   border-radius: 10px;
   width: 90vw;
@@ -91,28 +101,31 @@
 }
 
 @media screen and (min-width: 450px) {
-  .card_global {
-    width: 70vw;
-  }
-  .image {
-    height: 200px;
-  }
-}
-@media screen and (min-width: 768px) {
-  .card_global {
-    width: 60vw;
-  }
-  .image {
-    height: 250px;
-  }
-}
-@media screen and (min-width: 1024px) {
   .page {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .card_global {
+    width: 60%;
+  }
+  .image {
+    height: auto;
+  }
+}
+@media screen and (min-width: 768px) {
+  .card_global {
+    width: 50%;
+  }
+  .image {
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card_global {
+    width: 90%;
     padding: 1rem;
     display: flex;
     align-items: center;

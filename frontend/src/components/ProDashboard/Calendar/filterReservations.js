@@ -9,11 +9,9 @@ const algoToFilterReservationsInCalendar = (
     return;
   }
   const arrayOfDay = [];
-  console.info(allOrders);
   allOrders.forEach((reservation) => {
     arrayOfDay.push(parseInt(reservation.date_reservation, 10));
   });
-  console.info(arrayOfDay);
   const countMap = new Map();
 
   // Parcours du tableau
@@ -29,7 +27,6 @@ const algoToFilterReservationsInCalendar = (
 
   // Affichage des résultats
   countMap.forEach((count, value) => {
-    console.info(`La valeur ${value} apparaît ${count} fois.`);
     if (count === maxProSlot) {
       arrayFullDays.push(value);
     } else if (count >= 10 && count <= 19) {

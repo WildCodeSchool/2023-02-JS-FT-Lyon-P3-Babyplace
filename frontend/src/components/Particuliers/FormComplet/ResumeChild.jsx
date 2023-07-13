@@ -30,7 +30,7 @@ export default function ResumeChild() {
           <div>Né(e) le: {child.birthdate}</div>
 
           <div>Médecin traitant: {child.doctor}</div>
-          <div>{child.walking ? "Marcheur" : "Non marcheur"}</div>
+          <div>{child.walking === 1 ? "Marcheur" : "Non marcheur"}</div>
         </div>
       ))}
     </div>

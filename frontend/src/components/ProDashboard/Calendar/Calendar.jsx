@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
@@ -7,15 +6,14 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import CalendarInfo from "./CalendarInfo";
 import CalendarCard from "./CalendarCard";
-// import { useUserInfoContext } from "../../../contexts/UserInfoContext";
+import { useUserContext } from "../../../contexts/UserContext";
 import algoToFilterReservationsInCalendar from "./filterReservations";
 import styles from "./Calendar.module.css";
 import BadgeCalendar from "./BadgeCalendar";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import instance from "../../../services/APIService";
 
 export default function Calendar() {
-  // const { user } = useUserInfoContext();
+  const { user } = useUserContext();
   const arrayFreeDays = [];
   const arrayBusyDays = [];
   const arrayFullDays = [];
@@ -23,14 +21,13 @@ export default function Calendar() {
   const [dateOrder, setDateOrder] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
   const [thisMonth, setThisMonth] = useState(dayjs());
-  const maxProSlot = 20;
+  const maxProSlot = user.place;
 
   // --------------------------------------------------------------------
   const actualMonth = thisMonth.format("MM");
-
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/dashboard/overview/calendar/${actualMonth}`)
+    instance
+      .get(`/dashboard/overview/calendar/${actualMonth}`)
       .then((result) => {
         setAllOrders(result.data);
       })
@@ -50,8 +47,8 @@ export default function Calendar() {
 
   // Le useEffect sert à afficher les réservations à la date sur laquelle on clique sur le calendrier
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/dashboard/calendar/${date}`)
+    instance
+      .get(`/dashboard/calendar/${date}`)
       .then((res) => {
         setDateOrder(res.data);
       })

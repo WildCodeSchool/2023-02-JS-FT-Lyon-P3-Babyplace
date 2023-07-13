@@ -110,16 +110,19 @@ CREATE TABLE parent_notification (
   VALUES
   ('Picoti Picota', 'picotita@example.fr', 'hashed password', '22 place du soleil', "99999", 'Ville fictive', "0600000001", 'La crèche « Picoti Picota » n’est pas qu’un lieu de garde c’est surtout un lieu d’échange et d’accueil  des enfants et des familles dans une confiance réciproque où le respect, l’autonomie et la sécurité sont des références privilégiées dans notre projet. ', 'Micro-crèche', false),
   ('Coucou les chouchous', 'chouchous@coucou.fr', 'hashed password', '18 rue des Albatros', "99999", 'Ville fictive', "0600000002", 'On aime les bambins, et on en prend soin', 'Crèche associative', false),
-  ('Creche 3', 'creche@example.fr', '$argon2id$v=19$m=65536,t=5,p=1$PRp3VbzKhLRMsfvLIR84Kw$gGGsoTx8b+bf0335bbyS+8dE7EpJzrPGRxIESBc5vMA', '18 rue des Albatros', "99999", 'Ville fictive', "0600000002", 'Kikoo les zouzous', 'Micro-crèche', false);
+  ('BabyWild', 'creche@example.fr', '$argon2id$v=19$m=65536,t=5,p=1$PRp3VbzKhLRMsfvLIR84Kw$gGGsoTx8b+bf0335bbyS+8dE7EpJzrPGRxIESBc5vMA', '18 rue des Albatros', "99999", 'Ville fictive', "0600000002", 'Kikoo les zouzous', 'Micro-crèche', false);
   INSERT INTO child
   (lastname, firstname, birthdate, walking, doctor, parent_id)
   VALUES
   ('Dupont', 'Marcel', '20221224', false, 'Docteur Qui', 1),
   ('Dupond', 'Noe', '20191103', false, 'Docteur Folamour', 2),
+  ('Dupond', 'Jade', '20191103', true, 'Docteur Folamour', 1),
+  ('Dupond', 'Martin', '20191016', false, 'Docteur Folamour', 2),
+  ('Michel', 'Martin', '20151016', true, 'Docteur Folamour', 2),
   ('Dupond', 'Jade', '20191103', false, 'Docteur Folamour', 2),
-  ('Dupond', 'Martin', '20191016', false, 'Docteur Folamour', 4),
-  ('Michel', 'Martin', '20151016', false, 'Docteur Folamour', 4),
-  ('Michel', 'Martine', '20151016', true, 'Docteur Folamour', 4);
+  ('Dupond', 'Martin', '20191016', false, 'Docteur Folamour', 1),
+  ('Michel', 'Martin', '20151016', false, 'Docteur Folamour', 1),
+  ('Michel', 'Martine', '20151016', true, 'Docteur Folamour', 2);
 
   INSERT INTO disponibility
   (day)
@@ -135,50 +138,60 @@ CREATE TABLE parent_notification (
   INSERT into place
   (pro_id)
   VALUES
-  (1), (1), (1), (1), (1), (2), (2), (2);
+  (1), (1), (1), (1), (1), (2), (2), (2), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3), (3);
 
-  INSERT INTO `reservation`(`date_time_reservation`, `reservation_date`, `status`, `child_id`, `place_id`) VALUES ('2023-07-05 10:00:00', '2023-07-08', 0, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 2, 2, 2),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-09', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-09', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-09', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-09', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 2, 2),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-10', 1, 1, 1),
-('2023-07-05 10:00:00', '2023-07-08', 1, 2, 2);
+  INSERT INTO `reservation`(`date_time_reservation`, `reservation_date`, `status`, `child_id`, `place_id`) VALUES
+( NOW(), '2023-07-11', 0, 1, 9),
+( NOW(), '2023-07-11', 2, 3, 11),
+( NOW(), '2023-07-11', 1, 2, 10),
+( NOW(), '2023-07-11', 1, 4, 12),
+( NOW(), '2023-07-11', 1, 1, 14),
+( NOW(), '2023-07-11', 1, 5, 13),
+( NOW(), '2023-07-11', 1, 1, 15),
+( NOW(), '2023-07-11', 1, 2, 16),
+( NOW(), '2023-07-11', 1, 3, 17),
+( NOW(), '2023-07-11', 1, 4, 18),
+( NOW(), '2023-07-11', 1, 5, 19),
+( NOW(), '2023-07-11', 1, 2, 20),
+( NOW(), '2023-07-11', 1, 3, 21),
+( NOW(), '2023-07-11', 1, 5, 22),
+( NOW(), '2023-07-12', 1, 1, 9),
+( NOW(), '2023-07-12', 1, 4, 10),
+( NOW(), '2023-07-12', 1, 2, 11),
+( NOW(), '2023-07-12', 1, 1, 12),
+( NOW(), '2023-07-13', 1, 5, 9),
+( NOW(), '2023-07-13', 1, 3, 10),
+( NOW(), '2023-07-13', 1, 2, 11),
+( NOW(), '2023-07-13', 1, 1, 12),
+( NOW(), '2023-07-13', 1, 4, 13),
+( NOW(), '2023-07-13', 1, 5, 14),
+( NOW(), '2023-07-13', 1, 1, 15),
+( NOW(), '2023-07-13', 1, 2, 16),
+( NOW(), '2023-07-13', 1, 3, 17),
+( NOW(), '2023-07-13', 1, 1, 18),
+( NOW(), '2023-07-13', 1, 5, 19),
+( NOW(), '2023-07-13', 1, 2, 20),
+( NOW(), '2023-07-13', 1, 3, 21),
+( NOW(), '2023-07-13', 1, 1, 22),
+( NOW(), '2023-07-13', 1, 3, 23),
+( NOW(), '2023-07-13', 1, 2, 24),
+( NOW(), '2023-07-13', 1, 1, 25),
+( NOW(), '2023-07-13', 1, 2, 26),
+( NOW(), '2023-07-13', 1, 5, 27),
+( NOW(), '2023-07-13', 1, 3, 28),
+( NOW(), '2023-07-14', 0, 3, 9),
+( NOW(), '2023-07-14', 0, 3, 10),
+( NOW(), '2023-07-14', 0, 3, 11),
+( NOW(), '2023-07-14', 2, 3, 12),
+( NOW(), '2023-07-14', 2, 3, 13),
+( NOW(), '2023-07-14', 3, 3, 14),
+( NOW(), '2023-07-14', 3, 3, 15),
+( NOW(), '2023-07-14', 2, 3, 16),
+( NOW(), '2023-07-14', 0, 3, 17),
+( NOW(), '2023-07-14', 0, 3, 18);
+
 
 -- Requête pour consulter les jours de disponibilité d'une crèche.
-SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
+-- SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
 
 SET FOREIGN_KEY_CHECKS = 1;
