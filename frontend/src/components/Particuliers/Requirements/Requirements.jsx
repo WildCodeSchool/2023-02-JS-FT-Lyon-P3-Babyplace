@@ -11,6 +11,9 @@ function Requirements() {
   const navigate = useNavigate();
   const { user, userChildren, setUserChildren } = useUserContext();
 
+  // Lorsque le composant se monte : fetch des enfants du user.
+  // Ils sont enregistrés dans un state pour permettre de vérifier la condition d'avoir au minimum un enfant pour réserver,
+  // mais également pour l'écran suivant, afin d'afficher directement les enfants lors de la sélection de celui concerné par la réservation
   useEffect(() => {
     if (!user?.id) {
       navigate("/particulier");
@@ -18,7 +21,11 @@ function Requirements() {
       instance
         .get(`/parent/child/${user.id}`)
         .then((response) => {
-          setUserChildren(response.data);
+          if (response.data.length > 0) {
+            setUserChildren(response.data);
+          } else {
+            setUserChildren(null);
+          }
         })
         .catch((err) => console.error(err));
     }
@@ -46,12 +53,13 @@ function Requirements() {
             <VerifiedIcon color="success" />
             <p>Votre profil est complet.</p>
           </div>
-          {userChildren ? (
+          {userChildren?.length > 0 ? (
             <div className={styles.requirement}>
               <VerifiedIcon color="success" />
               <p>Vous avez enregistré au moins un enfant.</p>
             </div>
           ) : (
+            // Si aucun enfant trouvé dans le fetch, le message suivant est affiché, et l'utilisateur ne peut pas aller plus loin.
             <div className={styles.requirement}>
               <NewReleasesIcon color="error" />
               <p>Vous n'avez pas encore enregistré d'enfant.</p>
@@ -67,9 +75,14 @@ function Requirements() {
         </div>
         <button
           type="button"
-          disabled={!userChildren}
-          className={userChildren ? styles.button : styles.disabledButton}
-          onClick={() => navigate("/particulier/reservation/enfant")}
+          disabled={!userChildren || userChildren.length === 0}
+          className={
+            userChildren?.length > 0 ? styles.button : styles.disabledButton
+          }
+          onClick={() => {
+            if (userChildren?.length > 0)
+              navigate("/particulier/reservation/enfant");
+          }}
         >
           J'ai lu et j'accepte la consigne
         </button>

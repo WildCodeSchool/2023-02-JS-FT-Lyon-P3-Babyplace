@@ -45,6 +45,8 @@ const edit = async (req, res) => {
   // TODO validations (length, format...)
   try {
     let pro = {};
+    // On nettoie d'abord le corps de la requête pour ne pas envoyer de propriété inconnue dans la requête SQL
+    // (il peut s'agir ici d'ajouts de propriétés pour la gestion des requêtes suivantes)
     Object.entries(req.body).forEach((array) => {
       if (
         array[0] !== "empty" &&
@@ -61,7 +63,7 @@ const edit = async (req, res) => {
       }
     });
     pro.id = req.payloads?.sub;
-
+    // On met à jour le pro aec un objet propre
     await models.pro
       .update(pro)
       .then(([result]) => {
@@ -74,7 +76,7 @@ const edit = async (req, res) => {
         console.error(err);
         return res.send(500);
       });
-
+    // Si des places sont à ajouter, on fait une requête SQL pour ajouter les places dans la table
     if (req.body.placesToAdd && req.body.placesToAdd > 0) {
       await models.place
         .insert(req.body.placesToAdd, pro.id)
@@ -89,7 +91,7 @@ const edit = async (req, res) => {
           return res.send(500);
         });
     }
-
+    // Si des disponibilités sont à ajouter, on fait une requête SQL pour ajouter les jours non présents dans la table pour ce pro
     if (req.body.daysToAdd && req.body.daysToAdd.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         req.body.daysToAdd
@@ -164,6 +166,7 @@ const profile = (req, res) => {
 };
 
 const login = async (req, res) => {
+  // Lors du login du pro, on a besoin de connaître le nombre de places qu'il a par jour
   await models.place
     .countPlaces(req.user.id)
     .then(([result]) => {
@@ -174,7 +177,7 @@ const login = async (req, res) => {
     .catch((err) => {
       console.error(err);
     });
-
+  // On récupère également un tableau des différents jours de disponibilités de ce pro
   models.proDisponibility
     .findAll(req.user.id)
     .then(([result]) => {
@@ -198,6 +201,7 @@ const register = async (req, res) => {
     const pro = req.body;
 
     // TODO validations (length, format...)
+    // On enregistre les infos du pro dans la table correspondante
     await models.pro
       .insert(pro)
       .then(([result]) => {
@@ -211,7 +215,7 @@ const register = async (req, res) => {
         console.error(err);
         res.sendStatus(500);
       });
-
+    // Si le pro a indiqué des places, on en insère autant qu'il faut dans la table
     if (pro.place > 0) {
       await models.place
         .insert(pro.place, pro.id)
@@ -226,7 +230,7 @@ const register = async (req, res) => {
           return res.send(500);
         });
     }
-
+    // Si le pro a indique des jours de disponibilité lors de son enregistrement, on les enregistre
     if (pro.disponibility.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         pro.disponibility

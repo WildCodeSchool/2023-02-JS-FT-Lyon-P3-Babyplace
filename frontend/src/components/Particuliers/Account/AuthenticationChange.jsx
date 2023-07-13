@@ -23,6 +23,7 @@ function AuthenticationChange({ setAccountScreen }) {
     "Quelque chose s'est mal passé, réessayez plus tard.",
   ];
 
+  // Déclaration du schéma de validation des formulaires de modification de données d'authentification
   const schema = Joi.object().keys({
     email: Joi.string()
       .email({
@@ -42,6 +43,7 @@ function AuthenticationChange({ setAccountScreen }) {
     }),
   });
 
+  // Gestion du changement de l'adresse mail
   const handleSubmitMail = (e) => {
     e.preventDefault();
     const { error } = schema.validate({ email: mail });
@@ -63,7 +65,7 @@ function AuthenticationChange({ setAccountScreen }) {
         }
       });
   };
-
+  // Gestion du changement de mot de passe
   const handleSubmitPassword = (e) => {
     e.preventDefault();
     const { error } = schema.validate({ password, verifyPassword });
