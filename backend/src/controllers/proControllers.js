@@ -165,7 +165,7 @@ const profile = (req, res) => {
 
 const login = async (req, res) => {
   await models.place
-    .findPlaces(req.user.id)
+    .countPlaces(req.user.id)
     .then(([result]) => {
       if (result) {
         req.user.place = result[0].place;

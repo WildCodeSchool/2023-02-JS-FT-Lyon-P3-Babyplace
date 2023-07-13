@@ -91,6 +91,14 @@
   font-weight: bold;
   cursor: pointer;
 }
+.disabledButton {
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--second-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
 @media screen and (min-width: 450px) {
   .card_body {
     width: 70vw;

@@ -29,8 +29,7 @@
 .card h2 {
   font-size: large;
 }
-.form_modify {
-}
+
 .form_modify h3 {
   font-size: large;
   color: var(--main-color);
@@ -52,6 +51,7 @@
   width: 80%;
   padding: 0.7rem 2rem;
   margin: 0.3rem;
+  box-shadow: 3px 3px 3px var(--second-color);
 }
 
 .buttonSubmit,
@@ -74,6 +74,7 @@
   margin-top: 0;
   padding: 0.5rem 2rem;
 }
+
 @media screen and (min-width: 1024px) {
   .form {
     display: flex;
@@ -87,8 +88,7 @@
     padding: 1rem 2rem;
     margin: 0.7rem;
     font-size: large;
-    box-shadow: 3px 3px 3px var(--second-color);
-  }
+    }
   .validationMessage {
     display: grid;
     grid-column: 1/3;

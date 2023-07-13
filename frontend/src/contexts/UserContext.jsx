@@ -10,6 +10,7 @@ export default UserContext;
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useLocalStorage("user", null);
+  const [userChildren, setUserChildren] = useState(null);
   const [token, setToken] = useLocalStorage("token", "");
   const [sessionWarning, setSessionWarning] = useState(null);
   const navigate = useNavigate();
@@ -43,8 +44,10 @@ export function UserContextProvider({ children }) {
       logout,
       sessionWarning,
       setSessionWarning,
+      userChildren,
+      setUserChildren,
     }),
-    [user, token, sessionWarning]
+    [user, token, sessionWarning, userChildren]
   );
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
