@@ -23,7 +23,7 @@ export default function OrderCard({ reservation }) {
   } = reservation;
 
   const childName = `${prenomEnfant} ${nomEnfant}`;
-  console.info(childName);
+
   const notifySuccess = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
 

@@ -1,10 +1,11 @@
-.notificationcard_container {
+.notificationlign_container {
   width: 100%;
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: solid rgba(60, 60, 60, 0.25) 1px;
+  margin: 10px 0;
 }
 
 .status_color {

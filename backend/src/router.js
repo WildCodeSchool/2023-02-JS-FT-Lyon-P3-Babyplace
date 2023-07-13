@@ -26,7 +26,70 @@ router.put("/items/:id", itemControllers.edit);
 router.post("/items", itemControllers.add);
 router.delete("/items/:id", itemControllers.destroy);
 
+// ----------------  Parent & Child routes  -------------------
+
 router.get("/logout", logout);
+
+router.get("/parent", parentControllers.browse);
+
+router.get(
+  "/parent/reservations",
+  verifyToken,
+  parentControllers.getReservations
+);
+router.get("/parent/:id", parentControllers.read);
+
+router.get("/parent/child/:id", parentControllers.showChildWithParent);
+
+router.patch(
+  "/parent/mail",
+  verifyToken,
+  verifyIfParentRegistered,
+  parentControllers.edit
+);
+
+router.patch(
+  "/parent/password",
+  verifyToken,
+  hashPassword,
+  parentControllers.edit
+);
+
+router.put(
+  "/parent/reservations/cancel/:id",
+  verifyToken,
+  parentControllers.cancelReservation
+);
+router.patch("/parent/modify", verifyToken, parentControllers.edit);
+
+router.post("/parent/login", getParentByEmail, verifyPassword);
+
+router.post(
+  "/parent/register",
+  verifyIfParentRegistered,
+  hashPassword,
+  parentControllers.add
+);
+
+router.post(
+  "/parent/reservation",
+  verifyToken,
+  parentControllers.saveReservation
+);
+
+router.get("/dispo/:id", proControllers.browseProAndDispo);
+
+router.get("/child", childControllers.browse);
+
+router.post("/child/register", childControllers.add);
+
+// ---------------- / Parent & Child routes  -------------------
+
+// ----------------  Pro routes  -------------------
+
+router.get("/pro", proControllers.browse);
+
+router.get("/pro/profile", verifyToken, proControllers.profile);
 
 router.patch(
   "/pro/mail",
@@ -40,53 +103,9 @@ router.patch(
   hashPassword,
   proControllers.editAuth
 );
-router.get("/parent", parentControllers.browse);
-router.get(
-  "/parent/reservations",
-  verifyToken,
-  parentControllers.getReservations
-);
-router.get("/parent/:id", parentControllers.read);
-router.get("/parent/child/:id", parentControllers.showChildWithParent);
-router.patch(
-  "/parent/mail",
-  verifyToken,
-  verifyIfParentRegistered,
-  parentControllers.edit
-);
-router.patch(
-  "/parent/password",
-  verifyToken,
-  hashPassword,
-  parentControllers.edit
-);
-router.patch(
-  "/parent/reservation",
-  verifyToken,
-  parentControllers.cancelReservation
-);
-router.patch("/parent/modify", verifyToken, parentControllers.edit);
-router.post("/parent/login", getParentByEmail, verifyPassword);
-router.post(
-  "/parent/register",
-  verifyIfParentRegistered,
-  hashPassword,
-  parentControllers.add
-);
-router.post(
-  "/parent/reservation",
-  verifyToken,
-  parentControllers.saveReservation
-);
 
-router.get("/dispo/:id", proControllers.browseProAndDispo);
-
-router.get("/child", childControllers.browse);
-router.post("/child/register", childControllers.add);
-
-router.get("/pro", proControllers.browse);
-router.get("/pro/profile", verifyToken, proControllers.profile);
 router.get("/pro/:id", proControllers.read);
+
 router.patch("/pro/:id", verifyToken, proControllers.edit);
 
 router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
@@ -98,6 +117,8 @@ router.post(
   proControllers.register
 );
 
+// ---------------- / Pro routes  -------------------
+
 // ----------------  Notifications routes  -------------------
 
 router.get(
@@ -107,15 +128,32 @@ router.get(
 );
 
 router.get(
-  "/notifications/checked",
+  "/notifications/pro",
   verifyToken,
-  notificationControllers.AllNotificationsAreRead
+  notificationControllers.GetAllNotificationsForPro
 );
 
 router.get(
-  "/notifications/number",
+  "/notifications/checked/parent",
   verifyToken,
-  notificationControllers.getNumberOfNewNotifications
+  notificationControllers.AllParentNotificationsAreRead
+);
+router.get(
+  "/notifications/checked/pro",
+  verifyToken,
+  notificationControllers.AllProNotificationsAreRead
+);
+
+router.get(
+  "/notifications/number/parent",
+  verifyToken,
+  notificationControllers.getNumberOfParentNewNotifications
+);
+
+router.get(
+  "/notifications/number/pro",
+  verifyToken,
+  notificationControllers.getNumberOfProNewNotifications
 );
 
 // ---------------- / Notifications routes  -------------------
@@ -127,61 +165,73 @@ router.get(
   verifyToken,
   dashboardProControllers.browseReservations
 );
+
 router.get(
   "/dashboard/reservations/:id",
   verifyToken,
   dashboardProControllers.showMoreInfoOnOrder
 );
+
 router.put(
   "/dashboard/reservations/validate/:id",
   verifyToken,
   dashboardProControllers.validateOrder
 );
+
 router.put(
   "/dashboard/reservations/refuse/:id",
   verifyToken,
   dashboardProControllers.refuseOrder
 );
+
 router.put(
   "/dashboard/reservations/cancel/:id",
   verifyToken,
   dashboardProControllers.cancelOrder
 );
+
 router.get(
   "/dashboard/calendar/:date",
   verifyToken,
   dashboardProControllers.getDateOrder
 );
+
 router.get(
   "/dashboard/overview/calendar/:month",
   verifyToken,
   dashboardProControllers.getAllReservationsForCalendar
 );
+
 router.get(
   "/dashboard/preview",
   verifyToken,
   dashboardProControllers.getProInfoForPreview
 );
+
 router.get(
   "/dashboard/days",
   verifyToken,
   dashboardProControllers.getProDaysForPreview
 );
+
 router.get(
   "/dashboard/chart/:date",
   verifyToken,
   dashboardProControllers.getDataForToday
 );
+
 router.get(
   "/dashboard/waiting-order",
   verifyToken,
   dashboardProControllers.browseReservationsWaiting
 );
+
 router.get(
   "/dashboard/occupation/:date",
   verifyToken,
   dashboardProControllers.getDataForToday
 );
+
 router.get(
   "/occupation/:date",
   verifyToken,

@@ -48,14 +48,15 @@ export default function Header() {
 
   const getNewNotification = () => {
     instance
-      .get(`/notifications/number`)
+      .get(`/notifications/number/pro`)
       .then((response) => {
         setNumberOfReservations(response.data.total);
       })
       .catch((err) => console.error(err));
   };
 
-  setInterval(getNewNotification, 5000);
+  setInterval(getNewNotification, 5000); // pendant que l'on dev l'application le temps de rafraississement est 5s (5000).
+  // Il faudra bien penser à le changer pour la prod
 
   return (
     <ThemeProvider theme={theme}>
