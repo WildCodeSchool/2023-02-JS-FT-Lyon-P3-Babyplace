@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,9 +12,19 @@ import { useUserContext } from "../../../contexts/UserContext";
 import User from "../../../assets/icones/user-logo.png";
 import styles from "./Header.module.css";
 import NotificationBox from "./Notifications/NotificationBox";
+import instance from "../../../services/APIService";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(165,165,255)",
+    },
+  },
+});
 
 export default function Header() {
   const [openNotificationBox, setOpenNotificationBox] = useState(false);
+  const [numberOfReservations, setNumberOfReservations] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { user, logout } = useUserContext();
@@ -33,9 +45,20 @@ export default function Header() {
     setOpenNotificationBox(!openNotificationBox);
     setAnchorEl(null);
   };
-  console.info(openNotificationBox);
+
+  const getNewNotification = () => {
+    instance
+      .get(`/notifications/number`)
+      .then((response) => {
+        setNumberOfReservations(response.data.total);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  setInterval(getNewNotification, 5000);
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <div
         className={
           openNotificationBox
@@ -59,7 +82,7 @@ export default function Header() {
                 width: 60,
               }}
             >
-              <Badge badgeContent={1} color="secondary">
+              <Badge badgeContent={numberOfReservations} color="primary">
                 <NotificationsNoneOutlinedIcon sx={{ color: "black" }} />
               </Badge>
             </ListItemButton>
@@ -96,6 +119,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-    </>
+    </ThemeProvider>
   );
 }

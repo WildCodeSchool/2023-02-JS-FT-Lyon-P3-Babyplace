@@ -91,28 +91,14 @@
 
 @media screen and (max-width: 575px) {
     .notification_box_position_godown {
-        right: 0px;
-        width: 80%;
+        
+        width: calc(97vw - 70px);
         left: 75px;
     }
     
     .notification_box_position_goup {
-        right: 0px;
-        width: 80%;
-        left: 75px;
-    }
-    
-}
-@media screen and (max-width: 376px) {
-    .notification_box_position_godown {
-        right: 0px;
-        width: 78%;
-        left: 75px;
-    }
-    
-    .notification_box_position_goup {
-        right: 0px;
-        width: 78%;
+        
+        width: calc(97vw - 70px);
         left: 75px;
     }
     

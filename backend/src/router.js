@@ -7,6 +7,7 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
+const notificationControllers = require("./controllers/NotificationControllers");
 
 const {
   getParentByEmail,
@@ -92,6 +93,30 @@ router.post(
   proControllers.register
 );
 
+// ----------------  Notifications routes  -------------------
+
+router.get(
+  "/notifications/parents",
+  verifyToken,
+  notificationControllers.GetAllNotificationsForParent
+);
+
+router.get(
+  "/notifications/checked",
+  verifyToken,
+  notificationControllers.AllNotificationsAreRead
+);
+
+router.get(
+  "/notifications/number",
+  verifyToken,
+  notificationControllers.getNumberOfNewNotifications
+);
+
+// ---------------- / Notifications routes  -------------------
+
+// ----------------  Pro Dashboard routes  -------------------
+
 router.get(
   "/dashboard/reservations",
   verifyToken,
@@ -157,4 +182,7 @@ router.get(
   verifyToken,
   dashboardProControllers.getOccupationRates
 );
+
+// ---------------- / Pro Dashboard routes  -------------------
+
 module.exports = router;

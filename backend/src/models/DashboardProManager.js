@@ -20,7 +20,7 @@ class DashboardProManager extends AbstractManager {
   }
 
   showAllReservations(id, limit, offset, status) {
-    let query = `SELECT r.id, c.firstname AS prenom_enfant, c.lastname AS nom_enfant,
+    let query = `SELECT r.id, p.id id_parent, c.firstname AS prenom_enfant, c.lastname AS nom_enfant,
                  p.firstname AS prenom_parent, p.lastname AS nom_parent,
                  DATE_FORMAT(reservation_date, "%d/%m/%Y") AS date_reservation,
                  DATE_FORMAT(date_time_reservation, "%d/%m/%Y") AS date_enregistrement,
@@ -147,6 +147,16 @@ class DashboardProManager extends AbstractManager {
      group by r.reservation_date
      limit 7`,
       [date, id]
+    );
+  }
+
+  getInfosForNotification(id) {
+    return this.database.query(
+      `select c.firstname firstname, c.lastname lastname, 
+   DATE_FORMAT(reservation_date, "%d/%m") date from ${this.table} as r
+   join child as c on c.id = r.child_id
+   where r.id = ?`,
+      [id]
     );
   }
 }

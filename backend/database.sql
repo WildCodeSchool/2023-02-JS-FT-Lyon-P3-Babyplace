@@ -102,7 +102,10 @@ CREATE TABLE parent_notification (
 INSERT INTO parent_notification (type, status, description, notification_date_time, parent_id) VALUES 
 ('validation', false, 'votre réservation à été acceptée', NOW(), 1 ),
 ('cancel', false, 'votre réservation à été annulée', NOW(), 2 ),
-('refuse', false, 'votre réservation à été refusée', NOW(), 1 );
+('refuse', false, 'votre réservation à été refusée', NOW(), 1 ),
+('validation', false, 'votre réservation à été acceptée', NOW(), 2 ),
+('cancel', false, 'votre réservation à été annulée', NOW(), 1 ),
+('refuse', false, 'votre réservation à été refusée', NOW(), 2 );
 
   INSERT INTO parent
   (lastname, firstname, birthdate, mail_address, hashed_password, address, postcode, city, phone_number, notification_status) 

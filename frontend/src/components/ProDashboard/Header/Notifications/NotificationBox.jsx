@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
 import NotificationCard from "./NotificationCard";
 import styles from "./NotificationBox.module.css";
+import instance from "../../../../services/APIService";
 
 export default function NotificationBox() {
-  useEffect(() => {
-    console.info("je monte mon composant");
+  const [notifications, setNotifications] = useState([]);
 
+  useEffect(() => {
+    console.info("montage du composant");
+    instance
+      .get(`/notifications/parents`)
+      .then((response) => {
+        setNotifications(response.data);
+      })
+      .catch((err) => console.error(err));
     return () => {
-      console.info("je démonte mon composant");
+      console.info("démontage du composant");
+
+      instance.get(`/notifications/checked`).catch((err) => console.error(err));
     };
   }, []);
 
-  const [notifications] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-  ]);
   return (
     <div className={styles.notifications_container}>
       <p className={styles.div_title}>Notifications</p>
-      {notifications.map((notification) => (
-        <NotificationCard key={notification.id} />
-      ))}
+      <div>
+        {notifications.map((notification) => (
+          <NotificationCard key={notification.id} notification={notification} />
+        ))}
+      </div>
     </div>
   );
 }
