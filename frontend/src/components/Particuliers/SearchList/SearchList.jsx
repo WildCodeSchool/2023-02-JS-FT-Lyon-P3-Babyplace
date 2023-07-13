@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,6 +14,7 @@ import DispoPros from "./DispoPros";
 
 export default function SearchList() {
   const [pros, setPros] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     instance
@@ -29,11 +30,15 @@ export default function SearchList() {
         <img src={user} alt="user" />
         <Link to="/particulier">Log In</Link>
       </div>
-      <Link to="/">
-        <button type="button" className={style.button_back}>
-          <ArrowBackIosNewIcon />
-        </button>
-      </Link>
+
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className={style.button_back}
+      >
+        <ArrowBackIosNewIcon />
+      </button>
+
       <h2>Liste des crèches disponibles</h2>
       <div className={style.cards_media}>
         <div className={style.card_media}>

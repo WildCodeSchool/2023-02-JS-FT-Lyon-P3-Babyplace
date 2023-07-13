@@ -11,7 +11,7 @@ export default function FormCompletParent() {
   return (
     <div className={style.page}>
       <div className={style.header_card}>
-        <Link to={`/particulier/${user.id}/child`}>
+        <Link to={`/particulier/${user.id}`}>
           <button type="button" className={style.button_back}>
             <ArrowBackIosNewIcon />
           </button>

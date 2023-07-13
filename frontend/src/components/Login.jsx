@@ -11,7 +11,8 @@ function Login({ userType }) {
   const [loginInfo, setLoginInfo] = useState({});
   const [infoMessage, setInfoMessage] = useState(null);
   // TODO Faire context pour utilisateur et token
-  const { user, login } = useUserContext();
+  const { user, login, pendingReservation, setPendingReservation } =
+    useUserContext();
   const navigate = useNavigate();
 
   const validateLogin =
@@ -37,7 +38,12 @@ function Login({ userType }) {
         .then((response) => {
           login(response.data);
           if (response.data.role === "parent") {
-            navigate(`/particulier/${response.data.id}`);
+            if (pendingReservation) {
+              setPendingReservation(null);
+              navigate(`/particulier/recherche/${pendingReservation}/date`);
+            } else {
+              navigate(`/particulier/${response.data.id}`);
+            }
           } else {
             navigate("/pro");
           }

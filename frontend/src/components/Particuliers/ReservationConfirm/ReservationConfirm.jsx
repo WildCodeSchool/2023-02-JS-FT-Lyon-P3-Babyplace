@@ -6,7 +6,7 @@ import styles from "./ReservationConfirm.module.css";
 
 function ReservationConfirm() {
   const navigate = useNavigate();
-  const { reservation } = useReservationContext();
+  const { reservation, setReservation } = useReservationContext();
   const options = {
     weekday: "long",
     month: "long",
@@ -45,6 +45,7 @@ function ReservationConfirm() {
             type="button"
             className={styles.button}
             onClick={() => {
+              setReservation({});
               navigate("/particulier");
             }}
           >
