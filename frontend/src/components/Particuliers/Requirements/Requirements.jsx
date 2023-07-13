@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
@@ -26,11 +26,14 @@ function Requirements() {
 
   return (
     <div className={styles.requirementsScreen}>
-      <Link to="/particulier">
-        <button type="button" className={styles.button_back}>
-          <ArrowBackIosNewIcon />
-        </button>
-      </Link>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className={styles.button_back}
+      >
+        <ArrowBackIosNewIcon />
+      </button>
+
       <div className={styles.title}>
         <h1>Conditions de réservation</h1>
       </div>

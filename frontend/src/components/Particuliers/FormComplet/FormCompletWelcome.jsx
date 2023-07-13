@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormComplet.module.css";
@@ -7,14 +7,18 @@ import profilePicture from "../../../assets/ed-cannan.png";
 
 export default function FormCompletWelcome() {
   const { user } = useUserContext();
+  const navigate = useNavigate(-1);
 
   return (
     <div className={style.page}>
-      <Link to="/particulier">
-        <button type="button" className={style.button_back}>
-          <ArrowBackIosNewIcon />
-        </button>
-      </Link>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className={style.button_back}
+      >
+        <ArrowBackIosNewIcon />
+      </button>
+
       <div className={style.header_card}>
         <div>
           <img src={profilePicture} alt="profilepicture" />

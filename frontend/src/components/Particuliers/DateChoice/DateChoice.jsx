@@ -6,11 +6,13 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import style from "./DateChoice.module.css";
 import instance from "../../../services/APIService";
 import { useReservationContext } from "../../../contexts/ReservationContext";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export default function DateChoice() {
   const { reservation, setReservation } = useReservationContext();
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+  const { user, setPendingReservation } = useUserContext();
 
   // Creation palette personnalisée pour MUI
   const theme = createTheme({
@@ -44,6 +46,9 @@ export default function DateChoice() {
       date: selectedDay,
       day,
     });
+    if (!user?.id) {
+      setPendingReservation(id);
+    }
   };
 
   const options = {

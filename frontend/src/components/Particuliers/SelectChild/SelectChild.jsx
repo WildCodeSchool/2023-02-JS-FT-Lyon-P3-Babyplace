@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -80,11 +80,13 @@ function SelectChild() {
         theme="colored"
       />
       <div className={styles.selectChildScreen}>
-        <Link to="/particulier">
-          <button type="button" className={styles.button_back}>
-            <ArrowBackIosNewIcon />
-          </button>
-        </Link>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className={styles.button_back}
+        >
+          <ArrowBackIosNewIcon />
+        </button>
         <div className={styles.title}>
           <h1>Réservation</h1>
         </div>
