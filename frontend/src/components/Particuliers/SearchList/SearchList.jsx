@@ -49,7 +49,7 @@ export default function SearchList() {
                 }}
               >
                 <CardActionArea sx={{ padding: "10px" }}>
-                  <div className="style.image">
+                  <div className={style.image}>
                     <CardMedia
                       component="img"
                       height="140"

@@ -1,0 +1,104 @@
+.container {
+  height: calc(100vh - 53px);
+  overflow-y: auto;
+}
+
+.selectChildScreen {
+  position: relative;
+  background: var(--main-bg-gradient);
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.button_back {
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+}
+
+.selectChildScreen h1 {
+  margin: 2rem 0;
+  color: white;
+}
+
+.card {
+  padding: 2em;
+  background: white;
+  width: 50%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  color: var(--main-color);
+  box-shadow: 5px 5px 5px var(--second-color);
+}
+
+.card form > div > label {
+  color: var(--main-color);
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card form div > div {
+  width: fit-content;
+}
+
+.card form div > label {
+  font-family: var(--main-font-family);
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.card form > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer {
+  max-width: 35ch;
+  text-align: left;
+  width: 90%;
+  margin: 2rem 0;
+}
+
+.button {
+  margin-top: 2em;
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--main-bg-gradient);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.disabledButton {
+  margin-top: 2em;
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--second-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .requirementsScreen {
+    overflow-y: scroll;
+  }
+  .card {
+    width: 90vw;
+  }
+}
+
