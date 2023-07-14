@@ -23,58 +23,55 @@ import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
 import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
 import { UserContextProvider } from "./contexts/UserContext";
-import { UserInfoContextProvider } from "./contexts/UserInfoContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
 import "./App.css";
 
 function App() {
   return (
-    <UserInfoContextProvider>
-      <UserContextProvider>
-        <ReservationContextProvider>
-          <div className="App">
-            <Routes>
-              <Route path="/" element={<Home />} />
+    <UserContextProvider>
+      <ReservationContextProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-              {/* ----------- Route Parent  ----------------- */}
+            {/* ----------- Route Parent  ----------------- */}
 
-              <Route path="/particulier" element={<Particulier />}>
-                <Route index element={<Account />} />
-                <Route path="recherche" element={<SearchList />} />
-                <Route path="recherche/:id" element={<ProDetails />} />
-                <Route path="recherche/:id/date" element={<DateChoice />} />
-                <Route path="register" element={<FormParent />} />
-                <Route path="register/welcome" element={<WelcomePage />} />
-                <Route path="reservation" element={<Reservation />}>
-                  <Route index element={<Requirements />} />
-                  <Route path="enfant" element={<SelectChild />} />
-                  <Route path="confirmation" element={<ReservationConfirm />} />
-                </Route>
-                <Route path=":id" element={<FormCompletWelcome />} />
-                <Route path=":id/child" element={<FormCompletChildren />} />
-                <Route path=":id/parent" element={<FormCompletParent />} />
-                <Route path="notifications" element={<NotificationPage />} />
+            <Route path="/particulier" element={<Particulier />}>
+              <Route index element={<Account />} />
+              <Route path="recherche" element={<SearchList />} />
+              <Route path="recherche/:id" element={<ProDetails />} />
+              <Route path="recherche/:id/date" element={<DateChoice />} />
+              <Route path="register" element={<FormParent />} />
+              <Route path="register/welcome" element={<WelcomePage />} />
+              <Route path="reservation" element={<Reservation />}>
+                <Route index element={<Requirements />} />
+                <Route path="enfant" element={<SelectChild />} />
+                <Route path="confirmation" element={<ReservationConfirm />} />
               </Route>
+              <Route path=":id" element={<FormCompletWelcome />} />
+              <Route path=":id/child" element={<FormCompletChildren />} />
+              <Route path=":id/parent" element={<FormCompletParent />} />
+              <Route path="notifications" element={<NotificationPage />} />
+            </Route>
 
-              {/* ----------- Route RegisterPro  ----------------- */}
+            {/* ----------- Route RegisterPro  ----------------- */}
 
-              <Route path="/pro-register" element={<ProRegister />} />
+            <Route path="/pro-register" element={<ProRegister />} />
 
-              {/* ----------- Route DashboardPro  ----------------- */}
+            {/* ----------- Route DashboardPro  ----------------- */}
 
-              <Route path="/pro" element={<Dashboard />}>
-                <Route index element={<DashboardHome />} />
-                <Route path="calendar" element={<Calendar />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="authentification" element={<UserAuth />} />
-                <Route path="modify" element={<ModifyData />} />
-              </Route>
-            </Routes>
-          </div>
-        </ReservationContextProvider>
-      </UserContextProvider>
-    </UserInfoContextProvider>
+            <Route path="/pro" element={<Dashboard />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="authentification" element={<UserAuth />} />
+              <Route path="modify" element={<ModifyData />} />
+            </Route>
+          </Routes>
+        </div>
+      </ReservationContextProvider>
+    </UserContextProvider>
   );
 }
 
