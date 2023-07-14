@@ -5,7 +5,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import { ToastContainer, toast } from "react-toastify";
 import instance from "../../../services/APIService";
 import styles from "./SelectChild.module.css";
@@ -66,7 +65,7 @@ function SelectChild() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.selectChildScreen}>
       <ToastContainer
         position="bottom-right"
         autoClose={4000}
@@ -79,17 +78,17 @@ function SelectChild() {
         pauseOnHover
         theme="colored"
       />
-      <div className={styles.selectChildScreen}>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className={styles.button_back}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
-        <div className={styles.title}>
-          <h1>Réservation</h1>
-        </div>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className={styles.button_back}
+      >
+        <ArrowBackIosNewIcon />
+      </button>
+      <div className={styles.title}>
+        <h1>Réservation</h1>
+      </div>
+      <div className={styles.container}>
         <div className={styles.card}>
           <form
             onSubmit={(e) => {
@@ -97,13 +96,13 @@ function SelectChild() {
               handleSubmit();
             }}
           >
+            <h2>
+              {" "}
+              Sélectionnez l'enfant que vous souhaitez faire garder chez{" "}
+              {reservation.proName} le{" "}
+              {reservation.date.toLocaleString("fr-FR", options)} :
+            </h2>
             <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">
-                {" "}
-                Sélectionnez l'enfant que vous souhaitez faire garder chez{" "}
-                {reservation.proName} le{" "}
-                {reservation.date.toLocaleString("fr-FR", options)} :
-              </FormLabel>
               <RadioGroup
                 value={value}
                 onChange={(e) => handleRadioChange(e)}

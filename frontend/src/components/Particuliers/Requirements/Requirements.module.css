@@ -1,11 +1,21 @@
 .requirementsScreen {
   background: var(--main-bg-gradient);
-  height: calc(100vh - 53px);
+  height: calc(100vh - 56px);
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  text-align: center;
+  overflow-y: hidden;
+}
+
+.title {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
   text-align: center;
 }
 
@@ -13,8 +23,8 @@
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
-  left: 5%;
+  top: 2%;
+  left: 2%;
   cursor: pointer;
 }
 
@@ -23,18 +33,27 @@
   color: white;
 }
 
+.container {
+  margin-top: 1rem;
+  height: fit-content;
+  scrollbar-width: none;
+  overflow-y: auto;
+  box-shadow: 5px 5px 5px var(--second-color);
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
 .card {
+  overflow-y: hidden;
   padding: 2em;
   background: white;
-  width: 50%;
+  width: 100%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
   color: var(--main-color);
-  box-shadow: 5px 5px 5px var(--second-color);
 }
 
 .description {
@@ -79,5 +98,14 @@
   }
   .card {
     width: 90vw;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .requirementsScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

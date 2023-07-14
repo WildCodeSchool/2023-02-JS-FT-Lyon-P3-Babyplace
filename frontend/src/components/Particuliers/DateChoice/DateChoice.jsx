@@ -82,68 +82,64 @@ export default function DateChoice() {
   if (!pro) return null;
 
   return (
-    <div>
+    <div className={style.page}>
       <ThemeProvider theme={theme}>
-        <div className={style.card}>
-          <div className={style.header_card}>
-            <Link to={`/particulier/recherche/${pro.id}`}>
-              <button type="button" className={style.button_back}>
-                <ArrowBackIosNewIcon />
-              </button>
-            </Link>
+        <div className={style.header_card}>
+          <Link to={`/particulier/recherche/${pro.id}`}>
+            <button type="button" className={style.button_back}>
+              <ArrowBackIosNewIcon />
+            </button>
+          </Link>
 
-            <div className={style.name_type}>
-              <h2>Demandez une place</h2>
-              <h3>Crèche {pro.name}</h3>
-            </div>
+          <div className={style.name_type}>
+            <h1>Demandez une place</h1>
+            <h3>Crèche {pro.name}</h3>
           </div>
-          <div className={style.cards_media}>
-            <div className={style.card_body}>
-              <h2>Choisissez une date</h2>
-              <div>
-                <div className={style.days_of_week}>
-                  <h3>Jours de la semaine prochaine:</h3>
-                </div>
-                <div className={style.chip}>
-                  {getFutureDates().map((day) => (
-                    <Chip
-                      key={day}
-                      label={day.toLocaleString("fr-FR", options)}
-                      onClick={() => handleClick(day)}
-                      color={`${selectedDay === day ? "primary" : "default"}`}
-                      sx={{
-                        margin: "4px",
-                        borderRadius: "8px",
-                        cursor: "pointer",
-                      }}
-                    />
-                  ))}
-                </div>
+        </div>
+        <div className={style.cards_media}>
+          <div className={style.card_body}>
+            <h1>Choisissez une date</h1>
+            <div>
+              <div className={style.days_of_week}>
+                <h3>Jours de la semaine prochaine:</h3>
               </div>
-              <div className={style.reservation}>
-                <p>Vous souhaitez une réservation pour le:</p>
-                {selectedDay && (
-                  <p className={style.reservation_day}>
-                    {" "}
-                    {selectedDay.toLocaleString("fr-FR", options)}
-                  </p>
-                )}
+              <div className={style.chip}>
+                {getFutureDates().map((day) => (
+                  <Chip
+                    key={day}
+                    label={day.toLocaleString("fr-FR", options)}
+                    onClick={() => handleClick(day)}
+                    color={`${selectedDay === day ? "primary" : "default"}`}
+                    sx={{
+                      margin: "4px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                    }}
+                  />
+                ))}
               </div>
+            </div>
+            <div className={style.reservation}>
+              <p>Vous souhaitez une réservation pour le :</p>
+              {selectedDay && (
+                <p className={style.reservation_day}>
+                  {" "}
+                  {selectedDay.toLocaleString("fr-FR", options)}
+                </p>
+              )}
+            </div>
 
-              <div className={style.button_reservation}>
-                <Link to="/particulier/reservation">
-                  <button
-                    type="button"
-                    className={
-                      selectedDay ? style.button : style.disabledButton
-                    }
-                    onClick={() => handleNext()}
-                    disabled={!selectedDay}
-                  >
-                    Suivant
-                  </button>
-                </Link>
-              </div>
+            <div className={style.button_reservation}>
+              <Link to="/particulier/reservation">
+                <button
+                  type="button"
+                  className={selectedDay ? style.button : style.disabledButton}
+                  onClick={() => handleNext()}
+                  disabled={!selectedDay}
+                >
+                  Suivant
+                </button>
+              </Link>
             </div>
           </div>
         </div>
