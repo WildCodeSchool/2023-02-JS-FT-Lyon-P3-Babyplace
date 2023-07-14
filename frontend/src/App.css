@@ -19,8 +19,8 @@ body {
   --second-bg-color: rgb(245, 245, 245);
   --main-bg-gradient: linear-gradient(
     148.74deg,
-    rgba(71, 79, 255, 0.902) 2.49%,
-    rgba(89, 84, 249, 0.91) 13.34%,
+    rgba(71, 79, 255) 2.49%,
+    rgba(89, 84, 249) 13.34%,
     rgb(227, 122, 204) 99.05%
   );
 }
@@ -35,8 +35,6 @@ body {
 
 .dashboard_bg_color {
   background-color: rgb(230, 242, 243);
-  
-  
 }
 
 .dashboard_box {
