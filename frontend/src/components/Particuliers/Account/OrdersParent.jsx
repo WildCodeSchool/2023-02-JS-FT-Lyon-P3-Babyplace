@@ -22,7 +22,7 @@ function Orders({ setAccountScreen }) {
         }
       });
   }, []);
-
+  console.info(data);
   return (
     <div>
       <div className={styles.banner}>

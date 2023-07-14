@@ -14,7 +14,8 @@
   color: black;
 }
 
-.pro, .particuliers {
+.pro,
+.particuliers {
   padding: 1em;
   width: 100%;
   display: flex;
@@ -34,7 +35,8 @@
     flex-direction: column;
   }
 
-  .pro, .particuliers {
+  .pro,
+  .particuliers {
     flex-direction: column;
     gap: 1em;
   }
