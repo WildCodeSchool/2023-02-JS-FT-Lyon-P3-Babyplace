@@ -96,7 +96,7 @@ This is our last project during our training at the Wild Code School and we're g
 <li> Run command `npm run setup`</li>
 <li> Run command `npm run migrate`</li> 
 <li> _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_</li>
-<li> Create `.env` files in /frontend and /backend following `.env.sample` examples.</li>
+<li> Create `.env` files in /frontend and /backend following `.env.sample` examples, and insert the values following the instructions.</li>
 </ul>
 
 <br/>
