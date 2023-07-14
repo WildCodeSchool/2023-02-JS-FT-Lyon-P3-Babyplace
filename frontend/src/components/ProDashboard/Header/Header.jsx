@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,6 +15,8 @@ import User from "../../../assets/icones/user-logo.png";
 import styles from "./Header.module.css";
 import NotificationBox from "./Notifications/NotificationBox";
 import instance from "../../../services/APIService";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
+import UploadImage from "./UploadImage";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +29,7 @@ const theme = createTheme({
 export default function Header() {
   const [openNotificationBox, setOpenNotificationBox] = useState(false);
   const [numberOfReservations, setNumberOfReservations] = useState(null);
+  const [openModalUpload, setOpenModalUpload] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { user, logout } = useUserContext();
@@ -37,6 +42,11 @@ export default function Header() {
   };
   const handleLogout = () => {
     logout(false);
+    setAnchorEl(null);
+    setOpenNotificationBox(false);
+  };
+  const handleUpload = () => {
+    setOpenModalUpload(true);
     setAnchorEl(null);
     setOpenNotificationBox(false);
   };
@@ -113,12 +123,29 @@ export default function Header() {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Mes paramètres</MenuItem>
+                <MenuItem onClick={handleUpload}>Modifier mon image</MenuItem>
                 <MenuItem onClick={handleLogout}>Se déconnecter</MenuItem>
               </Menu>
             </div>
           </div>
         </div>
+        {openModalUpload && (
+          <ModalWrapper closeModal={setOpenModalUpload} isCloseBtn>
+            <UploadImage setOpenModalUpload={setOpenModalUpload} />
+          </ModalWrapper>
+        )}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     </ThemeProvider>
   );
