@@ -9,7 +9,7 @@ import instance from "../../../services/APIService";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import styles from "./OrderCardParent.module.css";
 
-function OrderCardParent({ reservation }) {
+function OrderCardParent({ reservation, refreshData, setRefreshData }) {
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState(null);
   const [pro, setPro] = useState(null);
@@ -78,9 +78,10 @@ function OrderCardParent({ reservation }) {
         } else {
           notifyFail();
         }
-        setOpenModal(false);
       })
       .catch((err) => console.error(err));
+    setOpenModal(false);
+    setRefreshData(!refreshData);
   };
 
   return (
@@ -266,4 +267,6 @@ OrderCardParent.propTypes = {
     status: PropTypes.string.isRequired,
     reservationDate: PropTypes.string.isRequired,
   }).isRequired,
+  refreshData: PropTypes.bool.isRequired,
+  setRefreshData: PropTypes.func.isRequired,
 };

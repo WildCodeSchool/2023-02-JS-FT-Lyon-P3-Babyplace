@@ -8,6 +8,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 
 function Orders({ setAccountScreen }) {
   const [data, setData] = useState(null);
+  const [refreshData, setRefreshData] = useState(false);
   const { logout } = useUserContext();
 
   useEffect(() => {
@@ -22,7 +23,8 @@ function Orders({ setAccountScreen }) {
           logout(true);
         }
       });
-  }, []);
+  }, [refreshData]);
+
   return (
     <div>
       <div className={styles.banner}>
@@ -38,7 +40,13 @@ function Orders({ setAccountScreen }) {
       <div className={styles.ordersList}>
         {data &&
           data.map((reservation) => {
-            return <OrderCardParent reservation={reservation} />;
+            return (
+              <OrderCardParent
+                reservation={reservation}
+                refreshData={refreshData}
+                setRefreshData={setRefreshData}
+              />
+            );
           })}
       </div>
     </div>

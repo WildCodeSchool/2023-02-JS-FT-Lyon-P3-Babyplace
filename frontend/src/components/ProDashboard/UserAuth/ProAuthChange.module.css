@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: space-around;
   width: 100%;
+  
 }
 
 form {
@@ -25,4 +26,8 @@ form div div {
 }
 
 @media screen and (min-width: 950px) {
+  .form {
+    margin: 25px 0;
+
+  }
 }
