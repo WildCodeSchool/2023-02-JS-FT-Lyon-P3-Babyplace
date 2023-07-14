@@ -7,7 +7,6 @@ export default function NotificationCenter() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    console.info("montage du composant");
     instance
       .get(`/notifications/parents`)
       .then((response) => {
@@ -15,8 +14,6 @@ export default function NotificationCenter() {
       })
       .catch((err) => console.error(err));
     return () => {
-      console.info("démontage du composant");
-
       instance
         .get(`/notifications/checked/parent`)
         .catch((err) => console.error(err));

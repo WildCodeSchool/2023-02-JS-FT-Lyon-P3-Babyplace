@@ -7,7 +7,6 @@ export default function NotificationBox() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    console.info("montage du composant");
     instance
       .get(`/notifications/pro`)
       .then((response) => {
@@ -15,8 +14,6 @@ export default function NotificationBox() {
       })
       .catch((err) => console.error(err));
     return () => {
-      console.info("démontage du composant");
-
       instance
         .get(`/notifications/checked/pro`)
         .catch((err) => console.error(err));
