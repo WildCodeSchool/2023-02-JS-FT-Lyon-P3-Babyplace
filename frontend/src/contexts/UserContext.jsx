@@ -27,6 +27,7 @@ export function UserContextProvider({ children }) {
     setToken(null);
     navigate("/");
     if (sessionExpired === true) {
+      // si l'utilisateur est déconnecté suite à un réponse 403 d'une reqûete, un message est affiché sur la page de redirection
       setSessionWarning("Votre session a expiré. Veuillez vous reconnecter.");
     }
   };

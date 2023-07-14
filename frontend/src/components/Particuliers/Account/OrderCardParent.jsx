@@ -66,6 +66,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
     return null;
   };
 
+  // Gestion du clic sur le bouton "Annuler" d'une réservation.
   const handleAction = () => {
     instance
       .put(
@@ -86,6 +87,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
   return (
     <>
       {openModal && !message && (
+        // Affichage des données de la crèche concernée par la réservation, via le clic sur la loupe
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
           <div className={styles.basic_modal_container}>
             <p className={styles.modal_text}>
@@ -119,6 +121,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
         </ModalWrapper>
       )}
       {openModal && message && (
+        // Affichage d'une modale pour confirmer l'annulation de la réservation
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
           <div className={styles.basic_modal_container}>
             <p className={styles.modal_text}>{message}</p>
@@ -198,6 +201,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
                     sx={{ borderRadius: 5, my: 1 }}
                     id="cancel"
                     onClick={() => {
+                      // Gestion de l'ouverture de la modale de confirmation d'annulation
                       setMessage(
                         "Êtes-vous sûr(e) de vouloir annuler cette réservation ?"
                       );

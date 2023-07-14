@@ -12,8 +12,8 @@ function ReservationConfirm() {
     month: "long",
     day: "numeric",
   };
-
   const day = reservation.date.toLocaleString("fr-FR", options);
+
   return (
     <div className={styles.container}>
       <div className={styles.confirmScreen}>
@@ -45,6 +45,8 @@ function ReservationConfirm() {
             type="button"
             className={styles.button}
             onClick={() => {
+              // On réinitialise le state réservation et on retourne au menu compte
+              // lorsque la réservation est effectuée et qu'on clique sur le bouton
               setReservation({});
               navigate("/particulier");
             }}

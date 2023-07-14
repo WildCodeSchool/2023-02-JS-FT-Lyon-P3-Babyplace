@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  overflow: scroll;
+  overflow: auto;
 }
 .header_card {
   background: var(--main-bg-gradient);
@@ -47,10 +47,13 @@
   border: 2px solid white;
 }
 .card_container {
+  display: flex;
+  justify-content: center;
   margin-top: 1rem;
   height: fit-content;
   overflow-y: auto;
   scrollbar-width: none;
+  width: 90%;
 }
 .card_container::-webkit-scrollbar {
   display: none;
@@ -70,12 +73,10 @@
   font-size: medium;
   margin-top: 2rem;
 }
-.card_container {
-  width: 90%;
-}
 
 /* Partie des enfants uniquement*/
 .card_child {
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,15 +124,20 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.form_container {
+  width: 95%;
+}
+
 .form {
   background: var(--main-bg-gradient);
-  margin-top: 1rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  width: 100%;
 }
 .form input {
   border-radius: 10px;
@@ -177,7 +183,6 @@
 @media screen and (min-width: 1024px) {
   .page {
     width: 100%;
-    height: auto;
   }
   .buttons {
     width: 100%;
@@ -211,8 +216,11 @@
     width: 80%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   .card_child {
+    width: 30%;
     padding: 1rem;
     font-size: large;
   }
@@ -228,17 +236,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
+    height: fit-content;
+    border-radius: 10px;
   }
   .form {
-    width: 80%;
-    margin-top: 0.5rem;
+    width: 100%;
     padding: 3rem;
-    box-shadow: 5px 5px 5px var(--second-color);
   }
   .form input {
-    width: 60%;
+    width: 80%;
     border-radius: 10px;
-    padding: 0.8rem 5rem;
+    padding: 0.8rem 1rem;
     margin: 0.5rem;
   }
   ::placeholder {

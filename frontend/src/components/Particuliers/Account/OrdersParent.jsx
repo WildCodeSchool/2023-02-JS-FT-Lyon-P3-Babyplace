@@ -12,6 +12,7 @@ function Orders({ setAccountScreen }) {
   const { logout } = useUserContext();
 
   useEffect(() => {
+    // On récupère les réservation du parent dès l'ouverture de l'écran "Réservations"
     instance
       .get("/parent/reservations")
       .then((response) => {
@@ -23,7 +24,7 @@ function Orders({ setAccountScreen }) {
         }
       });
   }, [refreshData]);
-  console.info(data);
+
   return (
     <div>
       <div className={styles.banner}>
