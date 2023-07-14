@@ -49,9 +49,10 @@ For deployment, you have to go to `secrets` → app `actions` on the github repo
 
 
 <!-- Introduction -->
-<h1 href='#'>Introduction</h1>
+<h1 href='#'>🫡Introduction</h1>
 <p>Hello 👋.<br/>
-Welcome on our app <i>Babyplace</i>, developed by our team of three companions : Marc-Antoine, François and Lucie.
+
+Welcome on our app <i>Babyplace</i>, developed by our team of three companions : <a href="https://github.com/HazeFury">Marc-Antoine</a>, <a href="https://github.com/Yukitaori">François</a> and <a href="https://github.com/LucieChev">Lucie</a>.
 This is our last project during our training at the Wild Code School and we're glad to present it to you.<p>
 <p>
 <br/>
@@ -68,72 +69,27 @@ This is our last project during our training at the Wild Code School and we're g
 <h2>User Target</h2>
 <p>The main users wil be parents and professionnals.</p>
 <p>A potential improvement of the app would be to give access to professionnals other than managers of daycare (childcare assistants, nannies, etc).</p>
-<!-- 
-<br/>
-<h2>Front-End</h2>
-<li>Make a wireframe</li>
-<li>Write user stories</li>
-<li>Responsive Website</li>
-<li>Dynamic Website  </li>
-<li>Two user levels (administrator, registred user)</li>
-</ul>
+
 <br/>
 <br/>
 
-
-<br/>
-<h2>Back-End</h2>
-<li>Create data & database</li>
-<li>Components to data'access </li>
-<li>MVC Schema</li>
-</ul>
-
-<br/>
-<br/> -->
 
 <!-- Technical stack -->
-<h1 href='#'>Technical Stack used for the project</h1>
-
-<p>- React.js</p>
-<p>- Node.js / Express</p>
-<p>- MySQL</p>
-<p>- Figma</p>
-
-<!-- <br/>
-<br/>
-  </div> -->
-  <!-- Wirframe -->
-<!-- <h1 href='#'>WireFrame</h1>
-🚧 IN CONSTRUCTION 🚧
-    
-<br/>
-<br/> -->
-
- <!-- Database -->
-<!-- <h1 href='#'>Database</h1>
-
-🚧 IN CONSTRUCTION 🚧
-
-<br />
-<br /> -->
- <!-- Features -->
-<!-- <h1 href='#'>Features</h1>
-<ul>👩‍💼 User : 
-<li>As a user, 🚧 IN CONSTRUCTION 🚧 </li>
-<li>As a user, 🚧 IN CONSTRUCTION 🚧 </li>
-
-</ul>
-<br />
-<ul>🧑‍💼 Admin :
-<li>As an administrator, 🚧 IN CONSTRUCTION 🚧. </li>
- <li>As an administrator, 🚧 IN CONSTRUCTION 🚧. </li>
+<h1 href='#'>⚙️Technical Stack used for the project</h1>
+<ul>
+<li>JavaScript / React.js / CSS vanilla</li>
+<li>Node.js / Express</li>
+<li>MySQL</li>
+<li>Git / Github</li>
+<li>Figma</li>
+<li>Trello</li>
 </ul>
 
 <br/>
-<br/>  -->
-<!-- Installation -->
-<h1 href='#'>Installation</h1>
-<ul><h3>Follow these steps</h3>
+<br/>
+<h1 href='#'>🔄Installation</h1>
+<h3>Follow these steps</h3>
+<ul>
 <li>
 - In VSCode, install plugins **Prettier - Code formatter** and **ESLint** and configure them</li>
 <li> Clone this repo, enter it</li>
@@ -141,14 +97,12 @@ This is our last project during our training at the Wild Code School and we're g
 <li> Run command `npm run migrate`</li> 
 <li> _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_</li>
 <li> Create `.env` files in /frontend and /backend following `.env.sample` examples.</li>
-<li> You must have to an account for <a href='https://fr.sendinblue.com/' rel="noreferrer" target='_blank' >SendingBlue</a> if you want to try the reset password functionnality</li>
 </ul>
 
-<i>✉️ To try Admin Role, you can log with : admintest@gmail.com  || Human76!  ✉️</i>
 <br/>
+<h3>
+Some commands :</h3> 
 <ul>
-  <h3>
-    Another commands :</h3> 
 <li>`setup` : Initialization of frontend and backend, as well as all toolings</li>
 <li> `migrate` : Run the database migration script</li>
 <li>`dev` : Starts both servers (frontend + backend) in one terminal</li>
@@ -161,10 +115,11 @@ This is our last project during our training at the Wild Code School and we're g
 <br/>
 <br/>
 <!-- Packages -->
-<h1 href='#'>Packages</h1>
-<p>We used the <a href='https://github.com/WildCodeSchool/js-template-fullstack' target='_blank' rel="noreferrer">Wild Code School - FullStack - Template</a></p>
- <ul><h3>It contains  :</h3>
-  <li> _Concurrently_ : Allows for several commands to run concurrently in the same CLI</li>
+<h1 href='#'>📦Packages</h1>
+<p>For this project, we used the <a href='https://github.com/WildCodeSchool/js-template-fullstack' target='_blank' rel="noreferrer">Wild Code School - FullStack - Template</a></p>
+<h3>The template initially contained  :</h3>
+<ul>
+<li> _Concurrently_ : Allows for several commands to run concurrently in the same CLI</li>
 <li> _Husky_ : Allows to execute specific commands that trigger on _git_ events</li>
 <li> _Vite_ : Alternative to _Create-React-App_, packaging less tools for a more fluid experience</li>
 <li> _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced</li>
@@ -172,28 +127,29 @@ This is our last project during our training at the Wild Code School and we're g
 <li> _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS</li>
 <li> _Nodemon_ : Allows to restart the server everytime a .js file is udated</li>
   </ul>
-<br/>
-<br/>
-<ul><h3>And we add :</h3>
-<li>React Router Dom</li>
-<li>TailwindCss for VITE - as a CSS framework</li>
-<li>Uuid - as a unique id manager</li>
-<li>Multer - as a uploads manager</li>
-<li>Argon2 - as a hashing password manager</li>
-  <li>React-hot-toast - as a toaster management</li>
-  <li>React-Quill - as a rich text editor </li>
-</ul>
 
 <br/>
-<br/>
-
-<!-- Next Features -->
-<h1 href='#'>Feature Plan</h1>
+<h3>Then we've added :</h3>
 <ul>
-<li>🚧 Back-end validators</li>
-<li>🚧 Refactoring</li>
-<li>🚧 Fix some bugs</li>
-
+<li>React Router Dom</li>
+<li>React Scroll</li>
+<li>Material UI (MUI)</li>
+<li>Multer (for file uploads)</li>
+<li>Argon2 (for hashing passwords )</li>
+<li>JWT - JSON Web Token</li>
+<li>Chart.js</li>
+<li>Joi (for forms validation)</li>
+<li>Axios</li>
+<li>Toastify</li>
+</ul>
+<br/>
+<br/>
+<h1 href='#'>🚧 What's next 🚧</h1>
+<ul>
+<li>Password reinitialization</li>
+<li>Pro availability / places deletion</li>
+<li>Back-end validators for more security</li>
+<li>Profile picture uploads</li>
 </ul>
 <br/>
 <br/>
