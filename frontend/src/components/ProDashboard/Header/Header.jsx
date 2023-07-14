@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { ToastContainer } from "react-toastify";
@@ -33,6 +33,8 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { user, logout } = useUserContext();
+  const delay = import.meta.env.VITE_NOTIF_FETCH_TIMING;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -57,16 +59,23 @@ export default function Header() {
   };
 
   const getNewNotification = () => {
-    instance
-      .get(`/notifications/number/pro`)
-      .then((response) => {
-        setNumberOfReservations(response.data.total);
-      })
-      .catch((err) => console.error(err));
+    if (user?.id) {
+      instance
+        .get(`/notifications/number/pro`)
+        .then((response) => {
+          setNumberOfReservations(response.data.total);
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
-  setInterval(getNewNotification, 5000); // pendant que l'on dev l'application le temps de rafraississement est 5s (5000).
-  // Il faudra bien penser à le changer pour la prod
+  useEffect(() => {
+    // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
+    const timer = setInterval(getNewNotification, delay);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
