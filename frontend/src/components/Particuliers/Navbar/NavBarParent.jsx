@@ -25,6 +25,7 @@ export default function NavBarParent() {
   const [value, setValue] = useState(0);
   const { user } = useUserContext();
   const [numberOfReservations, setNumberOfReservations] = useState(null);
+  const delay = import.meta.env.VITE_NOTIF_FETCH_TIMING;
 
   const getNewNotification = () => {
     if (user?.id) {
@@ -38,8 +39,8 @@ export default function NavBarParent() {
   };
 
   useEffect(() => {
-    const timer = setInterval(getNewNotification, 5000); // pendant que l'on dev l'application le temps de rafraississement est 5s (5000).
-    // Il faudra bien penser à le changer pour la prod
+    // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
+    const timer = setInterval(getNewNotification, delay);
     return () => {
       clearInterval(timer);
     };
