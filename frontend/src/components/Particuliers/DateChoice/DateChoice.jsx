@@ -38,7 +38,7 @@ export default function DateChoice() {
     ]
       .map((string) => (string.length === 1 ? `0${string}` : string))
       .join("-");
-
+    // On gère l'alimentation d'un state de réservation afin de garder les infos au fil du parcous de réservation
     setReservation({
       ...reservation,
       proId: id,
@@ -47,6 +47,7 @@ export default function DateChoice() {
       day,
     });
     if (!user?.id) {
+      // Si l'utilisateur n'est pas connecté, sauvegarde de l'id du pro dont il consultait le profil afin de revenir à la page de sélection de la date une fois connecté (cf userContext)
       setPendingReservation(id);
     }
   };

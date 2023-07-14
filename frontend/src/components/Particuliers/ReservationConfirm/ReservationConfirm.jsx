@@ -45,6 +45,8 @@ function ReservationConfirm() {
             type="button"
             className={styles.button}
             onClick={() => {
+              // On réinitialise le state réservation et on retourne au menu compte
+              // lorsque la réservation est effectuée et qu'on clique sur le bouton
               setReservation({});
               navigate("/particulier");
             }}
