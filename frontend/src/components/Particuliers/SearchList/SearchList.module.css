@@ -7,15 +7,14 @@
   align-items: center;
   background: var(--main-bg-gradient);
   color: white;
-  height: calc(100vh - 53px);
-  overflow: scroll;
+  height: calc(100vh - 56px);
 }
 .button_back {
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
-  left: 5%;
+  top: 2%;
+  left: 2%;
   cursor: pointer;
   z-index: 300;
 }
@@ -74,6 +73,7 @@
     max-width: 100%;
   }
   .card_media {
+    height: fit-content;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

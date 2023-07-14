@@ -1,15 +1,15 @@
 .page {
   background: var(--main-bg-gradient);
-  height: calc(100vh - 53px);
+  height: calc(100vh - 56px);
+  overflow: hidden;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  color: var(--dark-color);
-  overflow: scroll;
 }
+
 .header_card {
-  display: flex;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -23,27 +23,28 @@
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
-  left: 5%;
+  top: 2%;
+  left: 2%;
   cursor: pointer;
   z-index: 300;
 }
-.page h2 {
-  margin-top: 1rem;
+.page h1 {
+  text-align: center;
   color: white;
-  font-size: large;
+  margin-top: 2rem;
 }
 .page p {
   margin: 0.5rem;
   font-size: small;
+  word-wrap: break-word;
 }
-.page h4 {
+
+.page .name_type h3 {
+  text-align: center;
   color: white;
-  margin: 1rem;
-  font-size: small;
 }
+
 .page h3 {
-  font-size: medium;
   margin: 0.5rem;
   color: var(--main-color);
 }
@@ -51,16 +52,20 @@
 .card_global::-webkit-scrollbar {
   display: none;
 }
+
 .card_global {
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   height: fit-content;
   overflow-y: auto;
   scrollbar-width: none;
-
   background-color: white;
   border-radius: 10px;
-  width: 90vw;
+  width: 90%;
+  box-shadow: 5px 5px 5px var(--second-color);
+  margin-bottom: 1rem;
+  border-radius: 10px;
 }
+
 .image {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -125,7 +130,7 @@
 
 @media screen and (min-width: 1024px) {
   .card_global {
-    width: 90%;
+    width: fit-content;
     padding: 1rem;
     display: flex;
     align-items: center;

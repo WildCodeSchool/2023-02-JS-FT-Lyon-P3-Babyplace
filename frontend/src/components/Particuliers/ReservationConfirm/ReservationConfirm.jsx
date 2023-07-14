@@ -12,8 +12,8 @@ function ReservationConfirm() {
     month: "long",
     day: "numeric",
   };
-
   const day = reservation.date.toLocaleString("fr-FR", options);
+
   return (
     <div className={styles.container}>
       <div className={styles.confirmScreen}>
