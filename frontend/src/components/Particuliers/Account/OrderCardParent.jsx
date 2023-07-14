@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
@@ -13,6 +13,20 @@ function OrderCardParent({ reservation }) {
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState(null);
   const [pro, setPro] = useState(null);
+  const notifySuccess = (text) => toast.success(text);
+  const notifyFail = () => toast.error("Un problème est survenu");
+  const {
+    id: idReservation,
+    reservationDate: date,
+    firstname: prenomEnfant,
+    lastname: nomEnfant,
+    proId: idPro,
+    parent_firstname: parentFirstname,
+    parent_lastname: parentLastname,
+  } = reservation;
+
+  const childName = `${prenomEnfant} ${nomEnfant}`;
+  const parentName = `${parentFirstname} ${parentLastname}`;
 
   const getDetailStatus = () => {
     if (reservation.status === 0) {
@@ -55,16 +69,18 @@ function OrderCardParent({ reservation }) {
   // Gestion du clic sur le bouton "Annuler" d'une réservation.
   const handleAction = () => {
     instance
-      .patch("/parent/reservation", { id: reservation.id })
+      .put(
+        `/parent/reservations/cancel/${idReservation}?date=${date}&childname=${childName}&pro=${idPro}&parentname=${parentName}`
+      )
       .then((res) => {
         if (res.status === 200) {
-          setMessage("La réservation a bien été annulée.");
+          notifySuccess("Réservation annulée");
+        } else {
+          notifyFail();
         }
-        console.info(res);
+        setOpenModal(false);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -135,7 +151,7 @@ function OrderCardParent({ reservation }) {
                   <button
                     type="button"
                     className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
-                    onClick={() => handleAction()}
+                    onClick={handleAction}
                   >
                     Oui
                   </button>
@@ -241,10 +257,12 @@ export default OrderCardParent;
 
 OrderCardParent.propTypes = {
   reservation: PropTypes.shape({
-    proId: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    proId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
+    parent_firstname: PropTypes.string.isRequired,
+    parent_lastname: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     reservationDate: PropTypes.string.isRequired,
   }).isRequired,

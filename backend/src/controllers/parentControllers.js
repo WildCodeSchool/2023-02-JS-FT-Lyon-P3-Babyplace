@@ -144,19 +144,41 @@ const getReservations = (req, res) => {
     });
 };
 
-const cancelReservation = (req, res) => {
-  models.reservation
-    .delete(req.payloads.sub, req.body.id)
-    .then(([result]) => {
-      if (result.affectedRows > 0) {
-        return res.sendStatus(200);
-      }
-      return res.sendStatus(404);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const cancelReservation = async (req, res) => {
+  const parentId = req.payloads.sub;
+  const reservationId = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { childname } = req.query;
+  const { parentname } = req.query;
+  const { pro } = req.query;
+
+  try {
+    const cancelOrderResult = await models.reservation.delete(
+      parentId,
+      reservationId
+    );
+    if (cancelOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult =
+      await models.notify.parentHaveCanceledHisReservation(
+        parentname,
+        date,
+        childname,
+        pro
+      );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
 const saveReservation = async (req, res) => {

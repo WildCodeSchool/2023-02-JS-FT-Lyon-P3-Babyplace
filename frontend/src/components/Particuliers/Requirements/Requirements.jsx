@@ -44,19 +44,17 @@ function Requirements() {
       <div className={styles.title}>
         <h1>Conditions de réservation</h1>
       </div>
-      <div className={styles.card}>
-        <div className={styles.description}>
-          <h2>Vous devez répondre aux conditions suivantes pour réserver :</h2>
-        </div>
-        <div className={styles.requirements}>
-          <div className={styles.requirement}>
-            <VerifiedIcon color="success" />
-            <p>Votre profil est complet.</p>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.description}>
+            <h2>
+              Vous devez répondre aux conditions suivantes pour réserver :
+            </h2>
           </div>
           {userChildren?.length > 0 ? (
             <div className={styles.requirement}>
               <VerifiedIcon color="success" />
-              <p>Vous avez enregistré au moins un enfant.</p>
+              <p>Votre profil est complet.</p>
             </div>
           ) : (
             // Si aucun enfant trouvé dans le fetch, le message suivant est affiché, et l'utilisateur ne peut pas aller plus loin.

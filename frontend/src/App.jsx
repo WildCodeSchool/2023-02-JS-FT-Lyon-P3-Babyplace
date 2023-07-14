@@ -21,8 +21,8 @@ import WelcomePage from "./components/Particuliers/WelcomePage/WelcomePage";
 import Reservation from "./components/Particuliers/Reservation/Reservation";
 import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
+import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
 import { UserContextProvider } from "./contexts/UserContext";
-
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
 import "./App.css";
@@ -34,6 +34,9 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
+
+            {/* ----------- Route Parent  ----------------- */}
+
             <Route path="/particulier" element={<Particulier />}>
               <Route index element={<Account />} />
               <Route path="recherche" element={<SearchList />} />
@@ -49,8 +52,15 @@ function App() {
               <Route path=":id" element={<FormCompletWelcome />} />
               <Route path=":id/child" element={<FormCompletChildren />} />
               <Route path=":id/parent" element={<FormCompletParent />} />
+              <Route path="notifications" element={<NotificationPage />} />
             </Route>
+
+            {/* ----------- Route RegisterPro  ----------------- */}
+
             <Route path="/pro-register" element={<ProRegister />} />
+
+            {/* ----------- Route DashboardPro  ----------------- */}
+
             <Route path="/pro" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />
               <Route path="calendar" element={<Calendar />} />

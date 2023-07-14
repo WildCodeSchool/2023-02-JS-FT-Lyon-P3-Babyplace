@@ -23,7 +23,6 @@ function Orders({ setAccountScreen }) {
         }
       });
   }, []);
-
   return (
     <div>
       <div className={styles.banner}>

@@ -1,46 +1,65 @@
-.container {
-  height: calc(100vh - 53px);
-  overflow-y: auto;
-}
-
 .selectChildScreen {
-  position: relative;
   background: var(--main-bg-gradient);
-  height: 100%;
+  height: calc(100vh - 56px);
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
   text-align: center;
+  overflow-y: hidden;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  margin-top: 1rem;
+  height: fit-content;
+  scrollbar-width: none;
+  overflow-y: auto;
+  box-shadow: 5px 5px 5px var(--second-color);
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  width: 50%;
 }
 
 .button_back {
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
-  left: 5%;
+  top: 2%;
+  left: 2%;
   cursor: pointer;
 }
 
 .selectChildScreen h1 {
-  margin: 2rem 0;
+  margin-top: 2rem;
   color: white;
 }
 
 .card {
-  padding: 2em;
+  overflow-y: hidden;
+  padding: 1em 2em;
   background: white;
-  width: 50%;
+  width: 100%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
   color: var(--main-color);
-  box-shadow: 5px 5px 5px var(--second-color);
+}
+
+.card h2 {
+  color: var(--main-color);
+  margin-bottom: 1em;
 }
 
 .card form > div > label {
@@ -51,12 +70,23 @@
   align-items: center;
 }
 
+.card form div {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .card form div > div {
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .card form div > label {
   font-family: var(--main-font-family);
+  color: var(--main-color);
   font-weight: bold;
   font-size: 1.5em;
 }
@@ -70,7 +100,7 @@
   max-width: 35ch;
   text-align: left;
   width: 90%;
-  margin: 2rem 0;
+  margin: 2rem 0 1rem 0;
 }
 
 .button {
@@ -94,7 +124,10 @@
 }
 
 @media screen and (max-width: 768px) {
-  .requirementsScreen {
+  .container {
+    width: 90%;
+  }
+  .selectChildScreen {
     overflow-y: scroll;
   }
   .card {
@@ -102,3 +135,11 @@
   }
 }
 
+@media screen and (min-width: 450px) {
+  .selectChildScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
