@@ -11,7 +11,11 @@ import ParentHomeFolderInfo from "./ParentHomeFolderInfo";
 import styles from "./OrderCard.module.css";
 import instance from "../../../services/APIService";
 
-export default function OrderCard({ reservation }) {
+export default function OrderCard({
+  reservation,
+  refreshData,
+  setRefreshData,
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const {
@@ -82,6 +86,7 @@ export default function OrderCard({ reservation }) {
         }
       })
       .catch((err) => console.error(err));
+    setRefreshData(!refreshData);
   };
   const handleCancel = () => {
     if (reservation.status === 0) {
@@ -97,6 +102,7 @@ export default function OrderCard({ reservation }) {
           }
         })
         .catch((err) => console.error(err));
+      setRefreshData(!refreshData);
     } else if (reservation.status === 1) {
       instance
         .put(
@@ -110,6 +116,7 @@ export default function OrderCard({ reservation }) {
           }
         })
         .catch((err) => console.error(err));
+      setRefreshData(!refreshData);
     }
   };
 
@@ -241,4 +248,6 @@ OrderCard.propTypes = {
     id_parent: PropTypes.number.isRequired,
     date_reservation: PropTypes.string.isRequired,
   }).isRequired,
+  refreshData: PropTypes.bool.isRequired,
+  setRefreshData: PropTypes.func.isRequired,
 };

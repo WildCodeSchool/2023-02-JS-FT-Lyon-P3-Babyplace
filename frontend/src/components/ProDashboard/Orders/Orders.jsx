@@ -9,6 +9,7 @@ export default function Orders() {
   const [selectedValue, setSelectedValue] = useState(4);
   const [numberOfResults, setNumberOfResults] = useState(0);
   const [reservations, setReservations] = useState([]);
+  const [refreshData, setRefreshData] = useState(false);
   const limitPerPage = 10;
   const defaultPage = 1;
   const [maxPage, setMaxPage] = useState(0);
@@ -72,7 +73,7 @@ export default function Orders() {
         scrollToTop();
       })
       .catch((err) => console.error(err));
-  }, [currentPage, selectedValue]);
+  }, [currentPage, selectedValue, refreshData]);
 
   const handlePrev = () => {
     setCurrentPage((prev) => prev - 1);
@@ -135,7 +136,12 @@ export default function Orders() {
       </div>
       <div className={styles.orders_container} ref={reservationsContainerRef}>
         {filteredOrders.map((reservation) => (
-          <OrderCard key={reservation.id} reservation={reservation} />
+          <OrderCard
+            key={reservation.id}
+            reservation={reservation}
+            refreshData={refreshData}
+            setRefreshData={setRefreshData}
+          />
         ))}
         <div className={styles.pagination_btn_container}>
           <Button
