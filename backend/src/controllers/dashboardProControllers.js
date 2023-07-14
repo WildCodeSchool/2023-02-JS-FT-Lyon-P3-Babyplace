@@ -6,7 +6,7 @@ const browseReservations = async (req, res) => {
   const { page } = req.query;
   const limit = 10;
   const offset = (page - 1) * limit;
-  console.warn(`le status est ${status}`);
+
   try {
     const [[{ total }]] = await models.dashboardpro.countOrders(id, status);
 
@@ -16,7 +16,7 @@ const browseReservations = async (req, res) => {
       offset,
       status
     );
-    // console.info(orders);
+
     res.send({ total, datas: orders });
   } catch (err) {
     console.error(err);
@@ -39,52 +39,95 @@ const showMoreInfoOnOrder = (req, res) => {
       res.status(500).send("There is a problem");
     });
 };
-const validateOrder = (req, res) => {
-  models.dashboardpro
-    .validThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+
+const validateOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.validThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newValidateNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
-const refuseOrder = (req, res) => {
-  models.dashboardpro
-    .refuseThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+const refuseOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.refuseThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newRefuseNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
-const cancelOrder = (req, res) => {
-  models.dashboardpro
-    .cancelThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+const cancelOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.cancelThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newCancelNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
 const getDateOrder = (req, res) => {
