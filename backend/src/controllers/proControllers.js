@@ -121,6 +121,8 @@ const edit = async (req, res) => {
         req.body.daysToRemove
       );
       console.info(disponibilitiesToRemove);
+
+      await models.proDisponibility.delete(disponibilitiesToRemove, pro.id);
     }
 
     return res.sendStatus(204);
