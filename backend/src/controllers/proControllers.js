@@ -121,7 +121,6 @@ const edit = async (req, res) => {
       const [disponibilitiesToRemove] = await models.disponibility.find(
         req.body.daysToRemove
       );
-      console.info(disponibilitiesToRemove);
 
       await models.proDisponibility.delete(disponibilitiesToRemove, pro.id);
 
@@ -138,7 +137,6 @@ const edit = async (req, res) => {
         );
         futureDates.push(futureDate);
       }
-      console.info(futureDates);
       const datesToImpact = [];
       const daysOfTheWeek = [
         "Dimanche",
@@ -160,18 +158,16 @@ const edit = async (req, res) => {
           ]
             .map((string) => (string.length === 1 ? `0${string}` : string))
             .join("-");
-          console.info("trouvé");
           datesToImpact.push(formattedDay);
         }
       });
-      console.info("dates to impact = ", datesToImpact);
+
       // on récupère un tableau des réservations à annuler (codes status 0 (en attente) et 1 (acceptée))
       const [reservationsToCancel] =
         await models.reservation.findReservationForProByDate(
           datesToImpact,
           pro.id
         );
-      console.info("reservations to cancel = ", reservationsToCancel);
 
       // On change le statut des réservations à 3 (annulée)
       if (reservationsToCancel.length > 0) {
@@ -181,11 +177,7 @@ const edit = async (req, res) => {
         const parentIdArray = reservationsToCancel.map(
           (reservation) => reservation.parentId
         );
-        const [result] = await models.reservation.cancel(
-          parentIdArray,
-          reservationsIdArray
-        );
-        console.info("cancelling reservations results = ", result);
+        await models.reservation.cancel(parentIdArray, reservationsIdArray);
 
         // On envoie une notification à chaque parent concerné par une des réservations annulées pour chacune d'entre elles
         const notifArray = reservationsToCancel.map((reservation) => {
@@ -216,10 +208,7 @@ const edit = async (req, res) => {
           ];
         });
 
-        const [notifResult] = await models.notify.massNewCancelNotification(
-          notifArray
-        );
-        console.info("cancelling reservations results = ", notifResult);
+        await models.notify.massNewCancelNotification(notifArray);
       }
     }
 
