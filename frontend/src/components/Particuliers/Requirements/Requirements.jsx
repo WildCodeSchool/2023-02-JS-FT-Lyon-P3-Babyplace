@@ -51,10 +51,14 @@ function Requirements() {
               Vous devez répondre aux conditions suivantes pour réserver :
             </h2>
           </div>
+          <div className={styles.requirement}>
+            <VerifiedIcon color="success" />
+            <p>Votre profil est complet.</p>
+          </div>
           {userChildren?.length > 0 ? (
             <div className={styles.requirement}>
               <VerifiedIcon color="success" />
-              <p>Votre profil est complet.</p>
+              <p>Vous avez enregistré au moins un enfant.</p>
             </div>
           ) : (
             // Si aucun enfant trouvé dans le fetch, le message suivant est affiché, et l'utilisateur ne peut pas aller plus loin.
@@ -63,27 +67,27 @@ function Requirements() {
               <p>Vous n'avez pas encore enregistré d'enfant.</p>
             </div>
           )}
+          <div className={styles.disclaimer}>
+            <p>
+              En cliquant sur le bouton ci-dessous, je m'engage à signaler à la
+              crèche tout changement relatif à mes enfants qui iraient à
+              l'encontre des conditions de réservation.
+            </p>
+          </div>
+          <button
+            type="button"
+            disabled={!userChildren || userChildren.length === 0}
+            className={
+              userChildren?.length > 0 ? styles.button : styles.disabledButton
+            }
+            onClick={() => {
+              if (userChildren?.length > 0)
+                navigate("/particulier/reservation/enfant");
+            }}
+          >
+            J'ai lu et j'accepte la consigne
+          </button>
         </div>
-        <div className={styles.disclaimer}>
-          <p>
-            En cliquant sur le bouton ci-dessous, je m'engage à signaler à la
-            crèche tout changement relatif à mes enfants qui iraient à
-            l'encontre des conditions de réservation.
-          </p>
-        </div>
-        <button
-          type="button"
-          disabled={!userChildren || userChildren.length === 0}
-          className={
-            userChildren?.length > 0 ? styles.button : styles.disabledButton
-          }
-          onClick={() => {
-            if (userChildren?.length > 0)
-              navigate("/particulier/reservation/enfant");
-          }}
-        >
-          J'ai lu et j'accepte la consigne
-        </button>
       </div>
     </div>
   );

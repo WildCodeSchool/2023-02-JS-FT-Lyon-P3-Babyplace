@@ -63,6 +63,7 @@ const edit = async (req, res) => {
       }
     });
     pro.id = req.payloads?.sub;
+
     // On met à jour le pro aec un objet propre
     await models.pro
       .update(pro)
@@ -76,6 +77,7 @@ const edit = async (req, res) => {
         console.error(err);
         return res.send(500);
       });
+
     // Si des places sont à ajouter, on fait une requête SQL pour ajouter les places dans la table
     if (req.body.placesToAdd && req.body.placesToAdd > 0) {
       await models.place
@@ -109,6 +111,107 @@ const edit = async (req, res) => {
           return res.send(500);
         });
     }
+
+    // Si des jours de disponibilité sont à supprimer, on fait une requête pour trouver l'id des disponibilités à supprimer
+    // puis une requête pour les supprimer
+    // puis une requête pour trouver les réservations en lien avec cette disponibilité
+    // puis une requête pour changer le statut les réservations en lien avec cette disponibilité
+    // puis une requête pour notifier les parents en lien avec ces réservations
+    if (req.body.daysToRemove && req.body.daysToRemove.length > 0) {
+      const [disponibilitiesToRemove] = await models.disponibility.find(
+        req.body.daysToRemove
+      );
+
+      await models.proDisponibility.delete(disponibilitiesToRemove, pro.id);
+
+      // on cherche la prochaine date relative à chaque jour à supprimer
+      // puis on fait un tableau des dates concernées par les dates
+      const futureDates = [];
+      const today = new Date();
+      for (let i = 1; i <= 7; i += 1) {
+        const futureDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + i,
+          today.getHours()
+        );
+        futureDates.push(futureDate);
+      }
+      const datesToImpact = [];
+      const daysOfTheWeek = [
+        "Dimanche",
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+      ];
+
+      futureDates.forEach((day) => {
+        const dayToFind = day.getDay();
+        if (req.body.daysToRemove.includes(daysOfTheWeek[dayToFind])) {
+          const formattedDay = [
+            `${day.getFullYear()}`,
+            `${day.getMonth() + 1}`,
+            `${day.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+          datesToImpact.push(formattedDay);
+        }
+      });
+
+      // on récupère un tableau des réservations à annuler (codes status 0 (en attente) et 1 (acceptée))
+      const [reservationsToCancel] =
+        await models.reservation.findReservationForProByDate(
+          datesToImpact,
+          pro.id
+        );
+
+      // On change le statut des réservations à 3 (annulée)
+      if (reservationsToCancel.length > 0) {
+        const reservationsIdArray = reservationsToCancel.map(
+          (reservation) => reservation.reservationId
+        );
+        const parentIdArray = reservationsToCancel.map(
+          (reservation) => reservation.parentId
+        );
+        await models.reservation.cancel(parentIdArray, reservationsIdArray);
+
+        // On envoie une notification à chaque parent concerné par une des réservations annulées pour chacune d'entre elles
+        const notifArray = reservationsToCancel.map((reservation) => {
+          const formattedDay = [
+            `${reservation.reservationDate.getDate()}`,
+            `${reservation.reservationDate.getMonth() + 1}`,
+            `${reservation.reservationDate.getFullYear()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("/");
+
+          const formattedToday = [
+            `${today.getFullYear()}`,
+            `${today.getMonth() + 1}`,
+            `${today.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+
+          return [
+            ["cancel"],
+            [0],
+            [
+              `votre réservation du ${formattedDay} pour ${reservation.firstname} ${reservation.lastname} a été annulée`,
+            ],
+            [`${formattedToday}`],
+            [`${reservation.parentId}`],
+          ];
+        });
+
+        await models.notify.massNewCancelNotification(notifArray);
+      }
+    }
+
     return res.sendStatus(204);
   } catch (err) {
     console.error(err);

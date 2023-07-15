@@ -20,6 +20,13 @@ class ReservationManager extends AbstractManager {
     );
   }
 
+  findReservationForProByDate(dateArray, proId) {
+    return this.database.query(
+      `SELECT t.id reservationId, t.reservation_date reservationDate, t.status, c.firstname, c.lastname, p.id parentId FROM ${this.table} as t JOIN child AS c ON t.child_id = c.id JOIN place as pl ON t.place_id = pl.id JOIN parent as p ON c.parent_id = p.id WHERE pl.pro_id = ? AND t.reservation_date in (?) AND t.status in (0, 1)`,
+      [proId, dateArray]
+    );
+  }
+
   delete(parentId, reservationId) {
     return this.database.query(
       `update ${this.table} as t
@@ -27,6 +34,17 @@ class ReservationManager extends AbstractManager {
       join parent as p on c.parent_id = p.id
       set status = 3
       where t.id = ? and p.id = ?`,
+      [reservationId, parentId]
+    );
+  }
+
+  cancel(parentId, reservationId) {
+    return this.database.query(
+      `update ${this.table} as t
+      join child as c on c.id = t.child_id
+      join parent as p on c.parent_id = p.id
+      set status = 3
+      where t.id in (?) and p.id in (?)`,
       [reservationId, parentId]
     );
   }

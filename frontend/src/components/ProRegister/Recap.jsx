@@ -19,6 +19,20 @@ function Recap({
   const { user, setUser, logout } = useUserContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
 
+  useEffect(() => {
+    // Si le pro s'apprête à supprimer un jour de disponibilité, un message l'avertit des conséquences.
+    if (
+      infoToModify.disponibility?.length > 0 &&
+      user.disponibility.some(
+        (day) => !infoToModify.disponibility.includes(day)
+      )
+    ) {
+      setFormValidationMessage(
+        "Supprimer des jours de disponibilité aura pour effet d'annuler toutes les réservations positionnées sur ces jours. Si vous n'êtes pas sûr.e de vouloir annuler ces réservations, cliquez sur 'Annuler'."
+      );
+    }
+  }, [infoToModify]);
+
   const handleSubmitRegister = () => {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
 
@@ -38,6 +52,7 @@ function Recap({
         }
       }
       const daysToAdd = [];
+      const daysToRemove = [];
       if (infoToModify.disponibility) {
         for (const day of infoToModify.disponibility) {
           if (!user.disponibility.includes(day)) {
@@ -49,10 +64,7 @@ function Recap({
         for (const day of user.disponibility) {
           if (!infoToModify.disponibility.includes(day)) {
             // TODO si l'utilisateur déclare moins de disponibilités que précédemment enregistrées, il faut en supprimer.
-            setInfoToModify({});
-            return setFormValidationMessage(
-              "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer."
-            );
+            daysToRemove.push(day);
           }
         }
       }
@@ -61,6 +73,7 @@ function Recap({
           ...infoToModify,
           placesToAdd,
           daysToAdd,
+          daysToRemove,
         })
         .then((response) => {
           if (response.status !== 204) {
@@ -192,6 +205,8 @@ function Recap({
             {formValidationMessage ? (
               <Alert
                 severity={
+                  formValidationMessage ===
+                    "Supprimer des jours de disponibilité aura pour effet d'annuler toutes les réservations positionnées sur ces jours. Si vous n'êtes pas sûr.e de vouloir annuler ces réservations, cliquez sur 'Annuler'." ||
                   formValidationMessage ===
                     "Vous ne pouvez pas supprimer de places. Veuillez recommencer." ||
                   formValidationMessage ===
