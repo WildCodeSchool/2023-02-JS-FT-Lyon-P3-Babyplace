@@ -109,12 +109,12 @@ function Login({ userType }) {
           {userType === "pro" ? (
             <div className={styles.switch}>
               <p>Pas encore inscrit ?</p>
-              <Link to="/pro-register"> Cliquez ici</Link>
+              <Link to="/pro-inscription"> Cliquez ici</Link>
             </div>
           ) : (
             <div className={styles.switch}>
               <p>Pas encore inscrit ?</p>
-              <Link to="/particulier/register"> Cliquez ici</Link>
+              <Link to="/particulier/enregistrement"> Cliquez ici</Link>
             </div>
           )}
         </Box>
