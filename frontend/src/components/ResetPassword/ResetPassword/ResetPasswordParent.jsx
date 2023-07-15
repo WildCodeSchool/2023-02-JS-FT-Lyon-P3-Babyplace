@@ -62,8 +62,7 @@ export default function EmailForResetPro() {
   const handleConfirmPassword = (e) => {
     setConfirmPassword(e.target.value);
   };
-  console.info(password);
-  console.info(confirmPassword);
+
   return (
     <div className="email-for-reset_page">
       <DesignWelcome home={false} />

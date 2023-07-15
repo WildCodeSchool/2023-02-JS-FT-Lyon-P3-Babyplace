@@ -15,7 +15,6 @@ const hashingOptions = {
 
 const verifyProEmail = (req, res, next) => {
   const { email } = req.body;
-  console.info(email);
   models.pro
     .findByEmailWithPassword(email)
     .then(([users]) => {
@@ -36,7 +35,6 @@ const verifyProEmail = (req, res, next) => {
 
 const verifyParentEmail = (req, res, next) => {
   const { email } = req.body;
-  console.info(email);
   models.parent
     .findByEmailWithPassword(email)
     .then(([users]) => {
@@ -60,9 +58,6 @@ const verifyParentEmail = (req, res, next) => {
 const generatePasswordTokenForPro = (req, res, next) => {
   const { user } = req;
   user.passwordToken = uuidv4();
-  console.info(
-    `le password token qui viens d'être créé est ${user.passwordToken}`
-  );
   models.reset
     .updatePasswordTokenForPro(user)
     .then(() => {
@@ -98,7 +93,6 @@ const transporter = nodemailer.createTransport({
   tls: { rejectUnauthorized: false },
 });
 const sendForgottenPassword = (req, res) => {
-  console.info(req.user.mail_address);
   transporter.sendMail(
     {
       from: "babyplace.pro@gmail.com",
@@ -126,9 +120,6 @@ const sendForgottenPassword = (req, res) => {
 // Verify if the tokenPassword exist
 const verifyTokenPasswordPro = (req, res, next) => {
   const { passwordToken } = req.body;
-  console.info(
-    `le password token que je reçois depuis le front est le ${passwordToken}`
-  );
   models.reset
     .selectTokenPro(passwordToken)
     .then(([users]) => {
@@ -165,9 +156,6 @@ const verifyTokenPasswordParent = (req, res, next) => {
 
 const hashNewPassword = (req, res, next) => {
   // hash du password avec argon2 puis next()
-  console.info(
-    `le mot de passe que je reçois du front est : ${req.body.password}`
-  );
   argon2
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
@@ -185,7 +173,6 @@ const hashNewPassword = (req, res, next) => {
 const resetPasswordPro = (req, res) => {
   const { user } = req;
   user.hashed_password = req.body.hashed_password;
-  console.info(`les infos du user sont : ${user.id}`);
   models.reset
     .updateProPasswordAfterReset(user)
     .then(([result]) => {
