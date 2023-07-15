@@ -20,6 +20,7 @@ function Recap({
   const [formValidationMessage, setFormValidationMessage] = useState(null);
 
   useEffect(() => {
+    // Si le pro s'apprête à supprimer un jour de disponibilité, un message l'avertit des conséquences.
     if (
       infoToModify.disponibility?.length > 0 &&
       user.disponibility.some(
@@ -64,10 +65,6 @@ function Recap({
           if (!infoToModify.disponibility.includes(day)) {
             // TODO si l'utilisateur déclare moins de disponibilités que précédemment enregistrées, il faut en supprimer.
             daysToRemove.push(day);
-            // setInfoToModify({});
-            // return setFormValidationMessage(
-            //   "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer."
-            // );
           }
         }
       }

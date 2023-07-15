@@ -63,6 +63,7 @@ const edit = async (req, res) => {
       }
     });
     pro.id = req.payloads?.sub;
+
     // On met à jour le pro aec un objet propre
     await models.pro
       .update(pro)
@@ -76,6 +77,7 @@ const edit = async (req, res) => {
         console.error(err);
         return res.send(500);
       });
+
     // Si des places sont à ajouter, on fait une requête SQL pour ajouter les places dans la table
     if (req.body.placesToAdd && req.body.placesToAdd > 0) {
       await models.place
@@ -109,6 +111,18 @@ const edit = async (req, res) => {
           return res.send(500);
         });
     }
+
+    // Si des jours de disponibilité sont à supprimer, on fait une requête pour trouver l'id des disponibilités à supprimer
+    // puis une requête pour les supprimer
+    // puis une requête pour trouver les réservations en lien avec cette disponibilité
+    // puis une requête pour notifier les parents en lien avec ces réservations
+    if (req.body.daysToRemove && req.body.daysToRemove.length > 0) {
+      const [disponibilitiesToRemove] = await models.disponibility.find(
+        req.body.daysToRemove
+      );
+      console.info(disponibilitiesToRemove);
+    }
+
     return res.sendStatus(204);
   } catch (err) {
     console.error(err);
