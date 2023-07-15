@@ -152,9 +152,6 @@ const edit = async (req, res) => {
 
       futureDates.forEach((day) => {
         const dayToFind = day.getDay();
-        console.info(day);
-        console.info(dayToFind);
-        console.info(daysOfTheWeek[dayToFind]);
         if (req.body.daysToRemove.includes(daysOfTheWeek[dayToFind])) {
           const formattedDay = [
             `${day.getFullYear()}`,
@@ -167,14 +164,63 @@ const edit = async (req, res) => {
           datesToImpact.push(formattedDay);
         }
       });
-      console.info(datesToImpact);
-      // on récupère un tableau des réservations à annuler
+      console.info("dates to impact = ", datesToImpact);
+      // on récupère un tableau des réservations à annuler (codes status 0 (en attente) et 1 (acceptée))
       const [reservationsToCancel] =
         await models.reservation.findReservationForProByDate(
           datesToImpact,
           pro.id
         );
-      console.info(reservationsToCancel);
+      console.info("reservations to cancel = ", reservationsToCancel);
+
+      // On change le statut des réservations à 3 (annulée)
+      if (reservationsToCancel.length > 0) {
+        const reservationsIdArray = reservationsToCancel.map(
+          (reservation) => reservation.reservationId
+        );
+        const parentIdArray = reservationsToCancel.map(
+          (reservation) => reservation.parentId
+        );
+        const [result] = await models.reservation.cancel(
+          parentIdArray,
+          reservationsIdArray
+        );
+        console.info("cancelling reservations results = ", result);
+
+        // On envoie une notification à chaque parent concerné par une des réservations annulées pour chacune d'entre elles
+        const notifArray = reservationsToCancel.map((reservation) => {
+          const formattedDay = [
+            `${reservation.reservationDate.getFullYear()}`,
+            `${reservation.reservationDate.getMonth() + 1}`,
+            `${reservation.reservationDate.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+
+          const formattedToday = [
+            `${today.getFullYear()}`,
+            `${today.getMonth() + 1}`,
+            `${today.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+
+          return [
+            ["cancel"],
+            [0],
+            [
+              `votre réservation du ${formattedDay} pour ${reservation.firstname} ${reservation.lastname} a été annulée`,
+            ],
+            [`${formattedToday}`],
+            [`${reservation.parentId}`],
+          ];
+        });
+
+        const [notifResult] = await models.notify.massNewCancelNotification(
+          notifArray
+        );
+        console.info("cancelling reservations results = ", notifResult);
+      }
     }
 
     return res.sendStatus(204);

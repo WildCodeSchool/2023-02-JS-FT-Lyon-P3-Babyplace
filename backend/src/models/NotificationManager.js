@@ -70,6 +70,13 @@ class NotificationManager extends AbstractManager {
       `SELECT COUNT(*) as total from pro_notification where status = 0`
     );
   }
+
+  massNewCancelNotification(array) {
+    return this.database.query(
+      `INSERT INTO ${this.table} (type, status, description, notification_date_time, parent_id) VALUES ?`,
+      [array]
+    );
+  }
 }
 
 module.exports = NotificationManager;
