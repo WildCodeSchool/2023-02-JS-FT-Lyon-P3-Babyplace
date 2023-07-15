@@ -33,14 +33,16 @@ export default function EmailForResetPro() {
     confirmPassword !== null;
 
   const navigateToHome = () => {
-    navigate("/pro");
+    navigate("/particulier");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateLogin) {
       axios
-        .post(`${BACKEND_URL}/pro/resetpassword`, { password, passwordToken })
+        .post(`${BACKEND_URL}/parent/resetpassword`, {
+          password,
+          passwordToken,
+        })
         .then((res) => {
           if (res.status === 202) {
             notifySuccess();

@@ -4,7 +4,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const models = require("../models");
 
-const { FRONTEND_URL } = process.env;
+// const { FRONTEND_URL } = process.env;
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -60,6 +60,9 @@ const verifyParentEmail = (req, res, next) => {
 const generatePasswordTokenForPro = (req, res, next) => {
   const { user } = req;
   user.passwordToken = uuidv4();
+  console.info(
+    `le password token qui viens d'être créé est ${user.passwordToken}`
+  );
   models.reset
     .updatePasswordTokenForPro(user)
     .then(() => {
@@ -86,25 +89,26 @@ const generatePasswordTokenForParent = (req, res, next) => {
 };
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: true,
+  service: "gmail",
+  secure: false,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
+  tls: { rejectUnauthorized: false },
 });
 const sendForgottenPassword = (req, res) => {
+  console.info(req.user.mail_address);
   transporter.sendMail(
     {
       from: "babyplace.pro@gmail.com",
-      to: req.user.email,
-      subject: "Mot de passe oublié",
-      text: "Pour créer un nouveau mot de passe, cliquez ici !",
-      html: `<p>Pour créer un nouveau mot de passe, <a href="${FRONTEND_URL}/${
+      to: req.user.mail_address,
+      subject: "Réinitialisation de votre mot de passe",
+      text: "Bonjour, Vous recevez ce mail car vous avez choisi de réinitialiser votre mot passe. Si vous n'êtes pas à l'origne de cette démarche, veuillez contacter le support Babyplace immédiatement. Pour créer un nouveau mot de passe, cliquez ici ! À très vite sur Babyplace.",
+      html: `<p>Bonjour,</p><br><p>Vous recevez ce mail car vous avez choisi de réinitialiser votre mot passe. Si vous n'êtes pas à l'origne de cette démarche, veuillez contacter le support Babyplace immédiatement.</p><br><p>Pour créer un nouveau mot de passe, <a href="http://localhost:5173/${
         req.user.role === "pro" ? "pro" : "parent"
       }/resetpassword/${req.user.passwordToken}">cliquez ici !</
-		a></p>`,
+      a></p><br><p>À très vite sur Babyplace.`,
     },
     (err, info) => {
       console.error(`l'envoi de ce mail est ${info}`);
@@ -122,6 +126,9 @@ const sendForgottenPassword = (req, res) => {
 // Verify if the tokenPassword exist
 const verifyTokenPasswordPro = (req, res, next) => {
   const { passwordToken } = req.body;
+  console.info(
+    `le password token que je reçois depuis le front est le ${passwordToken}`
+  );
   models.reset
     .selectTokenPro(passwordToken)
     .then(([users]) => {
@@ -158,6 +165,9 @@ const verifyTokenPasswordParent = (req, res, next) => {
 
 const hashNewPassword = (req, res, next) => {
   // hash du password avec argon2 puis next()
+  console.info(
+    `le mot de passe que je reçois du front est : ${req.body.password}`
+  );
   argon2
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
@@ -174,12 +184,13 @@ const hashNewPassword = (req, res, next) => {
 // Create and hash a new password
 const resetPasswordPro = (req, res) => {
   const { user } = req;
-  user.hashedPassword = req.body.hashed_password;
+  user.hashed_password = req.body.hashed_password;
+  console.info(`les infos du user sont : ${user.id}`);
   models.reset
     .updateProPasswordAfterReset(user)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
-      else res.status(202);
+      else res.sendStatus(202);
     })
     .catch((err) => {
       console.error(err);
@@ -188,12 +199,12 @@ const resetPasswordPro = (req, res) => {
 };
 const resetPasswordParent = (req, res) => {
   const { user } = req;
-  user.hashedPassword = req.body.hashed_password;
+  user.hashed_password = req.body.hashed_password;
   models.reset
     .updateParentPasswordAfterReset(user)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
-      else res.status(202);
+      else res.sendStatus(202);
     })
     .catch((err) => {
       console.error(err);

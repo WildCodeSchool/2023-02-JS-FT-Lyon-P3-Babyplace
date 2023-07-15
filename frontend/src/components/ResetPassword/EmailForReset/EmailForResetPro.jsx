@@ -14,7 +14,7 @@ export default function EmailForResetPro() {
   // const navigate = useNavigate();
   const [infoMessage, setInfoMessage] = useState(null);
   const notifySuccess = () => {
-    toast("Un email a été envoyé sur votre boîte mail.", {
+    toast.success("Un email a été envoyé sur votre boîte mail.", {
       icon: "📧",
     });
   };
@@ -31,18 +31,7 @@ export default function EmailForResetPro() {
         });
         notifySuccess();
       } catch (error) {
-        if (error.code === "ECONNRESET") {
-          console.error(
-            "Erreur de connexion : la connexion a été réinitialisée par le serveur"
-          );
-        }
-        if (error.response) {
-          console.error("Erreur de réponse HTTP :", error.response.data);
-          console.error("Statut de la réponse :", error.response.status);
-          console.error("En-têtes de la réponse :", error.response.headers);
-        } else {
-          console.error("Une erreur inattendue s'est produite :", error);
-        }
+        console.warn(error);
       }
     } else {
       setInfoMessage("Le format de cette adresse mail est invalide");

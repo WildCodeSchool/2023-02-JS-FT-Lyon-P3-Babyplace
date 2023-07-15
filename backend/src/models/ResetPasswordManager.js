@@ -34,17 +34,17 @@ class ResetPasswordManager extends AbstractManager {
 
   updateProPasswordAfterReset(user) {
     return this.database.query(
-      `update ${this.table} set hashedPassword = ?, passwordToken =
+      `update ${this.table} set hashed_password = ?, passwordToken =
       NULL where id = ?`,
-      [user.hashedPassword, user.id]
+      [user.hashed_password, user.id]
     );
   }
 
   updateParentPasswordAfterReset(user) {
     return this.database.query(
-      `update parent set hashedPassword = ?, passwordToken =
+      `update parent set hashed_password = ?, passwordToken =
       NULL where id = ?`,
-      [user.hashedPassword, user.id]
+      [user.hashed_password, user.id]
     );
   }
 }

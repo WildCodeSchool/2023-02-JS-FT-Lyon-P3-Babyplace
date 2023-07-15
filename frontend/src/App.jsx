@@ -24,6 +24,7 @@ import ReservationConfirm from "./components/Particuliers/ReservationConfirm/Res
 import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
 import EmailForResetPro from "./components/ResetPassword/EmailForReset/EmailForResetPro";
 import ResetPassword from "./components/ResetPassword/ResetPassword/ResetPassword";
+import ResetPasswordParent from "./components/ResetPassword/ResetPassword/ResetPasswordParent";
 import { UserContextProvider } from "./contexts/UserContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
@@ -82,8 +83,12 @@ function App() {
               element={<EmailForResetParent />}
             /> */}
             <Route
-              path="/:role/resetpassword/:passwordToken "
+              path="/pro/resetpassword/:passwordToken"
               element={<ResetPassword />}
+            />
+            <Route
+              path="/parent/resetpassword/:passwordToken"
+              element={<ResetPasswordParent />}
             />
           </Routes>
         </div>
