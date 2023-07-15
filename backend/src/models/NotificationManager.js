@@ -28,7 +28,7 @@ class NotificationManager extends AbstractManager {
   newValidateNotification(date, name, parent) {
     return this.database.query(
       `INSERT INTO ${this.table} (type, status, description, notification_date_time, parent_id) VALUES 
-      ('validation', false, CONCAT('votre réservation du ', ?, ' pour ', ?, ' a été acceptée'), NOW(), ?)`,
+      ('validation', false, CONCAT('Votre réservation du ', ?, ' pour ', ?, ' a été acceptée'), NOW(), ?)`,
       [date, name, parent]
     );
   }
@@ -36,7 +36,7 @@ class NotificationManager extends AbstractManager {
   newRefuseNotification(date, name, parent) {
     return this.database.query(
       `INSERT INTO ${this.table} (type, status, description, notification_date_time, parent_id) VALUES 
-      ('refuse', false, CONCAT('votre réservation du ', ?, ' pour ', ?, ' a été refusée'), NOW(), ?)`,
+      ('refuse', false, CONCAT('Votre réservation du ', ?, ' pour ', ?, ' a été refusée'), NOW(), ?)`,
       [date, name, parent]
     );
   }
@@ -44,7 +44,7 @@ class NotificationManager extends AbstractManager {
   newCancelNotification(date, name, parent) {
     return this.database.query(
       `INSERT INTO ${this.table} (type, status, description, notification_date_time, parent_id) VALUES 
-      ('cancel', false, CONCAT('votre réservation du ', ?, ' pour ', ?, ' a été annulée'), NOW(), ?)`,
+      ('cancel', false, CONCAT('Votre réservation du ', ?, ' pour ', ?, ' a été annulée'), NOW(), ?)`,
       [date, name, parent]
     );
   }
