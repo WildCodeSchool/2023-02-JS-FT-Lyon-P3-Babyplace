@@ -115,6 +115,7 @@ const edit = async (req, res) => {
     // Si des jours de disponibilité sont à supprimer, on fait une requête pour trouver l'id des disponibilités à supprimer
     // puis une requête pour les supprimer
     // puis une requête pour trouver les réservations en lien avec cette disponibilité
+    // puis une requête pour changer le statut les réservations en lien avec cette disponibilité
     // puis une requête pour notifier les parents en lien avec ces réservations
     if (req.body.daysToRemove && req.body.daysToRemove.length > 0) {
       const [disponibilitiesToRemove] = await models.disponibility.find(
@@ -167,6 +168,13 @@ const edit = async (req, res) => {
         }
       });
       console.info(datesToImpact);
+      // on récupère un tableau des réservations à annuler
+      const [reservationsToCancel] =
+        await models.reservation.findReservationForProByDate(
+          datesToImpact,
+          pro.id
+        );
+      console.info(reservationsToCancel);
     }
 
     return res.sendStatus(204);
