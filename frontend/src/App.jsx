@@ -22,6 +22,8 @@ import Reservation from "./components/Particuliers/Reservation/Reservation";
 import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
 import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
+import EmailForResetPro from "./components/ResetPassword/EmailForReset/EmailForResetPro";
+import ResetPassword from "./components/ResetPassword/ResetPassword/ResetPassword";
 import { UserContextProvider } from "./contexts/UserContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
@@ -68,6 +70,21 @@ function App() {
               <Route path="authentification" element={<UserAuth />} />
               <Route path="modify" element={<ModifyData />} />
             </Route>
+
+            {/* ----------- Route Reset Password  ----------------- */}
+
+            <Route
+              path="/:userType/forgotten-password"
+              element={<EmailForResetPro />}
+            />
+            {/* <Route
+              path="/parent/forgotten-password"
+              element={<EmailForResetParent />}
+            /> */}
+            <Route
+              path="/:role/resetpassword/:passwordToken "
+              element={<ResetPassword />}
+            />
           </Routes>
         </div>
       </ReservationContextProvider>

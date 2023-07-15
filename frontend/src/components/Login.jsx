@@ -117,6 +117,19 @@ function Login({ userType }) {
               <Link to="/particulier/register"> Cliquez ici</Link>
             </div>
           )}
+          {userType === "pro" ? (
+            <div className={styles.switch}>
+              <Link to={`/${userType}/forgotten-password`}>
+                Mot de passe oublié ?
+              </Link>
+            </div>
+          ) : (
+            <div className={styles.switch}>
+              <Link to={`/${userType}/forgotten-password`}>
+                Mot de passe oublié ?
+              </Link>
+            </div>
+          )}
         </Box>
       </div>
     </div>
