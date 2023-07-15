@@ -123,6 +123,43 @@ const edit = async (req, res) => {
       console.info(disponibilitiesToRemove);
 
       await models.proDisponibility.delete(disponibilitiesToRemove, pro.id);
+
+      // on cherche la prochaine date relative à chaque jour à supprimer
+      // puis on fait un tableau des dates concernées par les dates
+      const futureDates = [];
+      const today = new Date();
+      for (let i = 1; i <= 7; i += 1) {
+        const futureDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + i,
+          today.getHours()
+        );
+        futureDates.push(futureDate);
+      }
+      console.info(futureDates);
+      const datesToImpact = [];
+      const daysOfTheWeek = [
+        "Dimanche",
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+      ];
+
+      futureDates.forEach((day) => {
+        const dayToFind = day.getDay();
+        console.info(day);
+        console.info(dayToFind);
+        console.info(daysOfTheWeek[dayToFind]);
+        if (req.body.daysToRemove.includes(daysOfTheWeek[dayToFind])) {
+          console.info("trouvé");
+          datesToImpact.push(day);
+        }
+      });
+      console.info(datesToImpact);
     }
 
     return res.sendStatus(204);
