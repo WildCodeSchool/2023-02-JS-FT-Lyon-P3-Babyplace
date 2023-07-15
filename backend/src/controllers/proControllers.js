@@ -190,12 +190,12 @@ const edit = async (req, res) => {
         // On envoie une notification à chaque parent concerné par une des réservations annulées pour chacune d'entre elles
         const notifArray = reservationsToCancel.map((reservation) => {
           const formattedDay = [
-            `${reservation.reservationDate.getFullYear()}`,
-            `${reservation.reservationDate.getMonth() + 1}`,
             `${reservation.reservationDate.getDate()}`,
+            `${reservation.reservationDate.getMonth() + 1}`,
+            `${reservation.reservationDate.getFullYear()}`,
           ]
             .map((string) => (string.length === 1 ? `0${string}` : string))
-            .join("-");
+            .join("/");
 
           const formattedToday = [
             `${today.getFullYear()}`,
