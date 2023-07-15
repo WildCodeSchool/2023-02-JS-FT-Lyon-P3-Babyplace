@@ -155,8 +155,15 @@ const edit = async (req, res) => {
         console.info(dayToFind);
         console.info(daysOfTheWeek[dayToFind]);
         if (req.body.daysToRemove.includes(daysOfTheWeek[dayToFind])) {
+          const formattedDay = [
+            `${day.getFullYear()}`,
+            `${day.getMonth() + 1}`,
+            `${day.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
           console.info("trouvé");
-          datesToImpact.push(day);
+          datesToImpact.push(formattedDay);
         }
       });
       console.info(datesToImpact);
