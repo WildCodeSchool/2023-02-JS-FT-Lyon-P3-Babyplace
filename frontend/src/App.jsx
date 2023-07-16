@@ -45,31 +45,34 @@ function App() {
               <Route path="recherche" element={<SearchList />} />
               <Route path="recherche/:id" element={<ProDetails />} />
               <Route path="recherche/:id/date" element={<DateChoice />} />
-              <Route path="register" element={<FormParent />} />
-              <Route path="register/welcome" element={<WelcomePage />} />
+              <Route path="enregistrement" element={<FormParent />} />
+              <Route
+                path="enregistrement/bienvenue"
+                element={<WelcomePage />}
+              />
               <Route path="reservation" element={<Reservation />}>
                 <Route index element={<Requirements />} />
                 <Route path="enfant" element={<SelectChild />} />
                 <Route path="confirmation" element={<ReservationConfirm />} />
               </Route>
               <Route path=":id" element={<FormCompletWelcome />} />
-              <Route path=":id/child" element={<FormCompletChildren />} />
+              <Route path=":id/enfant" element={<FormCompletChildren />} />
               <Route path=":id/parent" element={<FormCompletParent />} />
               <Route path="notifications" element={<NotificationPage />} />
             </Route>
 
             {/* ----------- Route RegisterPro  ----------------- */}
 
-            <Route path="/pro-register" element={<ProRegister />} />
+            <Route path="/pro-inscription" element={<ProRegister />} />
 
             {/* ----------- Route DashboardPro  ----------------- */}
 
             <Route path="/pro" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />
-              <Route path="calendar" element={<Calendar />} />
-              <Route path="orders" element={<Orders />} />
+              <Route path="calendrier" element={<Calendar />} />
+              <Route path="reservations" element={<Orders />} />
               <Route path="authentification" element={<UserAuth />} />
-              <Route path="modify" element={<ModifyData />} />
+              <Route path="modification" element={<ModifyData />} />
             </Route>
 
             {/* ----------- Route Reset Password  ----------------- */}

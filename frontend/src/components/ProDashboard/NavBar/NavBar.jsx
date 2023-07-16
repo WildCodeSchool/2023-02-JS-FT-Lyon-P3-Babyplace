@@ -65,7 +65,7 @@ export default function NavBar() {
           <h2 className={openMenu ? "" : `${styles.diplay_none_class}`}>
             Réservation
           </h2>
-          <NavLink className={styles.menu_link_style} to="orders">
+          <NavLink className={styles.menu_link_style} to="reservations">
             <ListItemButton>
               <ListItemIcon>
                 <ListAltOutlinedIcon sx={{ color: "white" }} />
@@ -81,7 +81,7 @@ export default function NavBar() {
               </h4>
             </ListItemButton>
           </NavLink>
-          <NavLink className={styles.menu_link_style} to="calendar">
+          <NavLink className={styles.menu_link_style} to="calendrier">
             <ListItemButton>
               <ListItemIcon>
                 <CalendarMonthOutlinedIcon sx={{ color: "white" }} />
@@ -118,7 +118,7 @@ export default function NavBar() {
               </h4>
             </ListItemButton>
           </NavLink>
-          <NavLink className={styles.menu_link_style} to="modify">
+          <NavLink className={styles.menu_link_style} to="modification">
             <ListItemButton>
               <ListItemIcon>
                 <CreateOutlinedIcon sx={{ color: "white" }} />

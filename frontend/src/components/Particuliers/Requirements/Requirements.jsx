@@ -5,11 +5,14 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
+import { useReservationContext } from "../../../contexts/ReservationContext";
+
 import styles from "./Requirements.module.css";
 
 function Requirements() {
   const navigate = useNavigate();
   const { user, userChildren, setUserChildren } = useUserContext();
+  const { reservation, setReservation } = useReservationContext();
 
   // Lorsque le composant se monte : fetch des enfants du user.
   // Ils sont enregistrés dans un state pour permettre de vérifier la condition d'avoir au minimum un enfant pour réserver,
@@ -28,6 +31,13 @@ function Requirements() {
           }
         })
         .catch((err) => console.error(err));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (reservation.completed) {
+      navigate("/particulier/recherche");
+      setReservation({});
     }
   }, []);
 

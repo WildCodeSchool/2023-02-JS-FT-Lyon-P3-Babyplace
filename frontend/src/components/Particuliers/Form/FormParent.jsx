@@ -264,7 +264,7 @@ export default function FormParent() {
 
         {validationMessage ===
         "Compte créé. Vous pouvez désormais vous connecter." ? (
-          <Link to="/particulier/register/welcome">
+          <Link to="/particulier/enregistrement/bienvenue">
             <button type="button" className={style.buttonNext}>
               Suivant
             </button>

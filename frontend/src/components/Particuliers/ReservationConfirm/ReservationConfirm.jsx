@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import rainbow from "../../../assets/images/rainbow.png";
 import { useReservationContext } from "../../../contexts/ReservationContext";
@@ -13,6 +13,10 @@ function ReservationConfirm() {
     day: "numeric",
   };
   const day = reservation.date.toLocaleString("fr-FR", options);
+
+  useEffect(() => {
+    return () => setReservation({});
+  }, []);
 
   return (
     <div className={styles.container}>
