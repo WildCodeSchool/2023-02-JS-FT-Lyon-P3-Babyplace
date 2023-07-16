@@ -84,7 +84,10 @@ router.get("/child", childControllers.browse);
 
 router.post("/child/register", childControllers.add);
 
-router.post("/available/days/:id", childControllers.add);
+router.get(
+  "/available/days/:id",
+  proDisponibilityControllers.GetAvailableDaysOfPro
+);
 
 // ---------------- / Parent & Child routes  -------------------
 
@@ -155,7 +158,7 @@ router.get(
 
 router.get(
   "/notifications/number/pro",
-  proDisponibilityControllers.GetAvailableDaysOfPro
+  notificationControllers.getNumberOfProNewNotifications
 );
 
 // ---------------- / Notifications routes  -------------------

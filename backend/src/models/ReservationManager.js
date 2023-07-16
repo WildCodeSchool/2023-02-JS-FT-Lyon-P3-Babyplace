@@ -48,6 +48,21 @@ class ReservationManager extends AbstractManager {
       [reservationId, parentId]
     );
   }
+
+  getFullDaysThisWeek(tommorow, proId, place) {
+    return this.database.query(
+      `SELECT DATE_FORMAT(reservation_date, "%W") AS thisDateIsFull
+      FROM ${this.table} AS r
+      JOIN place ON r.place_id = place.id
+      WHERE r.reservation_date >= ?
+      AND place.pro_id = ?
+      AND r.status in (0, 1)
+      GROUP BY DATE_FORMAT(reservation_date, "%W")
+      HAVING COUNT(r.id) = ?
+      LIMIT 7;`,
+      [tommorow, proId, place]
+    );
+  }
 }
 
 module.exports = ReservationManager;
