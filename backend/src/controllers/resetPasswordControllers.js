@@ -19,7 +19,6 @@ const verifyProEmail = (req, res, next) => {
       if (users[0] != null) {
         // eslint-disable-next-line prefer-destructuring
         req.user = users[0];
-        console.info(req.user);
         next();
       } else {
         res.sendStatus(404);

@@ -68,7 +68,7 @@ export default function EmailForResetPro() {
       <DesignWelcome home={false} />
       <div className="email-reset-form-container">
         <div className="reset-explaination-div">
-          Veuillez entrer votre nouveau mot de passe et confirmer le afin de
+          Veuillez entrer votre nouveau mot de passe et confirmez-le afin de
           valider la réinitialisation.
         </div>
         {infoMessage ? <Alert severity="warning">{infoMessage}</Alert> : null}
