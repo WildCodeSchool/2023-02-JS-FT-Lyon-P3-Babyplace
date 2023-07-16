@@ -169,6 +169,7 @@ router.get(
 
 router.get(
   "/notifications/number/pro",
+  verifyToken,
   notificationControllers.getNumberOfProNewNotifications
 );
 
