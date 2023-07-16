@@ -5,7 +5,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 
 function Reservation() {
   const navigate = useNavigate();
-  const { reservation } = useReservationContext();
+  const { reservation, setReservation } = useReservationContext();
   const { user } = useUserContext();
 
   useEffect(() => {
@@ -15,9 +15,11 @@ function Reservation() {
       !reservation.proId ||
       !reservation.date
     ) {
-      return navigate("/particulier");
+      navigate("/particulier");
     }
-    return undefined;
+    return () => {
+      setReservation({});
+    };
   }, []);
 
   if (user?.role === "pro") {
