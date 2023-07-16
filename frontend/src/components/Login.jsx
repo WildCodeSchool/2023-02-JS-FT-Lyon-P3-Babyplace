@@ -59,78 +59,82 @@ function Login({ userType }) {
   };
 
   return (
-    <div className={styles.login}>
+    <div className={userType === "parent" ? styles.login : styles.loginPro}>
       <DesignWelcome />
-      <div className={styles.loginForm}>
-        <div>
-          {user?.role ? (
-            <Alert severity="warning">{`Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`}</Alert>
-          ) : null}
-          {infoMessage ? <Alert severity="warning">{infoMessage}</Alert> : null}
-        </div>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-          }}
-          onSubmit={handleSubmit}
-          noValidate
-          autoComplete="off"
-        >
-          <div className={styles.field}>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <TextField
-              required
-              name="email"
-              id="email"
-              label="Entrez votre adresse mail"
-              onChange={handleChange}
-            />
+      <div className={styles.container}>
+        <div className={styles.loginForm}>
+          <div>
+            {user?.role ? (
+              <Alert severity="warning">{`Connecté en tant que ${user.role} : vous n'avez pas accès à cette partie du site`}</Alert>
+            ) : null}
+            {infoMessage ? (
+              <Alert severity="warning">{infoMessage}</Alert>
+            ) : null}
           </div>
-          <div className={styles.field}>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <TextField
-              required
-              name="password"
-              id="password"
-              label="Entrez votre mot de passe"
-              onChange={handleChange}
-              type="password"
-            />
-          </div>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            onSubmit={handleSubmit}
+            noValidate
+            autoComplete="off"
           >
-            Je me connecte
-          </Button>
-          {userType === "pro" ? (
-            <div className={styles.switch}>
-              <p>Pas encore inscrit ?</p>
-              <Link to="/pro-inscription"> Cliquez ici</Link>
+            <div className={styles.field}>
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <TextField
+                required
+                name="email"
+                id="email"
+                label="Entrez votre adresse mail"
+                onChange={handleChange}
+              />
             </div>
-          ) : (
-            <div className={styles.switch}>
-              <p>Pas encore inscrit ?</p>
-              <Link to="/particulier/enregistrement"> Cliquez ici</Link>
+            <div className={styles.field}>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <TextField
+                required
+                name="password"
+                id="password"
+                label="Entrez votre mot de passe"
+                onChange={handleChange}
+                type="password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Je me connecte
+              </Button>
+              {userType === "pro" ? (
+                <div className={styles.switch}>
+                  <p>Pas encore inscrit ?</p>
+                  <Link to="/pro-register"> Cliquez ici</Link>
+                </div>
+              ) : (
+                <div className={styles.switch}>
+                  <p>Pas encore inscrit ?</p>
+                  <Link to="/particulier/register"> Cliquez ici</Link>
+                </div>
+              )}
+              {userType === "pro" ? (
+                <div className={styles.switch}>
+                  <Link to={`/${userType}/mot-de-passe-oublie`}>
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              ) : (
+                <div className={styles.switch}>
+                  <Link to={`/${userType}/mot-de-passe-oublie`}>
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              )}
             </div>
-          )}
-          {userType === "pro" ? (
-            <div className={styles.switch}>
-              <Link to={`/${userType}/mot-de-passe-oublie`}>
-                Mot de passe oublié ?
-              </Link>
-            </div>
-          ) : (
-            <div className={styles.switch}>
-              <Link to={`/${userType}/mot-de-passe-oublie`}>
-                Mot de passe oublié ?
-              </Link>
-            </div>
-          )}
-        </Box>
+          </Box>
+        </div>
       </div>
     </div>
   );
