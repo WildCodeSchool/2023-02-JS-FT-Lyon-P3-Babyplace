@@ -9,6 +9,7 @@ const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
 const notificationControllers = require("./controllers/NotificationControllers");
 const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
+const resetPasswordControllers = require("./controllers/resetPasswordControllers");
 
 const {
   getParentByEmail,
@@ -20,6 +21,16 @@ const {
   logout,
   verifyIfParentRegistered,
 } = require("./services/auth");
+
+const {
+  verifyProEmail,
+  verifyParentEmail,
+  generatePasswordTokenForPro,
+  generatePasswordTokenForParent,
+  verifyTokenPasswordPro,
+  verifyTokenPasswordParent,
+  hashNewPassword,
+} = require("./controllers/resetPasswordControllers");
 
 router.get("/items", itemControllers.browse);
 router.get("/items/:id", itemControllers.read);
@@ -244,5 +255,37 @@ router.get(
 );
 
 // ---------------- / Pro Dashboard routes  -------------------
+
+// ----------------  Reset Password routes  -------------------
+
+router.post(
+  "/pro/forgottenpassword",
+  verifyProEmail,
+  generatePasswordTokenForPro,
+  resetPasswordControllers.sendForgottenPassword
+);
+
+router.post(
+  "/pro/resetpassword",
+  verifyTokenPasswordPro,
+  hashNewPassword,
+  resetPasswordControllers.resetPasswordPro
+);
+
+router.post(
+  "/parent/forgottenpassword",
+  verifyParentEmail,
+  generatePasswordTokenForParent,
+  resetPasswordControllers.sendForgottenPassword
+);
+
+router.post(
+  "/parent/resetpassword",
+  verifyTokenPasswordParent,
+  hashNewPassword,
+  resetPasswordControllers.resetPasswordParent
+);
+
+// ---------------- / Reset Password routes  -------------------
 
 module.exports = router;

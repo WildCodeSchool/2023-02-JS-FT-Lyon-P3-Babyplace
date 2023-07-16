@@ -22,6 +22,9 @@ import Reservation from "./components/Particuliers/Reservation/Reservation";
 import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
 import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
+import EmailForResetPro from "./components/ResetPassword/EmailForReset/EmailForResetPro";
+import ResetPassword from "./components/ResetPassword/ResetPassword/ResetPassword";
+import ResetPasswordParent from "./components/ResetPassword/ResetPassword/ResetPasswordParent";
 import { UserContextProvider } from "./contexts/UserContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
@@ -42,32 +45,50 @@ function App() {
               <Route path="recherche" element={<SearchList />} />
               <Route path="recherche/:id" element={<ProDetails />} />
               <Route path="recherche/:id/date" element={<DateChoice />} />
-              <Route path="register" element={<FormParent />} />
-              <Route path="register/welcome" element={<WelcomePage />} />
+              <Route path="enregistrement" element={<FormParent />} />
+              <Route
+                path="enregistrement/bienvenue"
+                element={<WelcomePage />}
+              />
               <Route path="reservation" element={<Reservation />}>
                 <Route index element={<Requirements />} />
                 <Route path="enfant" element={<SelectChild />} />
                 <Route path="confirmation" element={<ReservationConfirm />} />
               </Route>
               <Route path=":id" element={<FormCompletWelcome />} />
-              <Route path=":id/child" element={<FormCompletChildren />} />
+              <Route path=":id/enfant" element={<FormCompletChildren />} />
               <Route path=":id/parent" element={<FormCompletParent />} />
               <Route path="notifications" element={<NotificationPage />} />
             </Route>
 
             {/* ----------- Route RegisterPro  ----------------- */}
 
-            <Route path="/pro-register" element={<ProRegister />} />
+            <Route path="/pro-inscription" element={<ProRegister />} />
 
             {/* ----------- Route DashboardPro  ----------------- */}
 
             <Route path="/pro" element={<Dashboard />}>
               <Route index element={<DashboardHome />} />
-              <Route path="calendar" element={<Calendar />} />
-              <Route path="orders" element={<Orders />} />
+              <Route path="calendrier" element={<Calendar />} />
+              <Route path="reservations" element={<Orders />} />
               <Route path="authentification" element={<UserAuth />} />
-              <Route path="modify" element={<ModifyData />} />
+              <Route path="modification" element={<ModifyData />} />
             </Route>
+
+            {/* ----------- Route Reset Password  ----------------- */}
+
+            <Route
+              path="/:userType/mot-de-passe-oublie"
+              element={<EmailForResetPro />}
+            />
+            <Route
+              path="/pro/reinitialisation-mdp/:passwordToken"
+              element={<ResetPassword />}
+            />
+            <Route
+              path="/parent/reinitialisation-mdp/:passwordToken"
+              element={<ResetPasswordParent />}
+            />
           </Routes>
         </div>
       </ReservationContextProvider>

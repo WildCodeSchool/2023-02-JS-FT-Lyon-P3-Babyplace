@@ -32,7 +32,7 @@ export default function FormCompletWelcome() {
             </p>
           </div>
           <div>
-            <Link to={`/particulier/${user.id}/child`}>
+            <Link to={`/particulier/${user.id}/enfant`}>
               <button type="button" className={style.button_child}>
                 Dossier enfant
               </button>

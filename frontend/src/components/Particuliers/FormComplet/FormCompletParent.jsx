@@ -19,7 +19,7 @@ export default function FormCompletParent() {
         <div className={style.buttons}>
           <div>
             <NavLink
-              to={`/particulier/${user.id}/child`}
+              to={`/particulier/${user.id}/enfant`}
               className={({ isActive }) => (isActive ? style.active : "")}
             >
               <button type="button" className={style.button_child}>

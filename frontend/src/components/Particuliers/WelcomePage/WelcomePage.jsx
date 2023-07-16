@@ -8,7 +8,7 @@ import baby3 from "../../../assets/images/Babyplace3.svg";
 export default function WelcomePage() {
   return (
     <div className={style.welcomePage}>
-      <Link to="/particulier/register">
+      <Link to="/particulier/enregistrement">
         <button type="button" className={style.button_back}>
           <ArrowBackIosNewIcon />
         </button>

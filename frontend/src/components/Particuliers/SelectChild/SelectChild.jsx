@@ -27,6 +27,13 @@ function SelectChild() {
   };
 
   useEffect(() => {
+    if (reservation.completed) {
+      navigate("/particulier/recherche");
+      setReservation({});
+    }
+  }, []);
+
+  useEffect(() => {
     if (message) {
       notifyFail(message);
       setMessage(null);
@@ -38,30 +45,32 @@ function SelectChild() {
   };
 
   const handleSubmit = () => {
-    setReservation({ ...reservation, child: value });
-    const childName = `${
-      userChildren.find((child) => child.id === parseInt(value, 10)).firstname
-    } ${
-      userChildren.find((child) => child.id === parseInt(value, 10)).lastname
-    }`;
-    instance
-      .post("/parent/reservation", { ...reservation, childId: value })
-      .then((response) => {
-        if (response.status === 201) {
-          setReservation({ ...reservation, childName });
-          return navigate("/particulier/reservation/confirmation");
-        }
-        return setMessage(response.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          logout(true);
-        }
-        console.warn(err);
-        setMessage("Il y a eu une erreur. Réessayez plus tard.");
-        return setMessage(err.data);
-      });
-    setValue(null);
+    if (value) {
+      setReservation({ ...reservation, child: value });
+      const childName = `${
+        userChildren.find((child) => child.id === parseInt(value, 10)).firstname
+      } ${
+        userChildren.find((child) => child.id === parseInt(value, 10)).lastname
+      }`;
+      instance
+        .post("/parent/reservation", { ...reservation, childId: value })
+        .then((response) => {
+          if (response.status === 201) {
+            setReservation({ ...reservation, childName, completed: true });
+            return navigate("/particulier/reservation/confirmation");
+          }
+          return setMessage(response.data);
+        })
+        .catch((err) => {
+          if (err.response.status === 403) {
+            logout(true);
+          }
+          console.warn(err);
+          setMessage("Il y a eu une erreur. Réessayez plus tard.");
+          return setMessage(err.data);
+        });
+      setValue(null);
+    }
   };
 
   return (
