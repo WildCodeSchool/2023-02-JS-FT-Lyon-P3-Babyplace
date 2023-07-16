@@ -44,19 +44,24 @@ const destroy = (req, res, next) => {
   return next();
 };
 
-// const GetAvailableDaysOfPro = async (req, res, next) => {
-//   const id = parseInt(req.params.id, 10);
-//   try {
-//     const daysOfThePro = await models.proDisponibility.findAll;
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Erreur interne");
-//   }
-// };
+const GetAvailableDaysOfPro = async (req, res) => {
+  const proId = parseInt(req.params.id, 10);
+  console.info(`l'id du pro reçu du front est ${proId}`);
+  try {
+    const daysOfThePro = await models.proDisponibility.findAll(proId);
+    console.info(`les jours d'ouverture ud pro sont : ${daysOfThePro}`);
+
+    const maxPlaceOfPro = await models.place.countPlaces(proId);
+    console.info(`le nombre de place max est : ${maxPlaceOfPro}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
+};
 
 module.exports = {
   add,
   listProDisponibilities,
   destroy,
-  // GetAvailableDaysOfPro,
+  GetAvailableDaysOfPro,
 };
