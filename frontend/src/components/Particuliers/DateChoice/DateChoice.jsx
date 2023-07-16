@@ -12,6 +12,7 @@ export default function DateChoice() {
   const { reservation, setReservation } = useReservationContext();
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+  const [availableDays, setAvailableDays] = useState([]);
   const { user, setPendingReservation } = useUserContext();
 
   // Creation palette personnalisée pour MUI
@@ -80,6 +81,13 @@ export default function DateChoice() {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    instance
+      .get(`/available/days/${id}`)
+      .then((response) => setAvailableDays(response.data))
+      .catch((err) => console.error(err));
+  }, []);
+  console.info(availableDays);
   if (!pro) return null;
 
   return (

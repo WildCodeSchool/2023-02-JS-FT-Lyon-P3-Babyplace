@@ -8,6 +8,7 @@ const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
 const notificationControllers = require("./controllers/NotificationControllers");
+const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
 
 const {
   getParentByEmail,
@@ -83,6 +84,8 @@ router.get("/child", childControllers.browse);
 
 router.post("/child/register", childControllers.add);
 
+router.post("/available/days/:id", childControllers.add);
+
 // ---------------- / Parent & Child routes  -------------------
 
 // ----------------  Pro routes  -------------------
@@ -152,8 +155,7 @@ router.get(
 
 router.get(
   "/notifications/number/pro",
-  verifyToken,
-  notificationControllers.getNumberOfProNewNotifications
+  proDisponibilityControllers.GetAvailableDaysOfPro
 );
 
 // ---------------- / Notifications routes  -------------------

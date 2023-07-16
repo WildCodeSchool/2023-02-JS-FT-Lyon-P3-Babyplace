@@ -44,8 +44,19 @@ const destroy = (req, res, next) => {
   return next();
 };
 
+// const GetAvailableDaysOfPro = async (req, res, next) => {
+//   const id = parseInt(req.params.id, 10);
+//   try {
+//     const daysOfThePro = await models.proDisponibility.findAll;
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Erreur interne");
+//   }
+// };
+
 module.exports = {
   add,
   listProDisponibilities,
   destroy,
+  // GetAvailableDaysOfPro,
 };
