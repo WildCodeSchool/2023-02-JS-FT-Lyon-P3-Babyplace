@@ -12,6 +12,7 @@ CREATE TABLE parent (
   postcode VARCHAR(5) NOT NULL,
   city VARCHAR(45) NOT NULL,
   phone_number VARCHAR(10) NOT NULL,
+  passwordToken VARCHAR(255) NULL,
   notification_status BOOLEAN NOT NULL,
   role VARCHAR(10) NOT NULL DEFAULT 'parent'
 );
@@ -40,6 +41,7 @@ CREATE TABLE pro (
   phone_number VARCHAR(10) NOT NULL,
   description VARCHAR(255),
   type VARCHAR(45),
+  passwordToken VARCHAR(255) NULL,
   notification_status BOOLEAN NOT NULL,
   role VARCHAR(10) NOT NULL DEFAULT 'pro'
 );

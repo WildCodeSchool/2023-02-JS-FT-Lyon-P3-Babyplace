@@ -22,6 +22,9 @@ import Reservation from "./components/Particuliers/Reservation/Reservation";
 import SelectChild from "./components/Particuliers/SelectChild/SelectChild";
 import ReservationConfirm from "./components/Particuliers/ReservationConfirm/ReservationConfirm";
 import NotificationPage from "./components/Particuliers/NotificationCenter/NotificationPage";
+import EmailForResetPro from "./components/ResetPassword/EmailForReset/EmailForResetPro";
+import ResetPassword from "./components/ResetPassword/ResetPassword/ResetPassword";
+import ResetPasswordParent from "./components/ResetPassword/ResetPassword/ResetPasswordParent";
 import { UserContextProvider } from "./contexts/UserContext";
 import { ReservationContextProvider } from "./contexts/ReservationContext";
 
@@ -71,6 +74,21 @@ function App() {
               <Route path="authentification" element={<UserAuth />} />
               <Route path="modification" element={<ModifyData />} />
             </Route>
+
+            {/* ----------- Route Reset Password  ----------------- */}
+
+            <Route
+              path="/:userType/mot-de-passe-oublie"
+              element={<EmailForResetPro />}
+            />
+            <Route
+              path="/pro/reinitialisation-mdp/:passwordToken"
+              element={<ResetPassword />}
+            />
+            <Route
+              path="/parent/reinitialisation-mdp/:passwordToken"
+              element={<ResetPasswordParent />}
+            />
           </Routes>
         </div>
       </ReservationContextProvider>

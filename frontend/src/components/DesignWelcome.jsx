@@ -30,5 +30,9 @@ function DesignWelcome({ home }) {
 export default DesignWelcome;
 
 DesignWelcome.propTypes = {
-  home: PropTypes.bool.isRequired,
+  home: PropTypes.bool,
+};
+
+DesignWelcome.defaultProps = {
+  home: false,
 };

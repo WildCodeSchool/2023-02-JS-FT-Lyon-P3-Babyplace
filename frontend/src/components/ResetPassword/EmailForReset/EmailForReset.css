@@ -1,0 +1,39 @@
+.email-for-reset_page {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.email-reset-form-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-explaination-div {
+  width: 40%;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.field {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 950px) {
+  .email-for-reset_page {
+    flex-direction: column;
+  }
+
+  .email-reset-form-container {
+    height: 50%;
+    width: 100%;
+  }
+
+  .reset-explaination-div {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+}
