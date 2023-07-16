@@ -75,19 +75,15 @@ function App() {
             {/* ----------- Route Reset Password  ----------------- */}
 
             <Route
-              path="/:userType/forgotten-password"
+              path="/:userType/mot-de-passe-oublie"
               element={<EmailForResetPro />}
             />
-            {/* <Route
-              path="/parent/forgotten-password"
-              element={<EmailForResetParent />}
-            /> */}
             <Route
-              path="/pro/resetpassword/:passwordToken"
+              path="/pro/reinitialisation-mdp/:passwordToken"
               element={<ResetPassword />}
             />
             <Route
-              path="/parent/resetpassword/:passwordToken"
+              path="/parent/reinitialisation-mdp/:passwordToken"
               element={<ResetPasswordParent />}
             />
           </Routes>

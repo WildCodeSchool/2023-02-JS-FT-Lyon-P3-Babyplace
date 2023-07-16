@@ -119,13 +119,13 @@ function Login({ userType }) {
           )}
           {userType === "pro" ? (
             <div className={styles.switch}>
-              <Link to={`/${userType}/forgotten-password`}>
+              <Link to={`/${userType}/mot-de-passe-oublie`}>
                 Mot de passe oublié ?
               </Link>
             </div>
           ) : (
             <div className={styles.switch}>
-              <Link to={`/${userType}/forgotten-password`}>
+              <Link to={`/${userType}/mot-de-passe-oublie`}>
                 Mot de passe oublié ?
               </Link>
             </div>

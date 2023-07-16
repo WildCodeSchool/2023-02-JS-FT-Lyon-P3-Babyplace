@@ -4,8 +4,6 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const models = require("../models");
 
-// const { FRONTEND_URL } = process.env;
-
 const hashingOptions = {
   type: argon2.argon2id,
   memoryCost: 2 ** 16,
@@ -101,7 +99,7 @@ const sendForgottenPassword = (req, res) => {
       text: "Bonjour, Vous recevez ce mail car vous avez choisi de réinitialiser votre mot passe. Si vous n'êtes pas à l'origne de cette démarche, veuillez contacter le support Babyplace immédiatement. Pour créer un nouveau mot de passe, cliquez ici ! À très vite sur Babyplace.",
       html: `<p>Bonjour,</p><br><p>Vous recevez ce mail car vous avez choisi de réinitialiser votre mot passe. Si vous n'êtes pas à l'origne de cette démarche, veuillez contacter le support Babyplace immédiatement.</p><br><p>Pour créer un nouveau mot de passe, <a href="http://localhost:5173/${
         req.user.role === "pro" ? "pro" : "parent"
-      }/resetpassword/${req.user.passwordToken}">cliquez ici !</
+      }/reinitialisation-mdp/${req.user.passwordToken}">cliquez ici !</
       a></p><br><p>À très vite sur Babyplace.`,
     },
     (err, info) => {
