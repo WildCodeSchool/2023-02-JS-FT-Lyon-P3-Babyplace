@@ -100,26 +100,39 @@ function Login({ userType }) {
                 onChange={handleChange}
                 type="password"
               />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Je me connecte
+              </Button>
+              {userType === "pro" ? (
+                <div className={styles.switch}>
+                  <p>Pas encore inscrit ?</p>
+                  <Link to="/pro-register"> Cliquez ici</Link>
+                </div>
+              ) : (
+                <div className={styles.switch}>
+                  <p>Pas encore inscrit ?</p>
+                  <Link to="/particulier/register"> Cliquez ici</Link>
+                </div>
+              )}
+              {userType === "pro" ? (
+                <div className={styles.switch}>
+                  <Link to={`/${userType}/mot-de-passe-oublie`}>
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              ) : (
+                <div className={styles.switch}>
+                  <Link to={`/${userType}/mot-de-passe-oublie`}>
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              )}
             </div>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Je me connecte
-            </Button>
-            {userType === "pro" ? (
-              <div className={styles.switch}>
-                <p>Pas encore inscrit ?</p>
-                <Link to="/pro-register"> Cliquez ici</Link>
-              </div>
-            ) : (
-              <div className={styles.switch}>
-                <p>Pas encore inscrit ?</p>
-                <Link to="/particulier/register"> Cliquez ici</Link>
-              </div>
-            )}
           </Box>
         </div>
       </div>
