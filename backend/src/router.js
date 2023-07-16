@@ -8,6 +8,7 @@ const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
 const notificationControllers = require("./controllers/NotificationControllers");
+const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
 const resetPasswordControllers = require("./controllers/resetPasswordControllers");
 
 const {
@@ -93,6 +94,11 @@ router.get("/dispo/:id", proControllers.browseProAndDispo);
 router.get("/child", childControllers.browse);
 
 router.post("/child/register", childControllers.add);
+
+router.get(
+  "/available/days/:id",
+  proDisponibilityControllers.GetAvailableDaysOfPro
+);
 
 // ---------------- / Parent & Child routes  -------------------
 

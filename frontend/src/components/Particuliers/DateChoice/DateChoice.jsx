@@ -12,6 +12,7 @@ export default function DateChoice() {
   const { reservation, setReservation } = useReservationContext();
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+  const [availableDays, setAvailableDays] = useState([]);
   const { user, setPendingReservation } = useUserContext();
 
   // Creation palette personnalisée pour MUI
@@ -28,6 +29,12 @@ export default function DateChoice() {
 
   const handleClick = (day) => {
     setSelectedDay(day);
+  };
+
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
   };
 
   const handleNext = () => {
@@ -52,31 +59,17 @@ export default function DateChoice() {
     }
   };
 
-  const options = {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  };
-
-  const getFutureDates = () => {
-    const today = new Date();
-    const futureDates = [];
-
-    for (let i = 0; i < 7; i += 1) {
-      const futureDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + i + 1
-      );
-      futureDates.push(futureDate);
-    }
-
-    return futureDates;
-  };
   useEffect(() => {
     instance
       .get(`/pro/${id}`)
       .then((response) => setPro(response.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    instance
+      .get(`/available/days/${id}`)
+      .then((response) => setAvailableDays(response.data))
       .catch((err) => console.error(err));
   }, []);
 
@@ -105,19 +98,22 @@ export default function DateChoice() {
                 <h3>Jours de la semaine prochaine:</h3>
               </div>
               <div className={style.chip}>
-                {getFutureDates().map((day) => (
-                  <Chip
-                    key={day}
-                    label={day.toLocaleString("fr-FR", options)}
-                    onClick={() => handleClick(day)}
-                    color={`${selectedDay === day ? "primary" : "default"}`}
-                    sx={{
-                      margin: "4px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                    }}
-                  />
-                ))}
+                {availableDays.map((day) => {
+                  const newDay = new Date(day);
+                  return (
+                    <Chip
+                      key={day}
+                      label={newDay.toLocaleString("fr-FR", options)}
+                      onClick={() => handleClick(newDay)}
+                      color={`${selectedDay === day ? "primary" : "default"}`}
+                      sx={{
+                        margin: "4px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className={style.reservation}>
