@@ -1,5 +1,13 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS image;
+CREATE TABLE image (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  image_url VARCHAR(255) NULL, 
+  pro_id  INT NULL
+
+);
+
 DROP TABLE IF EXISTS parent;
 CREATE TABLE parent (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -98,7 +106,7 @@ CREATE TABLE parent_notification (
   parent_id INT NOT NULL,
   CONSTRAINT notification_parent FOREIGN KEY (parent_id) REFERENCES parent(id)
 );
-
+ 
   INSERT INTO parent
   (lastname, firstname, birthdate, mail_address, hashed_password, address, postcode, city, phone_number, notification_status) 
   VALUES

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormComplet.module.css";
-import profilePicture from "../../../assets/ed-cannan.png";
-
+/* import profilePicture from "../../../assets/ed-cannan.png";
+ */
 export default function FormCompletWelcome() {
   const { user } = useUserContext();
 
@@ -17,7 +17,7 @@ export default function FormCompletWelcome() {
       </Link>
       <div className={style.header_card}>
         <div>
-          <img src={profilePicture} alt="profilepicture" />
+          <img src={user.profilImage} alt="profilepicture" />
           <h3>
             {user.lastname} {user.firstname}
           </h3>

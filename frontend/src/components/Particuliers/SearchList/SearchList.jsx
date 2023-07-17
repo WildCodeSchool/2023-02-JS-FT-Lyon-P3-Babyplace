@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import instance from "../../../services/APIService";
-import pro1test from "../../../assets/images/pro1test.jpg";
 import user from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
+import ImageRead from "../ImageRead";
 
 export default function SearchList() {
   const [pros, setPros] = useState(null);
@@ -53,7 +53,7 @@ export default function SearchList() {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={pro1test}
+                      image={<ImageRead />}
                       alt="profil_picture"
                       sx={{
                         position: "relative",

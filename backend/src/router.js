@@ -1,4 +1,7 @@
 const express = require("express");
+const multer = require("multer");
+
+const upload = multer({ dest: "./public/uploads/" });
 
 const router = express.Router();
 
@@ -7,6 +10,7 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
+const imageControllers = require("./controllers/imageControllers");
 
 const {
   getParentByEmail,
@@ -27,6 +31,8 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/logout", logout);
 
+/*  Routes pro */
+
 router.patch(
   "/pro/mail",
   verifyToken,
@@ -39,6 +45,22 @@ router.patch(
   hashPassword,
   proControllers.editAuth
 );
+router.get("/pro", proControllers.browse);
+router.get("/pro/profile", verifyToken, proControllers.profile);
+router.get("/pro/:id", proControllers.read);
+router.patch("/pro/:id", verifyToken, proControllers.edit);
+
+router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
+
+router.post(
+  "/pro/register",
+  verifyIfProRegistered,
+  hashPassword,
+  proControllers.register
+);
+
+/*  Routes parent */
+
 router.get("/parent", parentControllers.browse);
 router.get(
   "/parent/reservations",
@@ -75,22 +97,16 @@ router.patch("/parent/modify", verifyToken, parentControllers.edit);
 
 router.get("/dispo/:id", proControllers.browseProAndDispo);
 
+/*  Routes enfant */
+
 router.get("/child", childControllers.browse);
 router.post("/child/register", childControllers.add);
 
-router.get("/pro", proControllers.browse);
-router.get("/pro/profile", verifyToken, proControllers.profile);
-router.get("/pro/:id", proControllers.read);
-router.patch("/pro/:id", verifyToken, proControllers.edit);
+/*  Routes upload images */
+router.post("/upload", upload.single("image_url"), imageControllers.upload);
+router.get("/upload/:id", imageControllers.read);
 
-router.post("/pro/login", getProByEmail, verifyPassword, proControllers.login);
-
-router.post(
-  "/pro/register",
-  verifyIfProRegistered,
-  hashPassword,
-  proControllers.register
-);
+/*  Routes dashboard */
 
 router.get(
   "/dashboard/reservations",
@@ -157,4 +173,5 @@ router.get(
   verifyToken,
   dashboardProControllers.getOccupationRates
 );
+
 module.exports = router;
