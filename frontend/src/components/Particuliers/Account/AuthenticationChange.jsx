@@ -57,7 +57,7 @@ function AuthenticationChange({ setAccountScreen }) {
         setMessage("Votre adresse mail a bien été modifiée.");
       })
       .catch((err) => {
-        if (err.response.status === 40) {
+        if (err.response.status === 401) {
           logout(true);
         }
         if (err.response.status === 400) {
