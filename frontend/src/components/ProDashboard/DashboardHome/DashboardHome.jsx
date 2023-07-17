@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "./DashboardHome.module.css";
-import Chart1 from "./InsideHome/WelcomeBox/WelcomeBox";
-import Chart2 from "./InsideHome/DayResume/DayResume";
-import Chart3 from "./InsideHome/OccupationChart/OccupationChart";
+import WelcomeBox from "./InsideHome/WelcomeBox/WelcomeBox";
+import DayResume from "./InsideHome/DayResume/DayResume";
+import OccupationChart from "./InsideHome/OccupationChart/OccupationChart";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import Preview from "./InsideHome/Preview/Preview";
 
@@ -14,13 +14,13 @@ export default function DashboardHome() {
   return (
     <div className={styles.dashboardhome_box}>
       <div className={styles.first_chart_container}>
-        <Chart1 />
+        <WelcomeBox />
       </div>
       <div className={styles.second_chart_container}>
-        <Chart2 />
+        <DayResume />
       </div>
       <div className={styles.diagram_container}>
-        <Chart3 />
+        <OccupationChart />
       </div>
       <div className={styles.preview_box}>
         <button

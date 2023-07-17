@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
@@ -10,6 +10,13 @@ export default function FormCompletChildren() {
   const { user } = useUserContext();
   const [showForm, setShowForm] = useState(false);
   const [showChild, setShowChild] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   return (
     <div className={style.page}>
@@ -21,28 +28,36 @@ export default function FormCompletChildren() {
         </Link>
         <div className={style.buttons}>
           <div>
-            <Link to={`/particulier/${user.id}/child`}>
-              <button type="button" className={style.buttonChild}>
+            <NavLink
+              to={`/particulier/${user.id}/enfant`}
+              className={({ isActive }) => (isActive ? style.active : "")}
+            >
+              <button type="button" className={style.button_child}>
                 Enfants
               </button>
-            </Link>
+            </NavLink>
           </div>
           <div>
-            <Link to={`/particulier/${user.id}/parent`}>
-              <button type="button" className={style.buttonParent}>
+            <NavLink
+              to={`/particulier/${user.id}/parent`}
+              className={({ isActive }) => (isActive ? style.active : "")}
+            >
+              <button type="button" className={style.button_parent}>
                 Parents
               </button>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
       <div className={style.file}>
-        <h2>Dossier enfants</h2>
         <div className={style.button_head}>
           <button
             type="button"
             className={style.button}
-            onClick={() => setShowChild(!showChild)}
+            onClick={() => {
+              setShowChild(!showChild);
+              setShowForm(false);
+            }}
           >
             Mes enfants
           </button>
@@ -57,8 +72,10 @@ export default function FormCompletChildren() {
             Ajouter un enfant
           </button>
         </div>
-        {showChild ? <ResumeChild /> : null}
-        {showForm ? <FormChild /> : null}
+        <div className={style.card_container}>
+          {showChild ? <ResumeChild /> : null}
+          {showForm ? <FormChild /> : null}
+        </div>
       </div>
     </div>
   );

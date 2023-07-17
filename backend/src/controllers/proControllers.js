@@ -45,6 +45,8 @@ const edit = async (req, res) => {
   // TODO validations (length, format...)
   try {
     let pro = {};
+    // On nettoie d'abord le corps de la requête pour ne pas envoyer de propriété inconnue dans la requête SQL
+    // (il peut s'agir ici d'ajouts de propriétés pour la gestion des requêtes suivantes)
     Object.entries(req.body).forEach((array) => {
       if (
         array[0] !== "empty" &&
@@ -62,6 +64,7 @@ const edit = async (req, res) => {
     });
     pro.id = req.payloads?.sub;
 
+    // On met à jour le pro aec un objet propre
     await models.pro
       .update(pro)
       .then(([result]) => {
@@ -75,6 +78,7 @@ const edit = async (req, res) => {
         return res.send(500);
       });
 
+    // Si des places sont à ajouter, on fait une requête SQL pour ajouter les places dans la table
     if (req.body.placesToAdd && req.body.placesToAdd > 0) {
       await models.place
         .insert(req.body.placesToAdd, pro.id)
@@ -89,7 +93,7 @@ const edit = async (req, res) => {
           return res.send(500);
         });
     }
-
+    // Si des disponibilités sont à ajouter, on fait une requête SQL pour ajouter les jours non présents dans la table pour ce pro
     if (req.body.daysToAdd && req.body.daysToAdd.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         req.body.daysToAdd
@@ -107,6 +111,107 @@ const edit = async (req, res) => {
           return res.send(500);
         });
     }
+
+    // Si des jours de disponibilité sont à supprimer, on fait une requête pour trouver l'id des disponibilités à supprimer
+    // puis une requête pour les supprimer
+    // puis une requête pour trouver les réservations en lien avec cette disponibilité
+    // puis une requête pour changer le statut les réservations en lien avec cette disponibilité
+    // puis une requête pour notifier les parents en lien avec ces réservations
+    if (req.body.daysToRemove && req.body.daysToRemove.length > 0) {
+      const [disponibilitiesToRemove] = await models.disponibility.find(
+        req.body.daysToRemove
+      );
+
+      await models.proDisponibility.delete(disponibilitiesToRemove, pro.id);
+
+      // on cherche la prochaine date relative à chaque jour à supprimer
+      // puis on fait un tableau des dates concernées par les dates
+      const futureDates = [];
+      const today = new Date();
+      for (let i = 1; i <= 7; i += 1) {
+        const futureDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + i,
+          today.getHours()
+        );
+        futureDates.push(futureDate);
+      }
+      const datesToImpact = [];
+      const daysOfTheWeek = [
+        "Dimanche",
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+      ];
+
+      futureDates.forEach((day) => {
+        const dayToFind = day.getDay();
+        if (req.body.daysToRemove.includes(daysOfTheWeek[dayToFind])) {
+          const formattedDay = [
+            `${day.getFullYear()}`,
+            `${day.getMonth() + 1}`,
+            `${day.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+          datesToImpact.push(formattedDay);
+        }
+      });
+
+      // on récupère un tableau des réservations à annuler (codes status 0 (en attente) et 1 (acceptée))
+      const [reservationsToCancel] =
+        await models.reservation.findReservationForProByDate(
+          datesToImpact,
+          pro.id
+        );
+
+      // On change le statut des réservations à 3 (annulée)
+      if (reservationsToCancel.length > 0) {
+        const reservationsIdArray = reservationsToCancel.map(
+          (reservation) => reservation.reservationId
+        );
+        const parentIdArray = reservationsToCancel.map(
+          (reservation) => reservation.parentId
+        );
+        await models.reservation.cancel(parentIdArray, reservationsIdArray);
+
+        // On envoie une notification à chaque parent concerné par une des réservations annulées pour chacune d'entre elles
+        const notifArray = reservationsToCancel.map((reservation) => {
+          const formattedDay = [
+            `${reservation.reservationDate.getDate()}`,
+            `${reservation.reservationDate.getMonth() + 1}`,
+            `${reservation.reservationDate.getFullYear()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("/");
+
+          const formattedToday = [
+            `${today.getFullYear()}`,
+            `${today.getMonth() + 1}`,
+            `${today.getDate()}`,
+          ]
+            .map((string) => (string.length === 1 ? `0${string}` : string))
+            .join("-");
+
+          return [
+            ["cancel"],
+            [0],
+            [
+              `votre réservation du ${formattedDay} pour ${reservation.firstname} ${reservation.lastname} a été annulée`,
+            ],
+            [`${formattedToday}`],
+            [`${reservation.parentId}`],
+          ];
+        });
+
+        await models.notify.massNewCancelNotification(notifArray);
+      }
+    }
+
     return res.sendStatus(204);
   } catch (err) {
     console.error(err);
@@ -164,8 +269,9 @@ const profile = (req, res) => {
 };
 
 const login = async (req, res) => {
+  // Lors du login du pro, on a besoin de connaître le nombre de places qu'il a par jour
   await models.place
-    .findPlaces(req.user.id)
+    .countPlaces(req.user.id)
     .then(([result]) => {
       if (result) {
         req.user.place = result[0].place;
@@ -174,7 +280,7 @@ const login = async (req, res) => {
     .catch((err) => {
       console.error(err);
     });
-
+  // On récupère également un tableau des différents jours de disponibilités de ce pro
   models.proDisponibility
     .findAll(req.user.id)
     .then(([result]) => {
@@ -198,6 +304,7 @@ const register = async (req, res) => {
     const pro = req.body;
 
     // TODO validations (length, format...)
+    // On enregistre les infos du pro dans la table correspondante
     await models.pro
       .insert(pro)
       .then(([result]) => {
@@ -211,7 +318,7 @@ const register = async (req, res) => {
         console.error(err);
         res.sendStatus(500);
       });
-
+    // Si le pro a indiqué des places, on en insère autant qu'il faut dans la table
     if (pro.place > 0) {
       await models.place
         .insert(pro.place, pro.id)
@@ -226,7 +333,7 @@ const register = async (req, res) => {
           return res.send(500);
         });
     }
-
+    // Si le pro a indique des jours de disponibilité lors de son enregistrement, on les enregistre
     if (pro.disponibility.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         pro.disponibility

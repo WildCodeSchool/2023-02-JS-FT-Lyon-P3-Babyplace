@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,6 +14,7 @@ import ImageRead from "../ImageRead";
 
 export default function SearchList() {
   const [pros, setPros] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     instance
@@ -25,16 +26,24 @@ export default function SearchList() {
   if (!pros) return null;
   return (
     <div className={style.search_list_page}>
-      <div className={style.logo_log_in}>
-        <img src={user} alt="user" />
-        <Link to="/particulier">Log In</Link>
-      </div>
-      <Link to="/">
-        <button type="button" className={style.button_back}>
+      <div className={style.header}>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className={style.button_back}
+        >
           <ArrowBackIosNewIcon />
         </button>
-      </Link>
-      <h2>Liste des crèches disponibles</h2>
+        <div />
+
+        <h2>Liste des crèches disponibles</h2>
+
+        <div className={style.logo_log_in}>
+          <img src={user} alt="user" />
+          <Link to="/particulier">Log In</Link>
+        </div>
+      </div>
+
       <div className={style.cards_media}>
         <div className={style.card_media}>
           {pros.map((pro) => (
@@ -49,7 +58,7 @@ export default function SearchList() {
                 }}
               >
                 <CardActionArea sx={{ padding: "10px" }}>
-                  <div className="style.image">
+                  <div className={style.image}>
                     <CardMedia
                       component="img"
                       height="140"

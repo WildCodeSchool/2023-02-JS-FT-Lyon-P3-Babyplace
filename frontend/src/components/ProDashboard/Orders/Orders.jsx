@@ -9,6 +9,7 @@ export default function Orders() {
   const [selectedValue, setSelectedValue] = useState(4);
   const [numberOfResults, setNumberOfResults] = useState(0);
   const [reservations, setReservations] = useState([]);
+  const [refreshData, setRefreshData] = useState(false);
   const limitPerPage = 10;
   const defaultPage = 1;
   const [maxPage, setMaxPage] = useState(0);
@@ -55,34 +56,32 @@ export default function Orders() {
       }
       return params;
     });
-
+    const scrollToTop = () => {
+      if (reservationsContainerRef.current) {
+        reservationsContainerRef.current.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    };
     instance
       .get(`/dashboard/reservations?page=${currentPage}&status=${status}`)
       .then((res) => {
         setReservations(res.data.datas);
         setNumberOfResults(res.data.total);
         setMaxPage(Math.ceil(res.data.total / limitPerPage));
+        scrollToTop();
       })
       .catch((err) => console.error(err));
-  }, [currentPage, selectedValue]);
-
-  const scrollToTop = () => {
-    if (reservationsContainerRef.current) {
-      reservationsContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  };
+  }, [currentPage, selectedValue, refreshData]);
 
   const handlePrev = () => {
-    setCurrentPage(currentPage - 1);
-    scrollToTop();
+    setCurrentPage((prev) => prev - 1);
   };
   const handleNext = () => {
-    setCurrentPage(currentPage + 1);
-    scrollToTop();
+    setCurrentPage((prev) => prev + 1);
   };
+
   return (
     <div className={styles.orders_box}>
       <div className={styles.orders_header}>
@@ -137,7 +136,12 @@ export default function Orders() {
       </div>
       <div className={styles.orders_container} ref={reservationsContainerRef}>
         {filteredOrders.map((reservation) => (
-          <OrderCard key={reservation.id} reservation={reservation} />
+          <OrderCard
+            key={reservation.id}
+            reservation={reservation}
+            refreshData={refreshData}
+            setRefreshData={setRefreshData}
+          />
         ))}
         <div className={styles.pagination_btn_container}>
           <Button

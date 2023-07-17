@@ -144,19 +144,71 @@ const getReservations = (req, res) => {
     });
 };
 
-const cancelReservation = (req, res) => {
-  models.reservation
-    .delete(req.payloads.sub, req.body.id)
-    .then(([result]) => {
-      if (result.affectedRows > 0) {
-        return res.sendStatus(200);
-      }
-      return res.sendStatus(404);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const cancelReservation = async (req, res) => {
+  const parentId = req.payloads.sub;
+  const reservationId = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { childname } = req.query;
+  const { parentname } = req.query;
+  const { pro } = req.query;
+
+  try {
+    const cancelOrderResult = await models.reservation.delete(
+      parentId,
+      reservationId
+    );
+    if (cancelOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult =
+      await models.notify.parentHaveCanceledHisReservation(
+        parentname,
+        date,
+        childname,
+        pro
+      );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
+};
+
+const saveReservation = async (req, res) => {
+  try {
+    // on liste d'abord le nombre de places maximum du professionnel
+    const [proPlaces] = await models.place.findAllPlaces(req.body.proId);
+    // on liste ensuite le nombre de places du professionnel déjà prises (status "en attente" (0) ou "accepté" (1)) pour le jour concerné
+    const [takenPlaces] = await models.place.findTakenPlaces(
+      req.body.proId,
+      req.body.day
+    );
+    const availablePlaces = proPlaces.filter(
+      (place) => !takenPlaces.find((takenPlace) => takenPlace.id === place.id)
+    );
+    // s'il n'y a pas de place disponible, on renvoie un message d'erreur
+    if (availablePlaces.length === 0) {
+      return res.send(
+        "Maximum de places atteint pour cette crèche. La réservation n'a pu être validée."
+      );
+    }
+    req.body.placeId = availablePlaces[0].id;
+    const [{ affectedRows }] = await models.reservation.add(req.body);
+    if (affectedRows === 0) {
+      return res.sendStatus(500);
+    }
+    return res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
 };
 
 module.exports = {
@@ -169,4 +221,5 @@ module.exports = {
   changeMailAddress,
   getReservations,
   cancelReservation,
+  saveReservation,
 };

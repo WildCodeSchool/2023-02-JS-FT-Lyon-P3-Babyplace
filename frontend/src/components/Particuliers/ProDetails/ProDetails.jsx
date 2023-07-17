@@ -29,8 +29,8 @@ export default function ProDetails() {
         </Link>
 
         <div className={style.name_type}>
-          <h2>Crèche {pro.name}</h2>
-          <h4>{pro.type}</h4>
+          <h1>Crèche {pro.name}</h1>
+          <h3>{pro.type}</h3>
         </div>
       </div>
       <div className={style.card_global}>

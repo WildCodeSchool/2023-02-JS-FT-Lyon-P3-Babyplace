@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
@@ -9,10 +9,24 @@ import instance from "../../../services/APIService";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import styles from "./OrderCardParent.module.css";
 
-function OrderCardParent({ reservation }) {
+function OrderCardParent({ reservation, refreshData, setRefreshData }) {
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState(null);
   const [pro, setPro] = useState(null);
+  const notifySuccess = (text) => toast.success(text);
+  const notifyFail = () => toast.error("Un problème est survenu");
+  const {
+    id: idReservation,
+    reservationDate: date,
+    firstname: prenomEnfant,
+    lastname: nomEnfant,
+    proId: idPro,
+    parent_firstname: parentFirstname,
+    parent_lastname: parentLastname,
+  } = reservation;
+
+  const childName = `${prenomEnfant} ${nomEnfant}`;
+  const parentName = `${parentFirstname} ${parentLastname}`;
 
   const getDetailStatus = () => {
     if (reservation.status === 0) {
@@ -52,23 +66,28 @@ function OrderCardParent({ reservation }) {
     return null;
   };
 
+  // Gestion du clic sur le bouton "Annuler" d'une réservation.
   const handleAction = () => {
     instance
-      .patch("/parent/reservation", { id: reservation.id })
+      .put(
+        `/parent/reservations/cancel/${idReservation}?date=${date}&childname=${childName}&pro=${idPro}&parentname=${parentName}`
+      )
       .then((res) => {
         if (res.status === 200) {
-          setMessage("La réservation a bien été annulée.");
+          notifySuccess("Réservation annulée");
+        } else {
+          notifyFail();
         }
-        console.info(res);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
+    setOpenModal(false);
+    setRefreshData(!refreshData);
   };
 
   return (
     <>
       {openModal && !message && (
+        // Affichage des données de la crèche concernée par la réservation, via le clic sur la loupe
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
           <div className={styles.basic_modal_container}>
             <p className={styles.modal_text}>
@@ -102,6 +121,7 @@ function OrderCardParent({ reservation }) {
         </ModalWrapper>
       )}
       {openModal && message && (
+        // Affichage d'une modale pour confirmer l'annulation de la réservation
         <ModalWrapper closeModal={setOpenModal} isCloseBtn={false}>
           <div className={styles.basic_modal_container}>
             <p className={styles.modal_text}>{message}</p>
@@ -122,14 +142,17 @@ function OrderCardParent({ reservation }) {
                   <button
                     type="button"
                     className={`${styles.btn_inside_modal} ${styles.btn_for_no}`}
-                    onClick={() => setOpenModal(false)}
+                    onClick={() => {
+                      setOpenModal(false);
+                      setMessage(null);
+                    }}
                   >
                     Non
                   </button>
                   <button
                     type="button"
                     className={`${styles.btn_inside_modal} ${styles.btn_for_yes}`}
-                    onClick={() => handleAction()}
+                    onClick={handleAction}
                   >
                     Oui
                   </button>
@@ -178,6 +201,7 @@ function OrderCardParent({ reservation }) {
                     sx={{ borderRadius: 5, my: 1 }}
                     id="cancel"
                     onClick={() => {
+                      // Gestion de l'ouverture de la modale de confirmation d'annulation
                       setMessage(
                         "Êtes-vous sûr(e) de vouloir annuler cette réservation ?"
                       );
@@ -234,11 +258,15 @@ export default OrderCardParent;
 
 OrderCardParent.propTypes = {
   reservation: PropTypes.shape({
-    proId: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    proId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
+    parent_firstname: PropTypes.string.isRequired,
+    parent_lastname: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     reservationDate: PropTypes.string.isRequired,
   }).isRequired,
+  refreshData: PropTypes.bool.isRequired,
+  setRefreshData: PropTypes.func.isRequired,
 };

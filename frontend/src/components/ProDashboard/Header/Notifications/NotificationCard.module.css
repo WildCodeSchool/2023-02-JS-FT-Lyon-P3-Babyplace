@@ -1,0 +1,63 @@
+.notificationcard_container {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid rgba(60, 60, 60, 0.25) 1px;
+}
+
+.status_color {
+  height: 100%;
+  width: 5%;
+  background-color: rgb(209, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.is_new_badge {
+  height: 100%;
+  width: 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text_section {
+  height: 100%;
+  width: 85%;
+  font-size: 0.8rem;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text_section p {
+  text-align: center;
+}
+
+.new_badge {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: rgb(165, 165, 255);
+}
+
+.display_none_class {
+  display: none;
+}
+
+.validation_color {
+  background-color: rgb(100, 176, 100);
+}
+
+.refuse_color {
+  background-color: rgb(255, 192, 75);
+}
+
+.cancel_color {
+  background-color: rgb(241, 87, 87);
+}

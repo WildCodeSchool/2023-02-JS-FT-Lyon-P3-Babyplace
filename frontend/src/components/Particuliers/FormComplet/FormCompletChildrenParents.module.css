@@ -1,12 +1,12 @@
 /* Page globale avec en-tete et partie en commun*/
 .page {
-  height: 100vh;
+  height: calc(100vh - 53px);
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  overflow: scroll;
+  overflow: auto;
 }
 .header_card {
   background: var(--main-bg-gradient);
@@ -28,25 +28,41 @@
   justify-content: space-around;
   margin-top: 4rem;
 }
-.buttonChild,
-.buttonParent {
+.button_child,
+.button_parent {
   padding: 1rem 1.5rem;
   border-radius: 25px;
   color: white;
   cursor: pointer;
 }
-.buttonChild {
+.button_child {
   background-color: var(--info-color);
 }
-.buttonParent {
+.button_parent {
   background-color: var(--success-color);
+}
+.active > .button_child,
+.active > .button_parent {
+  transform: scale(1.2);
+  border: 2px solid white;
+}
+.card_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  height: fit-content;
+  overflow-y: auto;
+  scrollbar-width: none;
+  width: 90%;
+}
+.card_container::-webkit-scrollbar {
+  display: none;
 }
 .file {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  margin-top: 10rem;
+  margin-top: 8rem;
   position: relative;
   z-index: 1;
 }
@@ -60,6 +76,7 @@
 
 /* Partie des enfants uniquement*/
 .card_child {
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,7 +86,6 @@
   color: var(--main-color);
   background: #fff;
   background-clip: padding-box;
-  padding: 0.5rem 3rem;
   border-radius: 20px;
 }
 .card_child:before {
@@ -87,7 +103,7 @@
 .card_child h4 {
   color: var(--pink-color);
   margin: 0.5rem;
-  font-size: large;
+  font-size: medium;
 }
 .card_child h3 {
   color: var(--main-color);
@@ -100,7 +116,7 @@
 }
 .button,
 .button_validation {
-  margin-top: 4rem;
+  margin-top: 3rem;
   padding: 0.5rem 2rem;
   border-radius: 20px;
   background-color: var(--main-color);
@@ -108,19 +124,20 @@
   font-weight: bold;
   cursor: pointer;
 }
-.formContainer {
-  width: 90%;
+
+.form_container {
+  width: 95%;
 }
+
 .form {
   background: var(--main-bg-gradient);
-  width: 100%;
-  margin-top: 1rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  width: 100%;
 }
 .form input {
   border-radius: 10px;
@@ -134,8 +151,12 @@
 }
 
 .validation_message {
-  margin: 0.8rem;
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 .radios {
   margin-top: 1.5rem;
   color: var(--dark-color);
@@ -149,6 +170,10 @@
 .button_validation {
   margin-top: 0.8rem;
 }
+.button_validation:disabled {
+  background-color: var(--second-color);
+}
+
 /* Partie des parents uniquement*/
 .form_parent {
   margin-top: 3rem;
@@ -156,22 +181,26 @@
 
 /* Media Queries */
 @media screen and (min-width: 1024px) {
+  .page {
+    width: 100%;
+  }
   .buttons {
+    width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 3rem;
   }
-  .buttonChild,
-  .buttonParent {
-    margin: 0 10rem;
-    padding: 1.5rem 10rem;
+  .button_child,
+  .button_parent {
+    margin: 0 6rem;
+    padding: 1rem 6rem;
     font-size: large;
     box-shadow: 5px 5px 5px var(--second-color);
   }
   .button_head {
     display: flex;
     justify-content: center;
-    margin: 4rem 0 2rem;
+    margin: 1.5rem 0 2rem;
     gap: 2rem;
   }
   .file h2 {
@@ -179,30 +208,46 @@
   }
   .button,
   .button_validation {
-    padding: 1.5rem 10rem;
-    font-size: large;
+    padding: 1rem 6rem;
+    font-size: medium;
     box-shadow: 5px 5px 5px var(--second-color);
   }
   .cards_child {
+    width: 80%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   .card_child {
-    padding: 2rem 5rem;
-    font-size: x-large;
+    width: 30%;
+    padding: 1rem;
+    font-size: large;
   }
   .card_child h4 {
     margin: 1rem;
-    font-size: xx-large;
+    font-size: x-large;
+  }
+  .file {
+    display: flex;
+    align-items: center;
+  }
+  .form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: fit-content;
+    border-radius: 10px;
   }
   .form {
-    margin-top: 0.5rem;
+    width: 100%;
     padding: 3rem;
-    box-shadow: 5px 5px 5px var(--second-color);
   }
   .form input {
+    width: 80%;
     border-radius: 10px;
-    padding: 0.8rem 7rem;
+    padding: 0.8rem 1rem;
     margin: 0.5rem;
   }
   ::placeholder {

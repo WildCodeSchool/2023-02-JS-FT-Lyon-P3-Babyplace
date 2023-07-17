@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
@@ -7,34 +7,46 @@ import FormParent from "../Form/FormParent";
 
 export default function FormCompletParent() {
   const { user } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   return (
     <div className={style.page}>
       <div className={style.header_card}>
-        <Link to={`/particulier/${user.id}/child`}>
+        <Link to={`/particulier/${user.id}`}>
           <button type="button" className={style.button_back}>
             <ArrowBackIosNewIcon />
           </button>
         </Link>
         <div className={style.buttons}>
           <div>
-            <Link to={`/particulier/${user.id}/child`}>
-              <button type="button" className={style.buttonChild}>
+            <NavLink
+              to={`/particulier/${user.id}/enfant`}
+              className={({ isActive }) => (isActive ? style.active : "")}
+            >
+              <button type="button" className={style.button_child}>
                 Enfants
               </button>
-            </Link>
+            </NavLink>
           </div>
           <div>
-            <Link to={`/particulier/${user.id}/parent`}>
-              <button type="button" className={style.buttonParent}>
+            <NavLink
+              to={`/particulier/${user.id}/parent`}
+              className={({ isActive }) => (isActive ? style.active : "")}
+            >
+              <button type="button" className={style.button_parent}>
                 Parents
               </button>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
       <div className={style.file}>
-        <h2>Dossier parents</h2>
         <div className={style.form_parent}>
           <FormParent />
         </div>

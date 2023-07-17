@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormComplet.module.css";
@@ -7,14 +7,24 @@ import style from "./FormComplet.module.css";
  */
 export default function FormCompletWelcome() {
   const { user } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   return (
     <div className={style.page}>
-      <Link to="/particulier">
-        <button type="button" className={style.button_back}>
-          <ArrowBackIosNewIcon />
-        </button>
-      </Link>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className={style.button_back}
+      >
+        <ArrowBackIosNewIcon />
+      </button>
+
       <div className={style.header_card}>
         <div>
           <img src={user.profilImage} alt="profilepicture" />
@@ -28,15 +38,15 @@ export default function FormCompletWelcome() {
             </p>
           </div>
           <div>
-            <Link to={`/particulier/${user.id}/child`}>
-              <button type="button" className={style.buttonChild}>
+            <Link to={`/particulier/${user.id}/enfant`}>
+              <button type="button" className={style.button_child}>
                 Dossier enfant
               </button>
             </Link>
           </div>
           <div>
             <Link to={`/particulier/${user.id}/parent`}>
-              <button type="button" className={style.buttonParent}>
+              <button type="button" className={style.button_parent}>
                 Dossier parent
               </button>
             </Link>
