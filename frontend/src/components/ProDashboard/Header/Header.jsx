@@ -65,7 +65,11 @@ export default function Header() {
         .then((response) => {
           setNumberOfReservations(response.data.total);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            logout(true);
+          }
+        });
     }
   };
 

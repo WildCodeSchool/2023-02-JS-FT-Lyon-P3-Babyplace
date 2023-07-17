@@ -53,7 +53,7 @@ export default function ProAuthChange() {
         setMessage("Votre adresse mail a bien été modifiée.");
       })
       .catch((err) => {
-        if (err.response.status === 403) {
+        if (err.response.status === 401) {
           logout();
         }
         if (err.response.status === 400) {
@@ -76,7 +76,7 @@ export default function ProAuthChange() {
         setVerifyPassword("");
       })
       .catch((err) => {
-        if (err.response.status === 403) {
+        if (err.response.status === 401) {
           logout();
         }
         setMessage(passwordErrorMessages[2]);

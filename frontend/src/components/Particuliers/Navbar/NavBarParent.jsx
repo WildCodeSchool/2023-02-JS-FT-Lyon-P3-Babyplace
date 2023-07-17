@@ -23,7 +23,7 @@ const theme = createTheme({
 
 export default function NavBarParent() {
   const [value, setValue] = useState(0);
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
   const [numberOfReservations, setNumberOfReservations] = useState(null);
   const delay = import.meta.env.VITE_NOTIF_FETCH_TIMING;
 
@@ -34,7 +34,11 @@ export default function NavBarParent() {
         .then((response) => {
           setNumberOfReservations(response.data.total);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            logout(true);
+          }
+        });
     }
   };
 

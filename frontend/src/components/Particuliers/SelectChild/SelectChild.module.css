@@ -7,7 +7,7 @@
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .title {
@@ -21,13 +21,16 @@
 
 .container {
   margin-top: 1rem;
-  height: fit-content;
-  scrollbar-width: none;
   overflow-y: auto;
+  overflow-x: hidden;
   box-shadow: 5px 5px 5px var(--second-color);
   margin-bottom: 1rem;
   border-radius: 10px;
   width: 50%;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 .button_back {
@@ -45,7 +48,7 @@
 }
 
 .card {
-  overflow-y: hidden;
+  height: fit-content;
   padding: 1em 2em;
   background: white;
   width: 100%;
@@ -127,9 +130,7 @@
   .container {
     width: 90%;
   }
-  .selectChildScreen {
-    overflow-y: scroll;
-  }
+
   .card {
     width: 90vw;
   }

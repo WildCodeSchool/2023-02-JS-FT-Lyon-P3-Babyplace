@@ -62,11 +62,10 @@ function SelectChild() {
           return setMessage(response.data);
         })
         .catch((err) => {
-          if (err.response.status === 403) {
+          if (err.response.status === 401) {
             logout(true);
           }
           console.warn(err);
-          setMessage("Il y a eu une erreur. Réessayez plus tard.");
           return setMessage(err.data);
         });
       setValue(null);

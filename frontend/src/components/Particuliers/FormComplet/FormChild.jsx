@@ -10,7 +10,6 @@ export default function FormChild() {
   const { user } = useUserContext();
   const navigate = useNavigate();
   const [validationMessage, setValidationMessage] = useState(null);
-  const [showChild, setShowChild] = useState(false);
   const [formInfo, setFormInfo] = useState({
     lastname: "",
     firstname: "",
@@ -59,6 +58,14 @@ export default function FormChild() {
       .then((response) => {
         if (response.status === 201) {
           setValidationMessage("Votre enfant a bien été ajouté.");
+          setFormInfo({
+            lastname: "",
+            firstname: "",
+            birthdate: "",
+            walking: "",
+            doctor: "",
+            parent_id: `${user.id}`,
+          });
         }
       })
 
@@ -70,20 +77,6 @@ export default function FormChild() {
 
   return (
     <div className={style.form_container}>
-      {showChild ? (
-        <div className={style.card_child}>
-          <h3>Enfant:</h3>
-          <div>
-            <h4>
-              {formInfo.lastname} {formInfo.firstname}
-            </h4>
-          </div>
-          <div>Né(e) le: {formInfo.birthdate}</div>
-
-          <div>Médecin traitant: {formInfo.doctor}</div>
-          <div>{formInfo.walking === "1" ? "Marcheur" : "Non marcheur"}</div>
-        </div>
-      ) : null}
       <form
         className={style.form}
         onSubmit={(e) => handleSubmit(e)}
@@ -170,9 +163,6 @@ export default function FormChild() {
             type="submit"
             className={style.button_validation}
             disabled={Object.values(formInfo)?.includes("")}
-            onClick={() => {
-              setShowChild(true);
-            }}
           >
             Valider
           </button>

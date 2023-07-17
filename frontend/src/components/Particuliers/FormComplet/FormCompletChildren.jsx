@@ -8,8 +8,7 @@ import ResumeChild from "./ResumeChild";
 
 export default function FormCompletChildren() {
   const { user } = useUserContext();
-  const [showForm, setShowForm] = useState(false);
-  const [showChild, setShowChild] = useState(true);
+  const [activeField, setActiveField] = useState("children");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,8 +54,7 @@ export default function FormCompletChildren() {
             type="button"
             className={style.button}
             onClick={() => {
-              setShowChild(!showChild);
-              setShowForm(false);
+              setActiveField("children");
             }}
           >
             Mes enfants
@@ -65,16 +63,15 @@ export default function FormCompletChildren() {
             type="button"
             className={style.button}
             onClick={() => {
-              setShowForm(!showForm);
-              setShowChild(false);
+              setActiveField("add");
             }}
           >
             Ajouter un enfant
           </button>
         </div>
         <div className={style.card_container}>
-          {showChild ? <ResumeChild /> : null}
-          {showForm ? <FormChild /> : null}
+          {activeField === "children" ? <ResumeChild /> : null}
+          {activeField === "add" ? <FormChild /> : null}
         </div>
       </div>
     </div>
