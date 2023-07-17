@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
@@ -7,6 +7,13 @@ import FormParent from "../Form/FormParent";
 
 export default function FormCompletParent() {
   const { user } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   return (
     <div className={style.page}>

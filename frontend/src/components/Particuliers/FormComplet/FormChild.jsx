@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import Joi from "joi";
 import instance from "../../../services/APIService";
@@ -7,6 +8,7 @@ import style from "./FormCompletChildrenParents.module.css";
 
 export default function FormChild() {
   const { user } = useUserContext();
+  const navigate = useNavigate();
   const [validationMessage, setValidationMessage] = useState(null);
   const [showChild, setShowChild] = useState(false);
   const [formInfo, setFormInfo] = useState({
@@ -17,6 +19,12 @@ export default function FormChild() {
     doctor: "",
     parent_id: `${user.id}`,
   });
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   const schema = Joi.object({
     lastname: Joi.string().alphanum().min(3).max(30).required(),
