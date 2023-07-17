@@ -62,7 +62,7 @@ function SelectChild() {
           return setMessage(response.data);
         })
         .catch((err) => {
-          if (err.response.status === 403) {
+          if (err.response.status === 401) {
             logout(true);
           }
           console.warn(err);
