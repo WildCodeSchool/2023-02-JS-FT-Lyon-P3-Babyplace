@@ -94,7 +94,7 @@
 
 @media screen and (max-width: 768px) {
   .requirementsScreen {
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   .card {
     width: 90vw;
