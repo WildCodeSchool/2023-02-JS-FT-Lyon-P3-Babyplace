@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
@@ -7,7 +7,13 @@ import profilePicture from "../../../assets/ed-cannan.png";
 
 export default function FormCompletWelcome() {
   const { user } = useUserContext();
-  const navigate = useNavigate(-1);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   return (
     <div className={style.page}>

@@ -26,20 +26,24 @@ export default function SearchList() {
   if (!pros) return null;
   return (
     <div className={style.search_list_page}>
-      <div className={style.logo_log_in}>
-        <img src={user} alt="user" />
-        <Link to="/particulier">Log In</Link>
+      <div className={style.header}>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className={style.button_back}
+        >
+          <ArrowBackIosNewIcon />
+        </button>
+        <div />
+
+        <h2>Liste des crèches disponibles</h2>
+
+        <div className={style.logo_log_in}>
+          <img src={user} alt="user" />
+          <Link to="/particulier">Log In</Link>
+        </div>
       </div>
 
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className={style.button_back}
-      >
-        <ArrowBackIosNewIcon />
-      </button>
-
-      <h2>Liste des crèches disponibles</h2>
       <div className={style.cards_media}>
         <div className={style.card_media}>
           {pros.map((pro) => (
