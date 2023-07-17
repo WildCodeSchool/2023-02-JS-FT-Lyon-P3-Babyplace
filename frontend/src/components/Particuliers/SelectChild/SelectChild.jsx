@@ -66,7 +66,6 @@ function SelectChild() {
             logout(true);
           }
           console.warn(err);
-          setMessage("Il y a eu une erreur. Réessayez plus tard.");
           return setMessage(err.data);
         });
       setValue(null);

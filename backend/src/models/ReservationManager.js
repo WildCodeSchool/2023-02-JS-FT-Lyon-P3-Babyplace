@@ -27,6 +27,13 @@ class ReservationManager extends AbstractManager {
     );
   }
 
+  findReservationForThisDayWithProAndChild(data) {
+    return this.database.query(
+      `SELECT count(t.id) count FROM ${this.table} as t JOIN place as p on p.id = t.place_id WHERE t.child_id = ? AND t.reservation_date = ? AND p.pro_id = ? AND t.status IN (0, 1)`,
+      [data.childId, data.day, data.proId]
+    );
+  }
+
   delete(parentId, reservationId) {
     return this.database.query(
       `update ${this.table} as t

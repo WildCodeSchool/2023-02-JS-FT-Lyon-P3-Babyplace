@@ -8,12 +8,19 @@
   text-align: center;
   overflow: auto;
 }
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
 .header_card {
   background: var(--main-bg-gradient);
   position: fixed;
   z-index: 10;
   width: 100vw;
-  height: 10rem;
+  height: 6rem;
+  display: flex;
+  align-items: center;
 }
 .button_back {
   background: transparent;
@@ -26,7 +33,7 @@
 .buttons {
   display: flex;
   justify-content: space-around;
-  margin-top: 4rem;
+  width: 100%;
 }
 .button_child,
 .button_parent {
@@ -125,6 +132,11 @@
   cursor: pointer;
 }
 
+.button {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
 .form_container {
   width: 95%;
 }
@@ -188,7 +200,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 3rem;
   }
   .button_child,
   .button_parent {
@@ -200,7 +211,8 @@
   .button_head {
     display: flex;
     justify-content: center;
-    margin: 1.5rem 0 2rem;
+    align-items: center;
+    margin-bottom: 1rem;
     gap: 2rem;
   }
   .file h2 {
@@ -212,6 +224,11 @@
     font-size: medium;
     box-shadow: 5px 5px 5px var(--second-color);
   }
+
+  .button_validation {
+    align-self: center;
+    max-width: 300px;
+  }
   .cards_child {
     width: 80%;
     display: flex;
@@ -220,7 +237,7 @@
     justify-content: space-around;
   }
   .card_child {
-    width: 30%;
+    width: 25%;
     padding: 1rem;
     font-size: large;
   }
