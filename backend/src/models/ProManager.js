@@ -52,6 +52,13 @@ class ProManager extends AbstractManager {
       [email]
     );
   }
+
+  updatePicture(pro) {
+    return this.database.query(
+      `update ${this.table} set image= ? where id = ${pro.id}`,
+      [pro.image]
+    );
+  }
 }
 
 module.exports = ProManager;

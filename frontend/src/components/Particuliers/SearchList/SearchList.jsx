@@ -7,14 +7,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import instance from "../../../services/APIService";
-import pro1test from "../../../assets/images/pro1test.jpg";
-import user from "../../../assets/icones/user.png";
+import userIcon from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
 export default function SearchList() {
   const [pros, setPros] = useState(null);
   const navigate = useNavigate();
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     instance
@@ -39,7 +39,7 @@ export default function SearchList() {
         <h2>Liste des crèches disponibles</h2>
 
         <div className={style.logo_log_in}>
-          <img src={user} alt="user" />
+          <img src={userIcon} alt="user" />
           <Link to="/particulier">Log In</Link>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function SearchList() {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={pro1test}
+                      image={`${BACKEND_URL}/uploads/${pro.image}`}
                       alt="profil_picture"
                       sx={{
                         position: "relative",

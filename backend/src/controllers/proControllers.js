@@ -1,3 +1,5 @@
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -302,6 +304,28 @@ const editAuth = (req, res) => {
     });
 };
 
+const upload = async (req, res) => {
+  const { originalname } = req.file;
+  const { filename } = req.file;
+  const photoPath = `${uuidv4()}-${originalname}`;
+
+  try {
+    await fs.promises.rename(
+      `./public/uploads/${filename}`,
+      `./public/uploads/${photoPath}`
+    );
+
+    await models.pro.updatePicture({
+      id: req.payloads.sub,
+      image: photoPath,
+    });
+    res.send({ photoPath });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
   browse,
   browseProAndDispo,
@@ -313,4 +337,5 @@ module.exports = {
   login,
   register,
   editAuth,
+  upload,
 };

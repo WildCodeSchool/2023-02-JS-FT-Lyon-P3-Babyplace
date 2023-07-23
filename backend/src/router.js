@@ -1,4 +1,7 @@
 const express = require("express");
+const multer = require("multer");
+
+const upload = multer({ dest: "./public/uploads/" });
 
 const router = express.Router();
 
@@ -135,6 +138,19 @@ router.post(
 );
 
 // ---------------- / Pro routes  -------------------
+
+// ----------------  Upload image routes  -------------------
+
+router.post(
+  "/upload",
+  verifyToken,
+  upload.single("image"),
+  proControllers.upload
+);
+
+router.get("/upload/:id", proControllers.read);
+
+// ---------------- / Upload image routes  -------------------
 
 // ----------------  Notifications routes  -------------------
 
