@@ -10,7 +10,6 @@ const parentControllers = require("./controllers/parentControllers");
 const childControllers = require("./controllers/childControllers");
 const proControllers = require("./controllers/proControllers");
 const dashboardProControllers = require("./controllers/dashboardProControllers");
-const imageControllers = require("./controllers/imageControllers");
 const notificationControllers = require("./controllers/NotificationControllers");
 const proDisponibilityControllers = require("./controllers/proDisponibilityControllers");
 const resetPasswordControllers = require("./controllers/resetPasswordControllers");
@@ -142,8 +141,14 @@ router.post(
 
 // ----------------  Upload image routes  -------------------
 
-router.post("/upload", upload.single("image_url"), imageControllers.upload);
-router.get("/upload/:id", imageControllers.read);
+router.post(
+  "/upload",
+  verifyToken,
+  upload.single("image"),
+  proControllers.upload
+);
+
+router.get("/upload/:id", proControllers.read);
 
 // ---------------- / Upload image routes  -------------------
 

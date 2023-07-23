@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
-import pro1test from "../../../../../assets/images/pro1test.jpg";
 import DispoProPreview from "./DispoProPreview";
 import style from "./Preview.module.css";
+import ImageRead from "./ImageRead";
 import instance from "../../../../../services/APIService";
 
 export default function Preview() {
@@ -19,8 +19,9 @@ export default function Preview() {
       {pro && (
         <div className={style.card_global}>
           <div className={style.card_left}>
-            <img src={pro1test} alt="profile_picture" className={style.image} />
-
+            <div className={style.image}>
+              <ImageRead />
+            </div>
             <h3>Présentation</h3>
             <p>{pro.description}</p>
           </div>

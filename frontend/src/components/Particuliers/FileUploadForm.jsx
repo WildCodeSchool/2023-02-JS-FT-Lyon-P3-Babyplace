@@ -24,6 +24,26 @@ export default function FileUploadForm() {
       console.error("Error uploading image", error);
     }
   };
+
+  /* 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("avatar", inputRef.current.files[0]);
+
+    instance
+      .post("/ma route pour envoyer mon image/", formData)
+      .then((res) => {
+        if (res.status === 200) {
+          notifySuccess("Votre image à bien été enregistrée");
+        } else {
+          notifyFail();
+        }
+      })
+      .catch((err) => console.error(err));
+    setOpenModalUpload(false);
+  }; */
   return (
     <form>
       <input type="file" onChange={handleImageUpload} />

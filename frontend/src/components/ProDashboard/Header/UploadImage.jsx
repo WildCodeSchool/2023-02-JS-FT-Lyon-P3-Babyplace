@@ -1,49 +1,80 @@
 import PropTypes from "prop-types";
-import { useRef } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
-import styles from "./UploadImage.module.css";
+import { useRef, useState } from "react";
 import instance from "../../../services/APIService";
+import { useUserContext } from "../../../contexts/UserContext";
+import styles from "./UploadImage.module.css";
 
 export default function UploadImage({ setOpenModalUpload }) {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const { user } = useUserContext();
+  const image = `${BACKEND_URL}/uploads/${user.image}`;
   const notifySuccess = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
-  const inputRef = useRef(null);
+  const [selectedFileName, setSelectedFileName] = useState("");
 
-  const handleSubmit = (e) => {
+  const inputRef = useRef();
+
+  const handleFiles = (files) => {
+    const selectedFile = files[0];
+    setSelectedFileName(selectedFile.name);
+    inputRef.current.files = files;
+  };
+
+  const handleChange = (e) => {
     e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      handleFiles(e.target.files);
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
 
     const formData = new FormData();
-    formData.append("avatar", inputRef.current.files[0]);
+    formData.append("image", inputRef.current.files[0]);
+    formData.append("id", user.id);
 
     instance
-      .post("/ma route pour envoyer mon image/", formData)
-      .then((res) => {
-        if (res.status === 200) {
-          notifySuccess("Votre image à bien été enregistrée");
-        } else {
-          notifyFail();
-        }
+      .post(`upload`, formData, {
+        withCredentials: true,
       })
-      .catch((err) => console.error(err));
-    setOpenModalUpload(false);
+      .then(() => {
+        notifySuccess("Votre image à bien été enregistrée");
+        setSelectedFileName("");
+        setOpenModalUpload(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        notifyFail();
+      });
   };
 
   return (
     <div className={styles.upload_container}>
-      <div className={styles.image_box} />
+      <div />
+      <img src={image} alt="profil_picture" className={styles.image_box} />
       <form
         className={styles.form_container}
         encType="multipart/form-data"
         onSubmit={handleSubmit}
       >
         <input
+          ref={inputRef}
           className={styles.image_input}
           type="file"
-          name="monfichier"
-          ref={inputRef}
+          name="image"
+          id="input-file-upload"
+          multiple
+          onChange={handleChange}
         />
+        <label id="label-file-upload" htmlFor="input-file-upload">
+          <div>
+            {selectedFileName && <p>Fichier sélectionné: {selectedFileName}</p>}{" "}
+          </div>
+        </label>
         <Button variant="contained" sx={{ my: 4 }} type="submit">
           Envoyer
         </Button>
