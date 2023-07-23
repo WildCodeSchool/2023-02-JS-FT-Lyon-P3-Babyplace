@@ -152,12 +152,7 @@
   padding: 1rem;
   width: 100%;
 }
-.form input {
-  border-radius: 10px;
-  width: 80%;
-  padding: 0.7rem 0.5rem;
-  margin: 0.3rem;
-}
+
 ::placeholder {
   color: var(--main-color);
   padding-right: 300px;
@@ -178,8 +173,50 @@
   margin-top: 1rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.radio label {
   cursor: pointer;
 }
+
+.radio div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form input {
+  width: 80%;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem;
+}
+
+.radio input {
+  cursor: pointer;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0.5rem;
+  padding: 0;
+  background-color: white;
+  border-radius: 50px;
+  border: 1px solid var(--dark-color);
+  transition: 0.5s;
+}
+
+.radio input:hover {
+  box-shadow: 1px 1px 1px 1px black inset;
+  transition: 0.5s;
+}
+
+.radio input:checked {
+  box-shadow: 1px 1px 1px 1px black inset;
+  background-color: var(--main-color);
+}
+
 .button_validation {
   margin-top: 0.8rem;
 }
@@ -189,7 +226,15 @@
 
 /* Partie des parents uniquement*/
 .form_parent {
-  margin-top: 3rem;
+  border-radius: 50px;
+  border: 3px solid var(--main-color);
+  margin: 4rem 3rem 3rem 3rem;
+  background-image: var(--main-bg-gradient);
+}
+
+  
+.form_parent h3 {
+  color: white;
 }
 
 /* Media Queries */
@@ -270,6 +315,13 @@
     padding: 0.8rem 1rem;
     margin: 0.5rem;
   }
+
+  .radio input {
+    width: 20px;
+    padding: 0;
+    border-radius: 50px;
+  }
+
   ::placeholder {
     padding-right: 300px;
   }
@@ -280,5 +332,9 @@
 
   .button_validation {
     margin-top: 1rem;
+  }
+  
+  .form_parent {
+    margin: 10rem;
   }
 }

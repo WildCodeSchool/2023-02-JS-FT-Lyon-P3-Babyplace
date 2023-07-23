@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AccountHeader.module.css";
-import avatar from "../../../assets/ed-cannan.png";
+import avatar from "../../../assets/images/avatar_Babyplace.jpg";
 import { useUserContext } from "../../../contexts/UserContext";
 
 function AccountHeader() {
