@@ -64,52 +64,19 @@ const edit = async (req, res) => {
     });
     pro.id = req.payloads?.sub;
 
-    // On met à jour le pro aec un objet propre
-    await models.pro
-      .update(pro)
-      .then(([result]) => {
-        if (result.affectedRows === 0) {
-          return res.sendStatus(404);
-        }
-        return null;
-      })
-      .catch((err) => {
-        console.error(err);
-        return res.send(500);
-      });
+    // On met à jour le pro avec un objet propre
+    await models.pro.update(pro);
 
     // Si des places sont à ajouter, on fait une requête SQL pour ajouter les places dans la table
     if (req.body.placesToAdd && req.body.placesToAdd > 0) {
-      await models.place
-        .insert(req.body.placesToAdd, pro.id)
-        .then(([result]) => {
-          if (result.affectedRows === 0) {
-            return res.sendStatus(404);
-          }
-          return null;
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.send(500);
-        });
+      await models.place.insert(req.body.placesToAdd, pro.id);
     }
     // Si des disponibilités sont à ajouter, on fait une requête SQL pour ajouter les jours non présents dans la table pour ce pro
     if (req.body.daysToAdd && req.body.daysToAdd.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         req.body.daysToAdd
       );
-      await models.proDisponibility
-        .insert(disponibilitiesToAdd, pro.id)
-        .then(([result]) => {
-          if (result.affectedRows === 0) {
-            return res.sendStatus(404);
-          }
-          return null;
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.send(500);
-        });
+      await models.proDisponibility.insert(disponibilitiesToAdd, pro.id);
     }
 
     // Si des jours de disponibilité sont à supprimer, on fait une requête pour trouver l'id des disponibilités à supprimer
@@ -269,34 +236,23 @@ const profile = (req, res) => {
 };
 
 const login = async (req, res) => {
-  // Lors du login du pro, on a besoin de connaître le nombre de places qu'il a par jour
-  await models.place
-    .countPlaces(req.user.id)
-    .then(([result]) => {
-      if (result) {
-        req.user.place = result[0].place;
-      }
-    })
-    .catch((err) => {
-      console.error(err);
+  try {
+    // Lors du login du pro, on a besoin de connaître le nombre de places qu'il a par jour
+    const [placesResult] = await models.place.countPlaces(req.user.id);
+    req.user.place = placesResult[0].place;
+
+    // On récupère également un tableau des différents jours de disponibilités de ce pro
+    const [dispoResult] = await models.proDisponibility.findAll(req.user.id);
+    const disponibilities = [];
+    dispoResult.forEach((disponibility) => {
+      disponibilities.push(disponibility.day);
     });
-  // On récupère également un tableau des différents jours de disponibilités de ce pro
-  models.proDisponibility
-    .findAll(req.user.id)
-    .then(([result]) => {
-      if (result) {
-        const disponibilities = [];
-        result.forEach((disponibility) => {
-          disponibilities.push(disponibility.day);
-        });
-        req.user.disponibility = disponibilities;
-        res.send(req.user);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    req.user.disponibility = disponibilities;
+    return res.send(req.user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Erreur interne");
+  }
 };
 
 const register = async (req, res) => {
@@ -305,51 +261,19 @@ const register = async (req, res) => {
 
     // TODO validations (length, format...)
     // On enregistre les infos du pro dans la table correspondante
-    await models.pro
-      .insert(pro)
-      .then(([result]) => {
-        if (result.insertId) {
-          pro.id = result.insertId;
-          return null;
-        }
-        return res.send(500);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
+    const [insertResult] = await models.pro.insert(pro);
+    pro.id = insertResult.insertId;
+
     // Si le pro a indiqué des places, on en insère autant qu'il faut dans la table
     if (pro.place > 0) {
-      await models.place
-        .insert(pro.place, pro.id)
-        .then(([result]) => {
-          if (result.affectedRows === 0) {
-            return res.sendStatus(500);
-          }
-          return null;
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.send(500);
-        });
+      await models.place.insert(pro.place, pro.id);
     }
     // Si le pro a indique des jours de disponibilité lors de son enregistrement, on les enregistre
     if (pro.disponibility.length > 0) {
       const [disponibilitiesToAdd] = await models.disponibility.find(
         pro.disponibility
       );
-      await models.proDisponibility
-        .insert(disponibilitiesToAdd, pro.id)
-        .then(([result]) => {
-          if (result.affectedRows === 0) {
-            return res.sendStatus(500);
-          }
-          return null;
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.send(500);
-        });
+      await models.proDisponibility.insert(disponibilitiesToAdd, pro.id);
     }
     return res.sendStatus(201);
   } catch (err) {
