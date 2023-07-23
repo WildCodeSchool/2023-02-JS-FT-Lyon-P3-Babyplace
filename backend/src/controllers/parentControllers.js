@@ -183,6 +183,19 @@ const cancelReservation = async (req, res) => {
 
 const saveReservation = async (req, res) => {
   try {
+    // on vérifie si l'enfant est déjà inscrit pour cette dae dans cette structure
+    req.body.childId = parseInt(req.body.childId, 10);
+    req.body.proId = parseInt(req.body.proId, 10);
+    const [result] =
+      await models.reservation.findReservationForThisDayWithProAndChild(
+        req.body
+      );
+    // Si c'est le cas, on sort du try et on renvoie un message d'erreur
+    if (result[0].count > 0) {
+      return res.send(
+        "Vous ne pouvez pas inscrire deux fois le même enfant pour la même journée dans cette crèche."
+      );
+    }
     // on liste d'abord le nombre de places maximum du professionnel
     const [proPlaces] = await models.place.findAllPlaces(req.body.proId);
     // on liste ensuite le nombre de places du professionnel déjà prises (status "en attente" (0) ou "accepté" (1)) pour le jour concerné

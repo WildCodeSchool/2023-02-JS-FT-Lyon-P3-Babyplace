@@ -24,21 +24,21 @@
   display: none;
 }
 
-@media screen and (min-width: 950px) {
+@media screen and (min-width: 1200px) {
   .menuScreen {
     padding: 3em;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 2em;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     overflow: auto;
     height: calc(100vh - 15vh - 8em - 5px);
   }
 
   .babyPic {
     display: block;
-    height: 75%;
+    height: 60%;
     border-radius: 25px;
   }
 

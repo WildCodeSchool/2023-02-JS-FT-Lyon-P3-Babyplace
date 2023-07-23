@@ -23,7 +23,7 @@ const theme = createTheme({
 
 export default function NavBarParent() {
   const [value, setValue] = useState(0);
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
   const [numberOfReservations, setNumberOfReservations] = useState(null);
   const delay = import.meta.env.VITE_NOTIF_FETCH_TIMING;
 
@@ -34,17 +34,27 @@ export default function NavBarParent() {
         .then((response) => {
           setNumberOfReservations(response.data.total);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            logout(true);
+          }
+        });
     }
   };
-
+  let timer;
   useEffect(() => {
-    // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
-    const timer = setInterval(getNewNotification, delay);
+    if (user?.id && user?.role === "parent") {
+      // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
+      timer = setInterval(getNewNotification, delay);
+    }
+    if (!user?.id) {
+      clearInterval(timer);
+    }
+
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [user]);
 
   return (
     <ThemeProvider theme={theme}>
