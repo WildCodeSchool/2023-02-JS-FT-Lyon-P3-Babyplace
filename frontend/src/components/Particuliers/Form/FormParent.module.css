@@ -1,12 +1,11 @@
 .page {
   background: var(--main-bg-gradient);
-  margin-bottom: 3rem;
-  height: 100vh;
+  height: calc(100vh - 56px);
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: auto;
 }
 .header_card {
@@ -46,6 +45,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .form input {
   border-radius: 10px;
   width: 80%;
@@ -54,8 +54,9 @@
   box-shadow: 3px 3px 3px var(--second-color);
 }
 
-.buttonSubmit,
-.buttonNext {
+.buttonSubmit {
+  width: 50%;
+  margin: auto;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -64,12 +65,31 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.buttonNext {
+  width: 100%;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background-color: var(--main-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .validationMessage {
   margin-top: 0.8rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
+
+.validationMessage div div {
+  width: fit-content;
+}
+
+
 .buttonNext {
   margin-top: 0;
   padding: 0.5rem 2rem;
@@ -84,7 +104,8 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .form input {
-    width: auto;
+    justify-self: center;
+    width: 70%;
     padding: 1rem 2rem;
     margin: 0.7rem;
     font-size: large;
@@ -96,5 +117,7 @@
   .buttonNext,
   .buttonSubmit {
     box-shadow: 5px 5px 5px var(--second-color);
+    width: 20rem;
+    height: 3rem;
   }
 }
