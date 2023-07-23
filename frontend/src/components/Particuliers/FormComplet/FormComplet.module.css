@@ -5,11 +5,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   overflow: auto;
 }
 .header_card {
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +22,9 @@
 .header_card p,
 .header_card h3 {
   width: 18rem;
-  margin: 1.5rem;
+  margin: 1.5rem 0;
   color: white;
+  text-align: center;
 }
 .button_back {
   background: transparent;
@@ -47,6 +49,16 @@
 }
 .button_parent {
   background-color: var(--success-color);
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+.profilePicture {
+  width: 80%;
 }
 
 @media screen and (min-width: 1024px) {

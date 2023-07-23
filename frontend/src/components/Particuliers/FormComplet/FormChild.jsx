@@ -104,7 +104,7 @@ export default function FormChild() {
           type="text"
           name="birthdate"
           id="birthdate"
-          placeholder="Date de naissance AAAA/MM/JJ"
+          placeholder="Naissance AAAA/MM/JJ"
           value={formInfo.birthdate}
           pattern="\d{4}/\d{2}/\d{2}"
           onChange={handleChange}

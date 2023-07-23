@@ -64,3 +64,12 @@
     width: fit-content;
   }
 }
+
+@media screen and (min-width: 800px) and (max-width: 1199px) {
+  .babyPic {
+    display: block;
+    width: 50%;
+    border-radius: 25px;
+    margin: 5rem auto;
+  }
+}

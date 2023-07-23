@@ -144,13 +144,15 @@
 
 .form {
   background: var(--main-bg-gradient);
-  border-radius: 10px;
+  border-radius: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 2rem;
   width: 100%;
+  border: 3px solid var(--main-color);
+  margin-top: 2rem;
 }
 
 ::placeholder {
@@ -167,7 +169,7 @@
 
 .radios {
   margin-top: 1.5rem;
-  color: var(--dark-color);
+  color: white;
 }
 .radio {
   margin-top: 1rem;
@@ -255,7 +257,7 @@
     box-shadow: 5px 5px 5px var(--second-color);
   }
   .button_head {
-    margin-top: 4rem;
+    margin-top: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -304,10 +306,12 @@
     width: 50%;
     height: fit-content;
     border-radius: 10px;
+    margin-bottom: 5rem;
   }
   .form {
     width: 100%;
     padding: 3rem;
+    margin-top: 3vh;
   }
   .form input {
     width: 80%;
@@ -335,6 +339,6 @@
   }
   
   .form_parent {
-    margin: 10rem;
+    margin: 20vh auto 10rem auto;
   }
 }

@@ -26,8 +26,12 @@ export default function FormCompletWelcome() {
       </button>
 
       <div className={style.header_card}>
-        <div>
-          <img src={profilePicture} alt="profilepicture" />
+        <div className={style.container}>
+          <img
+            className={style.profilePicture}
+            src={profilePicture}
+            alt="profilepicture"
+          />
           <h3>
             {user.lastname} {user.firstname}
           </h3>
