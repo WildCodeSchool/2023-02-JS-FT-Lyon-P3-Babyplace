@@ -3,13 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import instance from "../../../services/APIService";
-import pro1test from "../../../assets/images/pro1test.jpg";
 import DispoPros from "../SearchList/DispoPros";
 import style from "./ProDetails.module.css";
 
 export default function ProDetails() {
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     instance
@@ -35,7 +35,11 @@ export default function ProDetails() {
       </div>
       <div className={style.card_global}>
         <div className={style.card_left}>
-          <img src={pro1test} alt="profile_picture" className={style.image} />
+          <img
+            src={`${BACKEND_URL}/uploads/${pro.image}`}
+            alt="profile_picture"
+            className={style.image}
+          />
 
           <h3>Présentation</h3>
           <p>{pro.description}</p>
