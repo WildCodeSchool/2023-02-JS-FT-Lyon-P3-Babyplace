@@ -1,5 +1,8 @@
 const models = require("../models");
 
+// la fonction suivante récupère toutes les notifs du pro en fontion de la page,
+// c'est à dire avec un offset et une limit.
+// on prend également en compte le status que l'on demande depuis le front.
 const browseReservations = async (req, res) => {
   const id = req.payloads.sub;
   const { status } = req.query;
@@ -24,6 +27,7 @@ const browseReservations = async (req, res) => {
   }
 };
 
+// on récupère les infos lié à une réservation lorsqu'on clique sur la loupe
 const showMoreInfoOnOrder = (req, res) => {
   models.dashboardpro
     .moreDetailOrder(parseInt(req.params.id, 10))
@@ -40,6 +44,9 @@ const showMoreInfoOnOrder = (req, res) => {
     });
 };
 
+// cette fonction change le statut d'une réservation de "en attente" à accepté puis
+// crée une nouvelle nouvelle notification pour le parent concerné.
+// Idem pour les fonction refuseOrder et cancelOrder.
 const validateOrder = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const { date } = req.query;
@@ -130,6 +137,7 @@ const cancelOrder = async (req, res) => {
   }
 };
 
+// on récupère les enfants incrit sur ce jour
 const getDateOrder = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -147,6 +155,7 @@ const getDateOrder = (req, res) => {
     });
 };
 
+// on récupère les enfants incrit sur ce mois
 const getAllReservationsForCalendar = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -160,6 +169,7 @@ const getAllReservationsForCalendar = (req, res) => {
     });
 };
 
+// on récupère les infos du pro pour la prévisualisation du profil
 const getProInfoForPreview = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -186,6 +196,7 @@ const getProDaysForPreview = (req, res) => {
     });
 };
 
+// on récupère les enfant incrit ce jour dont ceux qui marche ou non
 const getDataForToday = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -198,7 +209,7 @@ const getDataForToday = (req, res) => {
       res.status(500).send("There is a problem");
     });
 };
-
+// on récupère les réservation en attente
 const browseReservationsWaiting = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -212,6 +223,7 @@ const browseReservationsWaiting = (req, res) => {
     });
 };
 
+// on récupère le nombre d'enfants incrit sur les 7 prochains jours
 const getOccupationRates = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro

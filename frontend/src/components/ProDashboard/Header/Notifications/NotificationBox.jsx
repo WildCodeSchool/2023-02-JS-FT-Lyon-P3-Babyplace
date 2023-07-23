@@ -8,14 +8,14 @@ export default function NotificationBox() {
 
   useEffect(() => {
     instance
-      .get(`/notifications/pro`)
+      .get(`/notifications/pro`) // on récupère toute les notifications (lues et non-lues)
       .then((response) => {
         setNotifications(response.data);
       })
       .catch((err) => console.error(err));
     return () => {
       instance
-        .get(`/notifications/checked/pro`)
+        .get(`/notifications/checked/pro`) // au démontage du composant, on marque ces notification comme lues
         .catch((err) => console.error(err));
     };
   }, []);

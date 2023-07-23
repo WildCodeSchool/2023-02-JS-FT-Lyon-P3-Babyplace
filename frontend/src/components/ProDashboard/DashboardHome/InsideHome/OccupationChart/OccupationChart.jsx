@@ -38,11 +38,14 @@ export default function Chart3() {
       })
       .catch((err) => console.error(err));
   }, []);
+
+  // Extraction des jours depuis arrayDays et stockage dans la variable days
   const days = [];
   arrayDays.forEach((day) => {
     days.push(day.day);
   });
 
+  // useEffect pour récupérer le taux d'occupation pour la date courante depuis le backend
   useEffect(() => {
     instance
       .get(`/occupation/${thisDate}`)
@@ -52,6 +55,7 @@ export default function Chart3() {
       .catch((err) => console.error(err));
   }, []);
 
+  // Extraction des dates et taux d'occupation depuis occupationRate et stockage dans les tableaux dayArray et occupation
   const dayArray = [];
   const occupation = [];
   occupationRate.forEach((date) => {

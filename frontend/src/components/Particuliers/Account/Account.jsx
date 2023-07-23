@@ -10,7 +10,7 @@ import styles from "./Account.module.css";
 import AuthenticationChange from "./AuthenticationChange";
 import OrdersParent from "./OrdersParent";
 import AccountHeader from "./AccountHeader";
-import baby from "../../../assets/images/baby-6087761_1280.jpg";
+import baby from "../../../assets/images/image2.png";
 
 function Account() {
   const { user, logout } = useUserContext();
@@ -46,7 +46,11 @@ function Account() {
                     setAccountScreen("authentication");
                   }}
                 >
-                  <LockOutlinedIcon sx={{ color: "var(--main-color)" }} />
+                  <LockOutlinedIcon
+                    sx={{
+                      color: "var(--main-color)",
+                    }}
+                  />
                   <p>Données d'authentification</p>
                 </button>
               </li>

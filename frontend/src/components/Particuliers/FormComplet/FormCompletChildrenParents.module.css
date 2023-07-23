@@ -7,6 +7,7 @@
   align-items: center;
   text-align: center;
   overflow: auto;
+  background-color: rgba(238, 225, 240, 0.8);
 }
 
 .page::-webkit-scrollbar {
@@ -91,7 +92,7 @@
   margin: 1.5rem;
   position: relative;
   color: var(--main-color);
-  background: #fff;
+  background: #f3f3f3;
   background-clip: padding-box;
   border-radius: 20px;
 }
@@ -106,7 +107,9 @@
   margin: -7px;
   border-radius: inherit;
   background: var(--main-bg-gradient);
+  box-shadow: 0 0 15px 0 rgba(78, 14, 123, 0.54);
 }
+
 .card_child h4 {
   color: var(--pink-color);
   margin: 0.5rem;
@@ -291,6 +294,7 @@
     padding: 1rem;
     font-size: large;
   }
+
   .card_child h4 {
     margin: 1rem;
     font-size: x-large;

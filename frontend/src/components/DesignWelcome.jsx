@@ -4,7 +4,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import styles from "./DesignWelcome.module.css";
-import baby from "../assets/images/baby-6087761_1280.jpg";
+import baby from "../assets/images/image2.png";
 
 function DesignWelcome({ home }) {
   const navigate = useNavigate();
