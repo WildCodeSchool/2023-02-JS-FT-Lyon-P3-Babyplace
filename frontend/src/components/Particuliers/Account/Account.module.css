@@ -24,7 +24,7 @@
   display: none;
 }
 
-@media screen and (min-width: 950px) {
+@media screen and (min-width: 1200px) {
   .menuScreen {
     padding: 3em;
     display: flex;

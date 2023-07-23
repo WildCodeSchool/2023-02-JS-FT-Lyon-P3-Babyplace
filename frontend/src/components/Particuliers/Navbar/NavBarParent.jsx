@@ -41,14 +41,20 @@ export default function NavBarParent() {
         });
     }
   };
-
+  let timer;
   useEffect(() => {
-    // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
-    const timer = setInterval(getNewNotification, delay);
+    if (user?.id && user?.role === "parent") {
+      // Le timing "delay" du fetch des notifs est paramétrable via la variable d'environnement dans le fichier .env
+      timer = setInterval(getNewNotification, delay);
+    }
+    if (!user?.id) {
+      clearInterval(timer);
+    }
+
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [user]);
 
   return (
     <ThemeProvider theme={theme}>
