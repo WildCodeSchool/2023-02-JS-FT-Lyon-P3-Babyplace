@@ -304,60 +304,6 @@ const editAuth = (req, res) => {
     });
 };
 
-/* const upload = (req, res) => {
-  let updatedPro = {};
-  Object.entries(req.body).forEach((array) => {
-    if (
-      array[0] !== "name" &&
-      array[0] !== "mail_address" &&
-      array[0] !== "password" &&
-      array[0] !== "hashed_password" &&
-      array[0] !== "address" &&
-      array[0] !== "postcode" &&
-      array[0] !== "city" &&
-      array[0] !== "phone_number" &&
-      array[0] !== "description" &&
-      array[0] !== "type" &&
-      array[0] !== "description" &&
-      array[0] !== "notification_status" &&
-      array[0] !== "role" &&
-      array[1] !== "" &&
-      array !== undefined
-    ) {
-      updatedPro = { ...updatedPro, [array[0]]: array[1] };
-    }
-  });
-  updatedPro.id = req.payloads?.sub;
-
-  // Récupérer le chemin de l'image temporaire
-  const { originalname } = req.file;
-  const { filename } = req.file;
-
-  // Déplacer l'image temporaire vers le dossier "uploads"
-  fs.rename(
-    `./public/uploads/${filename}`,
-    `./public/uploads/${uuidv4()}-${originalname}`,
-    (error) => {
-      if (error) throw error;
-    }
-  );
-  // Construire l'URL complète de l'image
-  const image = `${uuidv4()}-${originalname}`;
-
-  // Insérer l'URL de l'image dans la base de données
-
-  models.pro
-    .joinImageWithPro(image)
-    .then(([result]) => {
-      return res.location(`/pro/${result.insertId}`).status(201).send(image);
-    })
-
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-}; */
-
 const upload = async (req, res) => {
   const { originalname } = req.file;
   const { filename } = req.file;
