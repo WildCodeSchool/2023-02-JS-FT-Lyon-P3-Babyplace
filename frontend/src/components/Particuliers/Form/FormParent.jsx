@@ -277,7 +277,8 @@ export default function FormParent() {
     return (
       <div className={style.form_modify}>
         <h3>Modifier vos informations :</h3>
-        <form className={style.form} onSubmit={handleSubmit}>
+        <form className={style.formModify} onSubmit={handleSubmit}>
+          <label htmlFor="lastname">Nom de famille</label>
           <input
             type="text"
             name="lastname"
@@ -285,6 +286,7 @@ export default function FormParent() {
             value={formInfo.lastname}
             onChange={handleChange}
           />
+          <label htmlFor="firstname">Prénom</label>
           <input
             type="text"
             name="firstname"
@@ -292,6 +294,7 @@ export default function FormParent() {
             value={formInfo.firstname}
             onChange={handleChange}
           />
+          <label htmlFor="address">Adresse</label>
           <input
             type="text"
             name="address"
@@ -299,6 +302,8 @@ export default function FormParent() {
             value={formInfo.address}
             onChange={handleChange}
           />
+          <label htmlFor="postcode">Code postal</label>
+
           <input
             type="number"
             name="postcode"
@@ -306,6 +311,8 @@ export default function FormParent() {
             value={formInfo.postcode}
             onChange={handleChange}
           />
+          <label htmlFor="city">Ville</label>
+
           <input
             type="text"
             name="city"
@@ -313,6 +320,8 @@ export default function FormParent() {
             value={formInfo.city}
             onChange={handleChange}
           />
+          <label htmlFor="phone_number">Nom de famille</label>
+
           <input
             type="number"
             name="phone_number"
