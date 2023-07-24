@@ -40,7 +40,7 @@ export default function SearchList() {
 
         <div className={style.logo_log_in}>
           <img src={userIcon} alt="user" />
-          <Link to="/particulier">Log In</Link>
+          <Link to="/particulier">Connexion</Link>
         </div>
       </div>
 
