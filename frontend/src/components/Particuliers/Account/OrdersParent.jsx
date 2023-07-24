@@ -8,20 +8,22 @@ import { useUserContext } from "../../../contexts/UserContext";
 
 function Orders({ setAccountScreen }) {
   const [data, setData] = useState(null);
+  const [refreshData, setRefreshData] = useState(false);
   const { logout } = useUserContext();
 
   useEffect(() => {
+    // On récupère les réservation du parent dès l'ouverture de l'écran "Réservations"
     instance
       .get("/parent/reservations")
       .then((response) => {
         setData(response.data);
       })
       .catch((err) => {
-        if (err.response.status === 403) {
+        if (err.response.status === 401) {
           logout(true);
         }
       });
-  }, []);
+  }, [refreshData]);
 
   return (
     <div>
@@ -38,7 +40,13 @@ function Orders({ setAccountScreen }) {
       <div className={styles.ordersList}>
         {data &&
           data.map((reservation) => {
-            return <OrderCardParent reservation={reservation} />;
+            return (
+              <OrderCardParent
+                reservation={reservation}
+                refreshData={refreshData}
+                setRefreshData={setRefreshData}
+              />
+            );
           })}
       </div>
     </div>

@@ -4,21 +4,22 @@ import { Button, Alert } from "@mui/material";
 import Joi from "joi";
 import styles from "./FormBlock.module.css";
 import FormPart from "./FormPart";
-import { useUserInfoContext } from "../../contexts/UserInfoContext";
 import { useUserContext } from "../../contexts/UserContext";
 
-function FormBlock({ registerInfo, setRegisterInfo }) {
+function FormBlock({
+  registerInfo,
+  setRegisterInfo,
+  infoToModify,
+  setInfoToModify,
+  fieldsToComplete,
+  activeField,
+  setActiveField,
+}) {
   const [formBlockInfo, setFormBlockInfo] = useState({ empty: true });
   const [formMessage, setFormMessage] = useState(null);
   const [formFields, setFormFields] = useState([]);
   const [validationMessage, setValidationMessage] = useState(null);
-  const {
-    infoToModify,
-    setInfoToModify,
-    fieldsToComplete,
-    activeField,
-    setActiveField,
-  } = useUserInfoContext();
+
   const { user } = useUserContext();
 
   const schema = Joi.object().keys({
@@ -219,4 +220,9 @@ export default FormBlock;
 FormBlock.propTypes = {
   registerInfo: PropTypes.string.isRequired,
   setRegisterInfo: PropTypes.func.isRequired,
+  infoToModify: PropTypes.shape.isRequired,
+  setInfoToModify: PropTypes.func.isRequired,
+  fieldsToComplete: PropTypes.arrayOf.isRequired,
+  activeField: PropTypes.string.isRequired,
+  setActiveField: PropTypes.func.isRequired,
 };

@@ -1,22 +1,46 @@
 .login {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 56px);
 }
 
-.loginForm {
+.loginPro {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(238, 225, 240, 0.8);
+}
+
+.container {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 
+.loginForm {
+  width: 100%;;
+  padding: 0.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.loginForm > div {
+  margin-bottom: 1em;
+}
+
+.loginForm > div > div {
+justify-content: center;}
+
 .loginForm form {
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -25,7 +49,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: .5em;
+  gap: 0.5em;
 }
 
 .field {
@@ -45,13 +69,21 @@
 }
 
 @media screen and (max-width: 950px) {
-  .login {
+  .login, .loginPro {
     flex-direction: column;
   }
 
   .loginForm {
+    overflow-y: auto;
+  }
+
+  .container {
     height: 50%;
-    width: 100%
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .loginForm form {

@@ -38,6 +38,9 @@ const PlaceManager = require("./PlaceManager");
 const DisponibilityManager = require("./DisponibilityManager");
 const ProDisponibilityManager = require("./ProDisponibilityManager");
 const ReservationManager = require("./ReservationManager");
+const ImageManager = require("./ImageManager");
+const NotificationManager = require("./NotificationManager");
+const ResetPasswordManager = require("./ResetPasswordManager");
 
 models.item = new ItemManager();
 models.item.setDatabase(pool);
@@ -57,6 +60,12 @@ models.proDisponibility = new ProDisponibilityManager();
 models.proDisponibility.setDatabase(pool);
 models.reservation = new ReservationManager();
 models.reservation.setDatabase(pool);
+models.image = new ImageManager();
+models.image.setDatabase(pool);
+models.notify = new NotificationManager();
+models.notify.setDatabase(pool);
+models.reset = new ResetPasswordManager();
+models.reset.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

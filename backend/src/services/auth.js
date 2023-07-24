@@ -12,6 +12,7 @@ const hashingOptions = {
 };
 
 const getParentByEmail = (req, res, next) => {
+  // On récupère le parent lié au mail du login
   models.parent
     .findByEmailWithPassword(req.body.email)
     .then(([users]) => {
@@ -19,7 +20,7 @@ const getParentByEmail = (req, res, next) => {
         [req.user] = users;
         next();
       } else {
-        // If parent with this mail doesnt exist
+        // Si aucun parent avec cet email n'existe => 401
         res.sendStatus(401);
       }
     })
@@ -37,7 +38,7 @@ const getProByEmail = (req, res, next) => {
         [req.user] = users;
         next();
       } else {
-        // If pro with this mail doesnt exist
+        // Si aucun pro avec cet email n'existe => 401
         res.sendStatus(401);
       }
     })
@@ -122,12 +123,12 @@ const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
     if (!token) {
-      return res.sendStatus(403);
+      return res.sendStatus(401);
     }
     req.payloads = jwt.verify(token, JWT_SECRET);
     return next();
   } catch (err) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 };
 

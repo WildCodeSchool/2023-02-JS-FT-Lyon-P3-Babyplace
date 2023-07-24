@@ -1,12 +1,15 @@
 const models = require("../models");
 
+// la fonction suivante récupère toutes les notifs du pro en fontion de la page,
+// c'est à dire avec un offset et une limit.
+// on prend également en compte le status que l'on demande depuis le front.
 const browseReservations = async (req, res) => {
   const id = req.payloads.sub;
   const { status } = req.query;
   const { page } = req.query;
   const limit = 10;
   const offset = (page - 1) * limit;
-  console.warn(`le status est ${status}`);
+
   try {
     const [[{ total }]] = await models.dashboardpro.countOrders(id, status);
 
@@ -16,7 +19,7 @@ const browseReservations = async (req, res) => {
       offset,
       status
     );
-    // console.info(orders);
+
     res.send({ total, datas: orders });
   } catch (err) {
     console.error(err);
@@ -24,6 +27,7 @@ const browseReservations = async (req, res) => {
   }
 };
 
+// on récupère les infos lié à une réservation lorsqu'on clique sur la loupe
 const showMoreInfoOnOrder = (req, res) => {
   models.dashboardpro
     .moreDetailOrder(parseInt(req.params.id, 10))
@@ -39,54 +43,101 @@ const showMoreInfoOnOrder = (req, res) => {
       res.status(500).send("There is a problem");
     });
 };
-const validateOrder = (req, res) => {
-  models.dashboardpro
-    .validThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+
+// cette fonction change le statut d'une réservation de "en attente" à accepté puis
+// crée une nouvelle nouvelle notification pour le parent concerné.
+// Idem pour les fonction refuseOrder et cancelOrder.
+const validateOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.validThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newValidateNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
-const refuseOrder = (req, res) => {
-  models.dashboardpro
-    .refuseThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+const refuseOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.refuseThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newRefuseNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
-const cancelOrder = (req, res) => {
-  models.dashboardpro
-    .cancelThisOrder(parseInt(req.params.id, 10))
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("There is a problem");
-    });
+const cancelOrder = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { date } = req.query;
+  const { name } = req.query;
+  const { parent } = req.query;
+
+  try {
+    const validOrderResult = await models.dashboardpro.cancelThisOrder(id);
+    if (validOrderResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const newNotificationResult = await models.notify.newCancelNotification(
+      date,
+      name,
+      parent
+    );
+    if (newNotificationResult[0].affectedRows === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur interne");
+  }
 };
 
+// on récupère les enfants incrit sur ce jour
 const getDateOrder = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -104,6 +155,7 @@ const getDateOrder = (req, res) => {
     });
 };
 
+// on récupère les enfants incrit sur ce mois
 const getAllReservationsForCalendar = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -117,6 +169,7 @@ const getAllReservationsForCalendar = (req, res) => {
     });
 };
 
+// on récupère les infos du pro pour la prévisualisation du profil
 const getProInfoForPreview = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -143,6 +196,7 @@ const getProDaysForPreview = (req, res) => {
     });
 };
 
+// on récupère les enfant incrit ce jour dont ceux qui marche ou non
 const getDataForToday = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -155,7 +209,7 @@ const getDataForToday = (req, res) => {
       res.status(500).send("There is a problem");
     });
 };
-
+// on récupère les réservation en attente
 const browseReservationsWaiting = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro
@@ -169,6 +223,7 @@ const browseReservationsWaiting = (req, res) => {
     });
 };
 
+// on récupère le nombre d'enfants incrit sur les 7 prochains jours
 const getOccupationRates = (req, res) => {
   const id = req.payloads.sub;
   models.dashboardpro

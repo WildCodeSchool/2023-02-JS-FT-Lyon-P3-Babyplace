@@ -8,18 +8,35 @@ import { Link } from "react-router-dom";
 import instance from "../../services/APIService";
 import styles from "./Recap.module.css";
 import { useUserContext } from "../../contexts/UserContext";
-import { useUserInfoContext } from "../../contexts/UserInfoContext";
 
-function Recap({ registerInfo }) {
+function Recap({
+  registerInfo,
+  fieldsToComplete,
+  setActiveField,
+  infoToModify,
+  setInfoToModify,
+}) {
   const { user, setUser, logout } = useUserContext();
-  const { infoToModify, setInfoToModify, fieldsToComplete, setActiveField } =
-    useUserInfoContext();
   const [formValidationMessage, setFormValidationMessage] = useState(null);
+
+  useEffect(() => {
+    // Si le pro s'apprête à supprimer un jour de disponibilité, un message l'avertit des conséquences.
+    if (
+      infoToModify.disponibility?.length > 0 &&
+      user.disponibility.some(
+        (day) => !infoToModify.disponibility.includes(day)
+      )
+    ) {
+      setFormValidationMessage(
+        "Supprimer des jours de disponibilité aura pour effet d'annuler toutes les réservations positionnées sur ces jours. Si vous n'êtes pas sûr.e de vouloir annuler ces réservations, cliquez sur 'Annuler'."
+      );
+    }
+  }, [infoToModify]);
 
   const handleSubmitRegister = () => {
     // Si un utilisateur est enregistré, la fonction met à jour le user dans la base de données et si la requête envoie une réponse positive, le user est mis à jour dans le contexte.
 
-    if (user?.id) {
+    if (user?.role === "pro") {
       let placesToAdd = 0;
       if (infoToModify.place) {
         if (infoToModify.place < user.place) {
@@ -35,6 +52,7 @@ function Recap({ registerInfo }) {
         }
       }
       const daysToAdd = [];
+      const daysToRemove = [];
       if (infoToModify.disponibility) {
         for (const day of infoToModify.disponibility) {
           if (!user.disponibility.includes(day)) {
@@ -46,10 +64,7 @@ function Recap({ registerInfo }) {
         for (const day of user.disponibility) {
           if (!infoToModify.disponibility.includes(day)) {
             // TODO si l'utilisateur déclare moins de disponibilités que précédemment enregistrées, il faut en supprimer.
-            setInfoToModify({});
-            return setFormValidationMessage(
-              "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer."
-            );
+            daysToRemove.push(day);
           }
         }
       }
@@ -58,6 +73,7 @@ function Recap({ registerInfo }) {
           ...infoToModify,
           placesToAdd,
           daysToAdd,
+          daysToRemove,
         })
         .then((response) => {
           if (response.status !== 204) {
@@ -72,7 +88,7 @@ function Recap({ registerInfo }) {
           );
         })
         .catch((error) => {
-          if (error.response.status === 403) {
+          if (error.response.status === 401) {
             logout(true);
           }
           console.error(error);
@@ -105,7 +121,7 @@ function Recap({ registerInfo }) {
   }, []);
 
   // Le bloc suivant gère le rendu dans le cas où l'utilisateur est connecté (partie modification du dashboard)
-  if (user?.id) {
+  if (user?.role === "pro") {
     return (
       <div className={styles.recapPage}>
         <Grid container spacing={3}>
@@ -190,6 +206,8 @@ function Recap({ registerInfo }) {
               <Alert
                 severity={
                   formValidationMessage ===
+                    "Supprimer des jours de disponibilité aura pour effet d'annuler toutes les réservations positionnées sur ces jours. Si vous n'êtes pas sûr.e de vouloir annuler ces réservations, cliquez sur 'Annuler'." ||
+                  formValidationMessage ===
                     "Vous ne pouvez pas supprimer de places. Veuillez recommencer." ||
                   formValidationMessage ===
                     "Vous ne pouvez pas supprimer de disponibilités. Veuillez recommencer." ||
@@ -214,25 +232,19 @@ function Recap({ registerInfo }) {
                 Annuler
               </Button>
               {/* Tant que toutes les données de formulaires ne sont pas renseignées, le bouton OK est désactivé */}
-              {formValidationMessage ===
-              "Compte créé. Vous pouvez désormais vous connecter." ? (
-                <Link to="/pro">
-                  <Button variant="contained">Se connecter</Button>
-                </Link>
-              ) : (
-                <Button
-                  onClick={handleSubmitRegister}
-                  variant="contained"
-                  disabled={
-                    Object.values(infoToModify).length <= 1 ||
-                    Object.values(infoToModify).includes(null) ||
-                    Object.values(infoToModify).includes([]) ||
-                    Object.values(infoToModify).includes("")
-                  }
-                >
-                  Terminer
-                </Button>
-              )}
+
+              <Button
+                onClick={handleSubmitRegister}
+                variant="contained"
+                disabled={
+                  Object.values(infoToModify).length <= 1 ||
+                  Object.values(infoToModify).includes(null) ||
+                  Object.values(infoToModify).includes([]) ||
+                  Object.values(infoToModify).includes("")
+                }
+              >
+                Terminer
+              </Button>
             </div>
           </Grid>
         </Grid>
@@ -241,7 +253,7 @@ function Recap({ registerInfo }) {
   }
 
   // Le bloc suivant gère le rendu dans le cas où l'utilisateur n'est pas connecté (partie inscription)
-  if (!user?.id)
+  if (user?.role !== "pro")
     return (
       <div className={styles.recapPage}>
         <Grid container spacing={3}>
@@ -352,4 +364,8 @@ export default Recap;
 
 Recap.propTypes = {
   registerInfo: PropTypes.arrayOf.isRequired,
+  fieldsToComplete: PropTypes.arrayOf.isRequired,
+  setActiveField: PropTypes.func.isRequired,
+  infoToModify: PropTypes.shape.isRequired,
+  setInfoToModify: PropTypes.func.isRequired,
 };

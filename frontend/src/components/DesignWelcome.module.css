@@ -2,6 +2,9 @@
   width: 50%;
   background: var(--main-bg-gradient);
   color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .design h1,
@@ -12,10 +15,10 @@
 }
 
 .design img {
-  margin: 10%;
-  margin-top: 20%;
-  width: 80%;
+  margin: 100px auto;
+  width: 50%;
   border-radius: 25px;
+  opacity: 0.85;
 }
 
 .button_back {

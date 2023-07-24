@@ -24,6 +24,8 @@ export default function Calendar() {
   const maxProSlot = user.place;
 
   // --------------------------------------------------------------------
+  // dans le code suivant, on récupère toutes les réservations du mois actuellement sélectionné
+  // la requête se relance lorsque qu'on change de mois en cliquant sur le bouton du calendrier
   const actualMonth = thisMonth.format("MM");
   useEffect(() => {
     instance
@@ -34,6 +36,8 @@ export default function Calendar() {
       .catch((err) => console.error(err));
   }, [thisMonth]);
 
+  // cette fonction traite les réservations reçu dans la requête précedente pour les ranger dans un tableau
+  // en fonction du nombre de réservation par jour par rapport au nombre de places max de ce pro
   algoToFilterReservationsInCalendar(
     allOrders,
     arrayFreeDays,
@@ -61,41 +65,45 @@ export default function Calendar() {
       <div className={styles.left_container}>
         <CalendarInfo />
         <div className={styles.calendar_component}>
+          {/* Wrapper pour la localisation */}
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
+            {/* Composant de sélection de date statique */}
             <StaticDatePicker
-              orientation="portrait"
-              value={value}
+              orientation="portrait" // Orientation du sélecteur de date (portrait)
+              value={value} // Valeur de la date sélectionnée (peut être un objet de date)
               onChange={(newValue) => {
-                setValue(newValue);
+                setValue(newValue); // Fonction de gestionnaire pour mettre à jour la date sélectionnée lorsqu'elle change
               }}
               onMonthChange={(newMonth) => {
-                setThisMonth(newMonth);
+                setThisMonth(newMonth); // Fonction de gestionnaire pour mettre à jour le mois actuel lorsqu'il change
               }}
               slots={{
-                day: BadgeCalendar,
+                day: BadgeCalendar, // Utilisation du composant BadgeCalendar pour afficher chaque jour dans le sélecteur de date
               }}
               slotProps={{
                 actionBar: {
-                  actions: [],
+                  actions: [], // Actions à afficher dans la barre d'action (vide ici, pas d'actions spécifiées)
                 },
                 tabs: {
-                  hidden: true,
+                  hidden: true, // Cacher les onglets dans le sélecteur de date (true pour les cacher)
                 },
                 toolbar: {
-                  hidden: true,
+                  hidden: true, // Cacher la barre d'outils dans le sélecteur de date (true pour la cacher)
                 },
                 shortcuts: {
-                  hidden: true,
+                  hidden: true, // Cacher les raccourcis de date dans le sélecteur de date (true pour les cacher)
                 },
                 day: {
-                  freeDays: arrayFreeDays,
-                  busyDays: arrayBusyDays,
-                  fullDays: arrayFullDays,
+                  // Props spécifiques pour le composant BadgeCalendar utilisé pour afficher chaque jour
+                  freeDays: arrayFreeDays, // Liste des jours libres (un tableau d'objets date)
+                  busyDays: arrayBusyDays, // Liste des jours occupés (un tableau d'objets date)
+                  fullDays: arrayFullDays, // Liste des jours complets (un tableau d'objets date)
                 },
               }}
             />
           </LocalizationProvider>
         </div>
+        ;
       </div>
 
       <div className={styles.right_container}>

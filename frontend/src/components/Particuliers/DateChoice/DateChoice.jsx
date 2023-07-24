@@ -5,10 +5,15 @@ import { Chip } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import style from "./DateChoice.module.css";
 import instance from "../../../services/APIService";
+import { useReservationContext } from "../../../contexts/ReservationContext";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export default function DateChoice() {
+  const { reservation, setReservation } = useReservationContext();
   const { id } = useParams();
   const [pro, setPro] = useState(null);
+  const [availableDays, setAvailableDays] = useState([]);
+  const { user, setPendingReservation } = useUserContext();
 
   // Creation palette personnalisée pour MUI
   const theme = createTheme({
@@ -26,26 +31,34 @@ export default function DateChoice() {
     setSelectedDay(day);
   };
 
-  const getFutureDates = () => {
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-    };
-    const today = new Date();
-    const futureDates = [];
-
-    for (let i = 0; i < 7; i += 1) {
-      const futureDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + i + 1
-      );
-      futureDates.push(futureDate.toLocaleString("fr-FR", options));
-    }
-
-    return futureDates;
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
   };
+
+  const handleNext = () => {
+    const day = [
+      `${selectedDay.getFullYear()}`,
+      `${selectedDay.getMonth() + 1}`,
+      `${selectedDay.getDate()}`,
+    ]
+      .map((string) => (string.length === 1 ? `0${string}` : string))
+      .join("-");
+    // On gère l'alimentation d'un state de réservation afin de garder les infos au fil du parcous de réservation
+    setReservation({
+      ...reservation,
+      proId: id,
+      proName: pro.name,
+      date: selectedDay,
+      day,
+    });
+    if (!user?.id) {
+      // Si l'utilisateur n'est pas connecté, sauvegarde de l'id du pro dont il consultait le profil afin de revenir à la page de sélection de la date une fois connecté (cf userContext)
+      setPendingReservation(id);
+    }
+  };
+
   useEffect(() => {
     instance
       .get(`/pro/${id}`)
@@ -53,56 +66,74 @@ export default function DateChoice() {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    instance
+      .get(`/available/days/${id}`)
+      .then((response) => setAvailableDays(response.data))
+      .catch((err) => console.error(err));
+  }, []);
+
   if (!pro) return null;
 
   return (
-    <div>
+    <div className={style.page}>
       <ThemeProvider theme={theme}>
-        <div className={style.card}>
-          <div className={style.header_card}>
-            <Link to={`/particulier/recherche/${pro.id}`}>
-              <button type="button" className={style.button_back}>
-                <ArrowBackIosNewIcon />
-              </button>
-            </Link>
+        <div className={style.header_card}>
+          <Link to={`/particulier/recherche/${pro.id}`}>
+            <button type="button" className={style.button_back}>
+              <ArrowBackIosNewIcon />
+            </button>
+          </Link>
 
-            <div className={style.name_type}>
-              <h2>Demandez une place</h2>
-              <h3>Crèche {pro.name}</h3>
-            </div>
+          <div className={style.name_type}>
+            <h1>Demandez une place</h1>
+            <h3>Crèche {pro.name}</h3>
           </div>
+        </div>
+        <div className={style.cards_media}>
           <div className={style.card_body}>
-            <h2>Choisissez une date</h2>
+            <h1>Choisissez une date</h1>
             <div>
               <div className={style.days_of_week}>
                 <h3>Jours de la semaine prochaine:</h3>
               </div>
               <div className={style.chip}>
-                {getFutureDates().map((day) => (
-                  <Chip
-                    key={day}
-                    label={day}
-                    onClick={() => handleClick(day)}
-                    color={`${selectedDay === day ? "primary" : "default"}`}
-                    sx={{
-                      margin: "4px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                    }}
-                  />
-                ))}
+                {availableDays.map((day) => {
+                  const newDay = new Date(day);
+                  return (
+                    <Chip
+                      key={day}
+                      label={newDay.toLocaleString("fr-FR", options)}
+                      onClick={() => handleClick(newDay)}
+                      color={`${selectedDay === day ? "primary" : "default"}`}
+                      sx={{
+                        margin: "4px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  );
+                })}
               </div>
             </div>
-
             <div className={style.reservation}>
-              <p>Vous souhaitez une réservation pour le:</p>
+              <p>Vous souhaitez une réservation pour le :</p>
               {selectedDay && (
-                <p className={style.reservation_day}> {selectedDay}</p>
+                <p className={style.reservation_day}>
+                  {" "}
+                  {selectedDay.toLocaleString("fr-FR", options)}
+                </p>
               )}
             </div>
+
             <div className={style.button_reservation}>
-              <Link to="/particulier">
-                <button type="button" className={style.button}>
+              <Link to="/particulier/reservation">
+                <button
+                  type="button"
+                  className={selectedDay ? style.button : style.disabledButton}
+                  onClick={() => handleNext()}
+                  disabled={!selectedDay}
+                >
                   Suivant
                 </button>
               </Link>

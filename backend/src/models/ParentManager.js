@@ -47,7 +47,7 @@ class ParentManager extends AbstractManager {
 
   joinChildWithParent(id) {
     return this.database.query(
-      `select c.lastname, c.firstname, DATE_FORMAT(c.birthdate, "%d/%m/%Y") birthdate, c.doctor from ${this.table} as p
+      `select c.id, c.lastname, c.firstname, DATE_FORMAT(c.birthdate, "%d/%m/%Y") birthdate, c.doctor, c.walking from ${this.table} as p
        join child as c on c.parent_id = p.id
    where p.id = ?`,
       [id]

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./ParentHomeFolderInfo.module.css";
-import ParentPicture from "../../../assets/ed-cannan.png";
+import ParentPicture from "../../../assets/images/avatar_Babyplace.jpg";
 import instance from "../../../services/APIService";
 
 export default function ParentHomeFolderInfo({ orderId, closeModal }) {

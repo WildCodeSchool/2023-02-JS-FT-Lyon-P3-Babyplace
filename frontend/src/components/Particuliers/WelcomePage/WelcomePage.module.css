@@ -1,6 +1,6 @@
 .welcomePage {
   background: var(--main-bg-gradient);
-  height: 100vh;
+  height: calc(100vh - 53px);
   width: 100vw;
   color: white;
 }

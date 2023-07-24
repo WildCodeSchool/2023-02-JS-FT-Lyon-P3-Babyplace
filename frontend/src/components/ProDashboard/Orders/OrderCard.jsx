@@ -11,13 +11,27 @@ import ParentHomeFolderInfo from "./ParentHomeFolderInfo";
 import styles from "./OrderCard.module.css";
 import instance from "../../../services/APIService";
 
-export default function OrderCard({ reservation }) {
+export default function OrderCard({
+  reservation,
+  refreshData,
+  setRefreshData,
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [orderId, setOrderId] = useState(null);
-  const { id } = reservation;
+  const {
+    id,
+    date_reservation: date,
+    prenom_enfant: prenomEnfant,
+    nom_enfant: nomEnfant,
+    id_parent: idParent,
+  } = reservation;
+
+  const childName = `${prenomEnfant} ${nomEnfant}`;
+
   const notifySuccess = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
 
+  // les deux fonctions suivante servent à afficher les couleurs en fonction du statut de la réservation
   const getDetailStatus = () => {
     if (reservation.status === 0) {
       return "En attente";
@@ -55,14 +69,18 @@ export default function OrderCard({ reservation }) {
     return null;
   };
 
+  // on ouvre la modal d'info en donnant l'id de la réservation sur laquelle on clique pour récupérer les bonnes infos
   const handleModalOpen = () => {
     setOrderId(id);
     setOpenModal(true);
   };
 
+  // les fonctions suivante servent à accepter, refuser ou bien annuler une réservation (en fonction de son statut actuel)
   const handleValidate = () => {
     instance
-      .put(`/dashboard/reservations/validate/${id}`)
+      .put(
+        `/dashboard/reservations/validate/${id}?date=${date}&name=${childName}&parent=${idParent}`
+      )
       .then((res) => {
         if (res.status === 200) {
           notifySuccess("Réservation acceptée");
@@ -71,11 +89,14 @@ export default function OrderCard({ reservation }) {
         }
       })
       .catch((err) => console.error(err));
+    setRefreshData(!refreshData);
   };
   const handleCancel = () => {
     if (reservation.status === 0) {
       instance
-        .put(`/dashboard/reservations/refuse/${id}`)
+        .put(
+          `/dashboard/reservations/refuse/${id}?date=${date}&name=${childName}&parent=${idParent}`
+        )
         .then((res) => {
           if (res.status === 200) {
             notifySuccess("Réservation refusée");
@@ -84,9 +105,12 @@ export default function OrderCard({ reservation }) {
           }
         })
         .catch((err) => console.error(err));
+      setRefreshData(!refreshData);
     } else if (reservation.status === 1) {
       instance
-        .put(`/dashboard/reservations/cancel/${id}`)
+        .put(
+          `/dashboard/reservations/cancel/${id}?date=${date}&name=${childName}&parent=${idParent}`
+        )
         .then((res) => {
           if (res.status === 200) {
             notifySuccess("Réservation annulée");
@@ -95,6 +119,7 @@ export default function OrderCard({ reservation }) {
           }
         })
         .catch((err) => console.error(err));
+      setRefreshData(!refreshData);
     }
   };
 
@@ -223,6 +248,9 @@ OrderCard.propTypes = {
     date_enregistrement: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
+    id_parent: PropTypes.number.isRequired,
     date_reservation: PropTypes.string.isRequired,
   }).isRequired,
+  refreshData: PropTypes.bool.isRequired,
+  setRefreshData: PropTypes.func.isRequired,
 };

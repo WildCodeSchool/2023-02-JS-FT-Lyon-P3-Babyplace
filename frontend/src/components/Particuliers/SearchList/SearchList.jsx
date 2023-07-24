@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,13 +7,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import instance from "../../../services/APIService";
-import pro1test from "../../../assets/images/pro1test.jpg";
-import user from "../../../assets/icones/user.png";
+import userIcon from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
 export default function SearchList() {
   const [pros, setPros] = useState(null);
+  const navigate = useNavigate();
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     instance
@@ -25,67 +26,77 @@ export default function SearchList() {
   if (!pros) return null;
   return (
     <div className={style.search_list_page}>
-      <div className={style.logo_log_in}>
-        <img src={user} alt="user" />
-        <Link to="/particulier">Log In</Link>
-      </div>
-      <Link to="/">
-        <button type="button" className={style.button_back}>
+      <div className={style.header}>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className={style.button_back}
+        >
           <ArrowBackIosNewIcon />
         </button>
-      </Link>
-      <h2>Liste des crèches disponibles</h2>
+        <div />
+
+        <h2>Liste des crèches disponibles</h2>
+
+        <div className={style.logo_log_in}>
+          <img src={userIcon} alt="user" />
+          <Link to="/particulier">Connexion</Link>
+        </div>
+      </div>
+
       <div className={style.cards_media}>
         <div className={style.card_media}>
           {pros.map((pro) => (
             <Link key={pro.id} to={`/particulier/recherche/${pro.id}`}>
-              <Card
-                key={pro.id}
-                sx={{
-                  maxWidth: 345,
-                  margin: 2,
-                  borderRadius: "20px",
-                  boxShadow: 3,
-                }}
-              >
-                <CardActionArea sx={{ padding: "10px" }}>
-                  <div className="style.image">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={pro1test}
-                      alt="profil_picture"
-                      sx={{
-                        position: "relative",
-                        zIndex: 10,
-                        borderTopRightRadius: "20px",
-                        borderTopLeftRadius: "20px",
-                      }}
-                    />
-                  </div>
+              <div className={style.animation_div}>
+                <Card
+                  key={pro.id}
+                  sx={{
+                    maxWidth: 345,
+                    margin: 2,
+                    borderRadius: "20px",
+                    boxShadow: 3,
+                  }}
+                >
+                  <CardActionArea sx={{ padding: "10px" }}>
+                    <div className={style.image}>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={`${BACKEND_URL}/uploads/${pro.image}`}
+                        alt="profil_picture"
+                        sx={{
+                          position: "relative",
+                          zIndex: 10,
+                          borderTopRightRadius: "20px",
+                          borderTopLeftRadius: "20px",
+                        }}
+                      />
+                    </div>
 
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="h1"
-                    sx={{
-                      position: "absolute",
-                      top: "100px",
-                      left: "20px",
-                      color: "white",
-                      zIndex: 12,
-                    }}
-                  >
-                    {pro.name}
-                  </Typography>
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      {/*  Montage composant des disponibilités lié au back */}
-                      <DispoPros id={pro.id} />
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="h1"
+                      sx={{
+                        position: "absolute",
+                        top: "100px",
+                        left: "20px",
+                        color: "white",
+                        zIndex: 12,
+                      }}
+                    >
+                      {pro.name}
                     </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary">
+                        {/*  Montage composant des disponibilités lié au back */}
+                        <DispoPros id={pro.id} />
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </div>
             </Link>
           ))}
         </div>

@@ -1,0 +1,146 @@
+.selectChildScreen {
+  background: var(--main-bg-gradient);
+  height: calc(100vh - 56px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  margin-top: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 5px 5px 5px var(--second-color);
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.button_back {
+  background: transparent;
+  color: white;
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  cursor: pointer;
+}
+
+.selectChildScreen h1 {
+  margin-top: 2rem;
+  color: white;
+}
+
+.card {
+  height: fit-content;
+  padding: 1em 2em;
+  background: white;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--main-color);
+}
+
+.card h2 {
+  color: var(--main-color);
+  margin-bottom: 1em;
+}
+
+.card form > div > label {
+  color: var(--main-color);
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card form div {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card form div > div {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card form div > label {
+  font-family: var(--main-font-family);
+  color: var(--main-color);
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.card form > div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer {
+  max-width: 35ch;
+  text-align: left;
+  width: 90%;
+  margin: 2rem 0 1rem 0;
+}
+
+.button {
+  margin-top: 2em;
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--main-bg-gradient);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.disabledButton {
+  margin-top: 2em;
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  background: var(--second-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  .card {
+    width: 90vw;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .selectChildScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -3,13 +3,21 @@
   height: calc(100vh - 15vh - 8em - 63px);
 }
 
+.container::-webkit-scrollbar {
+  display: none;
+}
+
 .formScreen {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: scroll;
   height: calc(100vh - 15vh - 8em - 63px);
+}
+
+.container {
+  overflow: auto;
+  height: fit-content;
 }
 
 .banner {
@@ -57,7 +65,7 @@ form div div {
 }
 
 @media screen and (min-width: 950px) {
-  .form {
+  .container {
     padding: 2em;
     width: 60%;
     border: 5px solid var(--main-color);
