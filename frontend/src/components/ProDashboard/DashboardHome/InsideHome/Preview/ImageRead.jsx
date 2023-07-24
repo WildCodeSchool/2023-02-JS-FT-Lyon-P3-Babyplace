@@ -1,3 +1,4 @@
+import HideImageIcon from "@mui/icons-material/HideImage";
 import { useUserContext } from "../../../../../contexts/UserContext";
 import style from "./Image.module.css";
 
@@ -8,12 +9,14 @@ export default function ImageRead() {
 
   return (
     <div>
-      {imagePath && (
+      {user.image ? (
         <img
           src={imagePath}
           alt="profil_picture"
           className={style.profil_picture}
         />
+      ) : (
+        <HideImageIcon />
       )}
     </div>
   );
