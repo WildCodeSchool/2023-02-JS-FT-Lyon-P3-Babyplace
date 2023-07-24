@@ -4,7 +4,7 @@ import NavBarParent from "../components/Particuliers/Navbar/NavBarParent";
 
 export default function Particulier() {
   return (
-    <div>
+    <div className="particulier-bg-color">
       <div>
         <Outlet />
       </div>

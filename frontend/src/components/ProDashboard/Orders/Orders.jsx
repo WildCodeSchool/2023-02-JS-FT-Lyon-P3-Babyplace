@@ -25,6 +25,7 @@ export default function Orders() {
     setCurrentPage(1);
   };
 
+  // la fonction suivante sert à sélectionner le statut des réservation que l'on veut afficher
   const filterOrder = (res) => {
     if (parseInt(selectedValue, 10) === 4) {
       return 4;
@@ -44,10 +45,14 @@ export default function Orders() {
     return null;
   };
 
+  // on map sur une variable qui contient nos réservations toujours filtré
   const filteredOrders = reservations.filter(
     (reservation) => filterOrder(reservation) === parseInt(selectedValue, 10)
   );
 
+  // Dans ce useEffect, on récupère nos données et le nombre total de réservations depuis le back
+  // on peut ensuite calculer le nombre de pages à afficher
+  // on utilise la fonction srollToTop dans un useRef car on veut remonter une div et non la window.
   useEffect(() => {
     setSearchParams((params) => {
       searchParams.set("page", currentPage);

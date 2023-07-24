@@ -31,6 +31,7 @@ export default function OrderCard({
   const notifySuccess = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
 
+  // les deux fonctions suivante servent à afficher les couleurs en fonction du statut de la réservation
   const getDetailStatus = () => {
     if (reservation.status === 0) {
       return "En attente";
@@ -68,11 +69,13 @@ export default function OrderCard({
     return null;
   };
 
+  // on ouvre la modal d'info en donnant l'id de la réservation sur laquelle on clique pour récupérer les bonnes infos
   const handleModalOpen = () => {
     setOrderId(id);
     setOpenModal(true);
   };
 
+  // les fonctions suivante servent à accepter, refuser ou bien annuler une réservation (en fonction de son statut actuel)
   const handleValidate = () => {
     instance
       .put(

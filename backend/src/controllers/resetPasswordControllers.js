@@ -11,6 +11,8 @@ const hashingOptions = {
   parallelism: 1,
 };
 
+// On vérifie que l’email envoyé par l’utilisateur existe bien dans la base de données.
+// Si oui, on récupère son identifiant et le passe à la fonction suivante.
 const verifyProEmail = (req, res, next) => {
   const { email } = req.body;
   models.pro
@@ -49,9 +51,9 @@ const verifyParentEmail = (req, res, next) => {
     });
 };
 
-// I generate my token through uuidv4
-// I save the token in my BDD and associate it with the user
-// I transmit the token to the next middleware
+// On crée un token temporaire unique et on l’enregistre dans notre base de données
+// à la ligne liée à l’utilisateur identifié juste avant.
+// Puis on l’envoi à la fonction suivante
 const generatePasswordTokenForPro = (req, res, next) => {
   const { user } = req;
   user.passwordToken = uuidv4();
@@ -89,6 +91,10 @@ const transporter = nodemailer.createTransport({
   },
   tls: { rejectUnauthorized: false },
 });
+
+// On envoie un mail à l’adresse renseignée plus tôt.
+// Dans ce mail il y a un lien contenant à la fin de son URL,
+// le token temporaire généré précédemment.
 const sendForgottenPassword = (req, res) => {
   transporter.sendMail(
     {
@@ -114,7 +120,8 @@ const sendForgottenPassword = (req, res) => {
   );
 };
 
-// Verify if the tokenPassword exist
+// On vérifie si le token temporaire envoyé depuis le front correspond à une ligne
+// dans notre BDD et si c’est le cas, on renvoie les infos de l’utilisateur concerné.
 const verifyTokenPasswordPro = (req, res, next) => {
   const { passwordToken } = req.body;
   models.reset
@@ -150,7 +157,8 @@ const verifyTokenPasswordParent = (req, res, next) => {
       res.sendStatus(501);
     });
 };
-
+// On récupère le nouveau mot de passe envoyé par l’utilisateur
+// afin de le hasher et de supprimer l’original.
 const hashNewPassword = (req, res, next) => {
   // hash du password avec argon2 puis next()
   argon2
@@ -166,7 +174,8 @@ const hashNewPassword = (req, res, next) => {
     });
 };
 
-// Create and hash a new password
+// Enfin on remplace dans la base de données, à la ligne de l’utilisateur concerné,
+// l’ancien mot de passe hashé par le nouveau et on efface le token temporaire de la BDD
 const resetPasswordPro = (req, res) => {
   const { user } = req;
   user.hashed_password = req.body.hashed_password;
