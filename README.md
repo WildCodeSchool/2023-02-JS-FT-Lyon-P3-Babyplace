@@ -2,7 +2,7 @@
 
 
 <!-- Introduction -->
-<h1 href='#'>🫡Introduction</h1>
+<h1>🫡Introduction</h1>
 <p>Hello 👋.<br/>
 
 Welcome on our app <i>Babyplace</i>, developed by our team of three companions : <a href="https://github.com/HazeFury">Marc-Antoine</a>, <a href="https://github.com/Yukitaori">François</a> and <a href="https://github.com/LucieChev">Lucie</a>.
@@ -13,7 +13,7 @@ This is our last project during our training at the Wild Code School and we're g
 
 
 <!-- Objectives -->
-<h1 href='#'>🎯 The Objectives</h1>
+<h1>🎯 The Objectives</h1>
 <h2>Purpose</h2>
 <p>The purpose of our project is ease the booking and management of places in daycare for both parent and pro.</p>
 <p>We designed our application with two parts : one for the parent who wants to book a place in a daycare for one of his children, and another one for professionals who want to be able to manage easily their places and bookings for their structure.</p>
@@ -28,7 +28,7 @@ This is our last project during our training at the Wild Code School and we're g
 
 
 <!-- Technical stack -->
-<h1 href='#'>⚙️Technical Stack used for the project</h1>
+<h1>⚙️Technical Stack used for the project</h1>
 <ul>
 <li>JavaScript / React.js / CSS vanilla</li>
 <li>Node.js / Express</li>
@@ -40,7 +40,7 @@ This is our last project during our training at the Wild Code School and we're g
 
 <br/>
 <br/>
-<h1 href='#'>🔄Installation</h1>
+<h1>🔄Installation</h1>
 <h3>Follow these steps</h3>
 <ul>
 <li>
@@ -68,7 +68,7 @@ Some commands :</h3>
 <br/>
 <br/>
 <!-- Packages -->
-<h1 href='#'>📦Packages</h1>
+<h1>📦Packages</h1>
 <p>For this project, we used the <a href='https://github.com/WildCodeSchool/js-template-fullstack' target='_blank' rel="noreferrer">Wild Code School - FullStack - Template</a></p>
 <h3>The template initially contained  :</h3>
 <ul>
@@ -97,12 +97,10 @@ Some commands :</h3>
 </ul>
 <br/>
 <br/>
-<h1 href='#'>🚧 What's next 🚧</h1>
+<h1>🚧 What's next 🚧</h1>
 <ul>
-<li>Password reinitialization</li>
-<li>Pro availability / places deletion</li>
-<li>Back-end validators for more security</li>
-<li>Profile picture uploads</li>
+<li>Pro places deletion</li>
+<li>Opportunity for more types of pro (nannies, childcare assistants...) to register</li>
 </ul>
 <br/>
 <br/>

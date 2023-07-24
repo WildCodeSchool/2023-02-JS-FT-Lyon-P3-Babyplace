@@ -1,7 +1,7 @@
 .modifydata_box {
   display: flex;
   justify-content: flex-start;
-  height: calc(100% - 30px);
+  height: calc(100% - 60px);
   width: calc(100% - 70px);
   overflow: auto;
 }
