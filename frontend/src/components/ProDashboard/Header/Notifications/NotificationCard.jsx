@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./NotificationCard.module.css";
 
 export default function NotificationCard({ notification }) {
+  // on applique une couleur en fonction de la nature de la notification
   const getStatusColor = () => {
     if (notification.type === "validation") {
       return styles.validation_color;
@@ -14,6 +15,8 @@ export default function NotificationCard({ notification }) {
     }
     return null;
   };
+
+  // on applique un badge sur les notification non-lues
   const getNewBadge = () => {
     if (notification.status === 0) {
       return styles.new_badge;

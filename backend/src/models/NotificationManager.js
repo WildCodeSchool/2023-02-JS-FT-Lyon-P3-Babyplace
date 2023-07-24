@@ -5,15 +5,17 @@ class NotificationManager extends AbstractManager {
     super({ table: "parent_notification" });
   }
 
-  getParentNotifications() {
+  getParentNotifications(id) {
     return this.database.query(
-      `SELECT * FROM ${this.table} order by status ASC, notification_date_time DESC `
+      `SELECT * FROM ${this.table} where parent_id = ? order by status ASC, notification_date_time DESC`,
+      [id]
     );
   }
 
-  getProNotifications() {
+  getProNotifications(id) {
     return this.database.query(
-      `SELECT * FROM pro_notification order by status ASC, notification_date_time DESC `
+      `SELECT * FROM pro_notification where pro_id = ? order by status ASC, notification_date_time DESC`,
+      [id]
     );
   }
 
@@ -49,25 +51,33 @@ class NotificationManager extends AbstractManager {
     );
   }
 
-  parentNotificationIsViewed() {
-    return this.database.query(`update ${this.table}
-    set status = 1`);
-  }
-
-  proNotificationIsViewed() {
-    return this.database.query(`update pro_notification
-    set status = 1`);
-  }
-
-  areThereAnyParentNotifications() {
+  parentNotificationIsViewed(id) {
     return this.database.query(
-      `SELECT COUNT(*) as total from ${this.table} where status = 0`
+      `update ${this.table}
+    set status = 1 where parent_id = ?`,
+      [id]
     );
   }
 
-  areThereAnyProNotifications() {
+  proNotificationIsViewed(id) {
     return this.database.query(
-      `SELECT COUNT(*) as total from pro_notification where status = 0`
+      `update pro_notification
+    set status = 1 where pro_id = ?`,
+      [id]
+    );
+  }
+
+  areThereAnyParentNotifications(id) {
+    return this.database.query(
+      `SELECT COUNT(*) as total from ${this.table} where status = 0 and where parent_id = ?`,
+      [id]
+    );
+  }
+
+  areThereAnyProNotifications(id) {
+    return this.database.query(
+      `SELECT COUNT(*) as total from pro_notification where status = 0 where pro_id = ?`,
+      [id]
     );
   }
 

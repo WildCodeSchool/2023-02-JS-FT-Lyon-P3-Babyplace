@@ -7,19 +7,19 @@ export default function CalendarInfo() {
       <div className={styles.info_container}>
         <div className={styles.info_box}>
           <span className={`${styles.circle_color} ${styles.green}`} />
-          <p className={styles.text_info}>Il reste des places</p>
+          <p className={styles.text_info}>
+            Il reste plus de la moitié des places disponible
+          </p>
         </div>
         <div className={styles.info_box}>
-          <span className={`${styles.circle_color} ${styles.orange}`} />{" "}
-          <p className={styles.text_info}>Il reste quelques places</p>
+          <span className={`${styles.circle_color} ${styles.orange}`} />
+          <p className={styles.text_info}>
+            Il reste moins de la moitié des places disponible
+          </p>
         </div>
         <div className={styles.info_box}>
-          <span className={`${styles.circle_color} ${styles.red}`} />{" "}
-          <p className={styles.text_info}>C'est plein !</p>
-        </div>
-        <div className={styles.info_box}>
-          <span className={`${styles.circle_color} ${styles.grey}`} />{" "}
-          <p className={styles.text_info}>Jours OFF</p>
+          <span className={`${styles.circle_color} ${styles.red}`} />
+          <p className={styles.text_info}>Il ne reste plus de places !</p>
         </div>
       </div>
     </div>

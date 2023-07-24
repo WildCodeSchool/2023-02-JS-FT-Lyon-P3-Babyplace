@@ -1,8 +1,9 @@
 const models = require("../models");
 
 const GetAllNotificationsForParent = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .getParentNotifications()
+    .getParentNotifications(id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -13,8 +14,9 @@ const GetAllNotificationsForParent = (req, res) => {
 };
 
 const GetAllNotificationsForPro = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .getProNotifications()
+    .getProNotifications(id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -25,8 +27,9 @@ const GetAllNotificationsForPro = (req, res) => {
 };
 
 const AllParentNotificationsAreRead = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .parentNotificationIsViewed()
+    .parentNotificationIsViewed(id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         return res.sendStatus(204);
@@ -40,8 +43,9 @@ const AllParentNotificationsAreRead = (req, res) => {
 };
 
 const AllProNotificationsAreRead = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .proNotificationIsViewed()
+    .proNotificationIsViewed(id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         return res.sendStatus(204);
@@ -55,8 +59,9 @@ const AllProNotificationsAreRead = (req, res) => {
 };
 
 const getNumberOfParentNewNotifications = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .areThereAnyParentNotifications()
+    .areThereAnyParentNotifications(id)
     .then(([rows]) => {
       res.send(rows[0]);
     })
@@ -67,8 +72,9 @@ const getNumberOfParentNewNotifications = (req, res) => {
 };
 
 const getNumberOfProNewNotifications = (req, res) => {
+  const id = req.payloads.sub;
   models.notify
-    .areThereAnyProNotifications()
+    .areThereAnyProNotifications(id)
     .then(([rows]) => {
       res.send(rows[0]);
     })
