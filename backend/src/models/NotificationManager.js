@@ -69,14 +69,14 @@ class NotificationManager extends AbstractManager {
 
   areThereAnyParentNotifications(id) {
     return this.database.query(
-      `SELECT COUNT(*) as total from ${this.table} where status = 0 and where parent_id = ?`,
+      `SELECT COUNT(*) as total from ${this.table} where status = 0 and parent_id = ?`,
       [id]
     );
   }
 
   areThereAnyProNotifications(id) {
     return this.database.query(
-      `SELECT COUNT(*) as total from pro_notification where status = 0 where pro_id = ?`,
+      `SELECT COUNT(*) as total from pro_notification where status = 0 and pro_id = ?`,
       [id]
     );
   }
