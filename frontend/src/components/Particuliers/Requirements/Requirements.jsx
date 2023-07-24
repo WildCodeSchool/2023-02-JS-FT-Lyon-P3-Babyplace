@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import PersonIcon from "@mui/icons-material/Person";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import instance from "../../../services/APIService";
@@ -76,6 +77,13 @@ function Requirements() {
               <NewReleasesIcon color="error" />
               <p>Vous n'avez pas encore enregistré d'enfant.</p>
             </div>
+          )}
+          {userChildren?.length > 0 ? null : (
+            <p>
+              Vous pouvez enregistrer un enfant dans votre espace personnel (
+              <PersonIcon />
+              ).
+            </p>
           )}
           <div className={styles.disclaimer}>
             <p>
