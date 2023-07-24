@@ -10,7 +10,7 @@ import styles from "./Account.module.css";
 import AuthenticationChange from "./AuthenticationChange";
 import OrdersParent from "./OrdersParent";
 import AccountHeader from "./AccountHeader";
-import baby from "../../../assets/images/image2.png";
+import baby from "../../../assets/images/Babyplace-2.png";
 
 function Account() {
   const { user, logout } = useUserContext();

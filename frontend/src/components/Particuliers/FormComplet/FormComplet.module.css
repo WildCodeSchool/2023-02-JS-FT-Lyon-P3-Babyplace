@@ -59,7 +59,7 @@
   animation: open 0.6s ease;
 }
 .profilePicture {
-  width: 80%;
+  width: 40%;
 }
 
 @keyframes open {
