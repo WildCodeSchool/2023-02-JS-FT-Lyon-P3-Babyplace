@@ -139,6 +139,13 @@ export default function Orders() {
           </Button>
         </div>
       </div>
+      {!reservations || reservations.length === 0 ? (
+        <div className={styles.nodata}>
+          <p>
+            Vous n'avez aucune réservation en cours sur les prochains jours.
+          </p>
+        </div>
+      ) : null}
       <div className={styles.orders_container} ref={reservationsContainerRef}>
         {filteredOrders.map((reservation) => (
           <OrderCard

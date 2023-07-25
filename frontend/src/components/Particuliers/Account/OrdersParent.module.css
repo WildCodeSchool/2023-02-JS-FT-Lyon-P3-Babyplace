@@ -18,6 +18,13 @@
   margin-left: 5%;
 }
 
+.nodata {
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: x-large;
+}
+
 .ordersList {
   display: flex;
   flex-direction: column;
