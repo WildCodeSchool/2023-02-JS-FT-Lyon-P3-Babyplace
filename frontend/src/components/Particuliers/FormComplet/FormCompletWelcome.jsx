@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormComplet.module.css";
 import profilePicture from "../../../assets/images/avatar_Babyplace.jpg";
@@ -17,14 +16,6 @@ export default function FormCompletWelcome() {
 
   return (
     <div className={style.page}>
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className={style.button_back}
-      >
-        <ArrowBackIosNewIcon />
-      </button>
-
       <div className={style.header_card}>
         <div className={style.container}>
           <img
