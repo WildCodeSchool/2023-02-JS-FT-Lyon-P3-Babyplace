@@ -232,6 +232,7 @@
 /* Partie des parents uniquement*/
 .form_parent {
   border-radius: 50px;
+  width: 100%;
   border: 3px solid var(--main-color);
   margin: 4rem 3rem 3rem 3rem;
   background-image: var(--main-bg-gradient);

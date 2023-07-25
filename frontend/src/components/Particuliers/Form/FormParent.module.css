@@ -34,6 +34,7 @@
   color: var(--main-color);
   margin: 1rem 0;
 }
+
 .form, .formModify {
   background: transparent;
   width: 100%;
@@ -45,6 +46,7 @@
   justify-content: center;
   align-items: center;
 }
+
 
 .formModify input {
   border-radius: 10px;
@@ -62,7 +64,7 @@
 }
 .formModify label {
   color: white;
-  margin: 1rem;
+  margin: 0;
 }
 
 .buttonSubmit {
