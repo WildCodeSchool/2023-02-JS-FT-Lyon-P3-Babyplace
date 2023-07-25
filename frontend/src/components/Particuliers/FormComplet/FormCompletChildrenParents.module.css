@@ -42,18 +42,33 @@
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
+  top: 30px;
   left: 5%;
   cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px 5px 5px;
+  border-radius: 50%;
 }
+
+
+.button_back:hover {
+  scale: 1.1;
+  background-color: rgb(187, 87, 245);
+}
+
+
 .buttons {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  margin-left: 30px;
 }
 .button_child,
 .button_parent {
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1rem;
   border-radius: 25px;
   color: white;
   cursor: pointer;
