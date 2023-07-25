@@ -19,8 +19,7 @@ const verifyProEmail = (req, res, next) => {
     .findByEmailWithPassword(email)
     .then(([users]) => {
       if (users[0] != null) {
-        // eslint-disable-next-line prefer-destructuring
-        req.user = users[0];
+        [req.user] = users;
         next();
       } else {
         res.sendStatus(404);
@@ -38,8 +37,7 @@ const verifyParentEmail = (req, res, next) => {
     .findByEmailWithPassword(email)
     .then(([users]) => {
       if (users[0] != null) {
-        // eslint-disable-next-line prefer-destructuring
-        req.user = users[0];
+        [req.user] = users;
         next();
       } else {
         res.sendStatus(404);
@@ -129,8 +127,7 @@ const verifyTokenPasswordPro = (req, res, next) => {
     .then(([users]) => {
       console.warn(users);
       if (users[0] != null) {
-        // eslint-disable-next-line prefer-destructuring
-        req.user = users[0];
+        [req.user] = users;
         next();
       } else res.sendStatus(404);
     })
@@ -147,8 +144,7 @@ const verifyTokenPasswordParent = (req, res, next) => {
     .then(([users]) => {
       console.warn(users);
       if (users[0] != null) {
-        // eslint-disable-next-line prefer-destructuring
-        req.user = users[0];
+        [req.user] = users;
         next();
       } else res.sendStatus(404);
     })

@@ -19,7 +19,7 @@ export default function CalendarInfo() {
         </div>
         <div className={styles.info_box}>
           <span className={`${styles.circle_color} ${styles.red}`} />
-          <p className={styles.text_info}>Il ne reste plus de places !</p>
+          <p className={styles.text_info}>Il ne reste plus de place !</p>
         </div>
       </div>
     </div>

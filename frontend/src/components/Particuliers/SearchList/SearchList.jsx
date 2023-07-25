@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
+import HideImageIcon from "@mui/icons-material/HideImage";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -64,18 +65,22 @@ export default function SearchList() {
                 >
                   <CardActionArea sx={{ padding: "10px" }}>
                     <div className={style.image}>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={`${BACKEND_URL}/uploads/${pro.image}`}
-                        alt="profil_picture"
-                        sx={{
-                          position: "relative",
-                          zIndex: 10,
-                          borderTopRightRadius: "20px",
-                          borderTopLeftRadius: "20px",
-                        }}
-                      />
+                      {pro.image ? (
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={`${BACKEND_URL}/uploads/${pro.image}`}
+                          alt="profil_picture"
+                          sx={{
+                            position: "relative",
+                            zIndex: 10,
+                            borderTopRightRadius: "20px",
+                            borderTopLeftRadius: "20px",
+                          }}
+                        />
+                      ) : (
+                        <HideImageIcon />
+                      )}
                     </div>
 
                     <Typography
