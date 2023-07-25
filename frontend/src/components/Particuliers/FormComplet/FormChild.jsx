@@ -26,10 +26,32 @@ export default function FormChild() {
   }, []);
 
   const schema = Joi.object({
-    lastname: Joi.string().alphanum().min(3).max(30).required(),
-    firstname: Joi.string().alphanum().min(3).max(30).required(),
-    birthdate: Joi.number().integer().min(1900).required(),
-    doctor: Joi.string().alphanum().min(3).max(30).required(),
+    lastname: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Votre nom doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre nom doit avoir une longueur maximale de 80 caractères.",
+    }),
+    firstname: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Votre prénom doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Votre prénom doit avoir une longueur maximale de 80 caractères.",
+    }),
+    birthdate: Joi.string()
+      .regex(/^\d{4}\/\d{2}\/\d{2}$/)
+      .messages({
+        "string.pattern.base":
+          "Votre date de naissance doit respecter le format AAAA/MM/JJ.",
+      }),
+    doctor: Joi.string().min(3).max(80).messages({
+      "string.min":
+        "Le nom du médecin doit avoir une longueur minimale de 3 caractères.",
+      "string.max":
+        "Le nom du médecin doit avoir une longueur maximale de 80 caractères.",
+    }),
+    walking: Joi.number(),
+    parent_id: Joi.number(),
   });
 
   const handleChange = (event) => {
@@ -47,33 +69,31 @@ export default function FormChild() {
     const { error } = schema.validate(formInfo);
 
     if (error) {
-      setValidationMessage(error);
+      setValidationMessage(error.message);
     } else {
-      setValidationMessage(null);
+      instance
+        .post(`/child/register`, formInfo)
+        .then((response) => {
+          if (response.status === 201) {
+            setValidationMessage("Votre enfant a bien été ajouté.");
+            setFormInfo({
+              lastname: "",
+              firstname: "",
+              birthdate: "",
+              walking: "",
+              doctor: "",
+              parent_id: `${user.id}`,
+            });
+          }
+        })
+
+        .catch((err) => {
+          if (err.response.status === 500)
+            setValidationMessage("Erreur: Veuillez recommencer.");
+        });
     }
-
-    // Envoi au back des données recueillies dans le formulaire
-    instance
-      .post(`/child/register`, formInfo)
-      .then((response) => {
-        if (response.status === 201) {
-          setValidationMessage("Votre enfant a bien été ajouté.");
-          setFormInfo({
-            lastname: "",
-            firstname: "",
-            birthdate: "",
-            walking: "",
-            doctor: "",
-            parent_id: `${user.id}`,
-          });
-        }
-      })
-
-      .catch((err) => {
-        if (err.response.status === 500)
-          setValidationMessage("Erreur: Veuillez recommencer.");
-      });
   };
+  if (!user) return null;
 
   return (
     <div className={style.form_container}>
@@ -148,6 +168,11 @@ export default function FormChild() {
         </fieldset>
 
         <div className={style.validation_message}>
+          {validationMessage !== "Erreur: Veuillez recommencer." &&
+          validationMessage !== "Votre enfant a bien été ajouté." &&
+          validationMessage ? (
+            <Alert severity="error">{validationMessage}</Alert>
+          ) : null}
           {validationMessage === "Votre enfant a bien été ajouté." ? (
             <Alert
               severity={

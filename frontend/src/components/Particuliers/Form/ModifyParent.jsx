@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Alert } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 import Joi from "joi";
 import instance from "../../../services/APIService";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormParent.module.css";
 
-export default function FormParent() {
-  const { user } = useUserContext();
+export default function ModifyParent() {
+  const { user, setUser } = useUserContext();
 
   // Mise en place du schema pour les validateurs Joi
   const schema = Joi.object({
@@ -24,29 +22,7 @@ export default function FormParent() {
       "string.max":
         "Votre prénom doit avoir une longueur maximale de 80 caractères.",
     }),
-    birthdate: Joi.string()
-      .regex(/^\d{4}\/\d{2}\/\d{2}$/)
-      .messages({
-        "string.pattern.base":
-          "Votre date de naissance doit respecter le format AAAA/MM/JJ.",
-      }),
-    mail_address: Joi.string()
-      .email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "net", "fr"] },
-      })
-      .messages({
-        "string.email": "Vous devez entrez une adresse mail valide.",
-      }),
-    password: Joi.string()
-      .regex(/^[a-zA-Z0-9]{8,30}$/)
-      .messages({
-        "string.pattern.base":
-          "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 8 à 30 caractères.",
-      }),
-    verifyPassword: Joi.any().valid(Joi.ref("password")).messages({
-      "any.only": "Vos mots de passe ne correspondent pas.",
-    }),
+
     address: Joi.string().min(3).max(80).messages({
       "string.min":
         "Votre adresse doit avoir une longueur minimale de 3 caractères.",
@@ -72,155 +48,123 @@ export default function FormParent() {
           "Votre numéro de téléphone doit être constitué uniquement de 10 caractères numériques.",
       }),
   });
-  const navigate = useNavigate();
   const [validationMessage, setValidationMessage] = useState(null);
   const [formInfo, setFormInfo] = useState({
     lastname: "",
     firstname: "",
-    birthdate: "",
-    mail_address: "",
-    password: "",
     address: "",
     postcode: "",
     city: "",
     phone_number: "",
   });
-
   const handleChange = (event) => {
     setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { error } = schema.validate(formInfo);
+    let userModify = {};
+    Object.entries(user).forEach((entry) => {
+      if (
+        entry[0] !== "id" &&
+        entry[0] !== "birthdate" &&
+        entry[0] !== "mail_address" &&
+        entry[0] !== "hashed_password" &&
+        entry[0] !== "passwordToken" &&
+        entry[0] !== "notification_status" &&
+        entry[0] !== "role"
+      ) {
+        userModify = { ...userModify, [entry[0]]: entry[1] };
+      }
+    });
+    let formInfoModify = {};
+
+    Object.entries(formInfo).forEach((entry) => {
+      if (entry[1] !== "") {
+        formInfoModify = { ...formInfoModify, [entry[0]]: entry[1] };
+      }
+    });
+    const { error } = schema.validate({ ...userModify, ...formInfoModify });
 
     if (error) {
       setValidationMessage(error.message);
     } else {
       instance
-        .post("/parent/register", formInfo)
+        .patch(`/parent/modify`, formInfo)
         .then((response) => {
           if (response.status === 201) {
             setValidationMessage(
-              "Compte créé. Vous pouvez désormais vous connecter."
+              "Les informations ont bien été prises en compte."
             );
+
+            setUser(response.data);
           }
         })
 
         .catch((err) => {
           if (err.response.status === 400)
-            setValidationMessage("Veuillez utiliser une autre adresse mail");
+            setValidationMessage("Veuillez réessayer plus tard.");
         });
     }
   };
   if (!user) return null;
   return (
-    <div className={style.page}>
-      <div className={style.header_card}>
-        <button
-          type="button"
-          className={style.button_back}
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
-        <div className={style.name_type}>
-          <h2>Création de compte</h2>
-        </div>
-      </div>
+    <div className={style.form_modify}>
+      <h3>Modifier vos informations :</h3>
       <form className={style.form} onSubmit={handleSubmit}>
         <input
           type="text"
           name="lastname"
-          placeholder="Nom"
+          placeholder={user.lastname}
           value={formInfo.lastname}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
           name="firstname"
-          placeholder="Prénom"
+          placeholder={user.firstname}
           value={formInfo.firstname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="birthdate"
-          placeholder="Date de naissance AAAA/MM/JJ"
-          value={formInfo.birthdate}
-          pattern="\d{4}/\d{2}/\d{2}"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="mail_address"
-          placeholder="Email"
-          value={formInfo.mail_address}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={formInfo.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="verifyPassword"
-          placeholder="Confirmez votre mot de passe"
           onChange={handleChange}
         />
         <input
           type="text"
           name="address"
-          placeholder="Numéro et nom de voie"
+          placeholder={user.address}
           value={formInfo.address}
           onChange={handleChange}
-          required
         />
         <input
           type="number"
           name="postcode"
-          placeholder="Code postal"
+          placeholder={user.postcode}
           value={formInfo.postcode}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
           name="city"
-          placeholder="Ville"
+          placeholder={user.city}
           value={formInfo.city}
           onChange={handleChange}
-          required
         />
         <input
           type="number"
           name="phone_number"
-          placeholder="Téléphone mobile"
+          placeholder={user.phone_number}
           value={formInfo.phone_number}
           onChange={handleChange}
-          required
         />
-
         <div className={style.validationMessage}>
-          {validationMessage !== "Veuillez utiliser une autre adresse mail" &&
+          {validationMessage !== "Veuillez réessayer plus tard." &&
           validationMessage !==
-            "Compte créé. Vous pouvez désormais vous connecter." &&
+            "Les informations ont bien été prises en compte." &&
           validationMessage ? (
             <Alert severity="error">{validationMessage}</Alert>
           ) : null}
-          {validationMessage === "Veuillez utiliser une autre adresse mail" ? (
+          {validationMessage === "Veuillez réessayer plus tard." ? (
             <Alert
               severity={
-                validationMessage === "Veuillez utiliser une autre adresse mail"
+                validationMessage === "Veuillez réessayer plus tard."
                   ? "error"
                   : "success"
               }
@@ -228,19 +172,13 @@ export default function FormParent() {
               {validationMessage}
             </Alert>
           ) : null}
-          {validationMessage !==
-          "Compte créé. Vous pouvez désormais vous connecter." ? (
-            <button type="submit" className={style.buttonSubmit}>
-              Créer un compte
-            </button>
-          ) : null}
 
           {validationMessage ===
-          "Compte créé. Vous pouvez désormais vous connecter." ? (
+          "Les informations ont bien été prises en compte." ? (
             <Alert
               severity={
                 validationMessage ===
-                "Compte créé. Vous pouvez désormais vous connecter."
+                "Les informations ont bien été prises en compte."
                   ? "success"
                   : "error"
               }
@@ -248,17 +186,11 @@ export default function FormParent() {
               {validationMessage}
             </Alert>
           ) : null}
+          <button type="submit" className={style.buttonSubmit}>
+            Valider les modifications
+          </button>
         </div>
       </form>
-
-      {validationMessage ===
-      "Compte créé. Vous pouvez désormais vous connecter." ? (
-        <Link to="/particulier/enregistrement/bienvenue">
-          <button type="button" className={style.buttonNext}>
-            Suivant
-          </button>
-        </Link>
-      ) : null}
     </div>
   );
 }

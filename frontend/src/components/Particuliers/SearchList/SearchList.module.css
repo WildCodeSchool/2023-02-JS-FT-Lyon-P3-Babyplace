@@ -79,7 +79,6 @@
 .dispos_pro {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  cursor: pointer;
 }
 .dispos_pro li {
   padding: 1px;
@@ -118,5 +117,3 @@
     cursor: pointer;
   }
 }
-
-

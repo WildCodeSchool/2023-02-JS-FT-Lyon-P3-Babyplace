@@ -3,7 +3,7 @@ import { useNavigate, Link, NavLink } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormCompletChildrenParents.module.css";
-import FormParent from "../Form/FormParent";
+import ModifyParent from "../Form/ModifyParent";
 
 export default function FormCompletParent() {
   const { user } = useUserContext();
@@ -48,7 +48,7 @@ export default function FormCompletParent() {
       </div>
       <div className={style.file}>
         <div className={style.form_parent}>
-          <FormParent />
+          <ModifyParent />
         </div>
       </div>
     </div>
