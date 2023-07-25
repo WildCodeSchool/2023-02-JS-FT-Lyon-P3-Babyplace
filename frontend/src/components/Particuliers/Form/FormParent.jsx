@@ -355,10 +355,10 @@ export default function FormParent() {
                 {validationMessage}
               </Alert>
             ) : null}
-            <button type="submit" className={style.buttonSubmit}>
-              Valider les modifications
-            </button>
           </div>
+          <button type="submit" className={style.buttonSubmit}>
+            Valider les modifications
+          </button>
         </form>
       </div>
     );

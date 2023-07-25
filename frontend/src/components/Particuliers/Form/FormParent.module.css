@@ -141,11 +141,13 @@
     display: grid;
     grid-column: 1/3;
   }
+
   .buttonNext,
   .buttonSubmit {
     margin-top: 2rem;
     box-shadow: 5px 5px 5px var(--second-color);
     width: 20rem;
     height: 3rem;
+    grid-column: 1/3;
   }
 }
