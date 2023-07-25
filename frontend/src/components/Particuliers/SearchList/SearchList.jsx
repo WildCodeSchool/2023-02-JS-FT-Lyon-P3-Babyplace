@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
-import HideImageIcon from "@mui/icons-material/HideImage";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useUserContext } from "../../../contexts/UserContext";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import instance from "../../../services/APIService";
 import userIcon from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
@@ -81,7 +81,18 @@ export default function SearchList() {
                           }}
                         />
                       ) : (
-                        <HideImageIcon />
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={defautPicture}
+                          alt="profil_picture"
+                          sx={{
+                            position: "relative",
+                            zIndex: 10,
+                            borderTopRightRadius: "20px",
+                            borderTopLeftRadius: "20px",
+                          }}
+                        />
                       )}
                     </div>
 
