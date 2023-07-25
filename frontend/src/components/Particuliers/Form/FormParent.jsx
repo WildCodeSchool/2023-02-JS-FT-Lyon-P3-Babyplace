@@ -228,12 +228,6 @@ export default function FormParent() {
               {validationMessage}
             </Alert>
           ) : null}
-          {validationMessage !==
-          "Compte créé. Vous pouvez désormais vous connecter." ? (
-            <button type="submit" className={style.buttonSubmit}>
-              Créer un compte
-            </button>
-          ) : null}
 
           {validationMessage ===
           "Compte créé. Vous pouvez désormais vous connecter." ? (
@@ -249,6 +243,12 @@ export default function FormParent() {
             </Alert>
           ) : null}
         </div>
+        {validationMessage !==
+        "Compte créé. Vous pouvez désormais vous connecter." ? (
+          <button type="submit" className={style.buttonSubmit}>
+            Créer un compte
+          </button>
+        ) : null}
       </form>
 
       {validationMessage ===

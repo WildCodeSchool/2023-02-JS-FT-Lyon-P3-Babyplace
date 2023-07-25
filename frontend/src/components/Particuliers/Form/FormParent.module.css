@@ -132,7 +132,7 @@
 
   .form input {
     justify-self: center;
-    width: 70%;
+    width: 90%;
     padding: 1rem 2rem;
     margin: 0.3rem;
     font-size: large;
@@ -141,11 +141,13 @@
     display: grid;
     grid-column: 1/3;
   }
+
   .buttonNext,
   .buttonSubmit {
     margin-top: 2rem;
     box-shadow: 5px 5px 5px var(--second-color);
     width: 20rem;
     height: 3rem;
+    grid-column: 1/3;
   }
 }
