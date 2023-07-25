@@ -8,9 +8,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 import styles from "./UploadImage.module.css";
 
 export default function UploadImage({ setOpenModalUpload }) {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const { user } = useUserContext();
-  const image = `${BACKEND_URL}/uploads/${user.image}`;
+  const { user, login } = useUserContext();
   const notifySuccess = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -41,9 +39,10 @@ export default function UploadImage({ setOpenModalUpload }) {
       .post(`upload`, formData, {
         withCredentials: true,
       })
-      .then(() => {
+      .then((response) => {
         notifySuccess("Votre image à bien été enregistrée");
         setSelectedFileName("");
+        login({ ...user, image: response.data.photoPath });
         setOpenModalUpload(false);
       })
       .catch((error) => {
@@ -55,7 +54,6 @@ export default function UploadImage({ setOpenModalUpload }) {
   return (
     <div className={styles.upload_container}>
       <div />
-      <img src={image} alt="profil_picture" className={styles.image_box} />
       <form
         className={styles.form_container}
         encType="multipart/form-data"
