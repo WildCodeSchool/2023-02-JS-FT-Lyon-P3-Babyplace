@@ -4,7 +4,6 @@
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 1em;
-
 }
 
 .banner p {
@@ -27,6 +26,13 @@
 .button_back:hover {
   scale: 1.1;
   background-color: rgb(165,165,255);
+}
+
+.nodata {
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: x-large;
 }
 
 .ordersList {

@@ -31,6 +31,11 @@ export default function NotificationBox() {
     <div className={styles.notifications_container}>
       <p className={styles.div_title}>Notifications</p>
       <div>
+        {!notifications || notifications.length === 0 ? (
+          <div className={styles.nodata}>
+            <p>Vous n'avez actuellement aucune notification.</p>
+          </div>
+        ) : null}
         {notifications.map((notification) => (
           <NotificationCard key={notification.id} notification={notification} />
         ))}

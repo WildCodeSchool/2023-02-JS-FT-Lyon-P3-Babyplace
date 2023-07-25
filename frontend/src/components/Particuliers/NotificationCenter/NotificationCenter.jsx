@@ -30,6 +30,11 @@ export default function NotificationCenter() {
   return (
     <div className={styles.notifications_container}>
       <div>
+        {!notifications || notifications.length === 0 ? (
+          <div className={styles.nodata}>
+            <p>Vous n'avez actuellement aucune notification.</p>
+          </div>
+        ) : null}
         {notifications.map((notification) => (
           <NotificationLign key={notification.id} notification={notification} />
         ))}

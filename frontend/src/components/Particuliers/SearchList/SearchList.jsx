@@ -7,12 +7,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useUserContext } from "../../../contexts/UserContext";
 import instance from "../../../services/APIService";
 import userIcon from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
 export default function SearchList() {
+  const { user } = useUserContext();
   const [pros, setPros] = useState(null);
   const navigate = useNavigate();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -28,21 +30,25 @@ export default function SearchList() {
   return (
     <div className={style.search_list_page}>
       <div className={style.header}>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className={style.button_back}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
+        {!user?.id ? (
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={style.button_back}
+          >
+            <ArrowBackIosNewIcon />
+          </button>
+        ) : null}
         <div />
 
         <h2>Liste des crèches disponibles</h2>
 
-        <div className={style.logo_log_in}>
-          <img src={userIcon} alt="user" />
-          <Link to="/particulier">Connexion</Link>
-        </div>
+        {!user?.id || user?.role === "pro" ? (
+          <div className={style.logo_log_in}>
+            <img src={userIcon} alt="user" />
+            <Link to="/particulier">Connexion</Link>
+          </div>
+        ) : null}
       </div>
 
       <div className={style.cards_media}>

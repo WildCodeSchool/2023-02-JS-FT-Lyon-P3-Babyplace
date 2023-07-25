@@ -4,6 +4,13 @@
   overflow: scroll;
 }
 
+.nodata {
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: x-large;
+}
+
 .div_title {
   text-align: center;
   margin: 6px 0 0px 0;

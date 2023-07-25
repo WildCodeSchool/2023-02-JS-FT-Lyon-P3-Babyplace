@@ -283,6 +283,7 @@ background-color: rgb(165,165,255);
 /* Partie des parents uniquement*/
 .form_parent {
   border-radius: 50px;
+  width: 100%;
   border: 3px solid var(--main-color);
   margin: 4rem 3rem 3rem 3rem;
   background-image: var(--main-bg-gradient);
@@ -396,6 +397,6 @@ background-color: rgb(165,165,255);
   }
   
   .form_parent {
-    margin: 20vh auto 10rem auto;
+    margin: 15vh auto 10rem auto;
   }
 }

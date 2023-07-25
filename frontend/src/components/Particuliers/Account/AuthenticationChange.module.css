@@ -36,6 +36,7 @@
 }
 
 .banner {
+  margin-top: 2em;
   display: flex;
   gap: 5%;
   justify-content: flex-start;
@@ -102,6 +103,11 @@ form div div {
   
   .formScreen {
     height: calc(100vh - 15vh - 11em - 63px);
+  }
+
+  .form {
+    flex-direction: row;
+    align-items: flex-end;
   }
   .separator {
     margin: 10px 0;
