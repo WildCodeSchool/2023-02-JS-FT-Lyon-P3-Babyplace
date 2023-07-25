@@ -64,14 +64,14 @@ router.patch(
   "/parent/mail",
   verifyToken,
   verifyIfParentRegistered,
-  parentControllers.edit
+  parentControllers.editAuth
 );
 
 router.patch(
   "/parent/password",
   verifyToken,
   hashPassword,
-  parentControllers.edit
+  parentControllers.editAuth
 );
 
 router.put(
