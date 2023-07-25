@@ -106,6 +106,9 @@ export default function SearchList() {
                         left: "20px",
                         color: "white",
                         zIndex: 12,
+                        backgroundColor: "rgba(0, 0, 0, .3)",
+                        borderRadius: "25px",
+                        padding: "0.2rem",
                       }}
                     >
                       {pro.name}
