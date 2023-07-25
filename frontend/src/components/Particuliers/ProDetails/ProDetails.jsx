@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
-import HideImageIcon from "@mui/icons-material/HideImage";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import instance from "../../../services/APIService";
 import DispoPros from "../SearchList/DispoPros";
 import style from "./ProDetails.module.css";
@@ -43,7 +43,11 @@ export default function ProDetails() {
               className={style.image}
             />
           ) : (
-            <HideImageIcon />
+            <img
+              src={defautPicture}
+              alt="profile_picture"
+              className={style.image}
+            />
           )}
 
           <h3>Présentation</h3>
