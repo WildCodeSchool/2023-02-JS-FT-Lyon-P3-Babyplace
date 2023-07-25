@@ -30,13 +30,15 @@ export default function SearchList() {
   return (
     <div className={style.search_list_page}>
       <div className={style.header}>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className={style.button_back}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
+        {!user?.id ? (
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={style.button_back}
+          >
+            <ArrowBackIosNewIcon />
+          </button>
+        ) : null}
         <div />
 
         <h2>Liste des crèches disponibles</h2>
