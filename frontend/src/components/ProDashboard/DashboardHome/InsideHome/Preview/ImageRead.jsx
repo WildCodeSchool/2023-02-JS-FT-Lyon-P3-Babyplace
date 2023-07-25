@@ -10,15 +10,11 @@ export default function ImageRead() {
   return (
     <div>
       {user.image ? (
-        <img
-          src={imagePath}
-          alt="profil_picture"
-          className={style.profil_picture}
-        />
+        <img src={imagePath} alt="profil" className={style.profil_picture} />
       ) : (
         <img
           src={defautPicture}
-          alt="profil_picture"
+          alt="profil"
           className={style.profil_picture}
         />
       )}

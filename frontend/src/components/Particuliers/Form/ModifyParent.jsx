@@ -94,7 +94,7 @@ export default function ModifyParent() {
         .then((response) => {
           if (response.status === 201) {
             setValidationMessage(
-              "Les validations ont bien été prises en compte."
+              "Les informations ont bien été prises en compte."
             );
 
             setUser(response.data);
@@ -157,7 +157,7 @@ export default function ModifyParent() {
         <div className={style.validationMessage}>
           {validationMessage !== "Veuillez réessayer plus tard." &&
           validationMessage !==
-            "Les validations ont bien été prises en compte." &&
+            "Les informations ont bien été prises en compte." &&
           validationMessage ? (
             <Alert severity="error">{validationMessage}</Alert>
           ) : null}
@@ -174,11 +174,11 @@ export default function ModifyParent() {
           ) : null}
 
           {validationMessage ===
-          "Les validations ont bien été prises en compte." ? (
+          "Les informations ont bien été prises en compte." ? (
             <Alert
               severity={
                 validationMessage ===
-                "Les validations ont bien été prises en compte."
+                "Les informations ont bien été prises en compte."
                   ? "success"
                   : "error"
               }
