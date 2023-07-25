@@ -43,12 +43,24 @@
   margin: 0.8rem;
   color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
+.button_child:hover,
+.button_parent:hover {
+  scale: 1.06;
+  background-color: rgb(227, 227, 227);
+  color: var(--main-color);
+}
+.button_child:active,
+.button_parent:active {
+  scale: 1;
+}
+
 .button_child {
   background-color: var(--info-color);
 }
 .button_parent {
-  background-color: var(--success-color);
+  background-color: var(--main-color);
 }
 .container {
   display: flex;

@@ -148,37 +148,39 @@ export default function Orders() {
             setRefreshData={setRefreshData}
           />
         ))}
-        <div className={styles.pagination_btn_container}>
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-          >
-            Précédent
-          </Button>
-          {currentPage} / {maxPage}
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handleNext}
-            disabled={currentPage === maxPage}
-          >
-            Suivant
-          </Button>
-        </div>
+        {numberOfResults !== 0 && (
+          <div className={styles.pagination_btn_container}>
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+            >
+              Précédent
+            </Button>
+            {currentPage} / {maxPage}
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handleNext}
+              disabled={currentPage === maxPage}
+            >
+              Suivant
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

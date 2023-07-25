@@ -125,7 +125,6 @@ const verifyTokenPasswordPro = (req, res, next) => {
   models.reset
     .selectTokenPro(passwordToken)
     .then(([users]) => {
-      console.warn(users);
       if (users[0] != null) {
         [req.user] = users;
         next();
@@ -142,7 +141,6 @@ const verifyTokenPasswordParent = (req, res, next) => {
   models.reset
     .selectTokenParent(passwordToken)
     .then(([users]) => {
-      console.warn(users);
       if (users[0] != null) {
         [req.user] = users;
         next();
