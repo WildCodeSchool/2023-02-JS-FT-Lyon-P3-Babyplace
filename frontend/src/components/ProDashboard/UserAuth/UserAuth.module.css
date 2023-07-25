@@ -32,14 +32,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: left-come 1s ease;
 }
-
+@keyframes left-come {
+  from {
+    opacity: 0;
+    transform: translateX(200px);  
+  }
+  to {
+   opacity: 1;
+   transform: translateX(0px); 
+  }
+}
+@keyframes blur-come {
+  from {
+    opacity: 0;
+  }
+  to {
+   opacity: 1; 
+  }
+}
 .right_container {
   height: 80%;
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: blur-come 2s ease;
 }
 
 .bg_img {

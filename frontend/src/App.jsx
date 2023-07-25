@@ -37,6 +37,9 @@ const theme = createTheme({
     primary: {
       main: "rgb(165,165,255)",
     },
+    secondary: {
+      main: "rgb(91, 172, 204)",
+    },
   },
 });
 

@@ -13,7 +13,6 @@ export default function CalendarCard({ data }) {
     }
     return null;
   };
-  console.info(data);
   return (
     <div className={styles.calendarcard_box}>
       <div className={styles.duration}>
@@ -37,6 +36,6 @@ CalendarCard.propTypes = {
     prenom_enfant: PropTypes.string.isRequired,
     nom_enfant: PropTypes.string.isRequired,
     anniversaire: PropTypes.string.isRequired,
-    walking: PropTypes.bool.isRequired,
+    walking: PropTypes.number.isRequired,
   }).isRequired,
 };

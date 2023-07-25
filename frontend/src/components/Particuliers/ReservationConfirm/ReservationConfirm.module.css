@@ -36,6 +36,7 @@
 .congrats {
   text-align: center;
   font-size: 3em;
+  color: rgb(255, 152, 234);
 }
 
 .details {
@@ -62,10 +63,20 @@
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 1em;
+  transition: all 0.4s ease;
 }
+.button:hover {
+  scale: 1.2;
+  filter: brightness(1.2);
+}
+
 
 @media screen and (min-height: 900px) {
   .button {
     scale: 2;
+  }
+  .button:hover {
+    scale: 2.2;
+    filter: brightness(1.2);
   }
 }

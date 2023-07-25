@@ -139,6 +139,11 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.2s ease
+}
+
+.button:hover {
+  scale: 1.2;
 }
 
 @media screen and (min-width: 450px) {

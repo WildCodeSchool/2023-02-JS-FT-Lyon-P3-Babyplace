@@ -25,6 +25,7 @@
   );
   box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
   border-radius: 10px;
+  animation: left-come 1s ease;
 }
 
 .second_chart_container {
@@ -35,6 +36,7 @@
   background-color: rgb(250, 250, 250);
   box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
   border-radius: 10px;
+  animation: right-come 1s ease;
 }
 
 .diagram_container {
@@ -45,6 +47,7 @@
   background-color: rgb(250, 250, 250);
   box-shadow: 0 0 60px 5px rgba(40, 40, 40, 0.2);
   border-radius: 10px;
+  animation: left-come 1s ease;
 }
 
 .preview_box {
@@ -57,6 +60,7 @@
   border-radius: 10px;
   overflow: hidden;
   border: solid rgb(250, 250, 250) 4px;
+  animation: right-come 1s ease;
 }
 
 .preview_btn {
@@ -76,6 +80,29 @@
   height: 100%;
   object-fit: cover;
 }
+
+@keyframes left-come {
+  from {
+    opacity: 0;
+    transform: translateX(-600px);  
+  }
+  to {
+   opacity: 1;
+   transform: translateX(0px); 
+  }
+}
+@keyframes right-come {
+  from {
+    opacity: 0;
+    transform: translateX(600px);  
+  }
+  to {
+   opacity: 1;
+   transform: translateX(0px); 
+  }
+}
+
+
 
 .preview_title {
   background-color: #c299ff;

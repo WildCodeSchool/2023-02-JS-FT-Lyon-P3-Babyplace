@@ -114,6 +114,11 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.4s ease
+}
+
+.button:hover {
+  scale: 1.15;
 }
 
 .disabledButton {

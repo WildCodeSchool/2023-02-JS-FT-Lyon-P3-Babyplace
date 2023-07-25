@@ -246,7 +246,7 @@ OrderCard.propTypes = {
     prenom_parent: PropTypes.string.isRequired,
     nom_parent: PropTypes.string.isRequired,
     date_enregistrement: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
+    status: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
     id_parent: PropTypes.number.isRequired,
     date_reservation: PropTypes.string.isRequired,
