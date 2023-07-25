@@ -38,10 +38,10 @@ function FormBlock({
         "string.email": "Vous devez entrez une adresse mail valide.",
       }),
     password: Joi.string()
-      .regex(/^[a-zA-Z0-9]{3,30}$/)
+      .regex(/^[a-zA-Z0-9]{8,30}$/)
       .messages({
         "string.pattern.base":
-          "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 3 à 30 caractères.",
+          "Votre mot de passe doit être constitué uniquement de caractères alphanumériques et doit être d'une taille de 8 à 30 caractères.",
       }),
     verifyPassword: Joi.any().valid(Joi.ref("password")).messages({
       "any.only": "Vos mots de passe ne correspondent pas.",

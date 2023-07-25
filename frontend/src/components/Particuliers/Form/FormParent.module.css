@@ -34,7 +34,8 @@
   color: var(--main-color);
   margin: 1rem 0;
 }
-.form {
+
+.form, .formModify {
   background: transparent;
   width: 100%;
   padding: 2rem;
@@ -46,6 +47,14 @@
   align-items: center;
 }
 
+
+.formModify input {
+  border-radius: 10px;
+  width: 80%;
+  padding: 0.7rem 1rem;
+  margin: 0.3rem;
+  box-shadow: 3px 3px 3px var(--second-color);
+}
 .form input {
   border-radius: 10px;
   width: 80%;
@@ -53,9 +62,13 @@
   margin: 0.3rem;
   box-shadow: 3px 3px 3px var(--second-color);
 }
+.formModify label {
+  color: white;
+  margin: 0;
+}
 
 .buttonSubmit {
-  width: 50%;
+  width: 60%;
   margin: auto;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -96,18 +109,32 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .form {
+  
+  .form, .formModify {
     display: flex;
     justify-content: center;
     align-items: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .formModify label {
+    justify-self: flex-end;
+  }
+
+  .formModify input {
+    justify-self: center;
+    width: 90%;
+    padding: 0.5rem 1rem;
+    margin: 0.3rem;
+    font-size: large;
+  }
+
   .form input {
     justify-self: center;
     width: 70%;
     padding: 1rem 2rem;
-    margin: 0.7rem;
+    margin: 0.3rem;
     font-size: large;
   }
   .validationMessage {
@@ -116,6 +143,7 @@
   }
   .buttonNext,
   .buttonSubmit {
+    margin-top: 2rem;
     box-shadow: 5px 5px 5px var(--second-color);
     width: 20rem;
     height: 3rem;
