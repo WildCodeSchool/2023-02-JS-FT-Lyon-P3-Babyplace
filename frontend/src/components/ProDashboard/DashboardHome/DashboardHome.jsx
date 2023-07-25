@@ -1,7 +1,7 @@
 import { useState } from "react";
-import HideImageIcon from "@mui/icons-material/HideImage";
 import { useUserContext } from "../../../contexts/UserContext";
 import styles from "./DashboardHome.module.css";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import WelcomeBox from "./InsideHome/WelcomeBox/WelcomeBox";
 import DayResume from "./InsideHome/DayResume/DayResume";
 import OccupationChart from "./InsideHome/OccupationChart/OccupationChart";
@@ -41,7 +41,11 @@ export default function DashboardHome() {
                 className={styles.preview_img}
               />
             ) : (
-              <HideImageIcon />
+              <img
+                src={defautPicture}
+                alt="profile_picture"
+                className={styles.preview_img}
+              />
             )}
 
             <p className={styles.preview_title}>Prévisualiser mon annonce</p>

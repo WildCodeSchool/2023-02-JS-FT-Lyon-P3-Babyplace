@@ -1,6 +1,6 @@
-import HideImageIcon from "@mui/icons-material/HideImage";
 import { useUserContext } from "../../../../../contexts/UserContext";
 import style from "./Image.module.css";
+import defautPicture from "../../../../../assets/images/Babyplace-2.png";
 
 export default function ImageRead() {
   const { user } = useUserContext();
@@ -16,7 +16,11 @@ export default function ImageRead() {
           className={style.profil_picture}
         />
       ) : (
-        <HideImageIcon />
+        <img
+          src={defautPicture}
+          alt="profil_picture"
+          className={style.profil_picture}
+        />
       )}
     </div>
   );
