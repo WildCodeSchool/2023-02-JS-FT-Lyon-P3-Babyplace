@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Alert } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,14 @@ import { useUserContext } from "../../../contexts/UserContext";
 import style from "./FormParent.module.css";
 
 export default function FormParent() {
+  const navigate = useNavigate();
   const { user } = useUserContext();
+
+  useEffect(() => {
+    if (user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   // Mise en place du schema pour les validateurs Joi
   const schema = Joi.object({
@@ -72,7 +79,6 @@ export default function FormParent() {
           "Votre numéro de téléphone doit être constitué uniquement de 10 caractères numériques.",
       }),
   });
-  const navigate = useNavigate();
   const [validationMessage, setValidationMessage] = useState(null);
   const [formInfo, setFormInfo] = useState({
     lastname: "",
@@ -114,7 +120,6 @@ export default function FormParent() {
         });
     }
   };
-  if (!user) return null;
   return (
     <div className={style.page}>
       <div className={style.header_card}>

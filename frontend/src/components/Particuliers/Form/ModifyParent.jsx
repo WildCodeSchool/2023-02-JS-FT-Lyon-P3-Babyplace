@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import Joi from "joi";
 import instance from "../../../services/APIService";
@@ -7,6 +8,13 @@ import style from "./FormParent.module.css";
 
 export default function ModifyParent() {
   const { user, setUser } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   // Mise en place du schema pour les validateurs Joi
   const schema = Joi.object({
@@ -107,7 +115,7 @@ export default function ModifyParent() {
         });
     }
   };
-  if (!user) return null;
+  if (!user?.id) return null;
   return (
     <div className={style.form_modify}>
       <h3>Modifier vos informations :</h3>

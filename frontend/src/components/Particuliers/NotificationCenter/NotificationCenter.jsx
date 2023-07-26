@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../../contexts/UserContext";
 import NotificationLign from "./NotificationLign";
 import styles from "./NotificationCenter.module.css";
 import instance from "../../../services/APIService";
 
 export default function NotificationCenter() {
+  const navigate = useNavigate();
+  const { user } = useUserContext();
   const [notifications, setNotifications] = useState([]);
   // Obtenir la date d'aujourd'hui
   const currentDate = dayjs();
@@ -12,6 +16,12 @@ export default function NotificationCenter() {
   const previousWeekDate = currentDate.subtract(7, "day");
   // Formater la date en format "YYYY-MM-DD"
   const formattedDate = previousWeekDate.format("YYYY-MM-DD");
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   useEffect(() => {
     instance
