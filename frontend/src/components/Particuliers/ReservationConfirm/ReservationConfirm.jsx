@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import Confetti from "react-confetti";
+import useWindowSize from "react-use/lib/useWindowSize";
 import { useNavigate } from "react-router-dom";
 import rainbow from "../../../assets/images/rainbow.png";
 import { useReservationContext } from "../../../contexts/ReservationContext";
 import styles from "./ReservationConfirm.module.css";
 
 function ReservationConfirm() {
+  const { width, height } = useWindowSize();
   const navigate = useNavigate();
   const { reservation, setReservation } = useReservationContext();
   const options = {
@@ -20,6 +23,12 @@ function ReservationConfirm() {
 
   return (
     <div className={styles.container}>
+      <Confetti
+        width={width}
+        height={height}
+        numberOfPieces={400}
+        recycle={false}
+      />
       <div className={styles.confirmScreen}>
         <div className={styles.upperBox}>
           <img

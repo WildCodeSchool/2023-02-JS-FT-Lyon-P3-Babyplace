@@ -103,7 +103,6 @@ export default function Calendar() {
             />
           </LocalizationProvider>
         </div>
-        ;
       </div>
 
       <div className={styles.right_container}>

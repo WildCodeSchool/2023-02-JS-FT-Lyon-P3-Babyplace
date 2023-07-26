@@ -72,30 +72,25 @@ export default function NavBarParent() {
             right: 0,
             justifyContent: "space-between",
             alignItems: "center",
-            borderTop: 3,
+            borderTop: 2,
             borderColor: "var(--main-color)",
+            backgroundColor: "rgba(255, 242, 249, 1)",
           }}
         >
           <NavLink to="">
-            <BottomNavigationAction
-              icon={<HomeIcon sx={{ color: "var(--info-color)" }} />}
-            />
+            <BottomNavigationAction icon={<HomeIcon color="primary" />} />
           </NavLink>
           <NavLink to="recherche">
-            <BottomNavigationAction
-              icon={<SearchIcon sx={{ color: "var(--info-color)" }} />}
-            />
+            <BottomNavigationAction icon={<SearchIcon color="primary" />} />
           </NavLink>
           <NavLink to={user?.role === "parent" ? `${user.id}` : ""}>
-            <BottomNavigationAction
-              icon={<PersonIcon sx={{ color: "var(--info-color)" }} />}
-            />
+            <BottomNavigationAction icon={<PersonIcon color="primary" />} />
           </NavLink>
           <NavLink to={user?.role === "parent" ? `notifications` : ""}>
             <BottomNavigationAction
               icon={
                 <Badge badgeContent={numberOfReservations} color="primary">
-                  <NotificationsIcon sx={{ color: "var(--info-color)" }} />
+                  <NotificationsIcon color="primary" />
                 </Badge>
               }
             />

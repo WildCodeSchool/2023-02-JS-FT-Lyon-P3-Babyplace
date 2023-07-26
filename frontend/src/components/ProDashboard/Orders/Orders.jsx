@@ -21,7 +21,7 @@ export default function Orders() {
   const reservationsContainerRef = useRef(null);
 
   const handleSelect = (e) => {
-    setSelectedValue(e.target.id);
+    setSelectedValue(e.target.value);
     setCurrentPage(1);
   };
 
@@ -90,28 +90,31 @@ export default function Orders() {
   return (
     <div className={styles.orders_box}>
       <div className={styles.orders_header}>
-        <h3>Toutes les réservations</h3>
-        <p>{numberOfResults} Résultats</p>
+        <div>
+          <h3>Toutes les réservations</h3>
+          <p>{numberOfResults} Résultats</p>
+        </div>
         <div className={styles.filter_btn_box}>
           <Button
-            id="4"
+            value="4"
             variant="contained"
+            color="secondary"
             onClick={handleSelect}
             sx={{ marginRight: 1, marginLeft: 1 }}
           >
             Toutes
           </Button>
           <Button
-            id="0"
+            value="0"
             variant="outlined"
+            color="secondary"
             onClick={handleSelect}
-            color="primary"
             sx={{ mx: 1 }}
           >
             En attente
           </Button>
           <Button
-            id="1"
+            value="1"
             variant="outlined"
             onClick={handleSelect}
             color="success"
@@ -120,7 +123,7 @@ export default function Orders() {
             Acceptées
           </Button>
           <Button
-            id="2"
+            value="2"
             variant="outlined"
             onClick={handleSelect}
             color="error"
@@ -129,7 +132,7 @@ export default function Orders() {
             Refusées
           </Button>
           <Button
-            id="3"
+            value="3"
             variant="outlined"
             onClick={handleSelect}
             color="warning"
@@ -155,37 +158,39 @@ export default function Orders() {
             setRefreshData={setRefreshData}
           />
         ))}
-        <div className={styles.pagination_btn_container}>
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-          >
-            Précédent
-          </Button>
-          {currentPage} / {maxPage}
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handleNext}
-            disabled={currentPage === maxPage}
-          >
-            Suivant
-          </Button>
-        </div>
+        {numberOfResults !== 0 && (
+          <div className={styles.pagination_btn_container}>
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+            >
+              Précédent
+            </Button>
+            {currentPage} / {maxPage}
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handleNext}
+              disabled={currentPage === maxPage}
+            >
+              Suivant
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

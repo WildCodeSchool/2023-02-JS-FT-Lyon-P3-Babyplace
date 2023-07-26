@@ -1,8 +1,14 @@
 .menu {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   gap: 2em;
   animation: slide-in 1s ease;
+}
+
+.menu li {
+  list-style-type: none;
 }
 
 .menu p {
@@ -11,7 +17,7 @@
 
 .menu button {
   cursor: pointer;
-  width: 100%;
+  width: fit-content;
   text-decoration: none;
   color: black;
   display: flex;
@@ -30,7 +36,7 @@
 }
 
 .babyPic {
-  display: none;
+  
   animation: slide-in 1s ease;
   opacity: 0.7;
 }
@@ -49,7 +55,7 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1175px) {
   .menuScreen {
     padding: 3em;
     display: flex;
@@ -65,7 +71,7 @@
 
   .babyPic {
     display: block;
-    height: 90%;
+    height: 80%;
     border-radius: 25px;
   }
 
@@ -93,11 +99,22 @@
   }
 }
 
-@media screen and (min-width: 800px) and (max-width: 1199px) {
+@media screen and (max-width: 1174px) {
   .babyPic {
-    display: block;
     width: 30%;
-    border-radius: 25px;
-    margin: 0rem auto;
+    min-width: 200px;
+    display: block;
+    margin: 3rem auto;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .menu p {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (max-width: 375px) {
+  .babyPic {
+    margin: 1rem auto;
   }
 }

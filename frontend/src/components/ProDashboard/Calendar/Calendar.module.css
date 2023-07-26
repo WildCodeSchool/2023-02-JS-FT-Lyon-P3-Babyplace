@@ -15,6 +15,7 @@
   height: 450px;
   box-shadow: 0 0 100px 10px rgba(40, 40, 40, 0.296);
   border-radius: 20px 20px 0 0;
+  animation: left-come 1s ease;
 }
 
 .calendar_component {
@@ -36,11 +37,11 @@
   height: 500px;
   margin-top: 50px;
   border-radius: 20px;
-
   box-shadow: 0 0 100px 10px rgba(40, 40, 40, 0.296);
   background-color: #ffffff;
   overflow-y: scroll;
   overflow-x: hidden;
+  animation: right-come 1s ease;
 }
 .right_container h1 {
   text-align: center;
@@ -54,17 +55,39 @@
   background-color: green;
 }
 
+@keyframes left-come {
+  from {
+    opacity: 0;
+    transform: translateX(-600px);  
+  }
+  to {
+   opacity: 1;
+   transform: translateX(0px); 
+  }
+}
+@keyframes right-come {
+  from {
+    opacity: 0;
+    transform: translateX(600px);  
+  }
+  to {
+   opacity: 1;
+   transform: translateX(0px); 
+  }
+}
+
+
 @media screen and (max-width: 1066px) {
   .left_container {
     width: 300px;
   }
   .right_container {
-    width: 200px;
+    width: 300px;
     margin-left: 20px;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 690px) {
   .calendar_box {
     display: block;
     overflow: scroll;
