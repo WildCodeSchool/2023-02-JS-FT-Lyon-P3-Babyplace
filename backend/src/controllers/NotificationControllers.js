@@ -2,8 +2,9 @@ const models = require("../models");
 
 const GetAllNotificationsForParent = (req, res) => {
   const id = req.payloads.sub;
+  const { date } = req.query;
   models.notify
-    .getParentNotifications(id)
+    .getParentNotifications(id, date)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -15,8 +16,9 @@ const GetAllNotificationsForParent = (req, res) => {
 
 const GetAllNotificationsForPro = (req, res) => {
   const id = req.payloads.sub;
+  const { date } = req.query;
   models.notify
-    .getProNotifications(id)
+    .getProNotifications(id, date)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -28,8 +30,9 @@ const GetAllNotificationsForPro = (req, res) => {
 
 const AllParentNotificationsAreRead = (req, res) => {
   const id = req.payloads.sub;
+  const { date } = req.query;
   models.notify
-    .parentNotificationIsViewed(id)
+    .parentNotificationIsViewed(id, date)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         return res.sendStatus(204);
@@ -43,9 +46,10 @@ const AllParentNotificationsAreRead = (req, res) => {
 };
 
 const AllProNotificationsAreRead = (req, res) => {
+  const { date } = req.query;
   const id = req.payloads.sub;
   models.notify
-    .proNotificationIsViewed(id)
+    .proNotificationIsViewed(id, date)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         return res.sendStatus(204);

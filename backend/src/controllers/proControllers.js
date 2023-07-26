@@ -287,9 +287,6 @@ const register = async (req, res) => {
 const editAuth = (req, res) => {
   req.body.id = req.payloads.sub;
   const pro = req.body;
-  console.warn(pro);
-  // TODO validations (length, format...)
-
   models.pro
     .update(pro)
     .then(([result]) => {

@@ -5,19 +5,25 @@ const models = require("../models");
 // on prend également en compte le status que l'on demande depuis le front.
 const browseReservations = async (req, res) => {
   const id = req.payloads.sub;
+  const { date } = req.query;
   const { status } = req.query;
   const { page } = req.query;
   const limit = 10;
   const offset = (page - 1) * limit;
 
   try {
-    const [[{ total }]] = await models.dashboardpro.countOrders(id, status);
+    const [[{ total }]] = await models.dashboardpro.countOrders(
+      id,
+      status,
+      date
+    );
 
     const [orders] = await models.dashboardpro.showAllReservations(
       id,
       limit,
       offset,
-      status
+      status,
+      date
     );
 
     res.send({ total, datas: orders });

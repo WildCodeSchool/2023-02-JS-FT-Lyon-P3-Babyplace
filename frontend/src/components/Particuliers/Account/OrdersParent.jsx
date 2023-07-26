@@ -37,11 +37,19 @@ function Orders({ setAccountScreen }) {
         </button>
         <p>Réservations</p>
       </div>
+      {!data || data.length === 0 ? (
+        <div className={styles.nodata}>
+          <p>
+            Vous n'avez aucune réservation en cours sur les prochains jours.
+          </p>
+        </div>
+      ) : null}
       <div className={styles.ordersList}>
         {data &&
           data.map((reservation) => {
             return (
               <OrderCardParent
+                key={reservation.id}
                 reservation={reservation}
                 refreshData={refreshData}
                 setRefreshData={setRefreshData}

@@ -6,12 +6,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useUserContext } from "../../../contexts/UserContext";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import instance from "../../../services/APIService";
 import userIcon from "../../../assets/icones/user.png";
 import style from "./SearchList.module.css";
 import DispoPros from "./DispoPros";
 
 export default function SearchList() {
+  const { user } = useUserContext();
   const [pros, setPros] = useState(null);
   const navigate = useNavigate();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -27,21 +30,25 @@ export default function SearchList() {
   return (
     <div className={style.search_list_page}>
       <div className={style.header}>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className={style.button_back}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
+        {!user?.id ? (
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={style.button_back}
+          >
+            <ArrowBackIosNewIcon />
+          </button>
+        ) : null}
         <div />
 
         <h2>Liste des crèches disponibles</h2>
 
-        <div className={style.logo_log_in}>
-          <img src={userIcon} alt="user" />
-          <Link to="/particulier">Connexion</Link>
-        </div>
+        {!user?.id || user?.role === "pro" ? (
+          <div className={style.logo_log_in}>
+            <img src={userIcon} alt="user" />
+            <Link to="/particulier">Connexion</Link>
+          </div>
+        ) : null}
       </div>
 
       <div className={style.cards_media}>
@@ -60,18 +67,33 @@ export default function SearchList() {
                 >
                   <CardActionArea sx={{ padding: "10px" }}>
                     <div className={style.image}>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={`${BACKEND_URL}/uploads/${pro.image}`}
-                        alt="profil_picture"
-                        sx={{
-                          position: "relative",
-                          zIndex: 10,
-                          borderTopRightRadius: "20px",
-                          borderTopLeftRadius: "20px",
-                        }}
-                      />
+                      {pro.image ? (
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={`${BACKEND_URL}/uploads/${pro.image}`}
+                          alt="profil_picture"
+                          sx={{
+                            position: "relative",
+                            zIndex: 10,
+                            borderTopRightRadius: "20px",
+                            borderTopLeftRadius: "20px",
+                          }}
+                        />
+                      ) : (
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={defautPicture}
+                          alt="profil_picture"
+                          sx={{
+                            position: "relative",
+                            zIndex: 10,
+                            borderTopRightRadius: "20px",
+                            borderTopLeftRadius: "20px",
+                          }}
+                        />
+                      )}
                     </div>
 
                     <Typography
@@ -84,6 +106,9 @@ export default function SearchList() {
                         left: "20px",
                         color: "white",
                         zIndex: 12,
+                        backgroundColor: "rgba(0, 0, 0, .3)",
+                        borderRadius: "25px",
+                        padding: "0.2rem",
                       }}
                     >
                       {pro.name}

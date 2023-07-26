@@ -62,6 +62,25 @@ const edit = async (req, res) => {
   }
 };
 
+const editAuth = (req, res) => {
+  req.body.id = req.payloads.sub;
+  const parent = req.body;
+  // TODO validations (length, format...)
+
+  models.parent
+    .update(parent)
+    .then(([result]) => {
+      if (result.affectedRows > 0) {
+        return res.sendStatus(200);
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.sendStatus(500);
+    });
+};
+
 const add = (req, res) => {
   const parent = req.body;
 
@@ -228,6 +247,7 @@ module.exports = {
   browse,
   read,
   edit,
+  editAuth,
   add,
   destroy,
   showChildWithParent,

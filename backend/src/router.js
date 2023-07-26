@@ -1,7 +1,11 @@
 const express = require("express");
 const multer = require("multer");
 
-const upload = multer({ dest: "./public/uploads/" });
+const maxSize = 100 * 1024;
+const upload = multer({
+  dest: "./public/uploads/",
+  limits: { fileSize: maxSize },
+});
 
 const router = express.Router();
 
@@ -60,14 +64,14 @@ router.patch(
   "/parent/mail",
   verifyToken,
   verifyIfParentRegistered,
-  parentControllers.edit
+  parentControllers.editAuth
 );
 
 router.patch(
   "/parent/password",
   verifyToken,
   hashPassword,
-  parentControllers.edit
+  parentControllers.editAuth
 );
 
 router.put(

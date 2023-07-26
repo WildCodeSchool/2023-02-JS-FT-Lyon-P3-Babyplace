@@ -5,17 +5,21 @@ class NotificationManager extends AbstractManager {
     super({ table: "parent_notification" });
   }
 
-  getParentNotifications(id) {
+  getParentNotifications(id, date) {
     return this.database.query(
-      `SELECT * FROM ${this.table} where parent_id = ? order by status ASC, notification_date_time DESC`,
-      [id]
+      `SELECT * FROM ${this.table} where parent_id = ?
+      and notification_date_time >= ?
+      order by status ASC, notification_date_time DESC`,
+      [id, date]
     );
   }
 
-  getProNotifications(id) {
+  getProNotifications(id, date) {
     return this.database.query(
-      `SELECT * FROM pro_notification where pro_id = ? order by status ASC, notification_date_time DESC`,
-      [id]
+      `SELECT * FROM pro_notification where pro_id = ?
+      and notification_date_time >= ?
+      order by status ASC, notification_date_time DESC`,
+      [id, date]
     );
   }
 
@@ -51,19 +55,21 @@ class NotificationManager extends AbstractManager {
     );
   }
 
-  parentNotificationIsViewed(id) {
+  parentNotificationIsViewed(id, date) {
     return this.database.query(
       `update ${this.table}
-    set status = 1 where parent_id = ?`,
-      [id]
+    set status = 1 where parent_id = ?
+    and notification_date_time >= ?`,
+      [id, date]
     );
   }
 
-  proNotificationIsViewed(id) {
+  proNotificationIsViewed(id, date) {
     return this.database.query(
       `update pro_notification
-    set status = 1 where pro_id = ?`,
-      [id]
+    set status = 1 where pro_id = ?
+    and notification_date_time >= ?`,
+      [id, date]
     );
   }
 

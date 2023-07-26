@@ -1,21 +1,38 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../../contexts/UserContext";
 import NotificationLign from "./NotificationLign";
 import styles from "./NotificationCenter.module.css";
 import instance from "../../../services/APIService";
 
 export default function NotificationCenter() {
+  const navigate = useNavigate();
+  const { user } = useUserContext();
   const [notifications, setNotifications] = useState([]);
+  // Obtenir la date d'aujourd'hui
+  const currentDate = dayjs();
+  // Soustraire 7 jours pour obtenir la date d'il y a une semaine
+  const previousWeekDate = currentDate.subtract(7, "day");
+  // Formater la date en format "YYYY-MM-DD"
+  const formattedDate = previousWeekDate.format("YYYY-MM-DD");
+
+  useEffect(() => {
+    if (!user?.id || user?.role === "pro") {
+      navigate("/particulier");
+    }
+  }, []);
 
   useEffect(() => {
     instance
-      .get(`/notifications/parents`)
+      .get(`/notifications/parents?date=${formattedDate}`)
       .then((response) => {
         setNotifications(response.data);
       })
       .catch((err) => console.error(err));
     return () => {
       instance
-        .get(`/notifications/checked/parent`)
+        .get(`/notifications/checked/parent?date=${formattedDate}`)
         .catch((err) => console.error(err));
     };
   }, []);
@@ -23,6 +40,11 @@ export default function NotificationCenter() {
   return (
     <div className={styles.notifications_container}>
       <div>
+        {!notifications || notifications.length === 0 ? (
+          <div className={styles.nodata}>
+            <p>Vous n'avez actuellement aucune notification.</p>
+          </div>
+        ) : null}
         {notifications.map((notification) => (
           <NotificationLign key={notification.id} notification={notification} />
         ))}

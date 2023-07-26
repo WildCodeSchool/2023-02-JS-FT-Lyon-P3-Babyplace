@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useUserContext } from "../../../contexts/UserContext";
 import styles from "./DashboardHome.module.css";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import WelcomeBox from "./InsideHome/WelcomeBox/WelcomeBox";
 import DayResume from "./InsideHome/DayResume/DayResume";
 import OccupationChart from "./InsideHome/OccupationChart/OccupationChart";
@@ -7,6 +9,9 @@ import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import Preview from "./InsideHome/Preview/Preview";
 
 export default function DashboardHome() {
+  const { user } = useUserContext();
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const imagePath = `${BACKEND_URL}/uploads/${user.image}`;
   const [openModal, setOpenModal] = useState(false);
   const handleModal = () => {
     setOpenModal(true);
@@ -28,7 +33,21 @@ export default function DashboardHome() {
           className={styles.preview_btn}
           onClick={handleModal}
         >
-          <div className={styles.preview_img}>
+          <div className={styles.preview_img_box}>
+            {user.image ? (
+              <img
+                src={imagePath}
+                alt="profile_picture"
+                className={styles.preview_img}
+              />
+            ) : (
+              <img
+                src={defautPicture}
+                alt="profile_picture"
+                className={styles.preview_img}
+              />
+            )}
+
             <p className={styles.preview_title}>Prévisualiser mon annonce</p>
           </div>
         </button>

@@ -14,6 +14,21 @@
   display: none;
 }
 
+.animation_div {
+  animation: intro-left 1s ease;
+}
+
+@keyframes intro-left {
+  from {
+    opacity: 0;
+    transform: translateX(-800px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
 .header_card {
   background: var(--main-bg-gradient);
   position: fixed;
@@ -27,41 +42,71 @@
   background: transparent;
   color: white;
   position: fixed;
-  top: 5%;
+  top: 30px;
   left: 5%;
   cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px 5px 5px;
+  border-radius: 50%;
 }
+
+
+.button_back:hover {
+  scale: 1.1;
+  background-color: rgb(187, 87, 245);
+}
+
+
 .buttons {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  margin-left: 30px;
 }
 .button_child,
 .button_parent {
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1rem;
   border-radius: 25px;
   color: white;
   cursor: pointer;
+  transition: all 0.4s ease;
 }
+
+.button_child:hover,
+.button_parent:hover {
+  scale: 1.2;
+  filter: brightness(1.2);
+}
+
 .button_child {
   background-color: var(--info-color);
 }
 .button_parent {
-  background-color: var(--success-color);
+  background-color: var(--main-color);
 }
 .active > .button_child,
 .active > .button_parent {
   transform: scale(1.2);
   border: 2px solid white;
 }
+.active > .button_child:hover,
+.active > .button_parent:hover {
+  transform: scale(1);
+  filter: brightness(1);
+}
 .card_container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  align-items: center;
   height: fit-content;
+  margin-top: 1rem;
   overflow-y: auto;
   scrollbar-width: none;
   width: 90%;
+  
 }
 .card_container::-webkit-scrollbar {
   display: none;
@@ -111,7 +156,7 @@
 }
 
 .card_child h4 {
-  color: var(--pink-color);
+  color: rgb(255, 112, 248);
   margin: 0.5rem;
   font-size: medium;
 }
@@ -120,7 +165,7 @@
   margin: 0.5rem;
 }
 .button_head {
-  margin-top: 4rem;
+  margin-top: 3rem;
   width: 90vw;
   display: flex;
   justify-content: space-around;
@@ -139,6 +184,15 @@
 .button {
   margin: 0;
   margin-bottom: 1rem;
+  transition: all 0.4s ease;
+  background-color: rgb(195, 121, 227);
+}
+
+.button:hover {
+background-color: rgb(165,165,255);
+}
+.button:active {
+  scale: 0.8;
 }
 
 .form_container {
@@ -147,15 +201,27 @@
 
 .form {
   background: var(--main-bg-gradient);
-  border-radius: 50px;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 10px 15px 30px 15px;
   width: 100%;
   border: 3px solid var(--main-color);
-  margin-top: 2rem;
+  
+  animation: intro-right 1s ease;
+}
+
+@keyframes intro-right {
+  from {
+    opacity: 0;
+    transform: translateX(800px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 
 ::placeholder {
@@ -232,9 +298,11 @@
 /* Partie des parents uniquement*/
 .form_parent {
   border-radius: 50px;
+  width: 100%;
   border: 3px solid var(--main-color);
   margin: 4rem 3rem 3rem 3rem;
   background-image: var(--main-bg-gradient);
+  animation: intro-left 1s ease;
 }
 
   
@@ -260,7 +328,7 @@
     box-shadow: 5px 5px 5px var(--second-color);
   }
   .button_head {
-    margin-top: 10vh;
+    margin-top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -283,7 +351,7 @@
     max-width: 300px;
   }
   .cards_child {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -291,6 +359,7 @@
   }
   .card_child {
     width: 25%;
+    min-width: 300px;
     padding: 1rem;
     font-size: large;
   }
@@ -310,12 +379,13 @@
     width: 50%;
     height: fit-content;
     border-radius: 10px;
-    margin-bottom: 5rem;
+    margin-bottom: 1rem;
   }
   .form {
     width: 100%;
-    padding: 3rem;
-    margin-top: 3vh;
+    padding: 0.5rem;
+    margin-top: 0;
+  
   }
   .form input {
     width: 80%;
@@ -343,6 +413,6 @@
   }
   
   .form_parent {
-    margin: 20vh auto 10rem auto;
+    margin: 15vh auto 10rem auto;
   }
 }

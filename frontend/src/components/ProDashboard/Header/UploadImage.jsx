@@ -8,11 +8,9 @@ import { useUserContext } from "../../../contexts/UserContext";
 import styles from "./UploadImage.module.css";
 
 export default function UploadImage({ setOpenModalUpload }) {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const { user } = useUserContext();
-  const image = `${BACKEND_URL}/uploads/${user.image}`;
+  const { user, login } = useUserContext();
   const notifySuccess = (text) => toast.success(text);
-  const notifyFail = () => toast.error("Un problème est survenu");
+  const notifyFail = (text) => toast.error(text);
   const [selectedFileName, setSelectedFileName] = useState("");
 
   const inputRef = useRef();
@@ -33,6 +31,18 @@ export default function UploadImage({ setOpenModalUpload }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
+    const selectedFile = inputRef.current.files[0];
+
+    if (!selectedFile) {
+      notifyFail("Selectionnez une photo à télecharger.");
+      return;
+    }
+
+    const maxSize = 100 * 1024; // 100 KB (in bytes)
+    if (selectedFile.size > maxSize) {
+      notifyFail("La photo selectionnée dépasse la taille maximale : 100 KB.");
+      return;
+    }
     const formData = new FormData();
     formData.append("image", inputRef.current.files[0]);
     formData.append("id", user.id);
@@ -41,21 +51,21 @@ export default function UploadImage({ setOpenModalUpload }) {
       .post(`upload`, formData, {
         withCredentials: true,
       })
-      .then(() => {
+      .then((response) => {
         notifySuccess("Votre image à bien été enregistrée");
         setSelectedFileName("");
+        login({ ...user, image: response.data.photoPath });
         setOpenModalUpload(false);
       })
       .catch((error) => {
         console.error(error);
-        notifyFail();
+        notifyFail("Un problème est survenu");
       });
   };
 
   return (
     <div className={styles.upload_container}>
       <div />
-      <img src={image} alt="profil_picture" className={styles.image_box} />
       <form
         className={styles.form_container}
         encType="multipart/form-data"

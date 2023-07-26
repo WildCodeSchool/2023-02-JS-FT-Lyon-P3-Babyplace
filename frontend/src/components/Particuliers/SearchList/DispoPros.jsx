@@ -49,7 +49,7 @@ export default function DispoPros({ id }) {
               key={data.label}
               color={color}
               label={data.label}
-              sx={{ margin: "4px", borderRadius: "8px", cursor: "pointer" }}
+              sx={{ margin: "4px", borderRadius: "8px" }}
             />
           );
         })}

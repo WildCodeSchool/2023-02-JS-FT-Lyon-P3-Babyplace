@@ -31,7 +31,7 @@ export default function DispoProPreview() {
       .catch((err) => console.error(err));
   }, []);
   if (!dispos) return null;
-  console.info(dispos);
+
   return (
     <ThemeProvider theme={theme}>
       <div className={style.dispos_pro}>

@@ -15,6 +15,24 @@
   background: transparent;
   color: black;
   margin-left: 5%;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px 5px 5px;
+  border-radius: 50%;
+}
+
+.button_back:hover {
+  scale: 1.1;
+  background-color: rgb(165,165,255);
+}
+
+.nodata {
+  padding: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: x-large;
 }
 
 .ordersList {
@@ -24,4 +42,10 @@
   gap: 1em;
   overflow-y: scroll;
   height: calc(100vh - 15vh - 8em - 63px);
+}
+
+@media screen and (min-width: 1176px) {
+  .banner {
+   margin-top: 20px;
+  }
 }

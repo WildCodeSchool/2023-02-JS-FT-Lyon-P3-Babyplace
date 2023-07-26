@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
@@ -19,9 +20,11 @@ export default function Orders() {
   );
   const status = selectedValue;
   const reservationsContainerRef = useRef(null);
+  const currentDate = dayjs();
+  const formattedDate = currentDate.format("YYYY-MM-DD");
 
   const handleSelect = (e) => {
-    setSelectedValue(e.target.id);
+    setSelectedValue(e.target.value);
     setCurrentPage(1);
   };
 
@@ -70,7 +73,9 @@ export default function Orders() {
       }
     };
     instance
-      .get(`/dashboard/reservations?page=${currentPage}&status=${status}`)
+      .get(
+        `/dashboard/reservations?page=${currentPage}&status=${status}&date=${formattedDate}`
+      )
       .then((res) => {
         setReservations(res.data.datas);
         setNumberOfResults(res.data.total);
@@ -90,28 +95,31 @@ export default function Orders() {
   return (
     <div className={styles.orders_box}>
       <div className={styles.orders_header}>
-        <h3>Toutes les réservations</h3>
-        <p>{numberOfResults} Résultats</p>
+        <div>
+          <h3>Toutes les réservations</h3>
+          <p>{numberOfResults} Résultats</p>
+        </div>
         <div className={styles.filter_btn_box}>
           <Button
-            id="4"
+            value="4"
             variant="contained"
+            color="secondary"
             onClick={handleSelect}
             sx={{ marginRight: 1, marginLeft: 1 }}
           >
             Toutes
           </Button>
           <Button
-            id="0"
+            value="0"
             variant="outlined"
+            color="secondary"
             onClick={handleSelect}
-            color="primary"
             sx={{ mx: 1 }}
           >
             En attente
           </Button>
           <Button
-            id="1"
+            value="1"
             variant="outlined"
             onClick={handleSelect}
             color="success"
@@ -120,7 +128,7 @@ export default function Orders() {
             Acceptées
           </Button>
           <Button
-            id="2"
+            value="2"
             variant="outlined"
             onClick={handleSelect}
             color="error"
@@ -129,7 +137,7 @@ export default function Orders() {
             Refusées
           </Button>
           <Button
-            id="3"
+            value="3"
             variant="outlined"
             onClick={handleSelect}
             color="warning"
@@ -139,6 +147,13 @@ export default function Orders() {
           </Button>
         </div>
       </div>
+      {!reservations || reservations.length === 0 ? (
+        <div className={styles.nodata}>
+          <p>
+            Vous n'avez aucune réservation en cours sur les prochains jours.
+          </p>
+        </div>
+      ) : null}
       <div className={styles.orders_container} ref={reservationsContainerRef}>
         {filteredOrders.map((reservation) => (
           <OrderCard
@@ -148,37 +163,39 @@ export default function Orders() {
             setRefreshData={setRefreshData}
           />
         ))}
-        <div className={styles.pagination_btn_container}>
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-          >
-            Précédent
-          </Button>
-          {currentPage} / {maxPage}
-          <Button
-            variant="contained"
-            sx={{
-              mx: 3,
-              backgroundColor: "rgb(165,165,255)",
-              "&:hover": {
-                backgroundColor: "rgb(126,114,242)",
-              },
-            }}
-            onClick={handleNext}
-            disabled={currentPage === maxPage}
-          >
-            Suivant
-          </Button>
-        </div>
+        {numberOfResults !== 0 && (
+          <div className={styles.pagination_btn_container}>
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+            >
+              Précédent
+            </Button>
+            {currentPage} / {maxPage}
+            <Button
+              variant="contained"
+              sx={{
+                mx: 3,
+                backgroundColor: "rgb(165,165,255)",
+                "&:hover": {
+                  backgroundColor: "rgb(126,114,242)",
+                },
+              }}
+              onClick={handleNext}
+              disabled={currentPage === maxPage}
+            >
+              Suivant
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

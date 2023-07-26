@@ -33,7 +33,6 @@ export default function ParentHomeFolderInfo({ orderId, closeModal }) {
           <h4>
             {orderInfo.prenom_parent} {orderInfo.nom_parent}
           </h4>
-          <p>Papa Poule</p>
         </div>
         <div className={styles.info_box}>
           <h5>Coordonnées du parent</h5>

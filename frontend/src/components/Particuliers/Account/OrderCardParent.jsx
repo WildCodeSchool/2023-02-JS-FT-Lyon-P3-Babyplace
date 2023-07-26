@@ -13,7 +13,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState(null);
   const [pro, setPro] = useState(null);
-  const notifySuccess = (text) => toast.success(text);
+  const notifyCancel = (text) => toast.success(text);
   const notifyFail = () => toast.error("Un problème est survenu");
   const {
     id: idReservation,
@@ -74,7 +74,7 @@ function OrderCardParent({ reservation, refreshData, setRefreshData }) {
       )
       .then((res) => {
         if (res.status === 200) {
-          notifySuccess("Réservation annulée");
+          notifyCancel("Réservation annulée");
         } else {
           notifyFail();
         }

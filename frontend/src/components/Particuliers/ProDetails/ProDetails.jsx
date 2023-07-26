@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import defautPicture from "../../../assets/images/Babyplace-2.png";
 import instance from "../../../services/APIService";
 import DispoPros from "../SearchList/DispoPros";
 import style from "./ProDetails.module.css";
@@ -35,11 +36,19 @@ export default function ProDetails() {
       </div>
       <div className={style.card_global}>
         <div className={style.card_left}>
-          <img
-            src={`${BACKEND_URL}/uploads/${pro.image}`}
-            alt="profile_picture"
-            className={style.image}
-          />
+          {pro.image ? (
+            <img
+              src={`${BACKEND_URL}/uploads/${pro.image}`}
+              alt="profile_picture"
+              className={style.image}
+            />
+          ) : (
+            <img
+              src={defautPicture}
+              alt="profile_picture"
+              className={style.image}
+            />
+          )}
 
           <h3>Présentation</h3>
           <p>{pro.description}</p>
