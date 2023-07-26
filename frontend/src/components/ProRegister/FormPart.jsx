@@ -110,6 +110,7 @@ function FormPart({ data, formBlockInfo, setFormBlockInfo }) {
             {data[0].data.map((dataRow) => {
               return (
                 <FormControlLabel
+                  key={dataRow}
                   value={dataRow}
                   control={<Radio />}
                   label={dataRow}

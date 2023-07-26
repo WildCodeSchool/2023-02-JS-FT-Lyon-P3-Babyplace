@@ -21,7 +21,7 @@ export default function ResumeChild() {
     <div className={style.animation_div}>
       <div className={style.cards_child}>
         {childs.map((child) => (
-          <div className={style.card_child}>
+          <div key={child.id} className={style.card_child}>
             <h3>Enfant:</h3>
             <div>
               <h4>

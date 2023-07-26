@@ -49,6 +49,7 @@ function Orders({ setAccountScreen }) {
           data.map((reservation) => {
             return (
               <OrderCardParent
+                key={reservation.id}
                 reservation={reservation}
                 refreshData={refreshData}
                 setRefreshData={setRefreshData}
