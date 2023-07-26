@@ -201,8 +201,6 @@ INSERT INTO `reservation`(`date_time_reservation`, `reservation_date`, `status`,
 
 
 
--- Requête pour consulter les jours de disponibilité d'une crèche.
--- SELECT p.name, d.day from pro AS p JOIN pro_disponibility AS pd ON p.id = pd.pro_id JOIN disponibility AS d ON d.id = pd.disponibility_id; 
 
 SET FOREIGN_KEY_CHECKS = 1;
 
