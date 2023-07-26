@@ -32,6 +32,7 @@ jobs:
           fi
 
   deploy:
+    # secret checked and action merged or pushed only
     if: needs.check-secrets.outputs.caprover-server == 'true' && (github.event.pull_request.merged || github.event_name == 'push')
 
     runs-on: ubuntu-latest
