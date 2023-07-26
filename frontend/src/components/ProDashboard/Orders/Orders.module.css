@@ -85,7 +85,7 @@
 @media screen and (max-width: 780px) {
   .orders_header {
     height: 15%;
-    margin: 6rem 0 2rem 2rem;
+    margin: 7rem 0 2rem 2rem;
     flex-direction: row;
   }
   .filter_btn_box {
@@ -97,7 +97,7 @@
   .orders_header {
     flex-direction: column;
     height: 30%;
-    margin-bottom: 0;
+    margin-bottom: 20px;
     margin-left: 60px;
     margin-top: 75px;
   }

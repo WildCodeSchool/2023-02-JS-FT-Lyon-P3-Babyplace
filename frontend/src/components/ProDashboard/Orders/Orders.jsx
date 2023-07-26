@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import styles from "./Orders.module.css";
 import OrderCard from "./OrderCard";
@@ -19,6 +20,8 @@ export default function Orders() {
   );
   const status = selectedValue;
   const reservationsContainerRef = useRef(null);
+  const currentDate = dayjs();
+  const formattedDate = currentDate.format("YYYY-MM-DD");
 
   const handleSelect = (e) => {
     setSelectedValue(e.target.value);
@@ -70,7 +73,9 @@ export default function Orders() {
       }
     };
     instance
-      .get(`/dashboard/reservations?page=${currentPage}&status=${status}`)
+      .get(
+        `/dashboard/reservations?page=${currentPage}&status=${status}&date=${formattedDate}`
+      )
       .then((res) => {
         setReservations(res.data.datas);
         setNumberOfResults(res.data.total);

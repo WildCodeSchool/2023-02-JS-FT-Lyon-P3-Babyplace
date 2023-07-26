@@ -6,11 +6,12 @@ class DashboardProManager extends AbstractManager {
   }
 
   // on récupère le nombre total de réservation qui servira à la pagination
-  countOrders(id, status) {
+  countOrders(id, status, date) {
     let query = `SELECT COUNT(*) AS total FROM ${this.table} AS r
                  JOIN place ON r.place_id = place.id
-                 WHERE place.pro_id = ?`;
-    const params = [id];
+                 WHERE place.pro_id = ?
+                 and r.reservation_date >= ?`;
+    const params = [id, date];
     // on constitue la requête de base dans une variable et un tableau
     // si je demande à voir les réservations ayant un certain statut depuis le front,
     // je rajoute à ma query une condition et j'ajoute la valeur dans le tableau.
@@ -22,7 +23,7 @@ class DashboardProManager extends AbstractManager {
     return this.database.query(query, params);
   }
 
-  showAllReservations(id, limit, offset, status) {
+  showAllReservations(id, limit, offset, status, date) {
     let query = `SELECT r.id, p.id id_parent, c.firstname AS prenom_enfant, c.lastname AS nom_enfant,
                  p.firstname AS prenom_parent, p.lastname AS nom_parent,
                  DATE_FORMAT(reservation_date, "%d/%m/%Y") AS date_reservation,
@@ -32,9 +33,10 @@ class DashboardProManager extends AbstractManager {
                  JOIN child AS c ON c.id = r.child_id
                  JOIN parent AS p ON c.parent_id = p.id
                  JOIN place ON r.place_id = place.id
-                 WHERE place.pro_id = ?`;
+                 WHERE place.pro_id = ?
+                 and r.reservation_date >= ?`;
 
-    const params = [id];
+    const params = [id, date];
 
     if (status >= 0 && status <= 3) {
       query += ` AND r.status = ?`;
