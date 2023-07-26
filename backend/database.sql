@@ -131,7 +131,7 @@ VALUES
 ('Martin', 'Lucas', '2017-09-01', true, 'Docteur Dubois', 3),
 ('Martin', 'Camille', '2020-11-28', false, 'Docteur Dubois', 3),
 ('Martin', 'Antoine', '2016-12-05', true, 'Docteur Dubois', 3),
-('Dubois', 'Telma', '2019-08-02', true, 'Docteur Lefèvre', 4);
+('Dubois', 'Telma', '2019-08-02', true, 'Docteur Lefèvre', 4),
 ('Dubois', 'Louise', '2019-08-02', false, 'Docteur Lefèvre', 4);
 
   INSERT INTO disponibility
